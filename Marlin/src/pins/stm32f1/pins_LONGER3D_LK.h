@@ -88,9 +88,6 @@
 #define HEATER_0_PIN                        PD3   // (Nozzle Heat Mosfet)
 #define HEATER_BED_PIN                      PA8   // (Hot Bed Mosfet)
 
-<<<<<<< HEAD
-#define FAN0_PIN                            PA15  // (4cm Fan)
-=======
 #define FAN_PIN                             PA15  // pin 77 (4cm Fan)
 
 #if TERN(MAPLE_STM32F1, ENABLED(FAN_SOFT_PWM), ENABLED(FAST_PWM_FAN)) && FAN_MIN_PWM < 5 // Required to avoid issues with heating or STLink
@@ -106,7 +103,6 @@
     #error "FAST_PWM_FAN_FREQUENCY must be less than 65536."
   #endif
 #endif
->>>>>>> upstream/bugfix-2.0.x
 
 #if TERN(MAPLE_STM32F1, ENABLED(FAN_SOFT_PWM), ENABLED(FAST_PWM_FAN)) && FAN_MIN_PWM < 5 // Required to avoid issues with heating or STLink
   #error "FAN_MIN_PWM must be 5 or higher."       // Fan will not start in 1-30 range
@@ -154,37 +150,23 @@
 //
 #if HAS_FSMC_TFT
   #define LCD_USE_DMA_FSMC                        // Use DMA transfers to send data to the TFT
-<<<<<<< HEAD
-  #define FSMC_CS_PIN                       PD7   // FSMC_NE1
-  #define FSMC_RS_PIN                       PD11  // A16 Register. Only one address needed
-=======
   #define FSMC_CS_PIN                       PD7   // pin 88 = FSMC_NE1
   #define FSMC_RS_PIN                       PD11  // pin 58 A16 Register. Only one address needed
   #define FSMC_DMA_DEV                      DMA2
   #define FSMC_DMA_CHANNEL               DMA_CH5
->>>>>>> upstream/bugfix-2.0.x
 
   #define TFT_CS_PIN                 FSMC_CS_PIN
   #define TFT_RS_PIN                 FSMC_RS_PIN
 
-<<<<<<< HEAD
-  #define TFT_RESET_PIN                     PC4
-  #define TFT_BACKLIGHT_PIN                 PD12
-=======
   #define TFT_RESET_PIN                     PC4   // pin 33
   #define TFT_BACKLIGHT_PIN                 PD12  // pin 59
->>>>>>> upstream/bugfix-2.0.x
   #define TFT_BACKLIGHT_PWM                 150   // Brightness with alt. TIM4 chan 1 (1-255)
 
   #define DOGLCD_MOSI                       -1    // Prevent auto-define by Conditionals_post.h
   #define DOGLCD_SCK                        -1
 
   // Buffer for Color UI
-<<<<<<< HEAD
-  #define TFT_BUFFER_WORDS                  3200
-=======
   #define TFT_BUFFER_SIZE                   3200
->>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #if defined(TFT_BACKLIGHT_PWM) && !defined(MAPLE_STM32F1)
@@ -192,12 +174,7 @@
   #define LCD_BRIGHTNESS_DEFAULT TFT_BACKLIGHT_PWM
 #endif
 
-<<<<<<< HEAD
-#if SD_CONNECTION_IS(ONBOARD)
-  #define ONBOARD_SDIO
-=======
 #if ENABLED(SDIO_SUPPORT)
->>>>>>> upstream/bugfix-2.0.x
   #define SD_SS_PIN                         -1    // else SDSS set to PA4 in M43 (spi_pins.h)
 #endif
 
@@ -207,19 +184,11 @@
  * declared below.
  */
 #if NEED_TOUCH_PINS
-<<<<<<< HEAD
-  #define TOUCH_CS_PIN                      PB12  // SPI2_NSS
-  #define TOUCH_SCK_PIN                     PB13
-  #define TOUCH_MISO_PIN                    PB15  // (Swapped MOSI/MISO = No HW SPI2)
-  #define TOUCH_MOSI_PIN                    PB14
-  #define TOUCH_INT_PIN                     PC6   // (PenIRQ coming from ADS7843)
-=======
   #define TOUCH_CS_PIN                      PB12  // pin 51 SPI2_NSS
   #define TOUCH_SCK_PIN                     PB13  // pin 52
   #define TOUCH_MOSI_PIN                    PB14  // pin 53 (Inverted MOSI/MISO = No HW SPI2)
   #define TOUCH_MISO_PIN                    PB15  // pin 54
   #define TOUCH_INT_PIN                     PC6   // pin 63 (PenIRQ coming from ADS7843)
->>>>>>> upstream/bugfix-2.0.x
 #endif
 
 //
@@ -228,31 +197,13 @@
 //
 #if NO_EEPROM_SELECTED
   //#define SPI_EEPROM
-<<<<<<< HEAD
-  //#define SPI_FLASH                             // Use MARLIN_DEV_MODE for M993/M994 EEPROM backup tests
-=======
   //#define HAS_SPI_FLASH                      1  // need MARLIN_DEV_MODE for M993/M994 eeprom backup tests
->>>>>>> upstream/bugfix-2.0.x
   #define FLASH_EEPROM_EMULATION
 #endif
 
 #if ENABLED(SPI_EEPROM)
   // SPI1 EEPROM Winbond W25Q64 (8MB/64Mbits)
   #define SPI_CHAN_EEPROM1                     1
-<<<<<<< HEAD
-  #define SPI_EEPROM1_CS_PIN                PC5
-  #define EEPROM_SCK_PIN      BOARD_SPI1_SCK_PIN  // PA5
-  #define EEPROM_MISO_PIN    BOARD_SPI1_MISO_PIN  // PA6
-  #define EEPROM_MOSI_PIN    BOARD_SPI1_MOSI_PIN  // PA7
-  #define EEPROM_PAGE_SIZE               0x1000U  // 4K (from datasheet)
-  #define MARLIN_EEPROM_SIZE 16UL * (EEPROM_PAGE_SIZE)  // Limit to 64K for now...
-#elif ENABLED(SPI_FLASH)
-  #define SPI_FLASH_SIZE                0x40000U  // Limit to 256K (M993 will reboot with 512)
-  #define SPI_FLASH_CS_PIN                  PC5
-  #define SPI_FLASH_SCK_PIN                 PA5
-  #define SPI_FLASH_MISO_PIN                PA6
-  #define SPI_FLASH_MOSI_PIN                PA7
-=======
   #define SPI_EEPROM1_CS_PIN                PC5   // pin 34
   #define EEPROM_SCK_PIN      BOARD_SPI1_SCK_PIN  // PA5 pin 30
   #define EEPROM_MISO_PIN    BOARD_SPI1_MISO_PIN  // PA6 pin 31
@@ -265,7 +216,6 @@
   #define SPI_FLASH_MOSI_PIN                PA7
   #define SPI_FLASH_MISO_PIN                PA6
   #define SPI_FLASH_SCK_PIN                 PA5
->>>>>>> upstream/bugfix-2.0.x
 #elif ENABLED(FLASH_EEPROM_EMULATION)
   // SoC Flash (framework-arduinoststm32-maple/STM32F1/libraries/EEPROM/EEPROM.h)
   #define EEPROM_PAGE_SIZE     (0x800U)           // 2K

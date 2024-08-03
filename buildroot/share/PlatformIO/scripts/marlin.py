@@ -16,12 +16,7 @@ def copytree(src, dst, symlinks=False, ignore=None):
             shutil.copy2(item, dst / item.name)
 
 def replace_define(field, value):
-<<<<<<< HEAD
-    envdefs = env['CPPDEFINES'].copy()
-    for define in envdefs:
-=======
     for define in env['CPPDEFINES']:
->>>>>>> upstream/bugfix-2.0.x
         if define[0] == field:
             env['CPPDEFINES'].remove(define)
     env['CPPDEFINES'].append((field, value))
@@ -74,8 +69,4 @@ def encrypt_mks(source, target, env, new_name):
         fwpath.unlink()
 
 def add_post_action(action):
-<<<<<<< HEAD
-    env.AddPostAction(str(Path("$BUILD_DIR", "${PROGNAME}.bin")), action)
-=======
     env.AddPostAction(str(Path("$BUILD_DIR", "${PROGNAME}.bin")), action);
->>>>>>> upstream/bugfix-2.0.x

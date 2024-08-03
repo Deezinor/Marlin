@@ -7,11 +7,7 @@
 #
 import pioutil
 if pioutil.is_pio_build():
-<<<<<<< HEAD
-    import os, marlin
-=======
     import os,marlin
->>>>>>> upstream/bugfix-2.0.x
 
     board = marlin.env.BoardConfig()
 

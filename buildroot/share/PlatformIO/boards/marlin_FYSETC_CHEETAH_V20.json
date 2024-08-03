@@ -55,11 +55,7 @@
       "dfu",
       "jlink"
     ],
-<<<<<<< HEAD
-    "offset_address": "0x8008000",
-=======
 	"offset_address": "0x8008000",
->>>>>>> upstream/bugfix-2.0.x
     "require_upload_port": true,
     "use_1200bps_touch": false,
     "wait_for_upload_port": false

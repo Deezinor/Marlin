@@ -98,12 +98,6 @@ void GcodeSuite::G60() {
     return;
   }
 
-<<<<<<< HEAD
-  // G60 S
-  stored_position[slot] = current_position;
-  did_save_position.set(slot);
-  report_stored_position(slot);
-=======
   #if ENABLED(SAVED_POSITIONS_DEBUG)
   {
     const xyze_pos_t &pos = stored_position[slot];
@@ -119,7 +113,6 @@ void GcodeSuite::G60() {
     );
   }
   #endif
->>>>>>> upstream/bugfix-2.0.x
 }
 
 #endif // SAVED_POSITIONS

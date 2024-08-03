@@ -28,21 +28,6 @@
 
 #define BOARD_INFO_NAME "Melzi (Malyan)"
 
-<<<<<<< HEAD
-#if ENABLED(CR10_STOCKDISPLAY)
-  #define BTN_ENC                             28
-  #define BTN_EN1                             30
-  #define BTN_EN2                             29
-
-  #define LCD_PINS_RS                         17  // ST9720 CS
-  #define LCD_PINS_EN                         16  // ST9720 DAT
-  #define LCD_PINS_D4                         11  // ST9720 CLK
-
-  #define LCD_PINS_DEFINED
-#endif
-
-#include "pins_MELZI.h" // ... SANGUINOLOLU_12 ... SANGUINOLOLU_11
-=======
 #include "pins_MELZI.h" // ... SANGUINOLOLU_12 ... SANGUINOLOLU_11
 
 #undef LCD_SDSS
@@ -59,4 +44,3 @@
 #define BTN_EN1                               30
 #define BTN_EN2                               29
 #define BTN_ENC                               28
->>>>>>> upstream/bugfix-2.0.x

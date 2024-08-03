@@ -280,11 +280,7 @@ extern "C" {
 #define PIN_SERIAL_TX           PA9
 
 // Optional PIN_SERIALn_RX and PIN_SERIALn_TX where 'n' is the U(S)ART number
-<<<<<<< HEAD:buildroot/share/PlatformIO/variants/MARLIN_BTT_SKR_PRO_11/variant.h
-// Used when the user instantiates a hardware Serial using its peripheral name.
-=======
 // Used when user instantiate a hardware Serial using its peripheral name.
->>>>>>> upstream/bugfix-2.0.x:buildroot/share/PlatformIO/variants/MARLIN_BIGTREE_SKR_PRO_11/variant.h
 // Example: HardwareSerial mySerial(USART3);
 // will use PIN_SERIAL3_RX and PIN_SERIAL3_TX if defined.
 #define PIN_SERIAL1_RX          PA10

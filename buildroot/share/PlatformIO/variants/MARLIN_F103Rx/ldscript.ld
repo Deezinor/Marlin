@@ -23,11 +23,7 @@
 *****************************************************************************
 ** @attention
 **
-<<<<<<< HEAD
-** Copyright (c) 2019 STMicroelectronics
-=======
 ** <h2><center>&copy; COPYRIGHT(c) 2019 STMicroelectronics</center></h2>
->>>>>>> upstream/bugfix-2.0.x
 **
 ** Redistribution and use in source and binary forms, with or without modification,
 ** are permitted provided that the following conditions are met:

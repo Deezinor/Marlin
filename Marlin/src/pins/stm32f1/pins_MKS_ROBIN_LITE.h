@@ -80,15 +80,9 @@
 #define FIL_RUNOUT_PIN                      PB8   // MT_DET
 
 /**                ------
-<<<<<<< HEAD
- *   (BEEPER) PD2 | 1  2 | PB3  (ENC)
- *      (EN1) PB5 | 3  4 | PA11 (RESET?)
- *      (EN2) PB4   5  6 | PC1  (LCD_D4)
-=======
  *   (BEEPER) PD2 | 1  2 | PB3  (BTN_ENC)
  *  (BTN_EN1) PB5 | 3  4 | PA11 (RESET?)
  *  (BTN_EN2) PB4   5  6 | PC1  (LCD_D4)
->>>>>>> upstream/bugfix-2.0.x
  *   (LCD_RS) PC3 | 7  8 | PC2  (LCD_EN)
  *            GND | 9 10 | 5V
  *                 ------
@@ -116,11 +110,7 @@
   #define BTN_EN1                    EXP3_03_PIN
   #define BTN_EN2                    EXP3_05_PIN
 
-<<<<<<< HEAD
-  #define LCD_PINS_EN                EXP3_08_PIN
-=======
   #define LCD_PINS_ENABLE            EXP3_08_PIN
->>>>>>> upstream/bugfix-2.0.x
 
   #if ENABLED(MKS_MINI_12864)
 

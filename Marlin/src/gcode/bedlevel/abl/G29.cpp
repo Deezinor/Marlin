@@ -53,8 +53,6 @@
   #include "../../../lcd/e3v2/creality/dwin.h"
 #endif
 
-<<<<<<< HEAD
-=======
 #include "../../../lcd/marlinui.h"
 #if ENABLED(EXTENSIBLE_UI)
   #include "../../../lcd/extui/ui_api.h"
@@ -68,7 +66,6 @@
   #include "../../../module/tool_change.h"
 #endif
 
->>>>>>> upstream/bugfix-2.0.x
 #define DEBUG_OUT ENABLED(DEBUG_LEVELING_FEATURE)
 #include "../../../core/debug_out.h"
 

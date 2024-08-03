@@ -49,54 +49,22 @@
  */
 void GcodeSuite::M73() {
 
-<<<<<<< HEAD
-  #if ENABLED(SET_PROGRESS_PERCENT)
-=======
   #if ENABLED(DWIN_LCD_PROUI)
 
     DWIN_M73();
 
   #else
 
->>>>>>> upstream/bugfix-2.0.x
     if (parser.seenval('P'))
       ui.set_progress((PROGRESS_SCALE) > 1
         ? parser.value_float() * (PROGRESS_SCALE)
         : parser.value_byte()
       );
-<<<<<<< HEAD
-  #endif
-
-  #if ENABLED(SET_REMAINING_TIME)
-    if (parser.seenval('R')) ui.set_remaining_time(60 * parser.value_ulong());
-  #endif
-
-  #if ENABLED(SET_INTERACTION_TIME)
-    if (parser.seenval('C')) ui.set_interaction_time(60 * parser.value_ulong());
-  #endif
-
-  #if ENABLED(M73_REPORT)
-    if (TERN1(M73_REPORT_SD_ONLY, IS_SD_PRINTING())) {
-      SERIAL_ECHO_START();
-      SERIAL_ECHOPGM(" M73");
-      #if ENABLED(SET_PROGRESS_PERCENT)
-        SERIAL_ECHOPGM(" Progress: ", TERN(PRINT_PROGRESS_SHOW_DECIMALS, permyriadtostr4(ui.get_progress_permyriad()), ui.get_progress_percent()), "%;");
-      #endif
-      #if ENABLED(SET_REMAINING_TIME)
-        SERIAL_ECHOPGM(" Time left: ", ui.remaining_time / 60, "m;");
-      #endif
-      #if ENABLED(SET_INTERACTION_TIME)
-        SERIAL_ECHOPGM(" Change: ", ui.interaction_time / 60, "m;");
-      #endif
-      SERIAL_EOL();
-    }
-=======
 
     #if ENABLED(USE_M73_REMAINING_TIME)
       if (parser.seenval('R')) ui.set_remaining_time(60 * parser.value_ulong());
     #endif
 
->>>>>>> upstream/bugfix-2.0.x
   #endif
 }
 

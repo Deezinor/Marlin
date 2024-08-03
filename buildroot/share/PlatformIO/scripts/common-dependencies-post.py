@@ -4,13 +4,7 @@
 #
 import pioutil
 if pioutil.is_pio_build():
-<<<<<<< HEAD
-    env = pioutil.env
-    projenv = env
-    Import("projenv") # src_dir environment. Only for post: scripts!
-=======
     Import("env", "projenv")
->>>>>>> upstream/bugfix-2.0.x
 
     def apply_board_build_flags():
         if not 'BOARD_CUSTOM_BUILD_FLAGS' in env['MARLIN_FEATURES']:

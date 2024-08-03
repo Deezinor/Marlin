@@ -45,14 +45,6 @@ void GcodeSuite::M413() {
     recovery.enable(parser.value_bool());
   else
     M413_report();
-<<<<<<< HEAD
-
-  #if HAS_PLR_BED_THRESHOLD
-    if (parser.seenval('B'))
-      recovery.bed_temp_threshold = parser.value_celsius();
-  #endif
-=======
->>>>>>> upstream/bugfix-2.0.x
 
   #if ENABLED(DEBUG_POWER_LOSS_RECOVERY)
     if (parser.seen("RL")) recovery.load();
@@ -61,31 +53,14 @@ void GcodeSuite::M413() {
     if (parser.seen_test('D')) recovery.debug(F("M413"));
     if (parser.seen_test('O')) recovery._outage(true);
     if (parser.seen_test('C')) (void)recovery.check();
-<<<<<<< HEAD
-    if (parser.seen_test('E')) SERIAL_ECHO(recovery.exists() ? F("PLR Exists\n") : F("No PLR\n"));
-    if (parser.seen_test('V')) SERIAL_ECHO(recovery.valid() ? F("Valid\n") : F("Invalid\n"));
-=======
     if (parser.seen_test('E')) SERIAL_ECHOF(recovery.exists() ? F("PLR Exists\n") : F("No PLR\n"));
     if (parser.seen_test('V')) SERIAL_ECHOF(recovery.valid() ? F("Valid\n") : F("Invalid\n"));
->>>>>>> upstream/bugfix-2.0.x
   #endif
 }
 
 void GcodeSuite::M413_report(const bool forReplay/*=true*/) {
-<<<<<<< HEAD
-  TERN_(MARLIN_SMALL_BUILD, return);
-
-  report_heading_etc(forReplay, F(STR_POWER_LOSS_RECOVERY));
-  SERIAL_ECHOPGM("  M413 S", AS_DIGIT(recovery.enabled)
-    #if HAS_PLR_BED_THRESHOLD
-      , " B", recovery.bed_temp_threshold
-    #endif
-  );
-  SERIAL_ECHO(" ; ");
-=======
   report_heading_etc(forReplay, F(STR_POWER_LOSS_RECOVERY));
   SERIAL_ECHOPGM("  M413 S", AS_DIGIT(recovery.enabled), " ; ");
->>>>>>> upstream/bugfix-2.0.x
   serialprintln_onoff(recovery.enabled);
 }
 

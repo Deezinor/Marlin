@@ -49,19 +49,11 @@
 #endif
 
 #if ENABLED(IIC_BL24CXX_EEPROM)
-<<<<<<< HEAD
-  #define IIC_EEPROM_SDA                    PA11
-  #define IIC_EEPROM_SCL                    PA12
-  #define MARLIN_EEPROM_SIZE               0x800  // 2K (24C16)
-#elif ANY(SDCARD_EEPROM_EMULATION, FLASH_EEPROM_EMULATION)
-  #define MARLIN_EEPROM_SIZE               0x800  // 2K
-=======
   #define IIC_EEPROM_SDA                  PA11
   #define IIC_EEPROM_SCL                  PA12
   #define MARLIN_EEPROM_SIZE             0x800  // 2K (24C16)
 #elif EITHER(SDCARD_EEPROM_EMULATION, FLASH_EEPROM_EMULATION)
   #define MARLIN_EEPROM_SIZE             0x800  // 2K
->>>>>>> upstream/bugfix-2.0.x
 #endif
 
 //
@@ -69,20 +61,6 @@
 //
 #define X_STOP_PIN                          PC4
 #define Y_STOP_PIN                          PC5
-<<<<<<< HEAD
-#define Z_STOP_PIN                          PC15
-
-//
-// Probe
-//
-#if ENABLED(BLTOUCH)
-  #define SERVO0_PIN                        PC14  // BLTouch OUT PIN
-#elif ENABLED(PROBE_ACTIVATION_SWITCH)
-  #define PROBE_TARE_PIN                    PC14
-  #define PROBE_ACTIVATION_SWITCH_PIN       PB2
-#elif ENABLED(PROBE_ENABLE_DISABLE) && !defined(PROBE_ENABLE_PIN)
-  #define PROBE_ENABLE_PIN                  PC14
-=======
 
 #if ENABLED(BLTOUCH)
   #define Z_STOP_PIN                        -1
@@ -96,7 +74,6 @@
     #define PROBE_TARE_PIN                  PC14
     #define PROBE_ACTIVATION_SWITCH_PIN     PB2
   #endif
->>>>>>> upstream/bugfix-2.0.x
 #endif
 
 //
@@ -137,11 +114,7 @@
 #define HEATER_0_PIN                        PB14  // HEATER1
 #define HEATER_BED_PIN                      PB13  // HOT BED
 
-<<<<<<< HEAD
-#define FAN0_PIN                            PB15  // FAN
-=======
 #define FAN_PIN                             PB15  // FAN
->>>>>>> upstream/bugfix-2.0.x
 #ifndef E0_AUTO_FAN_PIN
   #define E0_AUTO_FAN_PIN                   PC13  // FAN
 #endif
@@ -154,11 +127,7 @@
 #define SDCARD_CONNECTION                ONBOARD
 #define ON_BOARD_SPI_DEVICE                    1
 #define ONBOARD_SD_CS_PIN                   PC12  // SDSS
-<<<<<<< HEAD
-#define ONBOARD_SDIO
-=======
 #define SDIO_SUPPORT
->>>>>>> upstream/bugfix-2.0.x
 #define NO_SD_HOST_DRIVE                          // This board's SD is only seen by the printer
 
 //

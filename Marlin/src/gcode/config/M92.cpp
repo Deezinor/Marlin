@@ -28,11 +28,7 @@
 #include "../../module/planner.h"
 
 /**
-<<<<<<< HEAD
- * M92: Set axis steps-per-unit for one or more axes, X, Y, Z, [I, [J, [K, [U, [V, [W,]]]]]] and E.
-=======
  * M92: Set axis steps-per-unit for one or more axes, X, Y, Z, [I, [J, [K]]] and E.
->>>>>>> upstream/bugfix-2.0.x
  *      (Follows the same syntax as G92)
  *
  *      With multiple extruders use T to specify which one.
@@ -64,11 +60,7 @@ void GcodeSuite::M92() {
           const float value = parser.value_per_axis_units((AxisEnum)(E_AXIS_N(target_extruder)));
           if (value < 20) {
             float factor = planner.settings.axis_steps_per_mm[E_AXIS_N(target_extruder)] / value; // increase e constants if M92 E14 is given for netfab.
-<<<<<<< HEAD
-            #if ALL(CLASSIC_JERK, HAS_CLASSIC_E_JERK)
-=======
             #if HAS_CLASSIC_JERK && HAS_CLASSIC_E_JERK
->>>>>>> upstream/bugfix-2.0.x
               planner.max_jerk.e *= factor;
             #endif
             planner.settings.max_feedrate_mm_s[E_AXIS_N(target_extruder)] *= factor;
@@ -95,11 +87,7 @@ void GcodeSuite::M92() {
       if (wanted) {
         const float best = uint16_t(wanted / z_full_step_mm) * z_full_step_mm;
         SERIAL_ECHOPGM(", best:[", best);
-<<<<<<< HEAD
-        if (best != wanted) { SERIAL_ECHO(C(','), best + z_full_step_mm); }
-=======
         if (best != wanted) { SERIAL_CHAR(','); SERIAL_DECIMAL(best + z_full_step_mm); }
->>>>>>> upstream/bugfix-2.0.x
         SERIAL_CHAR(']');
       }
       SERIAL_ECHOLNPGM(" }");
@@ -108,35 +96,6 @@ void GcodeSuite::M92() {
 }
 
 void GcodeSuite::M92_report(const bool forReplay/*=true*/, const int8_t e/*=-1*/) {
-<<<<<<< HEAD
-  TERN_(MARLIN_SMALL_BUILD, return);
-
-  report_heading_etc(forReplay, F(STR_STEPS_PER_UNIT));
-  #if NUM_AXES
-    #define PRINT_EOL
-    SERIAL_ECHOPGM_P(LIST_N(DOUBLE(NUM_AXES),
-      PSTR("  M92 X"), LINEAR_UNIT(planner.settings.axis_steps_per_mm[X_AXIS]),
-      SP_Y_STR, LINEAR_UNIT(planner.settings.axis_steps_per_mm[Y_AXIS]),
-      SP_Z_STR, LINEAR_UNIT(planner.settings.axis_steps_per_mm[Z_AXIS]),
-      SP_I_STR, I_AXIS_UNIT(planner.settings.axis_steps_per_mm[I_AXIS]),
-      SP_J_STR, J_AXIS_UNIT(planner.settings.axis_steps_per_mm[J_AXIS]),
-      SP_K_STR, K_AXIS_UNIT(planner.settings.axis_steps_per_mm[K_AXIS]),
-      SP_U_STR, U_AXIS_UNIT(planner.settings.axis_steps_per_mm[U_AXIS]),
-      SP_V_STR, V_AXIS_UNIT(planner.settings.axis_steps_per_mm[V_AXIS]),
-      SP_W_STR, W_AXIS_UNIT(planner.settings.axis_steps_per_mm[W_AXIS])
-    ));
-  #endif
-
-  #if HAS_EXTRUDERS && DISABLED(DISTINCT_E_FACTORS)
-    #define PRINT_EOL
-    SERIAL_ECHOPGM_P(SP_E_STR, VOLUMETRIC_UNIT(planner.settings.axis_steps_per_mm[E_AXIS]));
-  #endif
-
-  if (ENABLED(PRINT_EOL)) SERIAL_EOL();
-
-  #if ENABLED(DISTINCT_E_FACTORS)
-    for (uint8_t i = 0; i < E_STEPPERS; ++i) {
-=======
   report_heading_etc(forReplay, F(STR_STEPS_PER_UNIT));
   SERIAL_ECHOPGM_P(LIST_N(DOUBLE(NUM_AXES),
     PSTR("  M92 X"), LINEAR_UNIT(planner.settings.axis_steps_per_mm[X_AXIS]),
@@ -153,7 +112,6 @@ void GcodeSuite::M92_report(const bool forReplay/*=true*/, const int8_t e/*=-1*/
 
   #if ENABLED(DISTINCT_E_FACTORS)
     LOOP_L_N(i, E_STEPPERS) {
->>>>>>> upstream/bugfix-2.0.x
       if (e >= 0 && i != e) continue;
       report_echo_start(forReplay);
       SERIAL_ECHOLNPGM_P(
@@ -165,8 +123,3 @@ void GcodeSuite::M92_report(const bool forReplay/*=true*/, const int8_t e/*=-1*/
     UNUSED(e);
   #endif
 }
-<<<<<<< HEAD
-
-#endif // EDITABLE_STEPS_PER_UNIT
-=======
->>>>>>> upstream/bugfix-2.0.x

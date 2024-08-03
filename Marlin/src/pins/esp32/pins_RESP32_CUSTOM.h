@@ -34,10 +34,4 @@
 //
 // I2S (steppers & other output-only pins)
 //
-<<<<<<< HEAD
-#ifndef I2S_STEPPER_STREAM
-  #define I2S_STEPPER_STREAM
-#endif
-=======
 #define I2S_STEPPER_STREAM
->>>>>>> upstream/bugfix-2.0.x

@@ -129,15 +129,11 @@
 #if IS_MELZI
   #define LED_PIN                        AUX1_01
 #elif MB(STB_11)
-<<<<<<< HEAD
-  #define LCD_BACKLIGHT_PIN              AUX1_04  // LCD backlight LED
-=======
   #define LCD_BACKLIGHT_PIN                   17  // LCD backlight LED
 #endif
 
 #if !HAS_CUTTER && ENABLED(SANGUINOLOLU_V_1_2) && !BOTH(HAS_WIRED_LCD, IS_NEWPANEL) // try to use IO Header
   #define CASE_LIGHT_PIN                       4  // Hardware PWM  - see if IO Header is available
->>>>>>> upstream/bugfix-2.0.x
 #endif
 
 /**
@@ -181,11 +177,7 @@
       #define KILL_PIN                   AUX1_06
       #define BEEPER_PIN                 AUX1_01
 
-<<<<<<< HEAD
-    #elif IS_U8GLIB_ST7920                        // SPI GLCD 12864 ST7920 ( like [www.digole.com] ) For Melzi V2.0
-=======
     #elif IS_U8GLIB_ST7920                  // SPI GLCD 12864 ST7920 ( like [www.digole.com] ) For Melzi V2.0
->>>>>>> upstream/bugfix-2.0.x
 
       #if IS_MELZI
         #define LCD_PINS_RS              AUX1_07  // CS chip select /SS chip slave select
@@ -194,13 +186,8 @@
         // Pin 27 is taken by LED_PIN, but Melzi LED does nothing with
         // Marlin so this can be used for BEEPER_PIN. You can use this pin
         // with M42 instead of BEEPER_PIN.
-<<<<<<< HEAD
-        #define BEEPER_PIN               AUX1_01
-      #else // Sanguinololu >=1.3
-=======
         #define BEEPER_PIN                    27
       #else                                       // Sanguinololu >=1.3
->>>>>>> upstream/bugfix-2.0.x
         #define LCD_PINS_RS                    4
         #define LCD_PINS_EN              AUX1_04
         #define LCD_PINS_D4              AUX1_07
@@ -302,11 +289,7 @@
 // M3/M4/M5 - Spindle/Laser Control
 //
 #if HAS_CUTTER
-<<<<<<< HEAD
-  #if !MB(AZTEEG_X1) && ENABLED(SANGUINOLOLU_V_1_2) && !ALL(HAS_WIRED_LCD, IS_NEWPANEL) // try to use IO Header
-=======
   #if !MB(AZTEEG_X1) && ENABLED(SANGUINOLOLU_V_1_2) && !BOTH(HAS_WIRED_LCD, IS_NEWPANEL) // try to use IO Header
->>>>>>> upstream/bugfix-2.0.x
 
     #define SPINDLE_LASER_PWM_PIN              4  // Hardware PWM
     #define SPINDLE_LASER_ENA_PIN        AUX1_06  // Pullup or pulldown!

@@ -21,8 +21,6 @@
  */
 #pragma once
 
-<<<<<<< HEAD
-=======
 #define SKR_MINI_E3_V2
 
 #define BOARD_CUSTOM_BUILD_FLAGS -DTONE_CHANNEL=4 -DTONE_TIMER=4 -DTIMER_TONE=4
@@ -39,7 +37,6 @@
 
 #include "pins_BTT_SKR_MINI_E3_common.h"
 
->>>>>>> upstream/bugfix-2.0.x
 #ifndef BOARD_INFO_NAME
   #define BOARD_INFO_NAME "BTT SKR Mini E3 V2.0"
 #endif

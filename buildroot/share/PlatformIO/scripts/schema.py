@@ -2,19 +2,8 @@
 #
 # schema.py
 #
-<<<<<<< HEAD
-# Used by signature.py via common-dependencies.py to generate a schema file during the PlatformIO build
-# when CONFIG_EXPORT is defined in the configuration.
-#
-# This script can also be run standalone from within the Marlin repo to generate JSON and YAML schema files.
-#
-# This script is a companion to abm/js/schema.js in the MarlinFirmware/AutoBuildMarlin project, which has
-# been extended to evaluate conditions and can determine what options are actually enabled, not just which
-# options are uncommented. That will be migrated to this script for standalone migration.
-=======
 # Used by signature.py via common-dependencies.py to generate a schema file during the PlatformIO build.
 # This script can also be run standalone from within the Marlin repo to generate all schema files.
->>>>>>> upstream/bugfix-2.0.x
 #
 import re,json
 from pathlib import Path

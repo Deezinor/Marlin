@@ -3,14 +3,9 @@
 #
 import pioutil
 if pioutil.is_pio_build():
-<<<<<<< HEAD
-    from os.path import join, expandvars
-    env = pioutil.env
-=======
     from os.path import join
     from os.path import expandvars
     Import("env")
->>>>>>> upstream/bugfix-2.0.x
 
     # Custom HEX from ELF
     env.AddPostAction(

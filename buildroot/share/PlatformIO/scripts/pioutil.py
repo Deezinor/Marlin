@@ -2,18 +2,10 @@
 # pioutil.py
 #
 
-<<<<<<< HEAD
-from SCons.Script import DefaultEnvironment
-env = DefaultEnvironment()
-
-# Make sure 'vscode init' is not the current command
-def is_pio_build():
-=======
 # Make sure 'vscode init' is not the current command
 def is_pio_build():
     from SCons.Script import DefaultEnvironment
     env = DefaultEnvironment()
->>>>>>> upstream/bugfix-2.0.x
     if "IsCleanTarget" in dir(env) and env.IsCleanTarget(): return False
     return not env.IsIntegrationDump()
 

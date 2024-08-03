@@ -27,9 +27,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-<<<<<<< HEAD
-=======
-<<<<<<<< HEAD:Marlin/tests/feature/test_runout.cpp
 
 #include "../test/unit_tests.h"
 
@@ -45,8 +42,7 @@ MARLIN_TEST(runout, poll_runout_states) {
 }
 
 #endif
-========
->>>>>>> upstream/bugfix-2.0.x
+
 #include "../../inc/MarlinConfig.h"
 
 #if HAS_LCD_BRIGHTNESS
@@ -65,16 +61,10 @@ void GcodeSuite::M256() {
 }
 
 void GcodeSuite::M256_report(const bool forReplay/*=true*/) {
-<<<<<<< HEAD
-  TERN_(MARLIN_SMALL_BUILD, return);
-=======
->>>>>>> upstream/bugfix-2.0.x
+
   report_heading_etc(forReplay, F(STR_LCD_BRIGHTNESS));
   SERIAL_ECHOLNPGM("  M256 B", ui.brightness);
 }
 
 #endif // HAS_LCD_BRIGHTNESS
-<<<<<<< HEAD
-=======
->>>>>>>> upstream/bugfix-2.0.x:Marlin/src/gcode/lcd/M256.cpp
->>>>>>> upstream/bugfix-2.0.x
+

@@ -196,17 +196,6 @@
       //#define SHIFT_EN_PIN            _EXP1_10
     #endif
 
-<<<<<<< HEAD
-    #if ANY(VIKI2, miniVIKI)
-      #define BEEPER_PIN                   P1_30
-      #define DOGLCD_CS                    P0_26
-      #define DOGLCD_SCK              SD_SCK_PIN
-      #define DOGLCD_MOSI            SD_MOSI_PIN
-
-      #define STAT_LED_BLUE_PIN            P0_26
-      #define STAT_LED_RED_PIN             P1_21
-
-=======
     #if EITHER(VIKI2, miniVIKI)
       #define BEEPER_PIN                   P1_30  // (37) may change if cable changes
       #define DOGLCD_CS                    P0_26  // (63) J5-3 & AUX-2
@@ -217,7 +206,6 @@
       #define STAT_LED_RED_PIN             P1_21  // ( 6)  may change if cable changes
 
       //#define LCD_SCREEN_ROTATE            180  // 0, 90, 180, 270
->>>>>>> upstream/bugfix-2.0.x
     #else
       #if IS_ULTIPANEL
         #define LCD_PINS_D5                P1_17
@@ -233,11 +221,7 @@
 
     #endif
 
-<<<<<<< HEAD
-    #if ANY(VIKI2, miniVIKI, MINIPANEL)
-=======
     #if ENABLED(MINIPANEL)
->>>>>>> upstream/bugfix-2.0.x
       //#define LCD_SCREEN_ROTATE            180  // 0, 90, 180, 270
     #endif
 

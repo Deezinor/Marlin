@@ -4,21 +4,12 @@
 #
 import pioutil
 if pioutil.is_pio_build():
-<<<<<<< HEAD
-    import struct, uuid, marlin
-
-    board = pioutil.env.BoardConfig()
-
-    def calculate_crc(contents, seed):
-        accumulating_xor_value = seed
-=======
     import struct,uuid,marlin
 
     board = marlin.env.BoardConfig()
 
     def calculate_crc(contents, seed):
         accumulating_xor_value = seed;
->>>>>>> upstream/bugfix-2.0.x
 
         for i in range(0, len(contents), 4):
             value = struct.unpack('<I', contents[ i : i + 4])[0]
@@ -77,11 +68,7 @@ if pioutil.is_pio_build():
         uid_value = uuid.uuid4()
         file_key = int(uid_value.hex[0:8], 16)
 
-<<<<<<< HEAD
-        xor_crc = 0xEF3D4323
-=======
         xor_crc = 0xEF3D4323;
->>>>>>> upstream/bugfix-2.0.x
 
         # the input file is exepcted to be in chunks of 0x800
         # so round the size
@@ -136,8 +123,4 @@ if pioutil.is_pio_build():
         fwpath.unlink()
 
     marlin.relocate_firmware("0x08008800")
-<<<<<<< HEAD
-    marlin.add_post_action(encrypt)
-=======
     marlin.add_post_action(encrypt);
->>>>>>> upstream/bugfix-2.0.x

@@ -37,11 +37,7 @@
   }
 #endif
 
-<<<<<<< HEAD
-#if ANY(COOLANT_FLOOD, AIR_ASSIST)
-=======
 #if EITHER(COOLANT_FLOOD, AIR_ASSIST)
->>>>>>> upstream/bugfix-2.0.x
 
   #if ENABLED(AIR_ASSIST)
     #include "../../feature/spindle_laser.h"

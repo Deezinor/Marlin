@@ -60,27 +60,12 @@ void GcodeSuite::M150() {
 
   #if ENABLED(NEOPIXEL_LED)
     const pixel_index_t index = parser.intval('I', -1);
-<<<<<<< HEAD
-    const bool seenK = parser.seen_test('K');
-    #if ENABLED(NEOPIXEL2_SEPARATE)
-      #ifndef NEOPIXEL_M150_DEFAULT
-        #define NEOPIXEL_M150_DEFAULT -1
-      #elif NEOPIXEL_M150_DEFAULT > 1
-        #error "NEOPIXEL_M150_DEFAULT must be -1, 0, or 1."
-      #endif
-      int8_t brightness = neo.brightness(), unit = parser.intval('S', NEOPIXEL_M150_DEFAULT);
-      switch (unit) {
-        case -1: neo2.neoindex = index; // fall-thru
-        case  0:  neo.neoindex = index; old_color = seenK ? neo.pixel_color(_MAX(index, 0)) : 0; break;
-        case  1: neo2.neoindex = index; brightness = neo2.brightness(); old_color = seenK ? neo2.pixel_color(_MAX(index, 0)) : 0; break;
-=======
     #if ENABLED(NEOPIXEL2_SEPARATE)
       int8_t brightness = neo.brightness(), unit = parser.intval('S', -1);
       switch (unit) {
         case -1: neo2.neoindex = index; // fall-thru
         case  0:  neo.neoindex = index; break;
         case  1: neo2.neoindex = index; brightness = neo2.brightness(); break;
->>>>>>> upstream/bugfix-2.0.x
       }
     #else
       const uint8_t brightness = neo.brightness();
@@ -90,17 +75,10 @@ void GcodeSuite::M150() {
   #endif
 
   const LEDColor color = LEDColor(
-<<<<<<< HEAD
-    parser.seen('R') ? (parser.has_value() ? parser.value_byte() : 255) : (old_color >> 16) & 0xFF,
-    parser.seen('U') ? (parser.has_value() ? parser.value_byte() : 255) : (old_color >>  8) & 0xFF,
-    parser.seen('B') ? (parser.has_value() ? parser.value_byte() : 255) : old_color & 0xFF
-    OPTARG(HAS_WHITE_LED, parser.seen('W') ? (parser.has_value() ? parser.value_byte() : 255) : (old_color >> 24) & 0xFF)
-=======
     parser.seen('R') ? (parser.has_value() ? parser.value_byte() : 255) : 0,
     parser.seen('U') ? (parser.has_value() ? parser.value_byte() : 255) : 0,
     parser.seen('B') ? (parser.has_value() ? parser.value_byte() : 255) : 0
     OPTARG(HAS_WHITE_LED, parser.seen('W') ? (parser.has_value() ? parser.value_byte() : 255) : 0)
->>>>>>> upstream/bugfix-2.0.x
     OPTARG(NEOPIXEL_LED, parser.seen('P') ? (parser.has_value() ? parser.value_byte() : 255) : brightness)
   );
 

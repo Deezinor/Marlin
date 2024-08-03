@@ -92,21 +92,12 @@ void GcodeSuite::M852() {
 }
 
 void GcodeSuite::M852_report(const bool forReplay/*=true*/) {
-<<<<<<< HEAD
-  TERN_(MARLIN_SMALL_BUILD, return);
-
-  report_heading_etc(forReplay, F(STR_SKEW_FACTOR));
-  SERIAL_ECHOPGM("  M852 I", p_float_t(planner.skew_factor.xy, 6));
-  #if ENABLED(SKEW_CORRECTION_FOR_Z)
-    SERIAL_ECHOLNPGM(" J", p_float_t(planner.skew_factor.xz, 6), " K", p_float_t(planner.skew_factor.yz, 6), " ; XY, XZ, YZ");
-=======
   report_heading_etc(forReplay, F(STR_SKEW_FACTOR));
   SERIAL_ECHOPAIR_F("  M852 I", planner.skew_factor.xy, 6);
   #if ENABLED(SKEW_CORRECTION_FOR_Z)
     SERIAL_ECHOPAIR_F(" J", planner.skew_factor.xz, 6);
     SERIAL_ECHOPAIR_F(" K", planner.skew_factor.yz, 6);
     SERIAL_ECHOLNPGM(" ; XY, XZ, YZ");
->>>>>>> upstream/bugfix-2.0.x
   #else
     SERIAL_ECHOLNPGM(" ; XY");
   #endif

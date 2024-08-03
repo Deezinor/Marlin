@@ -117,18 +117,9 @@
 //
 #define TEMP_0_PIN                             0  // Analog Input, Header J2
 #define TEMP_1_PIN                             1  // Analog Input, Header J3
-<<<<<<< HEAD
-#define TEMP_BED_PIN                           2  // Analog Input, Header J6
-#define TEMP_PROBE_PIN                         3  // Analog Input, Header J15
-
-#ifndef TEMP_BOARD_PIN
-  #define TEMP_BOARD_PIN                      91  // Onboard thermistor, 100k TDK NTCG104LH104JT1
-#endif
-=======
 #define TEMP_BOARD_PIN                        91  // Onboard thermistor, 100k TDK NTCG104LH104JT1
 #define TEMP_BED_PIN                           2  // Analog Input, Header J6
 #define TEMP_PROBE_PIN                         3  // Analog Input, Header J15
->>>>>>> upstream/bugfix-2.0.x
 
 //
 // Heaters / Fans
@@ -146,15 +137,9 @@
 
 #ifndef FAN1_PIN
   #ifdef MK3_FAN_PINS
-<<<<<<< HEAD
-    #define FAN1_PIN                          -1
-  #else
-    #define FAN1_PIN                           6
-=======
     #define FAN1_PIN                           -1
   #else
     #define FAN1_PIN                            6
->>>>>>> upstream/bugfix-2.0.x
   #endif
 #endif
 

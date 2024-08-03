@@ -3,11 +3,7 @@
 #
 import pioutil
 if pioutil.is_pio_build():
-<<<<<<< HEAD
-    env = pioutil.env
-=======
     Import("env")
->>>>>>> upstream/bugfix-2.0.x
 
     # Get a build flag's value or None
     def getBuildFlagValue(name):

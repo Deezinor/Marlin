@@ -22,14 +22,6 @@
 
 #include "../../inc/MarlinConfig.h"
 
-<<<<<<< HEAD
-#if ENABLED(CAPABILITIES_REPORT)
-
-#include "../gcode.h"
-#include "../queue.h"           // for getting the command port
-
-=======
->>>>>>> upstream/bugfix-2.0.x
 #if ENABLED(M115_GEOMETRY_REPORT)
   #include "../../module/motion.h"
 #endif
@@ -38,24 +30,6 @@
   #include "../../feature/caselight.h"
 #endif
 
-<<<<<<< HEAD
-#if !defined(MACHINE_UUID) && ENABLED(HAS_STM32_UID)
-  #include "../../libs/hex_print.h"
-#endif
-
-//#define MINIMAL_CAP_LINES // Don't even mention the disabled capabilities
-
-#if ENABLED(EXTENDED_CAPABILITIES_REPORT)
-  inline void cap_line(FSTR_P const name, const bool ena=true) {
-    #if ENABLED(MINIMAL_CAP_LINES)
-      if (ena) SERIAL_ECHOLNPGM("Cap:", name, ":1");
-    #else
-      SERIAL_ECHOPGM("Cap:", name);
-      SERIAL_CHAR(':', '0' + ena);
-      SERIAL_EOL();
-    #endif
-  }
-=======
 //#define MINIMAL_CAP_LINES // Don't even mention the disabled capabilities
 
 #if ENABLED(EXTENDED_CAPABILITIES_REPORT)
@@ -75,7 +49,6 @@
       SERIAL_EOL();
     }
   #endif
->>>>>>> upstream/bugfix-2.0.x
 #endif
 
 /**
@@ -87,34 +60,6 @@
  *       at https://reprap.org/wiki/Firmware_Capabilities_Protocol
  */
 void GcodeSuite::M115() {
-<<<<<<< HEAD
-
-  // Hosts should match one of these
-  #define MACHINE_KINEMATICS "" \
-    TERN_(COREXY, "COREXY") TERN_(COREYX, "COREYX") \
-    TERN_(COREXZ, "COREXZ") TERN_(COREZX, "COREZX") \
-    TERN_(COREYZ, "COREYZ") TERN_(COREZY, "COREZY") \
-    TERN_(MARKFORGED_XY, "MARKFORGED_XY") TERN_(MARKFORGED_YX, "MARKFORGED_YX") \
-    TERN_(POLARGRAPH, "POLARGRAPH") \
-    TERN_(POLAR, "POLAR") \
-    TERN_(DELTA, "DELTA") \
-    TERN_(IS_SCARA, "SCARA") \
-    TERN_(IS_CARTESIAN, "Cartesian") \
-    TERN_(BELTPRINTER, " BELTPRINTER")
-
-  SERIAL_ECHOPGM("FIRMWARE_NAME:Marlin"
-    " " DETAILED_BUILD_VERSION " (" __DATE__ " " __TIME__ ")"
-    " SOURCE_CODE_URL:" SOURCE_CODE_URL
-    " PROTOCOL_VERSION:" PROTOCOL_VERSION
-    " MACHINE_TYPE:" MACHINE_NAME
-    " KINEMATICS:" MACHINE_KINEMATICS
-    " EXTRUDER_COUNT:" STRINGIFY(EXTRUDERS)
-    #if NUM_AXES != XYZ
-      " AXIS_COUNT:" STRINGIFY(NUM_AXES)
-    #endif
-    #if defined(MACHINE_UUID) || ENABLED(HAS_STM32_UID)
-      " UUID:"
-=======
   SERIAL_ECHOLNPGM(
     "FIRMWARE_NAME:Marlin " DETAILED_BUILD_VERSION " (" __DATE__ " " __TIME__ ") "
     "SOURCE_CODE_URL:" SOURCE_CODE_URL " "
@@ -123,7 +68,6 @@ void GcodeSuite::M115() {
     "EXTRUDER_COUNT:" STRINGIFY(EXTRUDERS) " "
     #if NUM_AXES != XYZ
       "AXIS_COUNT:" STRINGIFY(NUM_AXES) " "
->>>>>>> upstream/bugfix-2.0.x
     #endif
     #ifdef MACHINE_UUID
       MACHINE_UUID
@@ -158,17 +102,10 @@ void GcodeSuite::M115() {
     serial_index_t port = queue.ring_buffer.command_port();
 
     // PAREN_COMMENTS
-<<<<<<< HEAD
-    TERN_(PAREN_COMMENTS, cap_line(F("PAREN_COMMENTS")));
-
-    // QUOTED_STRINGS
-    TERN_(GCODE_QUOTED_STRINGS, cap_line(F("QUOTED_STRINGS")));
-=======
     TERN_(PAREN_COMMENTS, cap_line(F("PAREN_COMMENTS"), true));
 
     // QUOTED_STRINGS
     TERN_(GCODE_QUOTED_STRINGS, cap_line(F("QUOTED_STRINGS"), true));
->>>>>>> upstream/bugfix-2.0.x
 
     // SERIAL_XON_XOFF
     cap_line(F("SERIAL_XON_XOFF"), ENABLED(SERIAL_XON_XOFF));
@@ -189,17 +126,10 @@ void GcodeSuite::M115() {
     cap_line(F("AUTOREPORT_TEMP"), ENABLED(AUTO_REPORT_TEMPERATURES));
 
     // PROGRESS (M530 S L, M531 <file>, M532 X L)
-<<<<<<< HEAD
-    cap_line(F("PROGRESS"), false);
-
-    // Print Job timer M75, M76, M77
-    cap_line(F("PRINT_JOB"));
-=======
     cap_line(F("PROGRESS"));
 
     // Print Job timer M75, M76, M77
     cap_line(F("PRINT_JOB"), true);
->>>>>>> upstream/bugfix-2.0.x
 
     // AUTOLEVEL (G29)
     cap_line(F("AUTOLEVEL"), ENABLED(HAS_AUTOLEVEL));
@@ -214,11 +144,7 @@ void GcodeSuite::M115() {
     cap_line(F("LEVELING_DATA"), ENABLED(HAS_LEVELING));
 
     // BUILD_PERCENT (M73)
-<<<<<<< HEAD
-    cap_line(F("BUILD_PERCENT"), ENABLED(SET_PROGRESS_PERCENT));
-=======
     cap_line(F("BUILD_PERCENT"), ENABLED(LCD_SET_PROGRESS_MANUALLY));
->>>>>>> upstream/bugfix-2.0.x
 
     // SOFTWARE_POWER (M80, M81)
     cap_line(F("SOFTWARE_POWER"), ENABLED(PSU_CONTROL));
@@ -226,16 +152,6 @@ void GcodeSuite::M115() {
     // TOGGLE_LIGHTS (M355)
     cap_line(F("TOGGLE_LIGHTS"), ENABLED(CASE_LIGHT_ENABLE));
     cap_line(F("CASE_LIGHT_BRIGHTNESS"), TERN0(CASE_LIGHT_ENABLE, caselight.has_brightness()));
-<<<<<<< HEAD
-
-    // SPINDLE AND LASER CONTROL (M3, M4, M5)
-    #if ENABLED(SPINDLE_FEATURE)
-      cap_line(F("SPINDLE"));
-    #elif ENABLED(LASER_FEATURE)
-      cap_line(F("LASER"));
-    #endif
-=======
->>>>>>> upstream/bugfix-2.0.x
 
     // EMERGENCY_PARSER (M108, M112, M410, M876)
     cap_line(F("EMERGENCY_PARSER"), ENABLED(EMERGENCY_PARSER));
@@ -247,17 +163,10 @@ void GcodeSuite::M115() {
     cap_line(F("PROMPT_SUPPORT"), ENABLED(HOST_PROMPT_SUPPORT));
 
     // SDCARD (M20, M23, M24, etc.)
-<<<<<<< HEAD
-    cap_line(F("SDCARD"), ENABLED(HAS_MEDIA));
-
-    // MULTI_VOLUME (M21 S/M21 U)
-    #if HAS_MEDIA
-=======
     cap_line(F("SDCARD"), ENABLED(SDSUPPORT));
 
     // MULTI_VOLUME (M21 S/M21 U)
     #if ENABLED(SDSUPPORT)
->>>>>>> upstream/bugfix-2.0.x
       cap_line(F("MULTI_VOLUME"), ENABLED(MULTI_VOLUME));
     #endif
 
@@ -265,11 +174,7 @@ void GcodeSuite::M115() {
     cap_line(F("REPEAT"), ENABLED(GCODE_REPEAT_MARKERS));
 
     // SD_WRITE (M928, M28, M29)
-<<<<<<< HEAD
-    cap_line(F("SD_WRITE"), ENABLED(HAS_MEDIA) && DISABLED(SDCARD_READONLY));
-=======
     cap_line(F("SD_WRITE"), ENABLED(SDSUPPORT) && DISABLED(SDCARD_READONLY));
->>>>>>> upstream/bugfix-2.0.x
 
     // AUTOREPORT_SD_STATUS (M27 extension)
     cap_line(F("AUTOREPORT_SD_STATUS"), ENABLED(AUTO_REPORT_SD_STATUS));
@@ -297,12 +202,6 @@ void GcodeSuite::M115() {
 
     // BABYSTEPPING (M290)
     cap_line(F("BABYSTEPPING"), ENABLED(BABYSTEPPING));
-<<<<<<< HEAD
-
-    // EP_BABYSTEP (M293, M294)
-    cap_line(F("EP_BABYSTEP"), ENABLED(EP_BABYSTEPPING));
-=======
->>>>>>> upstream/bugfix-2.0.x
 
     // CHAMBER_TEMPERATURE (M141, M191)
     cap_line(F("CHAMBER_TEMPERATURE"), ENABLED(HAS_HEATED_CHAMBER));
@@ -318,28 +217,16 @@ void GcodeSuite::M115() {
 
     // Machine Geometry
     #if ENABLED(M115_GEOMETRY_REPORT)
-<<<<<<< HEAD
-      constexpr xyz_pos_t bmin{0},
-                          bmax = NUM_AXIS_ARRAY(X_BED_SIZE, Y_BED_SIZE, Z_MAX_POS, I_MAX_POS, J_MAX_POS, K_MAX_POS, U_MAX_POS, V_MAX_POS, W_MAX_POS),
-                          dmin = NUM_AXIS_ARRAY(X_MIN_POS,  Y_MIN_POS,  Z_MIN_POS, I_MIN_POS, J_MIN_POS, K_MIN_POS, U_MIN_POS, V_MIN_POS, W_MIN_POS),
-                          dmax = NUM_AXIS_ARRAY(X_MAX_POS,  Y_MAX_POS,  Z_MAX_POS, I_MAX_POS, J_MAX_POS, K_MAX_POS, U_MAX_POS, V_MAX_POS, W_MAX_POS);
-=======
       const xyz_pos_t bmin = { 0, 0, 0 },
                       bmax = { X_BED_SIZE , Y_BED_SIZE, Z_MAX_POS },
                       dmin = { X_MIN_POS, Y_MIN_POS, Z_MIN_POS },
                       dmax = { X_MAX_POS, Y_MAX_POS, Z_MAX_POS };
->>>>>>> upstream/bugfix-2.0.x
       xyz_pos_t cmin = bmin, cmax = bmax;
       apply_motion_limits(cmin);
       apply_motion_limits(cmax);
       const xyz_pos_t lmin = dmin.asLogical(), lmax = dmax.asLogical(),
                       wmin = cmin.asLogical(), wmax = cmax.asLogical();
-<<<<<<< HEAD
-
-      SERIAL_ECHOPGM(
-=======
       SERIAL_ECHOLNPGM(
->>>>>>> upstream/bugfix-2.0.x
         "area:{"
           "full:{"
             "min:{"

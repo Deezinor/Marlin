@@ -48,11 +48,7 @@
 
     // S: Report the current power supply state and exit
     if (parser.seen('S')) {
-<<<<<<< HEAD
-      SERIAL_ECHO(powerManager.psu_on ? F("PS:1\n") : F("PS:0\n"));
-=======
       SERIAL_ECHOF(powerManager.psu_on ? F("PS:1\n") : F("PS:0\n"));
->>>>>>> upstream/bugfix-2.0.x
       return;
     }
 
@@ -83,11 +79,7 @@ void GcodeSuite::M81() {
 
   print_job_timer.stop();
 
-<<<<<<< HEAD
-  #if ALL(HAS_FAN, PROBING_FANS_OFF)
-=======
   #if BOTH(HAS_FAN, PROBING_FANS_OFF)
->>>>>>> upstream/bugfix-2.0.x
     thermalManager.fans_paused = false;
     ZERO(thermalManager.saved_fan_speed);
   #endif
@@ -106,27 +98,6 @@ void GcodeSuite::M81() {
         powerManager.setPowerOffTimer(SEC_TO_MS(delay - 1));
       }
     }
-<<<<<<< HEAD
-  #endif
-
-  #if ENABLED(POWER_OFF_WAIT_FOR_COOLDOWN)
-    if (parser.boolval('S')) {
-      delayed_power_off = true;
-      powerManager.setPowerOffOnCooldown(true);
-    }
-  #endif
-
-  if (delayed_power_off) {
-    SERIAL_ECHOLNPGM(STR_DELAYED_POWEROFF);
-    return;
-  }
-
-  #if ENABLED(PSU_CONTROL)
-    powerManager.power_off_soon();
-  #elif HAS_SUICIDE
-    suicide();
-  #endif
-=======
   #endif
 
   #if ENABLED(POWER_OFF_WAIT_FOR_COOLDOWN)
@@ -146,5 +117,4 @@ void GcodeSuite::M81() {
   #elif ENABLED(PSU_CONTROL)
     powerManager.power_off_soon();
   #endif
->>>>>>> upstream/bugfix-2.0.x
 }

@@ -232,11 +232,7 @@
 
       #define LCD_SCREEN_ROTATE              180  // 0, 90, 180, 270
 
-<<<<<<< HEAD
-    #else // !VIKI2 && !miniVIKI
-=======
     #else                                         // !VIKI2 && !miniVIKI
->>>>>>> upstream/bugfix-2.0.x
 
       #define BEEPER_PIN                      79  // AUX-4
 

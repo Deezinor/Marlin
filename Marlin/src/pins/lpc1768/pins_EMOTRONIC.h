@@ -23,10 +23,6 @@
 
 /**
  * eMotion-Tech eMotronic pin assignments
-<<<<<<< HEAD
- * Schematic: https://data.emotion-tech.com/ftp/Datasheets_et_sources/Sources/eMotronic_brd_sources_1.0.4.zip
-=======
->>>>>>> upstream/bugfix-2.0.x
  *
  * Board pins<->features assignments are based on the
  * Micro-Delta Rework printer default connections.
@@ -89,11 +85,7 @@
 #define HEATER_0_PIN                       P2_06  // (H2: 10A shared)
 #define HEATER_1_PIN                       P2_07  // (H3: 10A shared)
 
-<<<<<<< HEAD
-#define FAN0_PIN                           P2_11  // (FAN0: 1A)
-=======
 #define FAN_PIN                            P2_11  // (FAN0: 1A)
->>>>>>> upstream/bugfix-2.0.x
 #define FAN1_PIN                           P2_13  // (FAN1: 1A)
 
 //

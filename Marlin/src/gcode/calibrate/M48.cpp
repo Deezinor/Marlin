@@ -81,13 +81,8 @@ void GcodeSuite::M48() {
   };
 
   if (!probe.can_reach(test_position)) {
-<<<<<<< HEAD
-    LCD_MESSAGE_MAX(MSG_M48_OUT_OF_BOUNDS);
-    SERIAL_ECHOLNPGM(GCODE_ERR_MSG(" (X,Y) out of bounds."));
-=======
     ui.set_status(GET_TEXT_F(MSG_M48_OUT_OF_BOUNDS), 99);
     SERIAL_ECHOLNPGM("? (X,Y) out of bounds.");
->>>>>>> upstream/bugfix-2.0.x
     return;
   }
 
@@ -117,11 +112,7 @@ void GcodeSuite::M48() {
     set_bed_leveling_enabled(false);
   #endif
 
-<<<<<<< HEAD
-  TERN_(HAS_PTC, ptc.set_enabled(parser.boolval('C', true)));
-=======
   TERN_(HAS_PTC, ptc.set_enabled(!parser.seen('C') || parser.value_bool()));
->>>>>>> upstream/bugfix-2.0.x
 
   // Work with reasonable feedrates
   remember_feedrate_scaling_off();
@@ -158,11 +149,7 @@ void GcodeSuite::M48() {
     for (uint8_t n = 0; n < n_samples; ++n) {
       #if HAS_STATUS_MESSAGE
         // Display M48 progress in the status bar
-<<<<<<< HEAD
-        ui.status_printf(0, F(S_FMT ": %d/%d"), GET_TEXT_F(MSG_M48_POINT), int(n + 1), int(n_samples));
-=======
         ui.status_printf(0, F(S_FMT ": %d/%d"), GET_TEXT(MSG_M48_POINT), int(n + 1), int(n_samples));
->>>>>>> upstream/bugfix-2.0.x
       #endif
 
       // When there are "legs" of movement move around the point before probing
@@ -218,11 +205,7 @@ void GcodeSuite::M48() {
             while (!probe.can_reach(next_pos)) {
               next_pos *= 0.8f;
               if (verbose_level > 3)
-<<<<<<< HEAD
-                SERIAL_ECHOLN(F("Moving inward: X"), next_pos.x, FPSTR(SP_Y_STR), next_pos.y);
-=======
                 SERIAL_ECHOLNPGM_P(PSTR("Moving inward: X"), next_pos.x, SP_Y_STR, next_pos.y);
->>>>>>> upstream/bugfix-2.0.x
             }
           #elif HAS_ENDSTOPS
             // For a rectangular bed just keep the probe in bounds
@@ -231,11 +214,7 @@ void GcodeSuite::M48() {
           #endif
 
           if (verbose_level > 3)
-<<<<<<< HEAD
-            SERIAL_ECHOLN(F("Going to: X"), next_pos.x, FPSTR(SP_Y_STR), next_pos.y);
-=======
             SERIAL_ECHOLNPGM_P(PSTR("Going to: X"), next_pos.x, SP_Y_STR, next_pos.y);
->>>>>>> upstream/bugfix-2.0.x
 
           do_blocking_move_to_xy(next_pos);
         } // n_legs loop
@@ -266,14 +245,10 @@ void GcodeSuite::M48() {
       sigma = SQRT(dev_sum / (n + 1));
 
       if (verbose_level > 1) {
-<<<<<<< HEAD
-        SERIAL_ECHO(n + 1, F(" of "), n_samples, F(": z: "), p_float_t(pz, 3), C(' '));
-=======
         SERIAL_ECHO(n + 1);
         SERIAL_ECHOPGM(" of ", n_samples);
         SERIAL_ECHOPAIR_F(": z: ", pz, 3);
         SERIAL_CHAR(' ');
->>>>>>> upstream/bugfix-2.0.x
         dev_report(verbose_level > 2, mean, sigma, min, max);
         SERIAL_EOL();
       }
@@ -289,12 +264,8 @@ void GcodeSuite::M48() {
 
     #if HAS_STATUS_MESSAGE
       // Display M48 results in the status bar
-<<<<<<< HEAD
-      ui.set_status_and_level(MString<30>(GET_TEXT_F(MSG_M48_DEVIATION), F(": "), w_float_t(sigma, 2, 6)));
-=======
       char sigma_str[8];
       ui.status_printf(0, F(S_FMT ": %s"), GET_TEXT(MSG_M48_DEVIATION), dtostrf(sigma, 2, 6, sigma_str));
->>>>>>> upstream/bugfix-2.0.x
     #endif
   }
 

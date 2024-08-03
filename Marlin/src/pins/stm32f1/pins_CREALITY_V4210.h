@@ -1,10 +1,6 @@
 /**
  * Marlin 3D Printer Firmware
-<<<<<<< HEAD
- * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
-=======
  * Copyright (C) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
->>>>>>> upstream/bugfix-2.0.x
  *
  * Based on Sprinter and grbl.
  * Copyright (c) 2011 Camiel Gubbels / Erik van der Zalm
@@ -26,11 +22,7 @@
 #pragma once
 
 /**
-<<<<<<< HEAD
- * Creality 4.2.10 (STM32F103RE / STM32F103RC) board pin assignments
-=======
  * CREALITY 4.2.10 (STM32F103RE / STM32F103RC) board pin assignments
->>>>>>> upstream/bugfix-2.0.x
  */
 
 #include "env_validate.h"
@@ -83,16 +75,6 @@
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                   PA5   // BLTouch IN
 #endif
-<<<<<<< HEAD
-
-//
-// Probe enable
-//
-#if ENABLED(PROBE_ENABLE_DISABLE) && !defined(PROBE_ENABLE_PIN)
-  #define PROBE_ENABLE_PIN            SERVO0_PIN
-#endif
-=======
->>>>>>> upstream/bugfix-2.0.x
 
 //
 // Filament Runout Sensor
@@ -148,11 +130,7 @@
 #define HEATER_0_PIN                        PA0   // HEATER1
 #define HEATER_BED_PIN                      PA1   // HOT BED
 
-<<<<<<< HEAD
-#define FAN0_PIN                            PA2   // FAN
-=======
 #define FAN_PIN                             PA2   // FAN
->>>>>>> upstream/bugfix-2.0.x
 #define FAN_SOFT_PWM_REQUIRED
 
 //
@@ -165,55 +143,6 @@
 #define ONBOARD_SDIO
 #define NO_SD_HOST_DRIVE                          // This board's SD is only seen by the printer
 
-<<<<<<< HEAD
-#if ANY(RET6_12864_LCD, HAS_DWIN_E3V2, IS_DWIN_MARLINUI)
-
-  /**
-   *    RET6 12864 LCD
-   *        ------
-   *  PC6  | 1  2 | PB2
-   *  PB10 | 3  4 | PE8
-   *  PB14   5  6 | PB13
-   *  PB12 | 7  8 | PB15
-   *   GND | 9 10 | 5V
-   *        ------
-   */
-  #define EXP3_01_PIN                       PC6
-  #define EXP3_02_PIN                       PB2
-  #define EXP3_03_PIN                       PB10
-  #define EXP3_04_PIN                       PE8
-  #define EXP3_05_PIN                       PB14
-  #define EXP3_06_PIN                       PB13
-  #define EXP3_07_PIN                       PB12
-  #define EXP3_08_PIN                       PB15
-
-#elif ANY(VET6_12864_LCD, DWIN_VET6_CREALITY_LCD)
-
-  /**
-   *    VET6 12864 LCD
-   *        ------
-   *  ?    | 1  2 | PC5
-   *  PB10 | 3  4 | ?
-   *  PA6    5  6 | PA5
-   *  PA4  | 7  8 | PA7
-   *   GND | 9 10 | 5V
-   *        ------
-   */
-  #define EXP3_01_PIN                       -1
-  #define EXP3_02_PIN                       PC5
-  #define EXP3_03_PIN                       PB10
-  #define EXP3_04_PIN                       -1
-  #define EXP3_05_PIN                       PA6
-  #define EXP3_06_PIN                       PA5
-  #define EXP3_07_PIN                       PA4
-  #define EXP3_08_PIN                       PA7
-
-#endif
-
-#if ENABLED(CR10_STOCKDISPLAY)
-  #if NONE(RET6_12864_LCD, VET6_12864_LCD)
-    #error "Define RET6_12864_LCD or VET6_12864_LCD to select pins for CR10_STOCKDISPLAY with the Creality V4 controller."
-=======
 #if ENABLED(CR10_STOCKDISPLAY)
 
   #if ENABLED(RET6_12864_LCD)
@@ -284,7 +213,6 @@
   //#define LCD_LED_PIN                     PB2
   #ifndef BEEPER_PIN
     #define BEEPER_PIN                      PB13
->>>>>>> upstream/bugfix-2.0.x
   #endif
 
   #define LCD_PINS_RS                EXP3_07_PIN

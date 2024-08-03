@@ -59,26 +59,17 @@ enum CalEnum : char {                        // the 7 main calibration points - 
 #define LOOP_CAL_RAD(VAR) LOOP_CAL_PT(VAR, __A, _7P_STEP)
 #define LOOP_CAL_ACT(VAR, _4P, _OP) LOOP_CAL_PT(VAR, _OP ? _AB : __A, _4P ? _4P_STEP : _7P_STEP)
 
-<<<<<<< HEAD
-=======
 #if HAS_MULTI_HOTEND
   const uint8_t old_tool_index = active_extruder;
 #endif
 
->>>>>>> upstream/bugfix-2.0.x
 float lcd_probe_pt(const xy_pos_t &xy);
 
 void ac_home() {
   endstops.enable(true);
-<<<<<<< HEAD
-  TERN_(SENSORLESS_HOMING, endstops.set_z_sensorless_current(true));
-  home_delta();
-  TERN_(SENSORLESS_HOMING, endstops.set_z_sensorless_current(false));
-=======
   TERN_(SENSORLESS_HOMING, endstops.set_homing_current(true));
   home_delta();
   TERN_(SENSORLESS_HOMING, endstops.set_homing_current(false));
->>>>>>> upstream/bugfix-2.0.x
   endstops.not_homing();
 }
 
@@ -101,12 +92,8 @@ void ac_cleanup() {
 }
 
 void print_signed_float(FSTR_P const prefix, const_float_t f) {
-<<<<<<< HEAD
-  SERIAL_ECHO(F("  "), prefix, C(':'));
-=======
   SERIAL_ECHOPGM("  ");
   SERIAL_ECHOF(prefix, AS_CHAR(':'));
->>>>>>> upstream/bugfix-2.0.x
   serial_offset(f);
 }
 
@@ -183,11 +170,7 @@ static float std_dev_points(float z_pt[NPP + 1], const bool _0p_cal, const bool 
  */
 static float calibration_probe(const xy_pos_t &xy, const bool stow, const bool probe_at_offset) {
   #if HAS_BED_PROBE
-<<<<<<< HEAD
-    return probe.probe_at_point(xy, stow ? PROBE_PT_STOW : PROBE_PT_RAISE, 0, probe_at_offset, false, Z_PROBE_LOW_POINT, Z_TWEEN_SAFE_CLEARANCE, true);
-=======
     return probe.probe_at_point(xy, stow ? PROBE_PT_STOW : PROBE_PT_RAISE, 0, probe_at_offset, false);
->>>>>>> upstream/bugfix-2.0.x
   #else
     UNUSED(stow);
     return lcd_probe_pt(xy);
@@ -420,20 +403,12 @@ void GcodeSuite::G33() {
                   towers_set = !parser.seen_test('T');
 
   // The calibration radius is set to a calculated value
-<<<<<<< HEAD
-  float dcr = probe_at_offset ? PRINTABLE_RADIUS : PRINTABLE_RADIUS - PROBING_MARGIN;
-=======
   float dcr = probe_at_offset ? DELTA_PRINTABLE_RADIUS : DELTA_PRINTABLE_RADIUS - PROBING_MARGIN;
->>>>>>> upstream/bugfix-2.0.x
   #if HAS_PROBE_XY_OFFSET
     const float total_offset = HYPOT(probe.offset_xy.x, probe.offset_xy.y);
     dcr -= probe_at_offset ? _MAX(total_offset, PROBING_MARGIN) : total_offset;
   #endif
-<<<<<<< HEAD
-  NOMORE(dcr, PRINTABLE_RADIUS);
-=======
   NOMORE(dcr, DELTA_PRINTABLE_RADIUS);
->>>>>>> upstream/bugfix-2.0.x
   if (parser.seenval('R')) dcr -= _MAX(parser.value_float(), 0.0f);
   TERN_(HAS_DELTA_SENSORLESS_PROBING, dcr *= sensorless_radius_factor);
 
@@ -485,14 +460,9 @@ void GcodeSuite::G33() {
   SERIAL_ECHOLNPGM("G33 Auto Calibrate");
 
   // Report settings
-<<<<<<< HEAD
-  FSTR_P const checkingac = F("Checking... AC");
-  SERIAL_ECHO(checkingac, F(" at radius:"), dcr);
-=======
   PGM_P const checkingac = PSTR("Checking... AC");
   SERIAL_ECHOPGM_P(checkingac);
   SERIAL_ECHOPGM(" at radius:", dcr);
->>>>>>> upstream/bugfix-2.0.x
   if (verbose_level == 0) SERIAL_ECHOPGM(" (DRY-RUN)");
   SERIAL_EOL();
   ui.set_status(checkingac);
@@ -506,12 +476,8 @@ void GcodeSuite::G33() {
   #if HAS_DELTA_SENSORLESS_PROBING
     if (verbose_level > 0 && do_save_offset_adj) {
       offset_sensorless_adj.reset();
-<<<<<<< HEAD
-      auto caltower = [&](Probe::sense_bool_t s) {
-=======
 
       auto caltower = [&](Probe::sense_bool_t s){
->>>>>>> upstream/bugfix-2.0.x
         float z_at_pt[NPP + 1];
         LOOP_CAL_ALL(rad) z_at_pt[rad] = 0.0f;
         probe.test_sensitivity = s;
@@ -700,12 +666,6 @@ void GcodeSuite::G33() {
     }
     else { // dry run
       FSTR_P const enddryrun = F("End DRY-RUN");
-<<<<<<< HEAD
-      SERIAL_ECHO(enddryrun);
-      SERIAL_ECHO_SP(35);
-      SERIAL_ECHOLNPGM("std dev:", p_float_t(zero_std_dev, 3));
-      MString<30> msg(enddryrun, F(" sd:"));
-=======
       SERIAL_ECHOF(enddryrun);
       SERIAL_ECHO_SP(35);
       SERIAL_ECHOLNPAIR_F("std dev:", zero_std_dev, 3);
@@ -713,7 +673,6 @@ void GcodeSuite::G33() {
       char mess[21];
       strcpy_P(mess, FTOP(enddryrun));
       strcpy_P(&mess[11], PSTR(" sd:"));
->>>>>>> upstream/bugfix-2.0.x
       if (zero_std_dev < 1)
         msg.appendf(F("0.%03i"), (int)LROUND(zero_std_dev * 1000.0f));
       else

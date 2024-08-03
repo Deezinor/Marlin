@@ -68,11 +68,7 @@
 // Heaters / Fans
 //
 #define HEATER_0_PIN                           2
-<<<<<<< HEAD
-#define FAN0_PIN                              13
-=======
 #define FAN_PIN                               13
->>>>>>> upstream/bugfix-2.0.x
 #define HEATER_BED_PIN                         4
 
 //

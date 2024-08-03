@@ -37,58 +37,6 @@
 
 #define BOARD_INFO_NAME "Melzi (Creality)"
 
-<<<<<<< HEAD
-/**       ------
- *    27 | 1  2 | 16
- *    11 | 3  4 | RESET
- *    10   5  6 | 30
- *    28 | 7  8 | 17
- *   GND | 9 10 | 5V
- *        ------
- *         EXP1
- */
-#define EXP1_01_PIN                           27  // BEEP
-#define EXP1_02_PIN                           16  // ENC
-#define EXP1_03_PIN                           11  // EN1
-#define EXP1_04_PIN                           -1  // RESET
-#define EXP1_05_PIN                           10  // EN2
-#define EXP1_06_PIN                           30  // A0 / ST9720 CLK
-#define EXP1_07_PIN                           28  // CS / ST9720 CS
-#define EXP1_08_PIN                           17  //      ST9720 DAT
-
-//
-// LCD / Controller
-//
-
-#if ANY(MKS_MINI_12864, CR10_STOCKDISPLAY, ENDER2_STOCKDISPLAY)
-  #if ANY(CR10_STOCKDISPLAY, ENDER2_STOCKDISPLAY)
-    #define LCD_PINS_RS              EXP1_07_PIN  // ST9720 CS
-    #define LCD_PINS_EN              EXP1_08_PIN  // ST9720 DAT
-    #define LCD_PINS_D4              EXP1_06_PIN  // ST9720 CLK
-  #endif
-  #if ANY(MKS_MINI_12864, ENDER2_STOCKDISPLAY)
-    #define DOGLCD_CS                EXP1_07_PIN
-    #define DOGLCD_A0                EXP1_06_PIN
-  #endif
-
-  #define LCD_SDSS                            31  // Controller's SD card
-
-  #define BTN_ENC                    EXP1_02_PIN
-  #define BTN_EN1                    EXP1_03_PIN
-  #define BTN_EN2                    EXP1_05_PIN
-  #define BEEPER_PIN                 EXP1_01_PIN
-
-  #define LCD_PINS_DEFINED
-
-#endif
-
-// Alter timing for graphical display
-#if IS_U8GLIB_ST7920
-  #define BOARD_ST7920_DELAY_1               125
-  #define BOARD_ST7920_DELAY_2               125
-  #define BOARD_ST7920_DELAY_3               125
-#endif
-=======
 // Alter timing for graphical display
 #if IS_U8GLIB_ST7920
   #define BOARD_ST7920_DELAY_1               125
@@ -97,7 +45,6 @@
 #endif
 
 #include "pins_MELZI.h" // ... SANGUINOLOLU_12 ... SANGUINOLOLU_11
->>>>>>> upstream/bugfix-2.0.x
 
 #include "pins_MELZI.h" // ... SANGUINOLOLU_12 ... SANGUINOLOLU_11
 
@@ -105,12 +52,9 @@
   #ifndef SERVO0_PIN
     #define SERVO0_PIN               EXP1_01_PIN
   #endif
-<<<<<<< HEAD
-=======
   #if SERVO0_PIN == BEEPER_PIN
     #undef BEEPER_PIN
   #endif
->>>>>>> upstream/bugfix-2.0.x
 #elif HAS_FILAMENT_SENSOR
   #ifndef FIL_RUNOUT_PIN
     #define FIL_RUNOUT_PIN           EXP1_01_PIN
@@ -167,8 +111,6 @@
   PIN:  30   Port: A1        LCD_PINS_D4      Output = 1
   PIN:  31   Port: A0        SDSS             Output = 1
 */
-<<<<<<< HEAD
-=======
 
 /**
  *    EXP1 Connector                      EXP1 as CR10 STOCKDISPLAY
@@ -180,4 +122,3 @@
  *   GND | 9 10 | 5V                             GND | 9 10 | 5V
  *        ------                                      ------
  */
->>>>>>> upstream/bugfix-2.0.x

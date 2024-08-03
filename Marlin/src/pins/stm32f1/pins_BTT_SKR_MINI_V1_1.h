@@ -68,11 +68,6 @@
 #define E0_DIR_PIN                          PB0
 #define E0_ENABLE_PIN                       PC4
 
-<<<<<<< HEAD
-// Shared with EXP2
-#ifndef TMC_SPI_SCK
-  #define TMC_SPI_SCK                       PB3
-=======
 #if ENABLED(TMC_USE_SW_SPI)                       // Shared with EXP2
   #ifndef TMC_SW_SCK
     #define TMC_SW_SCK                      PB3
@@ -83,7 +78,6 @@
   #ifndef TMC_SW_MOSI
     #define TMC_SW_MOSI                     PB5
   #endif
->>>>>>> upstream/bugfix-2.0.x
 #endif
 #ifndef TMC_SPI_MISO
   #define TMC_SPI_MISO                      PB4
@@ -172,43 +166,7 @@
 //
 // LCD / Controller
 //
-<<<<<<< HEAD
-
-#if ANY(TFT_COLOR_UI, TFT_CLASSIC_UI)
-  #define BEEPER_PIN                 EXP1_01_PIN
-  #define BTN_ENC                    EXP1_02_PIN
-  #define BTN_EN1                    EXP2_03_PIN
-  #define BTN_EN2                    EXP2_05_PIN
-
-  #define TFT_CS_PIN                 EXP1_07_PIN
-  #define TFT_SCK_PIN                EXP2_02_PIN
-  #define TFT_MISO_PIN               EXP2_01_PIN
-  #define TFT_MOSI_PIN               EXP2_06_PIN
-  #define TFT_DC_PIN                 EXP1_08_PIN
-  #define TFT_A0_PIN                  TFT_DC_PIN
-
-  #define TFT_RESET_PIN              EXP1_04_PIN
-
-  #define LCD_BACKLIGHT_PIN          EXP1_03_PIN
-  #define TFT_BACKLIGHT_PIN    LCD_BACKLIGHT_PIN
-
-  #define TOUCH_BUTTONS_HW_SPI
-  #define TOUCH_BUTTONS_HW_SPI_DEVICE          3
-
-  #define TOUCH_CS_PIN               EXP1_05_PIN  // SPI3_NSS
-  #define TOUCH_SCK_PIN              EXP2_02_PIN  // SPI3_SCK
-  #define TOUCH_MISO_PIN             EXP2_01_PIN  // SPI3_MISO
-  #define TOUCH_MOSI_PIN             EXP2_06_PIN  // SPI3_MOSI
-
-  #define LCD_READ_ID                       0xD3
-  #define LCD_USE_DMA_SPI
-
-  #define TFT_BUFFER_WORDS                  9600
-
-#elif HAS_WIRED_LCD
-=======
 #if HAS_WIRED_LCD
->>>>>>> upstream/bugfix-2.0.x
   #define BEEPER_PIN                 EXP1_01_PIN
   #define BTN_ENC                    EXP1_02_PIN
 
@@ -218,11 +176,7 @@
     #define BTN_EN1                  EXP1_03_PIN
     #define BTN_EN2                  EXP1_05_PIN
 
-<<<<<<< HEAD
-    #define LCD_PINS_EN              EXP1_08_PIN
-=======
     #define LCD_PINS_ENABLE          EXP1_08_PIN
->>>>>>> upstream/bugfix-2.0.x
     #define LCD_PINS_D4              EXP1_06_PIN
 
   #elif IS_TFTGLCD_PANEL
@@ -243,11 +197,7 @@
     #define BTN_EN1                  EXP2_03_PIN
     #define BTN_EN2                  EXP2_05_PIN
 
-<<<<<<< HEAD
-    #define LCD_PINS_EN              EXP1_03_PIN
-=======
     #define LCD_PINS_ENABLE          EXP1_03_PIN
->>>>>>> upstream/bugfix-2.0.x
 
     #if ENABLED(FYSETC_MINI_12864)
 
@@ -260,11 +210,7 @@
 
       #define FORCE_SOFT_SPI                      // SPI MODE3
 
-<<<<<<< HEAD
-      #define LED_PIN                EXP1_06_PIN  // red pwm
-=======
       #define LED_PIN                EXP1_06_PIN   // red pwm
->>>>>>> upstream/bugfix-2.0.x
       //#define LED_PIN              EXP1_07_PIN  // green
       //#define LED_PIN              EXP1_08_PIN  // blue
 
@@ -320,11 +266,7 @@
 #endif
 
 #if SD_CONNECTION_IS(LCD)
-<<<<<<< HEAD
-  #define SPI_DEVICE                           3  // Maple
-=======
   #define SPI_DEVICE                           3
->>>>>>> upstream/bugfix-2.0.x
   #define SD_DETECT_PIN              EXP2_07_PIN
   #define SD_SCK_PIN                 EXP2_02_PIN
   #define SD_MISO_PIN                EXP2_01_PIN

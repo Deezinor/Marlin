@@ -24,13 +24,8 @@
 
 #if ENABLED(PLATFORM_M997_SUPPORT)
 
-<<<<<<< HEAD
-#if ENABLED(EXTENSIBLE_UI)
-  #include "../../lcd/extui/ui_api.h"
-=======
 #if ENABLED(DWIN_LCD_PROUI)
   #include "../../lcd/e3v2/proui/dwin.h"
->>>>>>> upstream/bugfix-2.0.x
 #endif
 
 /**
@@ -38,11 +33,7 @@
  */
 void GcodeSuite::M997() {
 
-<<<<<<< HEAD
-  TERN_(EXTENSIBLE_UI, ExtUI::onFirmwareFlash());
-=======
   TERN_(DWIN_LCD_PROUI, DWIN_RebootScreen());
->>>>>>> upstream/bugfix-2.0.x
 
   flashFirmware(parser.intval('S'));
 

@@ -23,10 +23,6 @@
 
 /**
  * BigTreeTech SKR 1.1 pin assignments
-<<<<<<< HEAD
- * Schematic: https://github.com/bigtreetech/BIGTREETECH-SKR-V1.1/blob/master/hardware/SKR-V1.1SchDoc.pdf
-=======
->>>>>>> upstream/bugfix-2.0.x
  */
 
 #define BOARD_INFO_NAME "BTT SKR V1.1"
@@ -118,11 +114,7 @@
 
   #define LCD_SDSS                   EXP2_04_PIN
   #define LCD_PINS_RS                EXP1_04_PIN
-<<<<<<< HEAD
-  #define LCD_PINS_EN                EXP2_06_PIN
-=======
   #define LCD_PINS_ENABLE            EXP2_06_PIN
->>>>>>> upstream/bugfix-2.0.x
   #define LCD_PINS_D4                EXP2_02_PIN
 
   #if ENABLED(MKS_MINI_12864)
@@ -176,17 +168,10 @@
   // When using any TMC SPI-based drivers, software SPI is used
   // because pins may be shared with the display or SD card.
   #define TMC_USE_SW_SPI
-<<<<<<< HEAD
-  #define TMC_SPI_MOSI               EXP2_06_PIN
-  #define TMC_SPI_MISO               EXP2_01_PIN
-  // To minimize pin usage use the same clock pin as the display/SD card reader. (May generate LCD noise.)
-  #define TMC_SPI_SCK                EXP2_02_PIN
-=======
   #define TMC_SW_MOSI                EXP2_06_PIN
   #define TMC_SW_MISO                EXP2_01_PIN
   // To minimize pin usage use the same clock pin as the display/SD card reader. (May generate LCD noise.)
   #define TMC_SW_SCK                 EXP2_02_PIN
->>>>>>> upstream/bugfix-2.0.x
   // If pin 2_06 is unused, it can be used for the clock to avoid the LCD noise.
   //#define TMC_SPI_SCK                    P2_06
 

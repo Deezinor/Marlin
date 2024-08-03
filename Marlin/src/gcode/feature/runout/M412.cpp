@@ -67,11 +67,6 @@ void GcodeSuite::M412() {
 }
 
 void GcodeSuite::M412_report(const bool forReplay/*=true*/) {
-<<<<<<< HEAD
-  TERN_(MARLIN_SMALL_BUILD, return);
-
-=======
->>>>>>> upstream/bugfix-2.0.x
   report_heading_etc(forReplay, F(STR_FILAMENT_RUNOUT_SENSOR));
   SERIAL_ECHOPGM(
     "  M412 S", runout.enabled

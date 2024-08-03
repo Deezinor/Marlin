@@ -55,12 +55,8 @@ void GcodeSuite::M302() {
   const bool seen_S = parser.seen('S');
   if (seen_S) {
     thermalManager.extrude_min_temp = parser.value_celsius();
-<<<<<<< HEAD
-    TERN_(EXTENSIBLE_UI, ExtUI::onSetMinExtrusionTemp(thermalManager.extrude_min_temp));
-=======
     thermalManager.allow_cold_extrude = (thermalManager.extrude_min_temp == 0);
     TERN_(DWIN_LCD_PROUI, HMI_data.ExtMinT = thermalManager.extrude_min_temp);
->>>>>>> upstream/bugfix-2.0.x
   }
 
   const bool seen_P = parser.seen('P');
@@ -70,13 +66,9 @@ void GcodeSuite::M302() {
   else {
     // Report current state
     SERIAL_ECHO_START();
-<<<<<<< HEAD
-    SERIAL_ECHOLN(F("Cold extrudes are "), thermalManager.allow_cold_extrude ? F("en") : F("dis"), F("abled (min temp "), thermalManager.extrude_min_temp, F("C)"));
-=======
     SERIAL_ECHOPGM("Cold extrudes are ");
     SERIAL_ECHOF(thermalManager.allow_cold_extrude ? F("en") : F("dis"));
     SERIAL_ECHOLNPGM("abled (min temp ", thermalManager.extrude_min_temp, "C)");
->>>>>>> upstream/bugfix-2.0.x
   }
 }
 

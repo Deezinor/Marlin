@@ -35,28 +35,6 @@
 /**
  * G61: Return to saved position
  *
-<<<<<<< HEAD
- *   F<rate>   - Feedrate (optional) for the move back.
- *   S<slot>   - Slot # (0-based) to restore from (default 0).
- *   X<offset> - Restore X axis, applying the given offset (default 0)
- *   Y<offset> - Restore Y axis, applying the given offset (default 0)
- *   Z<offset> - Restore Z axis, applying the given offset (default 0)
- *
- * If there is an Extruder:
- *   E<offset> - Restore E axis, applying the given offset (default 0)
- *
- * With extra axes using default names:
- *   A<offset> - Restore 4th axis, applying the given offset (default 0)
- *   B<offset> - Restore 5th axis, applying the given offset (default 0)
- *   C<offset> - Restore 6th axis, applying the given offset (default 0)
- *   U<offset> - Restore 7th axis, applying the given offset (default 0)
- *   V<offset> - Restore 8th axis, applying the given offset (default 0)
- *   W<offset> - Restore 9th axis, applying the given offset (default 0)
- *
- *   If no axes are specified then all axes are restored.
- */
-void GcodeSuite::G61(int8_t slot/*=-1*/) {
-=======
  *   F<rate>  - Feedrate (optional) for the move back.
  *   S<slot>  - Slot # (0-based) to restore from (default 0).
  *   X Y Z E  - Axes to restore. At least one is required.
@@ -64,21 +42,9 @@ void GcodeSuite::G61(int8_t slot/*=-1*/) {
  *   If XYZE are not given, default restore uses the smart blocking move.
  */
 void GcodeSuite::G61() {
->>>>>>> upstream/bugfix-2.0.x
 
   if (slot < 0) slot = parser.byteval('S');
 
-<<<<<<< HEAD
-  #define SYNC_E(E) planner.set_e_position_mm(current_position.e = (E))
-
-  if (SAVED_POSITIONS < 256 && slot >= SAVED_POSITIONS) {
-    SERIAL_ERROR_MSG(STR_INVALID_POS_SLOT STRINGIFY(SAVED_POSITIONS));
-    return;
-  }
-
-  // No saved position? No axes being restored?
-  if (!did_save_position[slot]) return;
-=======
   #define SYNC_E(POINT) TERN_(HAS_EXTRUDERS, planner.set_e_position_mm((destination.e = current_position.e = (POINT))))
 
   #if SAVED_POSITIONS < 256
@@ -90,16 +56,12 @@ void GcodeSuite::G61() {
 
   // No saved position? No axes being restored?
   if (!TEST(saved_slots[slot >> 3], slot & 0x07)) return;
->>>>>>> upstream/bugfix-2.0.x
 
   // Apply any given feedrate over 0.0
   REMEMBER(saved, feedrate_mm_s);
   const float fr = parser.linearval('F');
   if (fr > 0.0) feedrate_mm_s = MMM_TO_MMS(fr);
 
-<<<<<<< HEAD
-  // No XYZ...E parameters, move to stored position
-=======
   if (!parser.seen_axis()) {
     DEBUG_ECHOLNPGM("Default position restore");
     do_blocking_move_to(stored_position[slot], feedrate_mm_s);
@@ -126,7 +88,6 @@ void GcodeSuite::G61() {
       }
     #endif
   }
->>>>>>> upstream/bugfix-2.0.x
 
   float epos = stored_position[slot].e;
   if (!parser.seen_axis()) {

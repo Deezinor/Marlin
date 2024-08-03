@@ -51,13 +51,7 @@
 //
 // Enable I2S stepper stream
 //
-<<<<<<< HEAD
-#ifndef I2S_STEPPER_STREAM
-  #define I2S_STEPPER_STREAM
-#endif
-=======
 #define I2S_STEPPER_STREAM
->>>>>>> upstream/bugfix-2.0.x
 #if ENABLED(I2S_STEPPER_STREAM)
   #define I2S_WS                              26
   #define I2S_BCK                             25

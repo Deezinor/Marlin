@@ -152,11 +152,7 @@
 #define HEATER_BED_PIN                         7
 
 // The board has 4 PWM fans, use and configure as desired
-<<<<<<< HEAD
-#define FAN0_PIN                               8
-=======
 #define FAN_PIN                                8
->>>>>>> upstream/bugfix-2.0.x
 #define FAN1_PIN                               9
 #define FAN2_PIN                              30
 #define FAN3_PIN                              31
@@ -186,18 +182,6 @@
  *        5B    | .  . | 5V
  *               ------
  *
-<<<<<<< HEAD
- *- Special mapping of EXP1 to work with Ender displays.
- *
- *               ------
- *       BEEPER | 1  2 | ENC
- *          EN1 | 3  4 | RESET
- *          EN2   5  6 | LCD_D4
- *       LCD_RS | 7  8 | LCD_EN
- *          GND | 9 10 | 5V
- *               ------
- *                EXP1
-=======
  *- Special mapping of EXP1 to EXP3 to work with Ender displays.
  *
  *               Enable CR10_STOCKDISPLAY in Configuration.h and connect EXP1 to the display EXP3 with this mapping.
@@ -208,24 +192,15 @@
  *        RESET | 7  8 | BTN_EN1
  *  BTN_ENCODER | 9 10 | BEEPER
  *               ------
->>>>>>> upstream/bugfix-2.0.x
  *
  *- Digital pinout reference of the Bricolemon for advanced users/configurations.
  *
  *               ------                    ------
-<<<<<<< HEAD
- *          D41 | 1  2 | D40          D50 | 1  2 | D52
- *          D35 | 3  4 | D34          D43 | 3  4 | D53
- *          D36   5  6 | D37          D42   5  6 | D51
- *          D38 | 7  8 | D39          D44 | 7  8 | RST
- *          GND | 9 10 | VCC          GND | 9 10 | D49
-=======
  *          VCC | 1  2 | GND          D49 | 1  2 | GND
  *          D39 | 3  4 | D38          RST | 3  4 | D44
  *          D37 | 5  6   D36          D51 | 5  6   D42
  *          D34 | 7  8 | D35          D53 | 7  8 | D43
  *          D40 | 9 10 | D41          D52 | 9 10 | D50
->>>>>>> upstream/bugfix-2.0.x
  *               ------                    ------
  *                EXP1                      EXP2
  *
@@ -280,17 +255,10 @@
  * This sections starts with the pins_RAMPS_144.h as example, after if you need any new
  * display, you could use normal duponts and connect it with with the scheme showed before.
  * Tested:
-<<<<<<< HEAD
- *   - Ender-3 Old display (Character LCD)
- *   - Ender-3 New Serial DWING Display
- *   - Reprap Display
- *   - Ender-5 New Serial Display
-=======
  *   - Ender 3 Old display (Character LCD)
  *   - Ender 3 New Serial DWING Display
  *   - Reprap Display
  *   - Ender 5 New Serial Display
->>>>>>> upstream/bugfix-2.0.x
  *   - Any Reprap character display like
  */
 
@@ -313,27 +281,13 @@
 
     #ifndef BEEPER_PIN
       #define BEEPER_PIN             EXP1_01_PIN
-<<<<<<< HEAD
-      #define NO_SPEAKER
-=======
       #undef SPEAKER
->>>>>>> upstream/bugfix-2.0.x
     #endif
 
   #elif ENABLED(REPRAPWORLD_GRAPHICAL_LCD)
 
     // TO TEST
     //#define LCD_PINS_RS            EXP2_10_PIN  // CS chip select /SS chip slave select
-<<<<<<< HEAD
-    //#define LCD_PINS_EN            EXP2_06_PIN  // SID (MOSI)
-    //#define LCD_PINS_D4            EXP2_02_PIN  // SCK (CLK) clock
-
-  #elif ALL(IS_NEWPANEL, PANEL_ONE)
-
-    // TO TEST
-    //#define LCD_PINS_RS            EXP1_02_PIN
-    //#define LCD_PINS_EN            EXP2_05_PIN
-=======
     //#define LCD_PINS_ENABLE        EXP2_06_PIN  // SID (MOSI)
     //#define LCD_PINS_D4            EXP2_02_PIN  // SCK (CLK) clock
 
@@ -342,7 +296,6 @@
     // TO TEST
     //#define LCD_PINS_RS            EXP1_02_PIN
     //#define LCD_PINS_ENABLE        EXP2_05_PIN
->>>>>>> upstream/bugfix-2.0.x
     //#define LCD_PINS_D4                     57  // Mega/Due:65 - AGCM4:57
     //#define LCD_PINS_D5                     58  // Mega/Due:66 - AGCM4:58
     //#define LCD_PINS_D6            EXP2_07_PIN
@@ -354,11 +307,7 @@
 
       // TO TEST
       #define LCD_PINS_RS            EXP3_04_PIN
-<<<<<<< HEAD
-      #define LCD_PINS_EN            EXP3_03_PIN
-=======
       #define LCD_PINS_ENABLE        EXP3_03_PIN
->>>>>>> upstream/bugfix-2.0.x
       #define LCD_PINS_D4            EXP3_05_PIN
 
       #if !IS_NEWPANEL
@@ -370,11 +319,7 @@
 
       // TO TEST
       //#define LCD_PINS_RS                   56  // Mega/Due:64 - AGCM4:56
-<<<<<<< HEAD
-      //#define LCD_PINS_EN          EXP2_07_PIN
-=======
       //#define LCD_PINS_ENABLE      EXP2_07_PIN
->>>>>>> upstream/bugfix-2.0.x
       //#define LCD_PINS_D4                   55  // Mega/Due:63 - AGCM4:55
       //#define LCD_PINS_D5          EXP1_02_PIN
       //#define LCD_PINS_D6          EXP2_05_PIN
@@ -382,11 +327,7 @@
 
     #else
 
-<<<<<<< HEAD
-      #if ANY(MKS_12864OLED, MKS_12864OLED_SSD1306)
-=======
       #if EITHER(MKS_12864OLED, MKS_12864OLED_SSD1306)
->>>>>>> upstream/bugfix-2.0.x
         // TO TEST
         //#define LCD_PINS_DC                 25  // Set as output on init
         //#define LCD_PINS_RS                 27  // Pull low for 1s to init
@@ -399,11 +340,7 @@
       #else
         // Definitions for any standard Display
         #define LCD_PINS_RS          EXP1_04_PIN
-<<<<<<< HEAD
-        #define LCD_PINS_EN          EXP1_03_PIN
-=======
         #define LCD_PINS_ENABLE      EXP1_03_PIN
->>>>>>> upstream/bugfix-2.0.x
         #define LCD_PINS_D4          EXP1_05_PIN
         #define LCD_PINS_D5          EXP1_06_PIN
         #define LCD_PINS_D6          EXP1_07_PIN
@@ -476,10 +413,6 @@
       //#define BTN_ENC                       32
       //#define LCD_SDSS                    SDSS
       //#define KILL_PIN             EXP1_01_PIN
-<<<<<<< HEAD
-      //#undef LCD_PINS_EN                        // not used, causes false pin conflict report
-=======
->>>>>>> upstream/bugfix-2.0.x
 
     #elif ENABLED(LCD_I2C_VIKI)
 
@@ -491,11 +424,7 @@
       //#define LCD_SDSS                    SDSS
       //#define SD_DETECT_PIN        EXP2_10_PIN
 
-<<<<<<< HEAD
-    #elif ANY(VIKI2, miniVIKI)
-=======
     #elif EITHER(VIKI2, miniVIKI)
->>>>>>> upstream/bugfix-2.0.x
 
       // TO TEST
       //#define DOGLCD_CS                     45
@@ -530,11 +459,7 @@
       //#define SD_DETECT_PIN        EXP2_10_PIN
       //#define KILL_PIN             EXP1_01_PIN
 
-<<<<<<< HEAD
-    #elif ANY(MKS_MINI_12864, FYSETC_MINI_12864)
-=======
     #elif EITHER(MKS_MINI_12864, FYSETC_MINI_12864)
->>>>>>> upstream/bugfix-2.0.x
 
       // TO TEST
       //#define BEEPER_PIN           EXP1_06_PIN
@@ -579,11 +504,7 @@
 
         //#define LCD_RESET_PIN               23  // Must be high or open for LCD to operate normally.
 
-<<<<<<< HEAD
-        #if ANY(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
-=======
         #if EITHER(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
->>>>>>> upstream/bugfix-2.0.x
           #ifndef RGB_LED_R_PIN
             // TO TEST
             //#define RGB_LED_R_PIN           25
@@ -699,8 +620,6 @@
 #endif
 
 #if HAS_TMC_UART
-<<<<<<< HEAD
-=======
 
   /**
    * Address for the UART Configuration of the TMC2209. Override in Configuration files.
@@ -722,7 +641,6 @@
     #define E1_SLAVE_ADDRESS                0b00
   #endif
 
->>>>>>> upstream/bugfix-2.0.x
   /**
    * TMC2208/TMC2209 stepper drivers
    *  It seems to work perfectly fine on Software Serial, if an advanced user wants to test, you could use the SAMD51 Serial1 and Serial 2. Be careful with the Sercom configurations.
@@ -735,36 +653,7 @@
   //#define E0_HARDWARE_SERIAL Serial1
   //#define E1_HARDWARE_SERIAL Serial2
 
-<<<<<<< HEAD
-  // Default TMC slave addresses
-  #ifndef X_SLAVE_ADDRESS
-    #define X_SLAVE_ADDRESS                  0
-  #endif
-  #ifndef Y_SLAVE_ADDRESS
-    #define Y_SLAVE_ADDRESS                  1
-  #endif
-  #ifndef Z_SLAVE_ADDRESS
-    #define Z_SLAVE_ADDRESS                  2
-  #endif
-  #ifndef E0_SLAVE_ADDRESS
-    #define E0_SLAVE_ADDRESS                 3
-  #endif
-  #ifndef E1_SLAVE_ADDRESS
-    #define E1_SLAVE_ADDRESS                 0
-  #endif
-  static_assert(X_SLAVE_ADDRESS == 0, "X_SLAVE_ADDRESS must be 0 for BOARD_BRICOLEMON_V1_0.");
-  static_assert(Y_SLAVE_ADDRESS == 1, "Y_SLAVE_ADDRESS must be 1 for BOARD_BRICOLEMON_V1_0.");
-  static_assert(Z_SLAVE_ADDRESS == 2, "Z_SLAVE_ADDRESS must be 2 for BOARD_BRICOLEMON_V1_0.");
-  static_assert(E0_SLAVE_ADDRESS == 3, "E0_SLAVE_ADDRESS must be 3 for BOARD_BRICOLEMON_V1_0.");
-  static_assert(E1_SLAVE_ADDRESS == 0, "E1_SLAVE_ADDRESS must be 0 for BOARD_BRICOLEMON_V1_0.");
-
-  // Reduce baud rate to improve software serial reliability
-  #ifndef TMC_BAUD_RATE
-    #define TMC_BAUD_RATE                  19200 // 250000
-  #endif
-=======
   #define TMC_BAUD_RATE 250000
->>>>>>> upstream/bugfix-2.0.x
 
   //
   // Software serial

@@ -21,11 +21,7 @@
 *****************************************************************************
 ** @attention
 **
-<<<<<<< HEAD
-** Copyright (c) 2014 Ac6
-=======
 ** <h2><center>&copy; COPYRIGHT(c) 2014 Ac6</center></h2>
->>>>>>> upstream/bugfix-2.0.x
 **
 ** Redistribution and use in source and binary forms, with or without modification,
 ** are permitted provided that the following conditions are met:
@@ -188,8 +184,4 @@ SECTIONS
   }
 
   .ARM.attributes 0 : { *(.ARM.attributes) }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> upstream/bugfix-2.0.x

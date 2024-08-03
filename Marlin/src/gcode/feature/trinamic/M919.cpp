@@ -64,11 +64,7 @@ void GcodeSuite::M919() {
     if (WITHIN(toff, 1, 15))
       DEBUG_ECHOLNPGM(".toff: ", toff);
     else {
-<<<<<<< HEAD
-      SERIAL_ECHOLNPGM(GCODE_ERR_MSG("O out of range (1..15)"));
-=======
       SERIAL_ECHOLNPGM("?O out of range (1..15)");
->>>>>>> upstream/bugfix-2.0.x
       err = true;
     }
   }
@@ -78,11 +74,7 @@ void GcodeSuite::M919() {
     if (WITHIN(hend, -3, 12))
       DEBUG_ECHOLNPGM(".hend: ", hend);
     else {
-<<<<<<< HEAD
-      SERIAL_ECHOLNPGM(GCODE_ERR_MSG("P out of range (-3..12)"));
-=======
       SERIAL_ECHOLNPGM("?P out of range (-3..12)");
->>>>>>> upstream/bugfix-2.0.x
       err = true;
     }
   }
@@ -92,11 +84,7 @@ void GcodeSuite::M919() {
     if (WITHIN(hstrt, 1, 8))
       DEBUG_ECHOLNPGM(".hstrt: ", hstrt);
     else {
-<<<<<<< HEAD
-      SERIAL_ECHOLNPGM(GCODE_ERR_MSG("S out of range (1..8)"));
-=======
       SERIAL_ECHOLNPGM("?S out of range (1..8)");
->>>>>>> upstream/bugfix-2.0.x
       err = true;
     }
   }
@@ -130,11 +118,7 @@ void GcodeSuite::M919() {
     // Get the chopper timing for the specified axis and index
     switch (i) {
       default: // A specified axis isn't Trinamic
-<<<<<<< HEAD
-        SERIAL_ECHOLNPGM(GCODE_ERR_MSG("Axis ", C(AXIS_CHAR(i)), " has no TMC drivers."));
-=======
         SERIAL_ECHOLNPGM("?Axis ", AS_CHAR(AXIS_CHAR(i)), " has no TMC drivers.");
->>>>>>> upstream/bugfix-2.0.x
         break;
 
       #if AXIS_IS_TMC(X) || AXIS_IS_TMC(X2)
@@ -185,18 +169,6 @@ void GcodeSuite::M919() {
       #if AXIS_IS_TMC(K)
         case K_AXIS: TMC_SET_CHOPPER_TIME(K); break;
       #endif
-<<<<<<< HEAD
-      #if AXIS_IS_TMC(U)
-        case U_AXIS: TMC_SET_CHOPPER_TIME(U); break;
-      #endif
-      #if AXIS_IS_TMC(V)
-        case V_AXIS: TMC_SET_CHOPPER_TIME(V); break;
-      #endif
-      #if AXIS_IS_TMC(W)
-        case W_AXIS: TMC_SET_CHOPPER_TIME(W); break;
-      #endif
-=======
->>>>>>> upstream/bugfix-2.0.x
 
       #if HAS_E_CHOPPER
         case E_AXIS: {
@@ -264,18 +236,6 @@ void GcodeSuite::M919() {
     #if AXIS_IS_TMC(K)
       TMC_SAY_CHOPPER_TIME(K);
     #endif
-<<<<<<< HEAD
-    #if AXIS_IS_TMC(U)
-      TMC_SAY_CHOPPER_TIME(U);
-    #endif
-    #if AXIS_IS_TMC(V)
-      TMC_SAY_CHOPPER_TIME(V);
-    #endif
-    #if AXIS_IS_TMC(W)
-      TMC_SAY_CHOPPER_TIME(W);
-    #endif
-=======
->>>>>>> upstream/bugfix-2.0.x
     #if AXIS_IS_TMC(E0)
       TMC_SAY_CHOPPER_TIME(E0);
     #endif

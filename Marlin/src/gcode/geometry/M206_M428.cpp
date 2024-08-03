@@ -48,11 +48,6 @@ void GcodeSuite::M206() {
 }
 
 void GcodeSuite::M206_report(const bool forReplay/*=true*/) {
-<<<<<<< HEAD
-  TERN_(MARLIN_SMALL_BUILD, return);
-
-=======
->>>>>>> upstream/bugfix-2.0.x
   report_heading_etc(forReplay, F(STR_HOME_OFFSET));
   SERIAL_ECHOLNPGM_P(
     #if IS_CARTESIAN
@@ -60,18 +55,9 @@ void GcodeSuite::M206_report(const bool forReplay/*=true*/) {
         PSTR("  M206 X"), LINEAR_UNIT(home_offset.x),
         SP_Y_STR, LINEAR_UNIT(home_offset.y),
         SP_Z_STR, LINEAR_UNIT(home_offset.z),
-<<<<<<< HEAD
-        SP_I_STR, I_AXIS_UNIT(home_offset.i),
-        SP_J_STR, J_AXIS_UNIT(home_offset.j),
-        SP_K_STR, K_AXIS_UNIT(home_offset.k),
-        SP_U_STR, U_AXIS_UNIT(home_offset.u),
-        SP_V_STR, V_AXIS_UNIT(home_offset.v),
-        SP_W_STR, W_AXIS_UNIT(home_offset.w)
-=======
         SP_I_STR, LINEAR_UNIT(home_offset.i),
         SP_J_STR, LINEAR_UNIT(home_offset.j),
         SP_K_STR, LINEAR_UNIT(home_offset.k)
->>>>>>> upstream/bugfix-2.0.x
       )
     #else
       PSTR("  M206 Z"), LINEAR_UNIT(home_offset.z)
@@ -100,11 +86,7 @@ void GcodeSuite::M428() {
       diff[i] = -current_position[i];
     if (!WITHIN(diff[i], -20, 20)) {
       SERIAL_ERROR_MSG(STR_ERR_M428_TOO_FAR);
-<<<<<<< HEAD
-      LCD_ALERTMESSAGE(MSG_ERR_M428_TOO_FAR);
-=======
       LCD_ALERTMESSAGE_F("Err: Too far!");
->>>>>>> upstream/bugfix-2.0.x
       ERR_BUZZ();
       return;
     }

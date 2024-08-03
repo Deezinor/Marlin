@@ -63,16 +63,6 @@
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                   PB1
 #endif
-<<<<<<< HEAD
-
-//
-// Probe enable
-//
-#if ENABLED(PROBE_ENABLE_DISABLE) && !defined(PROBE_ENABLE_PIN)
-  #define PROBE_ENABLE_PIN            SERVO0_PIN
-#endif
-=======
->>>>>>> upstream/bugfix-2.0.x
 
 //
 // Steppers
@@ -178,21 +168,13 @@
 #define EXP2_05_PIN                         PB0
 #define EXP2_06_PIN                         PB15
 #define EXP2_07_PIN                         PC10
-<<<<<<< HEAD
-#define EXP2_08_PIN                         -1    // RESET
-=======
 #define EXP2_08_PIN                         -1   // RESET
->>>>>>> upstream/bugfix-2.0.x
 
 // "Ender-3 EXP1"
 #define EXP3_01_PIN                         PC1
 #define EXP3_02_PIN                         PC3
 #define EXP3_03_PIN                         PB11
-<<<<<<< HEAD
-#define EXP3_04_PIN                         -1    // RESET
-=======
 #define EXP3_04_PIN                         -1   // RESET
->>>>>>> upstream/bugfix-2.0.x
 #define EXP3_05_PIN                         PB0
 #define EXP3_06_PIN                         PA6
 #define EXP3_07_PIN                         PA5
@@ -202,11 +184,7 @@
 
   #define BEEPER_PIN                 EXP1_01_PIN
   #define BTN_ENC                    EXP1_02_PIN
-<<<<<<< HEAD
-  #define LCD_PINS_EN                EXP1_03_PIN
-=======
   #define LCD_PINS_ENABLE            EXP1_03_PIN
->>>>>>> upstream/bugfix-2.0.x
   #define LCD_PINS_RS                EXP1_04_PIN
   #define BTN_EN1                    EXP2_03_PIN
   #define BTN_EN2                    EXP2_05_PIN
@@ -220,8 +198,6 @@
     #define DOGLCD_CS                EXP1_06_PIN
     #define DOGLCD_SCK               EXP2_02_PIN
     #define DOGLCD_MOSI              EXP2_06_PIN
-<<<<<<< HEAD
-=======
 
   #elif ENABLED(FYSETC_MINI_12864_2_1)
 
@@ -236,27 +212,9 @@
     #define FORCE_SOFT_SPI
     #define SOFTWARE_SPI
     //#define LCD_SCREEN_ROTATE              180  // 0, 90, 180, 270
->>>>>>> upstream/bugfix-2.0.x
 
   #elif ENABLED(FYSETC_MINI_12864_2_1)
 
-<<<<<<< HEAD
-    #define LCD_PINS_DC              EXP1_04_PIN
-    #define DOGLCD_CS                EXP1_03_PIN
-    #define DOGLCD_A0                LCD_PINS_DC
-    #define LCD_BACKLIGHT_PIN               -1
-    #define LCD_RESET_PIN            EXP1_05_PIN
-    #define NEOPIXEL_PIN             EXP1_06_PIN
-    #define DOGLCD_MOSI              EXP2_06_PIN
-    #define DOGLCD_SCK               EXP2_02_PIN
-    #define FORCE_SOFT_SPI
-    #define SOFTWARE_SPI
-    //#define LCD_SCREEN_ROTATE              180  // 0, 90, 180, 270
-
-  #else // !FYSETC_MINI_12864_2_1
-
-=======
->>>>>>> upstream/bugfix-2.0.x
     #define LCD_PINS_D4              EXP1_05_PIN
     #if IS_ULTIPANEL
       #define LCD_PINS_D5            EXP1_06_PIN
@@ -287,31 +245,19 @@
 #endif
 
 // LED driving pin
-<<<<<<< HEAD
-#ifndef BOARD_NEOPIXEL_PIN
-  #define BOARD_NEOPIXEL_PIN                PA2
-=======
 #ifndef NEOPIXEL_PIN
   #define NEOPIXEL_PIN                      PA2
->>>>>>> upstream/bugfix-2.0.x
 #endif
 
 //
 // SD Card
 //
 #define SDCARD_CONNECTION                ONBOARD
-<<<<<<< HEAD
-#define ONBOARD_SPI_DEVICE                     2  // Maple
-#define SDSS                           SD_SS_PIN
-#define ONBOARD_SD_CS_PIN              SD_SS_PIN
-#define SD_DETECT_PIN                EXP2_07_PIN
-=======
 #define SPI_DEVICE                             2
 #define ONBOARD_SPI_DEVICE                     2
 #define SDSS                           SD_SS_PIN
 #define ONBOARD_SD_CS_PIN              SD_SS_PIN
 #define SD_DETECT_PIN                       PC10  // EXP2_07_PIN
->>>>>>> upstream/bugfix-2.0.x
 #define NO_SD_HOST_DRIVE
 
 // TODO: This is the only way to set SPI for SD on STM32 (for now)

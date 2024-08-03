@@ -27,8 +27,4 @@
 #ifdef USBCON
   USB_DM = PA_11,
   USB_DP = PA_12,
-<<<<<<< HEAD
 #endif
-=======
-#endif
->>>>>>> upstream/bugfix-2.0.x

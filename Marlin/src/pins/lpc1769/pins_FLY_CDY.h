@@ -23,10 +23,6 @@
 
 /**
  * FLYmaker FLY-CDY pin assignments
-<<<<<<< HEAD
- * Schematic: https://github.com/Mellow-3D/FLY-CDY/blob/master/Motherboard%20information/FLY_CDY%20SCH.pdf
-=======
->>>>>>> upstream/bugfix-2.0.x
  */
 
 #include "env_validate.h"

@@ -32,15 +32,12 @@
 
 #undef ALLOW_STM32F4
 
-<<<<<<< HEAD
-=======
 #if NOT_TARGET(__STM32F1__, STM32F1)
   #if DISABLED(ALLOW_STM32F4)
     #error "Oops! Select an STM32F1 board in 'Tools > Board.'"
   #elif NOT_TARGET(STM32F4)
     #error "Oops! Select an STM32F4 board in 'Tools > Board.'"
   #endif
->>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #undef ALLOW_STM32F4

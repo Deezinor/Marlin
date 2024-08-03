@@ -59,9 +59,6 @@ typedef struct { raw_adc_t value; celsius_t celsius; } temp_entry_t;
 #if ANY_THERMISTOR_IS(1)      // beta25 = 4092 K, R25 = 100kΩ, Pullup = 4.7kΩ, "EPCOS"
   #include "thermistor_1.h"
 #endif
-<<<<<<< HEAD
-#if ANY_THERMISTOR_IS(331)    // Like table 1, but with 3V3 as input voltage for MEGA
-=======
 #if ANY_THERMISTOR_IS(2) // 4338 K, R25 = 200 kOhm, Pull-up = 4.7 kOhm, "ATC Semitec 204GT-2"
   #include "thermistor_2.h"
 #endif
@@ -189,7 +186,6 @@ typedef struct { raw_adc_t value; celsius_t celsius; } temp_entry_t;
   #include "thermistor_202.h"
 #endif
 #if ANY_THERMISTOR_IS(331) // Like table 1, but with 3V3 as input voltage for MEGA
->>>>>>> upstream/bugfix-2.0.x
   #include "thermistor_331.h"
 #endif
 #if ANY_THERMISTOR_IS(332)    // Like table 1, but with 3V3 as input voltage for DUE
@@ -345,38 +341,16 @@ typedef struct { raw_adc_t value; celsius_t celsius; } temp_entry_t;
 #if ANY_THERMISTOR_IS(1047)   // Pt1000 with 4k7 pullup
   #include "thermistor_1047.h"
 #endif
-<<<<<<< HEAD
-#if ANY_THERMISTOR_IS(20)     // Pt100 with INA826 amp on Ultimaker v2.0 electronics
-  #include "thermistor_20.h"
-#endif
-#if ANY_THERMISTOR_IS(21)     // Pt100 with INA826 amp with 3.3v excitation based on "Pt100 with INA826 amp on Ultimaker v2.0 electronics"
-  #include "thermistor_21.h"
-#endif
-#if ANY_THERMISTOR_IS(201)    // Pt100 with LMV324 Overlord
-  #include "thermistor_201.h"
-#endif
-
-//
-// Custom/Dummy/Other Thermal Sensors
-//
-
-#if ANY_THERMISTOR_IS(998)    // User-defined table 1
-=======
 #if ANY_THERMISTOR_IS(2000) // "Ultimachine Rambo TDK NTCG104LH104KT1 NTC100K motherboard Thermistor" https://product.tdk.com/en/search/sensor/ntc/chip-ntc-thermistor/info?part_no=NTCG104LH104KT1
   #include "thermistor_2000.h"
 #endif
 #if ANY_THERMISTOR_IS(998) // User-defined table 1
->>>>>>> upstream/bugfix-2.0.x
   #include "thermistor_998.h"
 #endif
 #if ANY_THERMISTOR_IS(999)    // User-defined table 2
   #include "thermistor_999.h"
 #endif
-<<<<<<< HEAD
-#if ANY_THERMISTOR_IS(1000)   // Custom
-=======
 #if ANY_THERMISTOR_IS(1000) // Custom
->>>>>>> upstream/bugfix-2.0.x
   constexpr temp_entry_t temptable_1000[] PROGMEM = { { 0, 0 } };
 #endif
 
@@ -506,11 +480,7 @@ static_assert(255 > TEMPTABLE_0_LEN || 255 > TEMPTABLE_1_LEN || 255 > TEMPTABLE_
 // For thermocouples the highest temperature results in the highest ADC value
 
 #define _TT_REV(N)    REVERSE_TEMP_SENSOR_RANGE_##N
-<<<<<<< HEAD
-#define TT_REV(N)     TERN0(TEMP_SENSOR_##N##_IS_THERMISTOR, DEFER4(_TT_REV)(TEMP_SENSOR(N)))
-=======
 #define TT_REV(N)     TERN0(TEMP_SENSOR_##N##_IS_THERMISTOR, DEFER4(_TT_REV)(TEMP_SENSOR_##N))
->>>>>>> upstream/bugfix-2.0.x
 #define _TT_REVRAW(N) !TEMP_SENSOR_##N##_IS_THERMISTOR
 #define TT_REVRAW(N)  (TT_REV(N) || _TT_REVRAW(N))
 
@@ -704,13 +674,6 @@ static_assert(255 > TEMPTABLE_0_LEN || 255 > TEMPTABLE_1_LEN || 255 > TEMPTABLE_
     #define TEMP_SENSOR_BOARD_RAW_LO_TEMP MAX_RAW_THERMISTOR_VALUE
   #endif
 #endif
-<<<<<<< HEAD
-#ifndef TEMP_SENSOR_SOC_RAW_HI_TEMP
-  #define TEMP_SENSOR_SOC_RAW_LO_TEMP 0
-  #define TEMP_SENSOR_SOC_RAW_HI_TEMP MAX_RAW_THERMISTOR_VALUE
-#endif
-=======
->>>>>>> upstream/bugfix-2.0.x
 #ifndef TEMP_SENSOR_REDUNDANT_RAW_HI_TEMP
   #if TT_REVRAW(REDUNDANT)
     #define TEMP_SENSOR_REDUNDANT_RAW_HI_TEMP MAX_RAW_THERMISTOR_VALUE

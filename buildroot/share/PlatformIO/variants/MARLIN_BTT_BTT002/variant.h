@@ -247,11 +247,7 @@ extern "C" {
 // Do not use timer used by PWM pins when possible. See PinMap_PWM in PeripheralPins.c
 #define TIMER_TONE              TIM7  // TIMER_TONE must be defined in this file
 #define TIMER_SERVO             TIM5  // TIMER_SERVO must be defined in this file
-<<<<<<< HEAD:buildroot/share/PlatformIO/variants/MARLIN_BTT_BTT002/variant.h
-#define TIMER_SERIAL            TIM2  // TIMER_SERIAL must be defined in this file
-=======
 #define TIMER_SERIAL            TIM8  // TIMER_SERIAL must be defined in this file
->>>>>>> upstream/bugfix-2.0.x:buildroot/share/PlatformIO/variants/MARLIN_BIGTREE_E3_RRF/variant.h
 
 // UART Definitions
 // Define here Serial instance number to map on Serial generic name

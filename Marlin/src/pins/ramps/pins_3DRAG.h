@@ -68,11 +68,6 @@
 #define MOSFET_B_PIN                           8
 #define MOSFET_C_PIN                           9
 #define MOSFET_D_PIN                          12
-<<<<<<< HEAD
-
-#define HEATER_2_PIN                           6
-=======
->>>>>>> upstream/bugfix-2.0.x
 
 //
 // Misc. Functions
@@ -119,11 +114,7 @@
     #define SPINDLE_LASER_PWM_PIN             46  // Hardware PWM
     #define SPINDLE_LASER_ENA_PIN             62  // Pullup!
     #define SPINDLE_DIR_PIN                   48
-<<<<<<< HEAD
-  #elif !ALL(HAS_WIRED_LCD, IS_NEWPANEL)          // Use expansion header if no LCD in use
-=======
   #elif !BOTH(HAS_WIRED_LCD, IS_NEWPANEL)          // Use expansion header if no LCD in use
->>>>>>> upstream/bugfix-2.0.x
     #define SPINDLE_LASER_ENA_PIN             16  // Pullup or pulldown!
     #define SPINDLE_DIR_PIN                   17
     #if !NUM_SERVOS                               // Use servo connector if possible
@@ -134,12 +125,6 @@
   #endif
 #endif
 
-<<<<<<< HEAD
-//
-// LCD / Controller
-//
-
-=======
 #include "pins_RAMPS.h"
 
 //
@@ -153,15 +138,10 @@
 //
 // LCD / Controller
 //
->>>>>>> upstream/bugfix-2.0.x
 #if HAS_WIRED_LCD && IS_NEWPANEL
   #undef BEEPER_PIN
 
   // TODO: Remap EXP1/2 based on adapter
-<<<<<<< HEAD
-  #define LCD_PINS_RS                         27
-  #define LCD_PINS_EN                         29
-=======
   #undef LCD_PINS_RS
   #undef LCD_PINS_ENABLE
   #undef LCD_PINS_D4
@@ -170,28 +150,19 @@
   #undef LCD_PINS_D7
   #define LCD_PINS_RS                         27
   #define LCD_PINS_ENABLE                     29
->>>>>>> upstream/bugfix-2.0.x
   #define LCD_PINS_D4                         37
   #define LCD_PINS_D5                         35
   #define LCD_PINS_D6                         33
   #define LCD_PINS_D7                         31
 
   // Buttons
-<<<<<<< HEAD
-=======
   #undef BTN_EN1
   #undef BTN_EN2
   #undef BTN_ENC
->>>>>>> upstream/bugfix-2.0.x
   #define BTN_EN1                             16
   #define BTN_EN2                             17
   #define BTN_ENC                             23
 
-<<<<<<< HEAD
-  #define LCD_PINS_DEFINED
-
-=======
->>>>>>> upstream/bugfix-2.0.x
 #else
 
   #define BEEPER_PIN                          33
@@ -203,10 +174,3 @@
   #define BOARD_ST7920_DELAY_2               188
   #define BOARD_ST7920_DELAY_3                 0
 #endif
-<<<<<<< HEAD
-
-#define SD_DETECT_PIN                         53
-
-#include "pins_RAMPS.h"
-=======
->>>>>>> upstream/bugfix-2.0.x
