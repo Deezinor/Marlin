@@ -38,6 +38,11 @@
 //
 // Heaters / Fans
 //
+<<<<<<< HEAD
+=======
+#define HEATER_1_PIN                           7
+#define FAN_PIN                                9  // PH6 ** Pin18 ** PWM9
+>>>>>>> upstream/bugfix-2.0.x
 #define FAN1_PIN                               6
 
 //
@@ -47,6 +52,7 @@
 #define E2_DIR_PIN                             5
 #define E2_ENABLE_PIN                         22
 
+<<<<<<< HEAD
 //
 // Servos / XS3 Connector
 //
@@ -59,6 +65,10 @@
 
 #include "pins_MKS_BASE_common.h" // ... RAMPS
 
+=======
+#include "pins_MKS_BASE_common.h" // ... RAMPS
+
+>>>>>>> upstream/bugfix-2.0.x
 /**
  * Available connectors on MKS BASE v1.4 (Basically same as ZRIB V5.2)
  *
@@ -88,13 +98,27 @@
  *  |  GND   |
  *  ==========
  *
+<<<<<<< HEAD
  * Servos / XS3 Connector
+=======
+ * XS3 Connector
+>>>>>>> upstream/bugfix-2.0.x
  *  =================
  *  | 65 | GND | 5V |      (65)  PK3 ** Pin86 ** A11
  *  |----|-----|----|
  *  | 66 | GND | 5V |      (66)  PK4 ** Pin85 ** A12
  *  =================
  *
+<<<<<<< HEAD
+=======
+ * Servos Connector
+ *  =================
+ *  | 11 | GND | 5V |      (11)  PB5 ** Pin24 ** PWM11
+ *  |----|-----|----|
+ *  | 12 | GND | 5V |      (12)  PB6 ** Pin25 ** PWM12
+ *  =================
+ *
+>>>>>>> upstream/bugfix-2.0.x
  * ICSP
  *  =================
  *  | 5V | 51 | GND |      (51)  PB2 ** Pin21 ** SPI_MOSI

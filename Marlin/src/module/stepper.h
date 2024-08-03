@@ -285,6 +285,175 @@ constexpr ena_mask_t enable_overlap[] = {
   typedef struct { int32_t A, B, C; } ne_fix_t;
 #endif
 
+<<<<<<< HEAD
+=======
+// If linear advance is disabled, the loop also handles them
+#if DISABLED(LIN_ADVANCE) && ENABLED(MIXING_EXTRUDER)
+  #define ISR_MIXING_STEPPER_CYCLES ((MIXING_STEPPERS) * (ISR_STEPPER_CYCLES))
+#else
+  #define ISR_MIXING_STEPPER_CYCLES  0UL
+#endif
+
+// Add time for each stepper
+#if HAS_X_STEP
+  #define ISR_X_STEPPER_CYCLES  ISR_STEPPER_CYCLES
+#endif
+#if HAS_Y_STEP
+  #define ISR_Y_STEPPER_CYCLES  ISR_STEPPER_CYCLES
+#endif
+#if HAS_Z_STEP
+  #define ISR_Z_STEPPER_CYCLES  ISR_STEPPER_CYCLES
+#endif
+#if HAS_I_STEP
+  #define ISR_I_STEPPER_CYCLES  ISR_STEPPER_CYCLES
+#endif
+#if HAS_J_STEP
+  #define ISR_J_STEPPER_CYCLES  ISR_STEPPER_CYCLES
+#endif
+#if HAS_K_STEP
+  #define ISR_K_STEPPER_CYCLES  ISR_STEPPER_CYCLES
+#endif
+#if HAS_EXTRUDERS
+  #define ISR_E_STEPPER_CYCLES  ISR_STEPPER_CYCLES    // E is always interpolated, even for mixing extruders
+#endif
+
+// And the total minimum loop time, not including the base
+#define MIN_ISR_LOOP_CYCLES (ISR_MIXING_STEPPER_CYCLES LOGICAL_AXIS_GANG(+ ISR_E_STEPPER_CYCLES, + ISR_X_STEPPER_CYCLES, + ISR_Y_STEPPER_CYCLES, + ISR_Z_STEPPER_CYCLES, + ISR_I_STEPPER_CYCLES, + ISR_J_STEPPER_CYCLES, + ISR_K_STEPPER_CYCLES))
+
+// Calculate the minimum MPU cycles needed per pulse to enforce, limited to the max stepper rate
+#define _MIN_STEPPER_PULSE_CYCLES(N) _MAX(uint32_t((F_CPU) / (MAXIMUM_STEPPER_RATE)), ((F_CPU) / 500000UL) * (N))
+#if MINIMUM_STEPPER_PULSE
+  #define MIN_STEPPER_PULSE_CYCLES _MIN_STEPPER_PULSE_CYCLES(uint32_t(MINIMUM_STEPPER_PULSE))
+#elif HAS_DRIVER(LV8729)
+  #define MIN_STEPPER_PULSE_CYCLES uint32_t((((F_CPU) - 1) / 2000000) + 1) // 0.5µs, aka 500ns
+#else
+  #define MIN_STEPPER_PULSE_CYCLES _MIN_STEPPER_PULSE_CYCLES(1UL)
+#endif
+
+// Calculate the minimum pulse times (high and low)
+#if MINIMUM_STEPPER_PULSE && MAXIMUM_STEPPER_RATE
+  constexpr uint32_t _MIN_STEP_PERIOD_NS = 1000000000UL / MAXIMUM_STEPPER_RATE;
+  constexpr uint32_t _MIN_PULSE_HIGH_NS = 1000UL * MINIMUM_STEPPER_PULSE;
+  constexpr uint32_t _MIN_PULSE_LOW_NS = _MAX((_MIN_STEP_PERIOD_NS - _MIN(_MIN_STEP_PERIOD_NS, _MIN_PULSE_HIGH_NS)), _MIN_PULSE_HIGH_NS);
+#elif MINIMUM_STEPPER_PULSE
+  // Assume 50% duty cycle
+  constexpr uint32_t _MIN_PULSE_HIGH_NS = 1000UL * MINIMUM_STEPPER_PULSE;
+  constexpr uint32_t _MIN_PULSE_LOW_NS = _MIN_PULSE_HIGH_NS;
+#elif MAXIMUM_STEPPER_RATE
+  // Assume 50% duty cycle
+  constexpr uint32_t _MIN_PULSE_HIGH_NS = 500000000UL / MAXIMUM_STEPPER_RATE;
+  constexpr uint32_t _MIN_PULSE_LOW_NS = _MIN_PULSE_HIGH_NS;
+#else
+  #error "Expected at least one of MINIMUM_STEPPER_PULSE or MAXIMUM_STEPPER_RATE to be defined"
+#endif
+
+// But the user could be enforcing a minimum time, so the loop time is
+#define ISR_LOOP_CYCLES (ISR_LOOP_BASE_CYCLES + _MAX(MIN_STEPPER_PULSE_CYCLES, MIN_ISR_LOOP_CYCLES))
+
+// If linear advance is enabled, then it is handled separately
+#if ENABLED(LIN_ADVANCE)
+
+  // Estimate the minimum LA loop time
+  #if ENABLED(MIXING_EXTRUDER) // ToDo: ???
+    // HELP ME: What is what?
+    // Directions are set up for MIXING_STEPPERS - like before.
+    // Finding the right stepper may last up to MIXING_STEPPERS loops in get_next_stepper().
+    //   These loops are a bit faster than advancing a bresenham counter.
+    // Always only one E stepper is stepped.
+    #define MIN_ISR_LA_LOOP_CYCLES ((MIXING_STEPPERS) * (ISR_STEPPER_CYCLES))
+  #else
+    #define MIN_ISR_LA_LOOP_CYCLES ISR_STEPPER_CYCLES
+  #endif
+
+  // And the real loop time
+  #define ISR_LA_LOOP_CYCLES _MAX(MIN_STEPPER_PULSE_CYCLES, MIN_ISR_LA_LOOP_CYCLES)
+
+#else
+  #define ISR_LA_LOOP_CYCLES 0UL
+#endif
+
+// Now estimate the total ISR execution time in cycles given a step per ISR multiplier
+#define ISR_EXECUTION_CYCLES(R) (((ISR_BASE_CYCLES + ISR_S_CURVE_CYCLES + (ISR_LOOP_CYCLES) * (R) + ISR_LA_BASE_CYCLES + ISR_LA_LOOP_CYCLES)) / (R))
+
+// The maximum allowable stepping frequency when doing x128-x1 stepping (in Hz)
+#define MAX_STEP_ISR_FREQUENCY_128X ((F_CPU) / ISR_EXECUTION_CYCLES(128))
+#define MAX_STEP_ISR_FREQUENCY_64X  ((F_CPU) / ISR_EXECUTION_CYCLES(64))
+#define MAX_STEP_ISR_FREQUENCY_32X  ((F_CPU) / ISR_EXECUTION_CYCLES(32))
+#define MAX_STEP_ISR_FREQUENCY_16X  ((F_CPU) / ISR_EXECUTION_CYCLES(16))
+#define MAX_STEP_ISR_FREQUENCY_8X   ((F_CPU) / ISR_EXECUTION_CYCLES(8))
+#define MAX_STEP_ISR_FREQUENCY_4X   ((F_CPU) / ISR_EXECUTION_CYCLES(4))
+#define MAX_STEP_ISR_FREQUENCY_2X   ((F_CPU) / ISR_EXECUTION_CYCLES(2))
+#define MAX_STEP_ISR_FREQUENCY_1X   ((F_CPU) / ISR_EXECUTION_CYCLES(1))
+
+// The minimum step ISR rate used by ADAPTIVE_STEP_SMOOTHING to target 50% CPU usage
+// This does not account for the possibility of multi-stepping.
+// Perhaps DISABLE_MULTI_STEPPING should be required with ADAPTIVE_STEP_SMOOTHING.
+#define MIN_STEP_ISR_FREQUENCY (MAX_STEP_ISR_FREQUENCY_1X / 2)
+
+#define ENABLE_COUNT (NUM_AXES + E_STEPPERS)
+typedef IF<(ENABLE_COUNT > 8), uint16_t, uint8_t>::type ena_mask_t;
+
+// Axis flags type, for enabled state or other simple state
+typedef struct {
+  union {
+    ena_mask_t bits;
+    struct {
+      bool NUM_AXIS_LIST(X:1, Y:1, Z:1, I:1, J:1, K:1);
+      #if HAS_EXTRUDERS
+        bool LIST_N(EXTRUDERS, E0:1, E1:1, E2:1, E3:1, E4:1, E5:1, E6:1, E7:1);
+      #endif
+    };
+  };
+} stepper_flags_t;
+
+// All the stepper enable pins
+constexpr pin_t ena_pins[] = {
+  NUM_AXIS_LIST(X_ENABLE_PIN, Y_ENABLE_PIN, Z_ENABLE_PIN, I_ENABLE_PIN, J_ENABLE_PIN, K_ENABLE_PIN),
+  LIST_N(E_STEPPERS, E0_ENABLE_PIN, E1_ENABLE_PIN, E2_ENABLE_PIN, E3_ENABLE_PIN, E4_ENABLE_PIN, E5_ENABLE_PIN, E6_ENABLE_PIN, E7_ENABLE_PIN)
+};
+
+// Index of the axis or extruder element in a combined array
+constexpr uint8_t index_of_axis(const AxisEnum axis E_OPTARG(const uint8_t eindex=0)) {
+  return uint8_t(axis) + (E_TERN0(axis < NUM_AXES ? 0 : eindex));
+}
+//#define __IAX_N(N,V...)           _IAX_##N(V)
+//#define _IAX_N(N,V...)            __IAX_N(N,V)
+//#define _IAX_1(A)                 index_of_axis(A)
+//#define _IAX_2(A,B)               index_of_axis(A E_OPTARG(B))
+//#define INDEX_OF_AXIS(V...)       _IAX_N(TWO_ARGS(V),V)
+
+#define INDEX_OF_AXIS(A,V...)     index_of_axis(A E_OPTARG(V+0))
+
+// Bit mask for a matching enable pin, or 0
+constexpr ena_mask_t ena_same(const uint8_t a, const uint8_t b) {
+  return ena_pins[a] == ena_pins[b] ? _BV(b) : 0;
+}
+
+// Recursively get the enable overlaps mask for a given linear axis or extruder
+constexpr ena_mask_t ena_overlap(const uint8_t a=0, const uint8_t b=0) {
+  return b >= ENABLE_COUNT ? 0 : (a == b ? 0 : ena_same(a, b)) | ena_overlap(a, b + 1);
+}
+
+// Recursively get whether there's any overlap at all
+constexpr bool any_enable_overlap(const uint8_t a=0) {
+  return a >= ENABLE_COUNT ? false : ena_overlap(a) || any_enable_overlap(a + 1);
+}
+
+// Array of axes that overlap with each
+// TODO: Consider cases where >=2 steppers are used by a linear axis or extruder
+//       (e.g., CoreXY, Dual XYZ, or E with multiple steppers, etc.).
+constexpr ena_mask_t enable_overlap[] = {
+  #define _OVERLAP(N) ena_overlap(INDEX_OF_AXIS(AxisEnum(N))),
+  REPEAT(NUM_AXES, _OVERLAP)
+  #if HAS_EXTRUDERS
+    #define _E_OVERLAP(N) ena_overlap(INDEX_OF_AXIS(E_AXIS, N)),
+    REPEAT(E_STEPPERS, _E_OVERLAP)
+  #endif
+};
+
+//static_assert(!any_enable_overlap(), "There is some overlap.");
+
+>>>>>>> upstream/bugfix-2.0.x
 //
 // Stepper class definition
 //
@@ -334,6 +503,7 @@ class Stepper {
     #endif
 
     #if ENABLED(FREEZE_FEATURE)
+<<<<<<< HEAD
       static bool frozen;                 // Set this flag to instantly freeze motion
     #endif
 
@@ -345,14 +515,22 @@ class Stepper {
       static bool adaptive_step_smoothing_enabled;
     #else
       static constexpr bool adaptive_step_smoothing_enabled = true;
+=======
+      static bool frozen;                   // Set this flag to instantly freeze motion
+>>>>>>> upstream/bugfix-2.0.x
     #endif
 
   private:
 
     static block_t* current_block;        // A pointer to the block currently being traced
 
+<<<<<<< HEAD
     static AxisBits last_direction_bits,  // The next stepping-bits to be output
                     axis_did_move;        // Last Movement in the given direction is not null, as computed when the last movement was fetched from planner
+=======
+    static axis_bits_t last_direction_bits, // The next stepping-bits to be output
+                       axis_did_move;       // Last Movement in the given direction is not null, as computed when the last movement was fetched from planner
+>>>>>>> upstream/bugfix-2.0.x
 
     static bool abort_current_block;      // Signals to the stepper that current block should be aborted
 
@@ -667,7 +845,11 @@ class Stepper {
     static void apply_directions();
 
     // Set direction bits and update all stepper DIR states
+<<<<<<< HEAD
     static void set_directions(const AxisBits bits) {
+=======
+    static void set_directions(const axis_bits_t bits) {
+>>>>>>> upstream/bugfix-2.0.x
       last_direction_bits = bits;
       apply_directions();
     }

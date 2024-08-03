@@ -138,6 +138,7 @@
 //
 // LCD / Controller
 //
+<<<<<<< HEAD
 
 #if HAS_WIRED_LCD
   #define BEEPER_PIN                           6
@@ -146,6 +147,15 @@
   #define BTN_EN2                             25
   #define BTN_ENC                             27
 
+=======
+#if HAS_WIRED_LCD
+  #define BEEPER_PIN                           6
+
+  #define BTN_EN1                             23
+  #define BTN_EN2                             25
+  #define BTN_ENC                             27
+
+>>>>>>> upstream/bugfix-2.0.x
   #if HAS_MARLINUI_U8GLIB
     #define DOGLCD_A0                         26
     #define DOGLCD_CS                         24

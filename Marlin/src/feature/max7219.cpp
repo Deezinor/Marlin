@@ -44,7 +44,6 @@
 #include "max7219.h"
 
 #include "../module/planner.h"
-#include "../module/stepper.h"
 #include "../MarlinCore.h"
 #include "../HAL/shared/Delay.h"
 
@@ -156,7 +155,13 @@ uint8_t Max7219::suspended; // = 0;
 
 void Max7219::error(FSTR_P const func, const int32_t v1, const int32_t v2/*=-1*/) {
   #if ENABLED(MAX7219_ERRORS)
+<<<<<<< HEAD
     SERIAL_ECHO(F("??? Max7219::"), func, C('('), v1);
+=======
+    SERIAL_ECHOPGM("??? Max7219::");
+    SERIAL_ECHOF(func, AS_CHAR('('));
+    SERIAL_ECHO(v1);
+>>>>>>> upstream/bugfix-2.0.x
     if (v2 > 0) SERIAL_ECHOPGM(", ", v2);
     SERIAL_CHAR(')');
     SERIAL_EOL();
@@ -294,7 +299,11 @@ void Max7219::set(const uint8_t line, const uint8_t bits) {
 #endif // MAX7219_NUMERIC
 
 // Modify a single LED bit and send the changed line
+<<<<<<< HEAD
 void Max7219::led_set(const uint8_t x, const uint8_t y, const bool on, uint8_t * const rcm/*=nullptr*/) {
+=======
+void Max7219::led_set(const uint8_t x, const uint8_t y, const bool on) {
+>>>>>>> upstream/bugfix-2.0.x
   if (x >= MAX7219_X_LEDS || y >= MAX7219_Y_LEDS) return error(F("led_set"), x, y);
   if (BIT_7219(x, y) == on) return;
   XOR_7219(x, y);
@@ -302,6 +311,7 @@ void Max7219::led_set(const uint8_t x, const uint8_t y, const bool on, uint8_t *
   if (rcm != nullptr) *rcm |= _BV(LED_IND(x, y) & 0x07);
 }
 
+<<<<<<< HEAD
 void Max7219::led_on(const uint8_t x, const uint8_t y, uint8_t * const rcm/*=nullptr*/) {
   if (x >= MAX7219_X_LEDS || y >= MAX7219_Y_LEDS) return error(F("led_on"), x, y);
   led_set(x, y, true, rcm);
@@ -315,6 +325,21 @@ void Max7219::led_off(const uint8_t x, const uint8_t y, uint8_t * const rcm/*=nu
 void Max7219::led_toggle(const uint8_t x, const uint8_t y, uint8_t * const rcm/*=nullptr*/) {
   if (x >= MAX7219_X_LEDS || y >= MAX7219_Y_LEDS) return error(F("led_toggle"), x, y);
   led_set(x, y, !BIT_7219(x, y), rcm);
+=======
+void Max7219::led_on(const uint8_t x, const uint8_t y) {
+  if (x >= MAX7219_X_LEDS || y >= MAX7219_Y_LEDS) return error(F("led_on"), x, y);
+  led_set(x, y, true);
+}
+
+void Max7219::led_off(const uint8_t x, const uint8_t y) {
+  if (x >= MAX7219_X_LEDS || y >= MAX7219_Y_LEDS) return error(F("led_off"), x, y);
+  led_set(x, y, false);
+}
+
+void Max7219::led_toggle(const uint8_t x, const uint8_t y) {
+  if (x >= MAX7219_X_LEDS || y >= MAX7219_Y_LEDS) return error(F("led_toggle"), x, y);
+  led_set(x, y, !BIT_7219(x, y));
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 void Max7219::send_row(const uint8_t row) {
@@ -357,13 +382,21 @@ void Max7219::fill() {
 
 void Max7219::clear_row(const uint8_t row) {
   if (row >= MAX7219_Y_LEDS) return error(F("clear_row"), row);
+<<<<<<< HEAD
   for (uint8_t x = 0; x < MAX7219_X_LEDS; ++x) CLR_7219(x, row);
+=======
+  LOOP_L_N(x, MAX7219_X_LEDS) CLR_7219(x, row);
+>>>>>>> upstream/bugfix-2.0.x
   send_row(row);
 }
 
 void Max7219::clear_column(const uint8_t col) {
   if (col >= MAX7219_X_LEDS) return error(F("set_column"), col);
+<<<<<<< HEAD
   for (uint8_t y = 0; y < MAX7219_Y_LEDS; ++y) CLR_7219(col, y);
+=======
+  LOOP_L_N(y, MAX7219_Y_LEDS) CLR_7219(col, y);
+>>>>>>> upstream/bugfix-2.0.x
   send_column(col);
 }
 

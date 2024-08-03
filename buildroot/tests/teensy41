@@ -71,7 +71,11 @@ exec_test $1 $2 "Ethernet, EEPROM, Magnetic Parking Extruder, No LCD" "$3"
 restore_configs
 opt_set MOTHERBOARD BOARD_TEENSY41 MIXING_STEPPERS 2
 opt_enable MIXING_EXTRUDER DIRECT_MIXING_IN_G1 GRADIENT_MIX GRADIENT_VTOOL
+<<<<<<< HEAD
 opt_disable DISABLE_OTHER_EXTRUDERS
+=======
+opt_disable DISABLE_INACTIVE_EXTRUDER
+>>>>>>> upstream/bugfix-2.0.x
 exec_test $1 $2 "Mixing Extruder" "$3"
 
 #
@@ -106,7 +110,11 @@ exec_test $1 $2 "Teensy 4.0/4.1 COREXZ" "$3"
 #
 restore_configs
 opt_set MOTHERBOARD BOARD_TEENSY41 Z_DRIVER_TYPE A4988 Z2_DRIVER_TYPE A4988 Z2_MIN_PIN 2
+<<<<<<< HEAD
 opt_enable Z_MULTI_ENDSTOPS
+=======
+opt_enable Z_MULTI_ENDSTOPS USE_XMAX_PLUG
+>>>>>>> upstream/bugfix-2.0.x
 pins_set ramps/RAMPS X_MAX_PIN -1
 exec_test $1 $2 "Dual Z with Dual Z endstops" "$3"
 

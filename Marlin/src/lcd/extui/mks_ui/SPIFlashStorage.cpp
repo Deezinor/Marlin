@@ -27,8 +27,13 @@
 #include "../../../inc/MarlinConfig.h"
 #include "SPIFlashStorage.h"
 
+<<<<<<< HEAD
 #if DISABLED(SPI_FLASH)
   #error "SPI_FLASH is required with TFT_LVGL_UI."
+=======
+#if !HAS_SPI_FLASH
+  #error "HAS_SPI_FLASH is required with TFT_LVGL_UI."
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 extern W25QXXFlash W25QXX;

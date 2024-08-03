@@ -136,7 +136,11 @@
 #define EXP1_01_PIN                         PB5
 #define EXP1_02_PIN                         PB6
 #define EXP1_03_PIN                         PA2
+<<<<<<< HEAD
 #define EXP1_04_PIN                         -1    // RESET
+=======
+#define EXP1_04_PIN                         -1   // RESET
+>>>>>>> upstream/bugfix-2.0.x
 #define EXP1_05_PIN                         PA3
 #define EXP1_06_PIN                         PB8
 #define EXP1_07_PIN                         PB7
@@ -145,6 +149,7 @@
 //
 // LCD / Controller
 //
+<<<<<<< HEAD
 
 #if ENABLED(CR10_STOCKDISPLAY)
   #define BEEPER_PIN                 EXP1_01_PIN
@@ -155,6 +160,17 @@
   #define LCD_PINS_RS                EXP1_07_PIN  // CS -- SOFT SPI for ENDER3 LCD
   #define LCD_PINS_D4                EXP1_06_PIN  // SCLK
   #define LCD_PINS_EN                EXP1_08_PIN  // DATA MOSI
+=======
+#if ENABLED(CR10_STOCKDISPLAY)
+  #define BEEPER_PIN                 EXP1_01_PIN
+  #define BTN_EN1                    EXP1_03_PIN
+  #define BTN_EN2                    EXP1_05_PIN
+  #define BTN_ENC                    EXP1_02_PIN
+
+  #define LCD_PINS_RS                EXP1_07_PIN  // CS -- SOFT SPI for ENDER3 LCD
+  #define LCD_PINS_D4                EXP1_06_PIN  // SCLK
+  #define LCD_PINS_ENABLE            EXP1_08_PIN  // DATA MOSI
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 // Alter timing for graphical display

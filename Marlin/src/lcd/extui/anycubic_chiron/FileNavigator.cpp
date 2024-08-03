@@ -84,16 +84,28 @@ void FileNavigator::reset() {
 void FileNavigator::refresh() { filelist.refresh(); }
 
 void FileNavigator::changeDIR(const char *folder) {
+<<<<<<< HEAD
   if (folderdepth >= MAX_FOLDER_DEPTH) return; // limit the folder depth
   currentDirIndex[folderdepth] = currentindex;
   strcat(currentDirPath, folder);
   strcat(currentDirPath, "/");
+=======
+  if (currentfolderdepth >= MAX_FOLDER_DEPTH) return; // limit the folder depth
+  DEBUG_ECHOLNPGM("FD:" , folderdepth, " FP:",currentindex, " currentfolder:", currentfoldername, " enter:", folder);
+  currentfolderindex[currentfolderdepth] = currentindex;
+  strcat(currentfoldername, folder);
+  strcat(currentfoldername, "/");
+>>>>>>> upstream/bugfix-2.0.x
   filelist.changeDir(folder);
   folderdepth++;
   currentindex = 0;
 }
 
 void FileNavigator::upDIR() {
+<<<<<<< HEAD
+=======
+  DEBUG_ECHOLNPGM("upDIR() from D:", currentfolderdepth, " N:", currentfoldername);
+>>>>>>> upstream/bugfix-2.0.x
   if (!filelist.isAtRootDir()) {
     filelist.upDir();
     folderdepth--;
@@ -114,6 +126,10 @@ void FileNavigator::skiptofileindex(uint16_t skip) {
   if (skip == 0) return;
   while (skip > 0) {
     if (filelist.seek(currentindex)) {
+<<<<<<< HEAD
+=======
+      DEBUG_ECHOLNPGM("CI:", currentindex, " FD:", currentfolderdepth, " N:", skip, " ", filelist.longFilename());
+>>>>>>> upstream/bugfix-2.0.x
       if (!filelist.isDir()) {
         skip--;
         currentindex++;
@@ -147,11 +163,21 @@ void FileNavigator::skiptofileindex(uint16_t skip) {
     }
     lastpanelindex = index;
 
+<<<<<<< HEAD
     if (currentindex == 0 && folderdepth > 0) { // Add a link to go up a folder
       // The new panel ignores entries that don't end in .GCO or .gcode so add and pad them.
       if (paneltype <= AC_panel_new) {
         TFTSer.println("<<.GCO");
         chiron.tftSendLn(F("..                  .gcode"));
+=======
+    DEBUG_ECHOLNPGM("index=", index, " currentindex=", currentindex);
+
+    if (currentindex == 0 && currentfolderdepth > 0) { // Add a link to go up a folder
+      // The new panel ignores entries that don't end in .GCO or .gcode so add and pad them.
+      if (paneltype <= AC_panel_new) {
+        TFTSer.println("<<.GCO");
+        Chiron.SendtoTFTLN(F("..                  .gcode"));
+>>>>>>> upstream/bugfix-2.0.x
       }
       else {
         TFTSer.println("<<");
@@ -160,8 +186,17 @@ void FileNavigator::skiptofileindex(uint16_t skip) {
       filesneeded--;
     }
 
+<<<<<<< HEAD
     for (uint16_t seek = currentindex; seek < currentindex + filesneeded; seek++)
       if (filelist.seek(seek)) sendFile(paneltype);
+=======
+    for (uint16_t seek = currentindex; seek < currentindex + filesneeded; seek++) {
+      if (filelist.seek(seek)) {
+        sendFile(paneltype);
+        DEBUG_ECHOLNPGM("-", seek, " '", filelist.longFilename(), "' '", currentfoldername, "", filelist.shortFilename(), "'");
+      }
+    }
+>>>>>>> upstream/bugfix-2.0.x
   }
 
   void FileNavigator::sendFile(panel_type_t paneltype) {
@@ -202,6 +237,10 @@ void FileNavigator::skiptofileindex(uint16_t skip) {
 #else // Flat file list
 
   void FileNavigator::getFiles(uint16_t index, panel_type_t paneltype, uint8_t filesneeded) {
+<<<<<<< HEAD
+=======
+    DEBUG_ECHOLNPGM("getFiles() I:", index," L:", lastpanelindex);
+>>>>>>> upstream/bugfix-2.0.x
     // if we're searching backwards, jump back to start and search forward
     if (index < lastpanelindex) {
       reset();
@@ -237,6 +276,10 @@ void FileNavigator::skiptofileindex(uint16_t skip) {
     TFTSer.println(filelist.shortFilename());
     if (folderdepth > 0) TFTSer.print(currentDirPath);
     TFTSer.println(filelist.longFilename());
+<<<<<<< HEAD
+=======
+    DEBUG_ECHOLNPGM("/", currentfoldername, "", filelist.shortFilename(), " ", filelist.longFilename());
+>>>>>>> upstream/bugfix-2.0.x
   }
 
 #endif // Flat file list

@@ -2,9 +2,12 @@
  * Marlin 3D Printer Firmware
  * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
+<<<<<<< HEAD
  * Based on Sprinter and grbl.
  * Copyright (c) 2011 Camiel Gubbels / Erik van der Zalm
  *
+=======
+>>>>>>> upstream/bugfix-2.0.x
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or

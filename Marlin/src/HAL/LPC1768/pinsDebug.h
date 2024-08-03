@@ -31,10 +31,18 @@
 #define NUMBER_PINS_TOTAL NUM_DIGITAL_PINS
 #define isAnalogPin(P) (digitalPinToAnalogIndex(P) >= 0 ? 1 : 0)
 #define digitalRead_mod(p) extDigitalRead(p)
+<<<<<<< HEAD
 #define getPinByIndex(p) pin_array[p].pin
 #define printPinNameByIndex(x) do{ sprintf_P(buffer, PSTR("%-" STRINGIFY(MAX_NAME_LENGTH) "s"), pin_array[x].name); SERIAL_ECHO(buffer); }while(0)
 #define printPinNumber(p) do{ sprintf_P(buffer, PSTR("P%d_%02d"), LPC176x::pin_port(p), LPC176x::pin_bit(p)); SERIAL_ECHO(buffer); }while(0)
 #define printPinAnalog(p) do{ sprintf_P(buffer, PSTR("_A%d     "), LPC176x::pin_get_adc_channel(pin)); SERIAL_ECHO(buffer); }while(0)
+=======
+#define PRINT_PORT(p)
+#define GET_ARRAY_PIN(p) pin_array[p].pin
+#define PRINT_ARRAY_NAME(x) do{ sprintf_P(buffer, PSTR("%-" STRINGIFY(MAX_NAME_LENGTH) "s"), pin_array[x].name); SERIAL_ECHO(buffer); }while(0)
+#define PRINT_PIN(p) do{ sprintf_P(buffer, PSTR("P%d_%02d"), LPC176x::pin_port(p), LPC176x::pin_bit(p)); SERIAL_ECHO(buffer); }while(0)
+#define PRINT_PIN_ANALOG(p) do{ sprintf_P(buffer, PSTR("_A%d     "), LPC176x::pin_get_adc_channel(pin)); SERIAL_ECHO(buffer); }while(0)
+>>>>>>> upstream/bugfix-2.0.x
 #define MULTI_NAME_PAD 17 // space needed to be pretty if not first name assigned to a pin
 
 // pins that will cause hang/reset/disconnect in M43 Toggle and Watch utilities
@@ -49,8 +57,12 @@ bool getValidPinMode(const pin_t pin) {
   return LPC176x::gpio_direction(pin);
 }
 
+<<<<<<< HEAD
 #define getPinIsDigitalByIndex(x) ((bool) pin_array[x].is_digital)
 
 void printPinPort(const pin_t) {}
 void printPinPWM(const pin_t) {}
 bool pwm_status(const pin_t) { return false; }
+=======
+#define GET_ARRAY_IS_DIGITAL(x) ((bool) pin_array[x].is_digital)
+>>>>>>> upstream/bugfix-2.0.x

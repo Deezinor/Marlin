@@ -52,6 +52,7 @@
 #define X_STOP_PIN                             3
 #define Y_STOP_PIN                            14
 
+<<<<<<< HEAD
 //
 // Fans
 //
@@ -65,6 +66,12 @@
 
 //
 // Heaters
+=======
+#include "pins_3DRAG.h" // ... RAMPS
+
+//
+// Heaters / Fans
+>>>>>>> upstream/bugfix-2.0.x
 //
 #undef HEATER_1_PIN
 #define HEATER_1_PIN                          11

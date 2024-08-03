@@ -110,7 +110,15 @@ bool BaseMoveAxisScreen::onTouchHeld(const uint8_t tag) {
         case 24: raiseZtoTop(); break;
       #endif
     #endif
+<<<<<<< HEAD
     case 23: SpinnerDialogBox::enqueueAndWait(F("G28")); break;
+=======
+    case 20: SpinnerDialogBox::enqueueAndWait(F("G28X")); break;
+    case 21: SpinnerDialogBox::enqueueAndWait(F("G28Y")); break;
+    case 22: SpinnerDialogBox::enqueueAndWait(F("G28Z")); break;
+    case 23: SpinnerDialogBox::enqueueAndWait(F("G28")); break;
+    case 24: raiseZtoTop(); break;
+>>>>>>> upstream/bugfix-2.0.x
     default:
       return false;
   }
@@ -127,7 +135,11 @@ float BaseMoveAxisScreen::getManualFeedrate(const uint8_t axis, const_float_t in
   // being held down, this allows enough margin for the planner to
   // connect segments and even out the motion.
   constexpr xyze_feedrate_t max_manual_feedrate = MANUAL_FEEDRATE;
+<<<<<<< HEAD
   return min(MMM_TO_MMS(max_manual_feedrate[axis]), ABS(increment_mm * (TOUCH_REPEATS_PER_SECOND) * 0.80f));
+=======
+  return min(max_manual_feedrate[axis] / 60.0f, ABS(increment_mm * (TOUCH_REPEATS_PER_SECOND) * 0.80f));
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 void BaseMoveAxisScreen::setManualFeedrate(const ExtUI::axis_t axis, const_float_t increment_mm) {

@@ -23,6 +23,7 @@
 
 #include "../DGUSDisplayDef.h"
 
+<<<<<<< HEAD
 enum DGUS_ScreenID : uint8_t {
   DGUS_SCREEN_BOOT                 = 160,
   DGUS_SCREEN_MAIN                 =   1,
@@ -52,6 +53,37 @@ enum DGUS_ScreenID : uint8_t {
   DGUS_SCREEN_WAITING              = 251,
   DGUS_SCREEN_POPUP                = 252, ///< special target, popup screen will also return this code to say "return to previous screen"
   DGUS_SCREEN_UNUSED               = 255
+=======
+enum DGUSLCD_Screens : uint8_t {
+  DGUSLCD_SCREEN_BOOT                 = 160,
+  DGUSLCD_SCREEN_MAIN                 =   1,
+  DGUSLCD_SCREEN_STATUS               =   1,
+  DGUSLCD_SCREEN_STATUS2              =   1,
+  DGUSLCD_SCREEN_POWER_LOSS           =  17,
+  DGUSLCD_SCREEN_TEMPERATURE          =  40,
+  DGUSLCD_SCREEN_MANUALMOVE           =  86,
+  DGUSLCD_SCREEN_PREHEAT              =  48,
+  DGUSLCD_SCREEN_UTILITY              =  70,
+  DGUSLCD_SCREEN_FILAMENT_HEATING     =  80,
+  DGUSLCD_SCREEN_FILAMENT_LOADING     =  76,
+  DGUSLCD_SCREEN_FILAMENT_UNLOADING   =  82,
+  DGUSLCD_SCREEN_MANUALEXTRUDE        =  84,
+  DGUSLCD_SCREEN_Z_OFFSET             =  88,
+  DGUSLCD_SCREEN_SDFILELIST           =   3,
+  DGUSLCD_SCREEN_SDPRINTMANIPULATION  =   7,
+  DGUSLCD_SCREEN_SDPRINTTUNE          =   9,
+  DGUSLCD_SCREEN_FLC_PREHEAT          =  94,
+  DGUSLCD_SCREEN_FLC_PRINTING         =  96,
+  DGUSLCD_SCREEN_STEPPERMM            = 122,
+  DGUSLCD_SCREEN_PID_E                = 126,
+  DGUSLCD_SCREEN_PID_BED              = 128,
+  DGUSLCD_SCREEN_INFOS                = 131,
+  DGUSLCD_SCREEN_CONFIRM              = 240,
+  DGUSLCD_SCREEN_KILL                 = 250, ///< Kill Screen. Must always be 250 (to be able to display "Error wrong LCD Version")
+  DGUSLCD_SCREEN_WAITING              = 251,
+  DGUSLCD_SCREEN_POPUP                = 252, ///< special target, popup screen will also return this code to say "return to previous screen"
+  DGUSLCD_SCREEN_UNUSED               = 255
+>>>>>>> upstream/bugfix-2.0.x
 };
 
 // Display Memory layout used (T5UID)

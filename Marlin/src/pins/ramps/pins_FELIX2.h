@@ -49,6 +49,10 @@
 //
 // LCD / Controller
 //
+<<<<<<< HEAD
+=======
+#if HAS_WIRED_LCD && IS_NEWPANEL
+>>>>>>> upstream/bugfix-2.0.x
 
 #if HAS_WIRED_LCD && IS_NEWPANEL
 

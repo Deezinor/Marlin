@@ -62,6 +62,7 @@ public:
   static void add_steps(const AxisEnum axis, const int16_t distance);
   static void add_mm(const AxisEnum axis, const_float_t mm);
 
+<<<<<<< HEAD
   #if ENABLED(EP_BABYSTEPPING)
     // Step Z for M293 / M294
     static void z_up();
@@ -81,6 +82,8 @@ public:
     static void set_mm(const AxisEnum axis, const_float_t mm);
   #endif
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
   static bool has_steps() {
     return steps[BS_AXIS_IND(X_AXIS)] || steps[BS_AXIS_IND(Y_AXIS)] || steps[BS_AXIS_IND(Z_AXIS)];
   }
@@ -90,7 +93,11 @@ public:
   // apply accumulated babysteps to the axes.
   //
   static void task() {
+<<<<<<< HEAD
     for (uint8_t i = 0; i <= BS_AXIS_IND(Z_AXIS); ++i) step_axis(BS_AXIS(i));
+=======
+    LOOP_LE_N(i, BS_AXIS_IND(Z_AXIS)) step_axis(BS_AXIS(i));
+>>>>>>> upstream/bugfix-2.0.x
   }
 
 private:

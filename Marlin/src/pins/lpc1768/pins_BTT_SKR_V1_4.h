@@ -23,7 +23,10 @@
 
 /**
  * BigTreeTech SKR 1.4 pin assignments
+<<<<<<< HEAD
  * Schematic: https://github.com/bigtreetech/BIGTREETECH-SKR-V1.3/blob/master/BTT%20SKR%20V1.4/Hardware/BTT%20SKR%20V1.4-SCH.pdf
+=======
+>>>>>>> upstream/bugfix-2.0.x
  */
 
 #include "env_validate.h"
@@ -44,7 +47,10 @@
 #if NO_EEPROM_SELECTED
   //#define I2C_EEPROM                            // EEPROM on I2C-0
   //#define SDCARD_EEPROM_EMULATION
+<<<<<<< HEAD
   //#undef NO_EEPROM_SELECTED
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #if ENABLED(I2C_EEPROM)
@@ -249,6 +255,7 @@
   #define E1_SERIAL_RX_PIN      E1_SERIAL_TX_PIN
 
   // Reduce baud rate to improve software serial reliability
+<<<<<<< HEAD
   #ifndef TMC_BAUD_RATE
     #define TMC_BAUD_RATE                  19200
   #endif
@@ -297,6 +304,55 @@
 
   #if ENABLED(CTC_A10S_A13)
     CONTROLLER_WARNING("BTT_SKR_V1_4", "CTC_A10S_A13")
+=======
+  #define TMC_BAUD_RATE                    19200
+#endif
+
+/**       ------                ------
+ *  1.30 | 1  2 | 0.28    0.17 | 1  2 | 0.15
+ *  1.18 | 3  4 | 1.19    3.26 | 3  4 | 0.16
+ *  1.20   5  6 | 1.21    3.25   5  6 | 0.18
+ *  1.22 | 7  8 | 1.23    1.31 | 7  8 | RESET
+ *   GND | 9 10 | 5V       GND | 9 10 | --
+ *        ------                ------
+ *         EXP1                  EXP2
+ */
+#define EXP1_01_PIN                        P1_30
+#define EXP1_02_PIN                        P0_28
+#define EXP1_03_PIN                        P1_18
+#define EXP1_04_PIN                        P1_19
+#define EXP1_05_PIN                        P1_20
+#define EXP1_06_PIN                        P1_21
+#define EXP1_07_PIN                        P1_22
+#define EXP1_08_PIN                        P1_23
+
+#define EXP2_01_PIN                        P0_17
+#define EXP2_02_PIN                        P0_15
+#define EXP2_03_PIN                        P3_26
+#define EXP2_04_PIN                        P0_16
+#define EXP2_05_PIN                        P3_25
+#define EXP2_06_PIN                        P0_18
+#define EXP2_07_PIN                        P1_31
+#define EXP2_08_PIN                        -1     // RESET
+
+#if HAS_DWIN_E3V2 || IS_DWIN_MARLINUI
+
+  // RET6 DWIN ENCODER LCD
+  #define BTN_ENC                    EXP1_05_PIN
+  #define BTN_EN1                    EXP1_08_PIN
+  #define BTN_EN2                    EXP1_07_PIN
+
+  #ifndef BEEPER_PIN
+    #define BEEPER_PIN               EXP1_06_PIN
+  #endif
+
+#elif HAS_WIRED_LCD
+
+  #if ENABLED(ANET_FULL_GRAPHICS_LCD_ALT_WIRING)
+    #ifndef NO_CONTROLLER_CUSTOM_WIRING_WARNING
+      #error "CAUTION! ANET_FULL_GRAPHICS_LCD_ALT_WIRING requires wiring modifications. See 'pins_BTT_SKR_V1_4.h' for details. (Define NO_CONTROLLER_CUSTOM_WIRING_WARNING to suppress this warning.)"
+    #endif
+>>>>>>> upstream/bugfix-2.0.x
 
     /**
      * 1. Cut the tab off the LCD connector so it can be plugged into the "EXP1" connector the other way.
@@ -323,12 +379,22 @@
     #define BTN_EN2                  EXP1_07_PIN
     #define BTN_ENC                  EXP1_01_PIN
 
+<<<<<<< HEAD
     #define LCD_PINS_EN              EXP1_03_PIN
+=======
+    #define LCD_PINS_ENABLE          EXP1_03_PIN
+>>>>>>> upstream/bugfix-2.0.x
     #define LCD_PINS_D4              EXP1_05_PIN
     #define BEEPER_PIN               EXP1_08_PIN
 
   #elif ENABLED(ANET_FULL_GRAPHICS_LCD)
+<<<<<<< HEAD
     CONTROLLER_WARNING("BTT_SKR_V1_4", "ANET_FULL_GRAPHICS_LCD")
+=======
+    #ifndef NO_CONTROLLER_CUSTOM_WIRING_WARNING
+      #error "CAUTION! ANET_FULL_GRAPHICS_LCD requires wiring modifications. See 'pins_BTT_SKR_V1_4.h' for details. (Define NO_CONTROLLER_CUSTOM_WIRING_WARNING to suppress this warning.)"
+    #endif
+>>>>>>> upstream/bugfix-2.0.x
 
    /**
     * 1. Cut the tab off the LCD connector so it can be plugged into the "EXP1" connector the other way.
@@ -357,19 +423,32 @@
     #define BTN_EN2                  EXP1_07_PIN
     #define BTN_ENC                  EXP1_03_PIN
 
+<<<<<<< HEAD
     #define LCD_PINS_EN              EXP1_06_PIN
+=======
+    #define LCD_PINS_ENABLE          EXP1_06_PIN
+>>>>>>> upstream/bugfix-2.0.x
     #define LCD_PINS_D4              EXP1_04_PIN
 
     #define BEEPER_PIN               EXP1_01_PIN
 
   #elif ENABLED(CR10_STOCKDISPLAY)
+<<<<<<< HEAD
+=======
+    #define BTN_ENC                  EXP1_02_PIN  // (58) open-drain
+>>>>>>> upstream/bugfix-2.0.x
     #define LCD_PINS_RS              EXP1_07_PIN
 
     #define BTN_EN1                  EXP1_03_PIN
     #define BTN_EN2                  EXP1_05_PIN
+<<<<<<< HEAD
     #define BTN_ENC                  EXP1_02_PIN
 
     #define LCD_PINS_EN              EXP1_08_PIN
+=======
+
+    #define LCD_PINS_ENABLE          EXP1_08_PIN
+>>>>>>> upstream/bugfix-2.0.x
     #define LCD_PINS_D4              EXP1_06_PIN
 
   #elif ENABLED(ENDER2_STOCKDISPLAY)
@@ -397,9 +476,19 @@
     #define LCD_BACKLIGHT_PIN              -1
 
   #elif HAS_SPI_TFT                               // Config for Classic UI (emulated DOGM) and Color UI
+<<<<<<< HEAD
+=======
+    #define TFT_CS_PIN               EXP1_07_PIN
+    #define TFT_A0_PIN               EXP1_08_PIN
+    #define TFT_DC_PIN               EXP1_08_PIN
+    #define TFT_MISO_PIN             EXP2_01_PIN
+    #define TFT_BACKLIGHT_PIN        EXP1_03_PIN
+    #define TFT_RESET_PIN            EXP1_04_PIN
+>>>>>>> upstream/bugfix-2.0.x
 
     #define SDCARD_CONNECTION            ONBOARD
 
+<<<<<<< HEAD
     #define BEEPER_PIN               EXP1_01_PIN
 
     #define BTN_ENC                  EXP1_02_PIN
@@ -407,6 +496,17 @@
     #define BTN_EN2                  EXP2_05_PIN
 
     #define TFT_A0_PIN                TFT_DC_PIN
+=======
+    #define TOUCH_INT_PIN            EXP1_06_PIN
+    #define TOUCH_CS_PIN             EXP1_05_PIN
+    #define TOUCH_BUTTONS_HW_SPI
+    #define TOUCH_BUTTONS_HW_SPI_DEVICE        1
+
+    // SPI 1
+    #define SD_SCK_PIN               EXP2_02_PIN
+    #define SD_MISO_PIN              EXP2_01_PIN
+    #define SD_MOSI_PIN              EXP2_06_PIN
+>>>>>>> upstream/bugfix-2.0.x
 
     #ifndef TFT_WIDTH
       #define TFT_WIDTH                      480
@@ -525,7 +625,11 @@
     #define BTN_EN1                  EXP2_03_PIN  // (31) J3-2 & AUX-4
     #define BTN_EN2                  EXP2_05_PIN  // (33) J3-4 & AUX-4
 
+<<<<<<< HEAD
     #define LCD_PINS_EN              EXP1_03_PIN
+=======
+    #define LCD_PINS_ENABLE          EXP1_03_PIN
+>>>>>>> upstream/bugfix-2.0.x
     #define LCD_PINS_D4              EXP1_05_PIN
 
     #define LCD_SDSS                 EXP2_04_PIN  // (16) J3-7 & AUX-4

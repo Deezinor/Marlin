@@ -255,9 +255,15 @@ extern "C" {
 
 // Timer Definitions
 // Do not use timer used by PWM pins when possible. See PinMap_PWM in PeripheralPins.c
+<<<<<<< HEAD:buildroot/share/PlatformIO/variants/MARLIN_I3DBEEZ9/variant.h
 #define TIMER_TONE              TIM2  // TIMER_TONE must be defined in this file
 #define TIMER_SERVO             TIM5  // Only 1 Servo PIN on BEEZ9, so use the same timer as defined in PeripheralPins
 #define TIMER_SERIAL            TIM7  // TIMER_SERIAL must be defined in this file
+=======
+#define TIMER_TONE              TIM7  // TIMER_TONE must be defined in this file
+#define TIMER_SERVO             TIM5  // TIMER_SERVO must be defined in this file
+#define TIMER_SERIAL            TIM2  // TIMER_SERIAL must be defined in this file
+>>>>>>> upstream/bugfix-2.0.x:buildroot/share/PlatformIO/variants/MARLIN_BIGTREE_BTT002/variant.h
 
 // UART Definitions
 //#define ENABLE_HWSERIAL1        done automatically by the #define SERIAL_UART_INSTANCE below
@@ -279,6 +285,7 @@ extern "C" {
 #define PIN_SERIAL_RX           PA10
 #define PIN_SERIAL_TX           PA9
 
+<<<<<<< HEAD:buildroot/share/PlatformIO/variants/MARLIN_I3DBEEZ9/variant.h
 // Optional PIN_SERIALn_RX and PIN_SERIALn_TX where 'n' is the U(S)ART number
 // Used when user instantiate a hardware Serial using its peripheral name.
 // Example: HardwareSerial mySerial(USART3);
@@ -291,6 +298,12 @@ extern "C" {
 #define PIN_SERIAL6_TX          PC6
 //#define PIN_SERIALLP1_RX        x // For LPUART1 RX
 //#define PIN_SERIALLP1_TX        x // For LPUART1 TX
+=======
+// Serial Pins for the MMU2
+#define ENABLE_HWSERIAL4
+#define PIN_SERIAL4_RX          PC11
+#define PIN_SERIAL4_TX          PC10
+>>>>>>> upstream/bugfix-2.0.x:buildroot/share/PlatformIO/variants/MARLIN_BIGTREE_BTT002/variant.h
 
 #ifdef __cplusplus
 } // extern "C"

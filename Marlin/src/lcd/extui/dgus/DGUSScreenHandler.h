@@ -42,11 +42,15 @@
 
 #endif
 
+<<<<<<< HEAD
 // endianness swap
 #define BE16_P(V) ( ((uint8_t*)(V))[0] << 8U | ((uint8_t*)(V))[1] )
 #define BE32_P(V) ( ((uint8_t*)(V))[0] << 24U | ((uint8_t*)(V))[1] << 16U | ((uint8_t*)(V))[2] << 8U | ((uint8_t*)(V))[3] )
 
 #if DGUS_LCD_UI_ORIGIN
+=======
+#if ENABLED(DGUS_LCD_UI_ORIGIN)
+>>>>>>> upstream/bugfix-2.0.x
   #include "origin/DGUSScreenHandler.h"
 #elif DGUS_LCD_UI_MKS
   #include "mks/DGUSScreenHandler.h"
@@ -56,7 +60,11 @@
   #include "hiprecy/DGUSScreenHandler.h"
 #endif
 
+<<<<<<< HEAD
 extern DGUSScreenHandlerClass screen;
+=======
+extern DGUSScreenHandlerClass ScreenHandler;
+>>>>>>> upstream/bugfix-2.0.x
 
 // Helper to define a DGUS_VP_Variable for common use-cases.
 #define VPHELPER(VPADR, VPADRVAR, RXFPTR, TXFPTR) { \

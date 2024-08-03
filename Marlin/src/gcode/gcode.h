@@ -114,7 +114,11 @@
  * M43  - Display pin status, watch pins for changes, watch endstops & toggle LED, Z servo probe test, toggle pins (Requires PINS_DEBUGGING)
  * M48  - Measure Z Probe repeatability: M48 P<points> X<pos> Y<pos> V<level> E<engage> L<legs> S<chizoid>. (Requires Z_MIN_PROBE_REPEATABILITY_TEST)
  *
+<<<<<<< HEAD
  * M73  - Set the progress percentage. (Requires SET_PROGRESS_MANUALLY)
+=======
+ * M73  - Set the progress percentage. (Requires LCD_SET_PROGRESS_MANUALLY)
+>>>>>>> upstream/bugfix-2.0.x
  * M75  - Start the print job timer.
  * M76  - Pause the print job timer.
  * M77  - Stop the print job timer.
@@ -128,12 +132,19 @@
  * M84  - Disable steppers until next move, or use S<seconds> to specify an idle
  *        duration after which steppers should turn off. S0 disables the timeout.
  * M85  - Set inactivity shutdown timer with parameter S<seconds>. To disable set zero (default)
+<<<<<<< HEAD
  * M92  - Set planner.settings.axis_steps_per_mm for one or more axes. (Requires EDITABLE_STEPS_PER_UNIT)
  *
  * M100 - Watch Free Memory (for debugging) (Requires M100_FREE_MEMORY_WATCHER)
  *
  * M102 - Configure Bed Distance Sensor. (Requires BD_SENSOR)
  *
+=======
+ * M92  - Set planner.settings.axis_steps_per_mm for one or more axes.
+ *
+ * M100 - Watch Free Memory (for debugging) (Requires M100_FREE_MEMORY_WATCHER)
+ *
+>>>>>>> upstream/bugfix-2.0.x
  * M104 - Set extruder target temp.
  * M105 - Report current temperatures.
  * M106 - Set print fan speed.
@@ -143,7 +154,11 @@
  *        R<temp> Wait for extruder current temp to reach target temp. ** Wait for heating or cooling. **
  *        If AUTOTEMP is enabled, S<mintemp> B<maxtemp> F<factor>. Exit autotemp by any M109 without F
  *
+<<<<<<< HEAD
  * M110 - Get or set the current line number. (Used by host printing)
+=======
+ * M110 - Set the current line number. (Used by host printing)
+>>>>>>> upstream/bugfix-2.0.x
  * M111 - Set debug flags: "M111 S<flagbits>". See flag bits defined in enum.h.
  * M112 - Full Shutdown.
  *
@@ -157,7 +172,11 @@
  * M120 - Enable endstops detection.
  * M121 - Disable endstops detection.
  *
+<<<<<<< HEAD
  * M122 - Debug stepper (Requires at least one _DRIVER_TYPE defined as TMC2130/2160/5130/5160/2208/2209/2660)
+=======
+ * M122 - Debug stepper (Requires at least one _DRIVER_TYPE defined as TMC2130/2160/5130/5160/2208/2209/2660 or L6470)
+>>>>>>> upstream/bugfix-2.0.x
  * M123 - Report fan tachometers. (Requires En_FAN_TACHO_PIN) Optionally set auto-report interval. (Requires AUTO_REPORT_FANS)
  * M125 - Save current position and move to filament change position. (Requires PARK_HEAD_ON_PAUSE)
  *
@@ -260,8 +279,11 @@
  * M554 - Get or set IP gateway. (Requires enabled Ethernet port)
  * M569 - Enable stealthChop on an axis. (Requires at least one _DRIVER_TYPE to be TMC2130/2160/2208/2209/5130/5160)
  * M575 - Change the serial baud rate. (Requires BAUD_RATE_GCODE)
+<<<<<<< HEAD
  * M592 - Get or set nonlinear extrusion parameters. (Requires NONLINEAR_EXTRUSION)
  * M593 - Get or set input shaping parameters. (Requires INPUT_SHAPING_[XY])
+=======
+>>>>>>> upstream/bugfix-2.0.x
  * M600 - Pause for filament change: "M600 X<pos> Y<pos> Z<raise> E<first_retract> L<later_retract>". (Requires ADVANCED_PAUSE_FEATURE)
  * M603 - Configure filament change: "M603 T<tool> U<unload_length> L<load_length>". (Requires ADVANCED_PAUSE_FEATURE)
  * M605 - Set Dual X-Carriage movement mode: "M605 S<mode> [X<x_offset>] [R<temp_offset>]". (Requires DUAL_X_CARRIAGE)
@@ -292,7 +314,11 @@
  * M871 - Print/reset/clear first layer temperature offset values. (Requires PTC_PROBE, PTC_BED, or PTC_HOTEND)
  * M876 - Handle Prompt Response. (Requires HOST_PROMPT_SUPPORT and not EMERGENCY_PARSER)
  * M900 - Get or Set Linear Advance K-factor. (Requires LIN_ADVANCE)
+<<<<<<< HEAD
  * M906 - Set or get motor current in milliamps using axis codes XYZE, etc. Report values if no axis codes given. (Requires at least one _DRIVER_TYPE defined as TMC2130/2160/5130/5160/2208/2209/2660)
+=======
+ * M906 - Set or get motor current in milliamps using axis codes XYZE, etc. Report values if no axis codes given. (Requires at least one _DRIVER_TYPE defined as TMC2130/2160/5130/5160/2208/2209/2660 or L6470)
+>>>>>>> upstream/bugfix-2.0.x
  * M907 - Set digital trimpot motor current using axis codes. (Requires a board with digital trimpots)
  * M908 - Control digital trimpot directly. (Requires HAS_MOTOR_CURRENT_DAC or DIGIPOTSS_PIN)
  * M909 - Print digipot/DAC current value. (Requires HAS_MOTOR_CURRENT_DAC)
@@ -301,8 +327,15 @@
  * M912 - Clear stepper driver overtemperature pre-warn condition flag. (Requires at least one _DRIVER_TYPE defined as TMC2130/2160/5130/5160/2208/2209/2660)
  * M913 - Set HYBRID_THRESHOLD speed. (Requires HYBRID_THRESHOLD)
  * M914 - Set StallGuard sensitivity. (Requires SENSORLESS_HOMING or SENSORLESS_PROBING)
+<<<<<<< HEAD
  * M919 - Get or Set motor Chopper Times (time_off, hysteresis_end, hysteresis_start) using axis codes XYZE, etc. If no parameters are given, report. (Requires at least one _DRIVER_TYPE defined as TMC2130/2160/5130/5160/2208/2209/2660)
  * M936 - OTA update firmware. (Requires OTA_FIRMWARE_UPDATE)
+=======
+ * M916 - L6470 tuning: Increase KVAL_HOLD until thermal warning. (Requires at least one _DRIVER_TYPE L6470)
+ * M917 - L6470 tuning: Find minimum current thresholds. (Requires at least one _DRIVER_TYPE L6470)
+ * M918 - L6470 tuning: Increase speed until max or error. (Requires at least one _DRIVER_TYPE L6470)
+ * M919 - Get or Set motor Chopper Times (time_off, hysteresis_end, hysteresis_start) using axis codes XYZE, etc. If no parameters are given, report. (Requires at least one _DRIVER_TYPE defined as TMC2130/2160/5130/5160/2208/2209/2660)
+>>>>>>> upstream/bugfix-2.0.x
  * M951 - Set Magnetic Parking Extruder parameters. (Requires MAGNETIC_PARKING_EXTRUDER)
  * M3426 - Read MCP3426 ADC over I2C. (Requires HAS_MCP3426_ADC)
  * M7219 - Control Max7219 Matrix LEDs. (Requires MAX7219_GCODE)
@@ -342,6 +375,7 @@
   #define HAS_FAST_MOVES 1
 #endif
 
+<<<<<<< HEAD
 #if ENABLED(MARLIN_SMALL_BUILD)
   #define GCODE_ERR_MSG(V...) "?"
 #else
@@ -356,18 +390,31 @@ enum AxisRelative : uint8_t {
   , NUM_REL_MODES
 };
 typedef bits_t(NUM_REL_MODES) relative_t;
+=======
+enum AxisRelative : uint8_t {
+  LOGICAL_AXIS_LIST(REL_E, REL_X, REL_Y, REL_Z, REL_I, REL_J, REL_K)
+  #if HAS_EXTRUDERS
+    , E_MODE_ABS, E_MODE_REL
+  #endif
+};
+>>>>>>> upstream/bugfix-2.0.x
 
 extern const char G28_STR[];
 
 class GcodeSuite {
 public:
 
+<<<<<<< HEAD
   static relative_t axis_relative;
 
   GcodeSuite() { // Relative motion mode for each logical axis
     axis_relative = AxisBits(AXIS_RELATIVE_MODES).bits;
   }
 
+=======
+  static axis_bits_t axis_relative;
+
+>>>>>>> upstream/bugfix-2.0.x
   static bool axis_is_relative(const AxisEnum a) {
     #if HAS_EXTRUDERS
       if (a == E_AXIS) {
@@ -381,8 +428,12 @@ public:
     axis_relative = rel ? (0 LOGICAL_AXIS_GANG(
       | _BV(REL_E),
       | _BV(REL_X), | _BV(REL_Y), | _BV(REL_Z),
+<<<<<<< HEAD
       | _BV(REL_I), | _BV(REL_J), | _BV(REL_K),
       | _BV(REL_U), | _BV(REL_V), | _BV(REL_W)
+=======
+      | _BV(REL_I), | _BV(REL_J), | _BV(REL_K)
+>>>>>>> upstream/bugfix-2.0.x
     )) : 0;
   }
   #if HAS_EXTRUDERS
@@ -418,7 +469,11 @@ public:
   }
   FORCE_INLINE static void reset_stepper_timeout(const millis_t ms=millis()) { previous_move_ms = ms; }
 
+<<<<<<< HEAD
   #if HAS_DISABLE_IDLE_AXES
+=======
+  #if HAS_DISABLE_INACTIVE_AXIS
+>>>>>>> upstream/bugfix-2.0.x
     static millis_t stepper_inactive_time;
     FORCE_INLINE static bool stepper_inactive_timeout(const millis_t ms=millis()) {
       return ELAPSED(ms, previous_move_ms + stepper_inactive_time);
@@ -491,9 +546,12 @@ public:
 private:
 
   friend class MarlinSettings;
+<<<<<<< HEAD
   #if ENABLED(ARC_SUPPORT)
     friend void plan_arc(const xyze_pos_t&, const ab_float_t&, const bool, const uint8_t);
   #endif
+=======
+>>>>>>> upstream/bugfix-2.0.x
 
   #if ENABLED(MARLIN_DEV_MODE)
     static void D(const int16_t dcode);
@@ -600,7 +658,11 @@ private:
     static void G59();
   #endif
 
+<<<<<<< HEAD
   #if ALL(PTC_PROBE, PTC_BED)
+=======
+  #if BOTH(PTC_PROBE, PTC_BED)
+>>>>>>> upstream/bugfix-2.0.x
     static void G76();
   #endif
 
@@ -632,11 +694,19 @@ private:
     static void M7();
   #endif
 
+<<<<<<< HEAD
   #if ANY(AIR_ASSIST, COOLANT_FLOOD)
     static void M8();
   #endif
 
   #if ANY(AIR_ASSIST, COOLANT_CONTROL)
+=======
+  #if EITHER(AIR_ASSIST, COOLANT_FLOOD)
+    static void M8();
+  #endif
+
+  #if EITHER(AIR_ASSIST, COOLANT_CONTROL)
+>>>>>>> upstream/bugfix-2.0.x
     static void M9();
   #endif
 
@@ -673,7 +743,11 @@ private:
 
   static void M31();
 
+<<<<<<< HEAD
   #if HAS_MEDIA
+=======
+  #if ENABLED(SDSUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
     #if HAS_MEDIA_SUBCALLS
       static void M32();
     #endif
@@ -719,6 +793,7 @@ private:
   #endif
 
   static void M85();
+<<<<<<< HEAD
 
   #if ENABLED(HOTEND_IDLE_TIMEOUT)
     static void M86();
@@ -730,16 +805,24 @@ private:
     static void M92();
     static void M92_report(const bool forReplay=true, const int8_t e=-1);
   #endif
+=======
+  static void M92();
+  static void M92_report(const bool forReplay=true, const int8_t e=-1);
+>>>>>>> upstream/bugfix-2.0.x
 
   #if ENABLED(M100_FREE_MEMORY_WATCHER)
     static void M100();
   #endif
 
+<<<<<<< HEAD
   #if ENABLED(BD_SENSOR)
     static void M102();
   #endif
 
   #if HAS_HOTEND
+=======
+  #if HAS_EXTRUDERS
+>>>>>>> upstream/bugfix-2.0.x
     static void M104_M109(const bool isM109);
     FORCE_INLINE static void M104() { M104_M109(false); }
     FORCE_INLINE static void M109() { M104_M109(true); }
@@ -769,10 +852,14 @@ private:
   #endif
 
   static void M114();
+<<<<<<< HEAD
 
   #if ENABLED(CAPABILITIES_REPORT)
     static void M115();
   #endif
+=======
+  static void M115();
+>>>>>>> upstream/bugfix-2.0.x
 
   #if HAS_STATUS_MESSAGE
     static void M117();
@@ -840,7 +927,11 @@ private:
     static void M154();
   #endif
 
+<<<<<<< HEAD
   #if ALL(AUTO_REPORT_TEMPERATURES, HAS_TEMP_SENSOR)
+=======
+  #if BOTH(AUTO_REPORT_TEMPERATURES, HAS_TEMP_SENSOR)
+>>>>>>> upstream/bugfix-2.0.x
     static void M155();
   #endif
 
@@ -873,7 +964,11 @@ private:
   static void M205();
   static void M205_report(const bool forReplay=true);
 
+<<<<<<< HEAD
   #if HAS_HOME_OFFSET
+=======
+  #if HAS_M206_COMMAND
+>>>>>>> upstream/bugfix-2.0.x
     static void M206();
     static void M206_report(const bool forReplay=true);
   #endif
@@ -921,7 +1016,11 @@ private:
     static void M250_report(const bool forReplay=true);
   #endif
 
+<<<<<<< HEAD
   #if ENABLED(EDITABLE_DISPLAY_TIMEOUT)
+=======
+  #if HAS_GCODE_M255
+>>>>>>> upstream/bugfix-2.0.x
     static void M255();
     static void M255_report(const bool forReplay=true);
   #endif
@@ -1056,7 +1155,11 @@ private:
     static void M425_report(const bool forReplay=true);
   #endif
 
+<<<<<<< HEAD
   #if HAS_HOME_OFFSET
+=======
+  #if HAS_M206_COMMAND
+>>>>>>> upstream/bugfix-2.0.x
     static void M428();
   #endif
 
@@ -1148,7 +1251,11 @@ private:
     static void M665_report(const bool forReplay=true);
   #endif
 
+<<<<<<< HEAD
   #if ANY(DELTA, HAS_EXTRA_ENDSTOPS)
+=======
+  #if EITHER(DELTA, HAS_EXTRA_ENDSTOPS)
+>>>>>>> upstream/bugfix-2.0.x
     static void M666();
     static void M666_report(const bool forReplay=true);
   #endif
@@ -1221,6 +1328,17 @@ private:
     static void M919();
   #endif
 
+<<<<<<< HEAD
+=======
+  #if HAS_L64XX
+    static void M122();
+    static void M906();
+    static void M916();
+    static void M917();
+    static void M918();
+  #endif
+
+>>>>>>> upstream/bugfix-2.0.x
   #if HAS_MOTOR_CURRENT_SPI || HAS_MOTOR_CURRENT_PWM || HAS_MOTOR_CURRENT_I2C || HAS_MOTOR_CURRENT_DAC
     static void M907();
     #if HAS_MOTOR_CURRENT_SPI || HAS_MOTOR_CURRENT_PWM
@@ -1273,7 +1391,11 @@ private:
     static void M423_report(const bool forReplay=true);
   #endif
 
+<<<<<<< HEAD
   #if HAS_MEDIA
+=======
+  #if ENABLED(SDSUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
     static void M1001();
   #endif
 
@@ -1281,10 +1403,13 @@ private:
     static void M1002();
   #endif
 
+<<<<<<< HEAD
   #if ENABLED(ONE_CLICK_PRINT)
     static void M1003();
   #endif
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
   #if ENABLED(UBL_MESH_WIZARD)
     static void M1004();
   #endif

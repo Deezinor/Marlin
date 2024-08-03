@@ -141,7 +141,11 @@
 
 #define SDCARD_CONNECTION                ONBOARD
 
+<<<<<<< HEAD
 #define SD_DETECT_PIN                      P0_27  // SD_CD
+=======
+//#define SD_DETECT_PIN                    P0_25  // SD_CD
+>>>>>>> upstream/bugfix-2.0.x
 #define SD_SCK_PIN                         P0_07
 #define SD_MISO_PIN                        P0_08
 #define SD_MOSI_PIN                        P0_09
@@ -188,7 +192,11 @@
    */
   #define BEEPER_PIN                 EXP1_01_PIN
   #define LCD_PINS_RS                EXP1_07_PIN
+<<<<<<< HEAD
   #define LCD_PINS_EN                EXP1_08_PIN
+=======
+  #define LCD_PINS_ENABLE            EXP1_08_PIN
+>>>>>>> upstream/bugfix-2.0.x
   #define LCD_PINS_D4                EXP1_06_PIN
   #define KILL_PIN                   EXP1_04_PIN
 
@@ -217,7 +225,11 @@
 
 #endif
 
+<<<<<<< HEAD
 #if ANY(CR10_STOCKDISPLAY, MKS_MINI_12864)
+=======
+#if EITHER(CR10_STOCKDISPLAY, MKS_MINI_12864)
+>>>>>>> upstream/bugfix-2.0.x
   #define BTN_EN1                    EXP1_03_PIN
   #define BTN_EN2                    EXP1_05_PIN
   #define BTN_ENC                    EXP1_02_PIN

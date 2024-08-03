@@ -59,9 +59,12 @@
  *  I[position] - Move to this I position (instead of NOZZLE_PARK_POINT.i)
  *  J[position] - Move to this J position (instead of NOZZLE_PARK_POINT.j)
  *  K[position] - Move to this K position (instead of NOZZLE_PARK_POINT.k)
+<<<<<<< HEAD
  *  C[position] - Move to this U position (instead of NOZZLE_PARK_POINT.u)
  *  H[position] - Move to this V position (instead of NOZZLE_PARK_POINT.v)
  *  O[position] - Move to this W position (instead of NOZZLE_PARK_POINT.w)
+=======
+>>>>>>> upstream/bugfix-2.0.x
  *  U[distance] - Retract distance for removal (manual reload)
  *  L[distance] - Extrude distance for insertion (manual reload)
  *  B[count]    - Number of times to beep, -1 for indefinite (if equipped with a buzzer)
@@ -129,10 +132,14 @@ void GcodeSuite::M600() {
     if (parser.seenval('Z')) park_point.z = parser.linearval('Z'),    // Lift Z axis
     if (parser.seenval('I')) park_point.i = parser.linearval('I'),
     if (parser.seenval('J')) park_point.j = parser.linearval('J'),
+<<<<<<< HEAD
     if (parser.seenval('K')) park_point.k = parser.linearval('K'),
     if (parser.seenval('C')) park_point.u = parser.linearval('C'),    // U axis
     if (parser.seenval('H')) park_point.v = parser.linearval('H'),    // V axis
     if (parser.seenval('O')) park_point.w = parser.linearval('O')     // W axis
+=======
+    if (parser.seenval('K')) park_point.k = parser.linearval('K')
+>>>>>>> upstream/bugfix-2.0.x
   );
 
   #if HAS_HOTEND_OFFSET && NONE(DUAL_X_CARRIAGE, DELTA)

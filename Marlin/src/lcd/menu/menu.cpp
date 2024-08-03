@@ -48,7 +48,11 @@
 ////////////////////////////////////////////
 
 #if HAS_LEVELING && ANY(LCD_BED_TRAMMING, PROBE_OFFSET_WIZARD, X_AXIS_TWIST_COMPENSATION)
+<<<<<<< HEAD
   bool menu_leveling_was_active; // = false
+=======
+  bool leveling_was_active; // = false
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 #if ANY(PROBE_MANUALLY, MESH_BED_LEVELING, X_AXIS_TWIST_COMPENSATION)
   uint8_t manual_probe_index; // = 0
@@ -61,7 +65,11 @@ typedef struct {
   screenFunc_t menu_function;     // The screen's function
   uint32_t encoder_position;      // The position of the encoder
   int8_t top_line, items;         // The amount of scroll, and the number of items
+<<<<<<< HEAD
   #if HAS_SCREEN_TIMEOUT
+=======
+  #if SCREENS_CAN_TIME_OUT
+>>>>>>> upstream/bugfix-2.0.x
     bool sticky;                  // The screen is sticky
   #endif
 } menuPosition;
@@ -89,7 +97,11 @@ void MarlinUI::return_to_status() { goto_screen(status_screen); }
 
 void MarlinUI::push_current_screen() {
   if (screen_history_depth < COUNT(screen_history))
+<<<<<<< HEAD
     screen_history[screen_history_depth++] = { currentScreen, encoderPosition, encoderTopLine, screen_items OPTARG(HAS_SCREEN_TIMEOUT, screen_is_sticky()) };
+=======
+    screen_history[screen_history_depth++] = { currentScreen, encoderPosition, encoderTopLine, screen_items OPTARG(SCREENS_CAN_TIME_OUT, screen_is_sticky()) };
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 void MarlinUI::_goto_previous_screen(TERN_(TURBO_BACK_MENU_ITEM, const bool is_back/*=false*/)) {
@@ -102,7 +114,11 @@ void MarlinUI::_goto_previous_screen(TERN_(TURBO_BACK_MENU_ITEM, const bool is_b
       is_back ? 0 : sh.top_line,
       sh.items
     );
+<<<<<<< HEAD
     defer_status_screen(TERN_(HAS_SCREEN_TIMEOUT, sh.sticky));
+=======
+    defer_status_screen(TERN_(SCREENS_CAN_TIME_OUT, sh.sticky));
+>>>>>>> upstream/bugfix-2.0.x
   }
   else
     return_to_status();
@@ -117,7 +133,12 @@ void MenuEditItemBase::edit_screen(strfunc_t strfunc, loadfunc_t loadfunc) {
   // Reset repeat_delay for Touch Buttons
   TERN_(HAS_TOUCH_BUTTONS, ui.repeat_delay = BUTTON_DELAY_EDIT);
   // Constrain ui.encoderPosition to 0 ... maxEditValue (calculated in encoder steps)
+<<<<<<< HEAD
   ui.encoderPosition = constrain(int32_t(ui.encoderPosition), 0, maxEditValue);
+=======
+  if (int32_t(ui.encoderPosition) < 0) ui.encoderPosition = 0;
+  if (int32_t(ui.encoderPosition) > maxEditValue) ui.encoderPosition = maxEditValue;
+>>>>>>> upstream/bugfix-2.0.x
   // If drawing is flagged then redraw the (whole) edit screen
   if (ui.should_draw())
     draw_edit_screen(strfunc(ui.encoderPosition + minEditValue));
@@ -168,6 +189,9 @@ void MenuEditItemBase::goto_edit_screen(
  */
 void MarlinUI::goto_screen(screenFunc_t screen, const uint16_t encoder/*=0*/, const uint8_t top/*=0*/, const uint8_t items/*=0*/) {
   if (currentScreen != screen) {
+    thermalManager.set_menu_cold_override(false);
+
+    TERN_(IS_DWIN_MARLINUI, did_first_redraw = false);
 
     wake_display();
 
@@ -222,7 +246,10 @@ void MarlinUI::goto_screen(screenFunc_t screen, const uint16_t encoder/*=0*/, co
     TERN_(HAS_MARLINUI_U8GLIB, drawing_screen = false);
 
     TERN_(HAS_MARLINUI_MENU, encoder_direction_normal());
+<<<<<<< HEAD
     enable_encoder_multiplier(false);
+=======
+>>>>>>> upstream/bugfix-2.0.x
 
     set_selection(false);
   }
@@ -274,6 +301,16 @@ void scroll_screen(const uint8_t limit, const bool is_menu) {
     encoderTopLine = encoderLine;
 }
 
+<<<<<<< HEAD
+=======
+#if HAS_SOUND
+  void MarlinUI::completion_feedback(const bool good/*=true*/) {
+    TERN_(HAS_TOUCH_SLEEP, wakeup_screen()); // Wake up on rotary encoder click...
+    if (good) OKAY_BUZZ(); else ERR_BUZZ();
+  }
+#endif
+
+>>>>>>> upstream/bugfix-2.0.x
 #if HAS_LINE_TO_Z
 
   void line_to_z(const_float_t z) {
@@ -316,7 +353,11 @@ void scroll_screen(const uint8_t limit, const bool is_menu) {
     if (ui.should_draw()) {
       if (do_probe) {
         MenuEditItemBase::draw_edit_screen(GET_TEXT_F(MSG_ZPROBE_ZOFFSET), BABYSTEP_TO_STR(probe.offset.z));
+<<<<<<< HEAD
         TERN_(BABYSTEP_GFX_OVERLAY, ui.zoffset_overlay(probe.offset.z));
+=======
+        TERN_(BABYSTEP_ZPROBE_GFX_OVERLAY, ui.zoffset_overlay(probe.offset.z));
+>>>>>>> upstream/bugfix-2.0.x
       }
       else {
         #if ENABLED(BABYSTEP_HOTEND_Z_OFFSET)
@@ -355,7 +396,11 @@ bool MarlinUI::update_selection() {
 void MenuItem_confirm::select_screen(
   FSTR_P const yes, FSTR_P const no,
   selectFunc_t yesFunc, selectFunc_t noFunc,
+<<<<<<< HEAD
   FSTR_P const fpre, const char * const string/*=nullptr*/, FSTR_P const fsuf/*=nullptr*/
+=======
+  FSTR_P const pref, const char * const string/*=nullptr*/, FSTR_P const suff/*=nullptr*/
+>>>>>>> upstream/bugfix-2.0.x
 ) {
   ui.defer_status_screen();
   const bool ui_selection = !yes ? false : !no || ui.update_selection(),

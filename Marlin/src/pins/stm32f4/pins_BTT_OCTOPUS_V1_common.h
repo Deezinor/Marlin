@@ -21,6 +21,7 @@
  */
 #pragma once
 
+<<<<<<< HEAD
 // The Octopus Pro V1 has shipped with both STM32F4 and STM32H7 MCUs.
 // Ensure the correct env_validate.h file is included based on the build environment used.
 #if NOT_TARGET(STM32H7)
@@ -28,11 +29,15 @@
 #else
   #include "../stm32h7/env_validate.h"
 #endif
+=======
+#include "env_validate.h"
+>>>>>>> upstream/bugfix-2.0.x
 
 #define HAS_OTG_USB_HOST_SUPPORT                  // USB Flash Drive support
 #define USES_DIAG_JUMPERS
 
 // Onboard I2C EEPROM
+<<<<<<< HEAD
 #if ANY(NO_EEPROM_SELECTED, I2C_EEPROM)
   #undef NO_EEPROM_SELECTED
   #define I2C_EEPROM
@@ -44,6 +49,15 @@
 
 // Avoid conflict with TIMER_TONE
 #define STEP_TIMER 8
+=======
+#define I2C_EEPROM
+#define MARLIN_EEPROM_SIZE                0x1000  // 4KB (AT24C32)
+#define I2C_SCL_PIN                         PB8
+#define I2C_SDA_PIN                         PB9
+
+// Avoid conflict with TIMER_TONE
+#define STEP_TIMER 10
+>>>>>>> upstream/bugfix-2.0.x
 
 //
 // Servos
@@ -51,6 +65,14 @@
 #define SERVO0_PIN                          PB6
 
 //
+<<<<<<< HEAD
+=======
+// Misc. Functions
+//
+#define LED_PIN                             PA13
+
+//
+>>>>>>> upstream/bugfix-2.0.x
 // Trinamic Stallguard pins
 //
 #define X_DIAG_PIN                          PG6   // X-STOP
@@ -63,6 +85,33 @@
 #define E3_DIAG_PIN                         PG15  // E3DET
 
 //
+<<<<<<< HEAD
+=======
+// Z Probe (when not Z_MIN_PIN)
+//
+#ifndef Z_MIN_PROBE_PIN
+  #define Z_MIN_PROBE_PIN                   PB7
+#endif
+
+//
+// Check for additional used endstop pins
+//
+#if HAS_EXTRA_ENDSTOPS
+  #define _ENDSTOP_IS_ANY(ES) X2_USE_ENDSTOP == ES || Y2_USE_ENDSTOP == ES || Z2_USE_ENDSTOP == ES || Z3_USE_ENDSTOP == ES || Z4_USE_ENDSTOP == ES
+  #if _ENDSTOP_IS_ANY(_XMIN_) || _ENDSTOP_IS_ANY(_XMAX_)
+    #define NEEDS_X_MINMAX 1
+  #endif
+  #if _ENDSTOP_IS_ANY(_YMIN_) || _ENDSTOP_IS_ANY(_YMAX_)
+    #define NEEDS_Y_MINMAX 1
+  #endif
+  #if _ENDSTOP_IS_ANY(_ZMIN_) || _ENDSTOP_IS_ANY(_ZMAX_)
+    #define NEEDS_Z_MINMAX 1
+  #endif
+  #undef _ENDSTOP_IS_ANY
+#endif
+
+//
+>>>>>>> upstream/bugfix-2.0.x
 // Limit Switches
 //
 #ifdef X_STALL_SENSITIVITY
@@ -72,7 +121,11 @@
   #else
     #define X_MIN_PIN                E0_DIAG_PIN  // E0DET
   #endif
+<<<<<<< HEAD
 #elif NEEDS_X_MINMAX
+=======
+#elif EITHER(DUAL_X_CARRIAGE, NEEDS_X_MINMAX)
+>>>>>>> upstream/bugfix-2.0.x
   #ifndef X_MIN_PIN
     #define X_MIN_PIN                 X_DIAG_PIN  // X-STOP
   #endif
@@ -119,6 +172,7 @@
   #define Z_STOP_PIN                  Z_DIAG_PIN  // Z-STOP
 #endif
 
+<<<<<<< HEAD
 //
 // Z Probe (when not Z_MIN_PIN)
 //
@@ -132,6 +186,11 @@
 #if ENABLED(PROBE_ENABLE_DISABLE) && !defined(PROBE_ENABLE_PIN)
   #define PROBE_ENABLE_PIN            SERVO0_PIN
 #endif
+=======
+#undef NEEDS_X_MINMAX
+#undef NEEDS_Y_MINMAX
+#undef NEEDS_Z_MINMAX
+>>>>>>> upstream/bugfix-2.0.x
 
 //
 // Filament Runout Sensor
@@ -156,11 +215,14 @@
 #endif
 
 //
+<<<<<<< HEAD
 // Misc. Functions
 //
 #define LED_PIN                             PA13
 
 //
+=======
+>>>>>>> upstream/bugfix-2.0.x
 // Steppers
 //
 #define X_STEP_PIN                          PF13  // MOTOR 0
@@ -237,7 +299,11 @@
 #define HEATER_2_PIN                        PB10  // Heater2
 #define HEATER_3_PIN                        PB11  // Heater3
 
+<<<<<<< HEAD
 #define FAN0_PIN                            PA8   // Fan0
+=======
+#define FAN_PIN                             PA8   // Fan0
+>>>>>>> upstream/bugfix-2.0.x
 #define FAN1_PIN                            PE5   // Fan1
 #define FAN2_PIN                            PD12  // Fan2
 #define FAN3_PIN                            PD13  // Fan3
@@ -248,7 +314,11 @@
 // SD Support
 //
 #ifndef SDCARD_CONNECTION
+<<<<<<< HEAD
   #if HAS_WIRED_LCD && DISABLED(NO_LCD_SDCARD)
+=======
+  #if HAS_WIRED_LCD
+>>>>>>> upstream/bugfix-2.0.x
     #define SDCARD_CONNECTION                LCD
   #else
     #define SDCARD_CONNECTION            ONBOARD
@@ -256,6 +326,7 @@
 #endif
 
 //
+<<<<<<< HEAD
 // SPI pins for TMC2130 stepper drivers
 //
 #ifndef TMC_SPI_MOSI
@@ -266,6 +337,20 @@
 #endif
 #ifndef TMC_SPI_SCK
   #define TMC_SPI_SCK                       PA5
+=======
+// Software SPI pins for TMC2130 stepper drivers
+//
+#if ENABLED(TMC_USE_SW_SPI)
+  #ifndef TMC_SW_MOSI
+    #define TMC_SW_MOSI                     PA7
+  #endif
+  #ifndef TMC_SW_MISO
+    #define TMC_SW_MISO                     PA6
+  #endif
+  #ifndef TMC_SW_SCK
+    #define TMC_SW_SCK                      PA5
+  #endif
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #if HAS_TMC_UART
@@ -312,11 +397,16 @@
   #define E3_SERIAL_RX_PIN      E3_SERIAL_TX_PIN
 
   // Reduce baud rate to improve software serial reliability
+<<<<<<< HEAD
   #ifndef TMC_BAUD_RATE
     #define TMC_BAUD_RATE                  19200
   #endif
 
 #endif // HAS_TMC_UART
+=======
+  #define TMC_BAUD_RATE                    19200
+#endif
+>>>>>>> upstream/bugfix-2.0.x
 
 /**               ------                                      ------
  * (BEEPER) PE8  | 1  2 | PE7  (BTN_ENC)         (MISO) PA6  | 1  2 | PA5  (SCK)
@@ -350,7 +440,11 @@
 // Must use soft SPI because Marlin's default hardware SPI is tied to LCD's EXP2
 //
 #if SD_CONNECTION_IS(ONBOARD)
+<<<<<<< HEAD
   #define ONBOARD_SDIO                            // Use SDIO for onboard SD
+=======
+  #define SDIO_SUPPORT                            // Use SDIO for onboard SD
+>>>>>>> upstream/bugfix-2.0.x
   #ifndef SD_DETECT_STATE
     #define SD_DETECT_STATE HIGH
   #elif SD_DETECT_STATE == LOW
@@ -418,15 +512,21 @@
 #endif // BTT_MOTOR_EXPANSION
 
 //
+<<<<<<< HEAD
 // LCD / Controller
 //
 
+=======
+// LCDs and Controllers
+//
+>>>>>>> upstream/bugfix-2.0.x
 #if IS_TFTGLCD_PANEL
 
   #if ENABLED(TFTGLCD_PANEL_SPI)
     #define TFTGLCD_CS               EXP2_03_PIN
   #endif
 
+<<<<<<< HEAD
 #elif HAS_DWIN_E3V2 || IS_DWIN_MARLINUI
   /**
    *        ------                 ------            ---
@@ -449,6 +549,8 @@
   #define BTN_EN2                    EXP1_07_PIN
   #define BTN_ENC                    EXP1_05_PIN
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #elif HAS_WIRED_LCD
 
   #define BEEPER_PIN                 EXP1_01_PIN
@@ -461,7 +563,11 @@
     #define BTN_EN1                  EXP1_03_PIN
     #define BTN_EN2                  EXP1_05_PIN
 
+<<<<<<< HEAD
     #define LCD_PINS_EN              EXP1_08_PIN
+=======
+    #define LCD_PINS_ENABLE          EXP1_08_PIN
+>>>>>>> upstream/bugfix-2.0.x
     #define LCD_PINS_D4              EXP1_06_PIN
 
   #else
@@ -471,7 +577,11 @@
     #define BTN_EN1                  EXP2_03_PIN
     #define BTN_EN2                  EXP2_05_PIN
 
+<<<<<<< HEAD
     #define LCD_PINS_EN              EXP1_03_PIN
+=======
+    #define LCD_PINS_ENABLE          EXP1_03_PIN
+>>>>>>> upstream/bugfix-2.0.x
     #define LCD_PINS_D4              EXP1_05_PIN
 
     #if ENABLED(FYSETC_MINI_12864)
@@ -479,7 +589,11 @@
       #define DOGLCD_A0              EXP1_04_PIN
       //#define LCD_BACKLIGHT_PIN           -1
       #define LCD_RESET_PIN          EXP1_05_PIN  // Must be high or open for LCD to operate normally.
+<<<<<<< HEAD
       #if ANY(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
+=======
+      #if EITHER(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
+>>>>>>> upstream/bugfix-2.0.x
         #ifndef RGB_LED_R_PIN
           #define RGB_LED_R_PIN      EXP1_06_PIN
         #endif
@@ -506,8 +620,12 @@
     #endif
 
   #endif
+<<<<<<< HEAD
 
 #endif // HAS_WIRED_LCD
+=======
+#endif  // HAS_WIRED_LCD
+>>>>>>> upstream/bugfix-2.0.x
 
 // Alter timing for graphical display
 #if IS_U8GLIB_ST7920
@@ -537,6 +655,7 @@
 //
 // NeoPixel LED
 //
+<<<<<<< HEAD
 #ifndef BOARD_NEOPIXEL_PIN
   #define BOARD_NEOPIXEL_PIN                PB0
 #endif
@@ -566,3 +685,32 @@
   #define ESP_WIFI_MODULE_GPIO0_PIN         PD7
   #define ESP_WIFI_MODULE_GPIO4_PIN         PD10
 #endif
+=======
+#ifndef NEOPIXEL_PIN
+  #define NEOPIXEL_PIN                      PB0
+#endif
+
+//
+// WIFI
+//
+
+/**
+ *                      -------
+ *            GND | 9  |       | 8 | 3.3V
+ *  (ESP-CS) PB12 | 10 |       | 7 | PB15 (ESP-MOSI)
+ *           3.3V | 11 |       | 6 | PB14 (ESP-MISO)
+ * (ESP-IO0)  PD7 | 12 |       | 5 | PB13 (ESP-CLK)
+ * (ESP-IO4) PD10 | 13 |       | 4 | --
+ *             -- | 14 |       | 3 | PE15 (ESP-EN)
+ *  (ESP-RX)  PD8 | 15 |       | 2 | --
+ *  (ESP-TX)  PD9 | 16 |       | 1 | PE14 (ESP-RST)
+ *                      -------
+ *                       WIFI
+ */
+#define ESP_WIFI_MODULE_COM                    3  // Must also set either SERIAL_PORT or SERIAL_PORT_2 to this
+#define ESP_WIFI_MODULE_BAUDRATE        BAUDRATE  // Must use same BAUDRATE as SERIAL_PORT & SERIAL_PORT_2
+#define ESP_WIFI_MODULE_RESET_PIN           PG7
+#define ESP_WIFI_MODULE_ENABLE_PIN          PG8
+#define ESP_WIFI_MODULE_GPIO0_PIN           PD7
+#define ESP_WIFI_MODULE_GPIO4_PIN           PD10
+>>>>>>> upstream/bugfix-2.0.x

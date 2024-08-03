@@ -23,7 +23,10 @@
 
 /**
  * GMARSH X6 Rev.1 pin assignments
+<<<<<<< HEAD
  * Schematic: https://github.com/gmarsh/gmarsh_x6/blob/master/armprinter_2208_1heater.pdf
+=======
+>>>>>>> upstream/bugfix-2.0.x
  */
 
 #include "env_validate.h"

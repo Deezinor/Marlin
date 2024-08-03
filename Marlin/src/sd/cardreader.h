@@ -31,12 +31,24 @@ extern const char M23_STR[], M24_STR[];
   #if ENABLED(SDSORT_DYNAMIC_RAM)
     #define SD_RESORT 1
   #endif
+<<<<<<< HEAD
   #ifndef SDSORT_FOLDERS
     #define SDSORT_FOLDERS 0
   #endif
   #if SDSORT_FOLDERS || ENABLED(SDSORT_GCODE)
     #define HAS_FOLDER_SORTING 1
   #endif
+=======
+  #if FOLDER_SORTING || ENABLED(SDSORT_GCODE)
+    #define HAS_FOLDER_SORTING 1
+  #endif
+#endif
+
+#if ENABLED(SDCARD_RATHERRECENTFIRST) && DISABLED(SDCARD_SORT_ALPHA)
+  #define SD_ORDER(N,C) ((C) - 1 - (N))
+#else
+  #define SD_ORDER(N,C) N
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #define MAX_DIR_DEPTH     10       // Maximum folder depth
@@ -130,12 +142,15 @@ public:
     static void autofile_begin();   // Begin check. Called automatically after boot-up.
     static bool autofile_check();   // Check for the next auto-start file and run it.
     static void autofile_cancel() { autofile_index = 0; }
+<<<<<<< HEAD
   #endif
 
   #if ENABLED(ONE_CLICK_PRINT)
     static bool one_click_check();  // Check for the newest file and prompt to run it.
     static void diveToNewestFile(MediaFile parent, uint32_t &compareDateTime, MediaFile &outdir, char * const outname);
     static bool selectNewestFile();
+=======
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 
   // Basic file ops
@@ -158,7 +173,11 @@ public:
   static int16_t get_num_items();
 
   // Select a file
+<<<<<<< HEAD
   static void selectFileByIndex(const int16_t nr);
+=======
+  static void selectFileByIndex(const uint16_t nr);
+>>>>>>> upstream/bugfix-2.0.x
   static void selectFileByName(const char * const match);  // (working directory only)
 
   // Print job
@@ -192,19 +211,32 @@ public:
    * Relative paths apply to the workDir.
    *
    * update_cwd: Pass 'true' to update the workDir on success.
+<<<<<<< HEAD
    *   inDirPtr: On exit your pointer points to the target MediaFile.
+=======
+   *   inDirPtr: On exit your pointer points to the target SdFile.
+>>>>>>> upstream/bugfix-2.0.x
    *             A nullptr indicates failure.
    *       path: Start with '/' for abs path. End with '/' to get a folder ref.
    *       echo: Set 'true' to print the path throughout the loop.
    */
+<<<<<<< HEAD
   static const char* diveToFile(const bool update_cwd, MediaFile* &inDirPtr, const char * const path, const bool echo=false);
+=======
+  static const char* diveToFile(const bool update_cwd, SdFile* &inDirPtr, const char * const path, const bool echo=false);
+>>>>>>> upstream/bugfix-2.0.x
 
   #if ENABLED(SDCARD_SORT_ALPHA)
     static void presort();
     static void selectFileByIndexSorted(const int16_t nr);
     #if ENABLED(SDSORT_GCODE)
+<<<<<<< HEAD
       FORCE_INLINE static void setSortOn(const SortFlag f) { sort_alpha = (f == AS_ALSO_REV) ? AS_REV : f; presort(); }
       FORCE_INLINE static void setSortFolders(const int8_t i) { sort_folders = i; presort(); }
+=======
+      FORCE_INLINE static void setSortOn(bool b)        { sort_alpha   = b; presort(); }
+      FORCE_INLINE static void setSortFolders(int i)    { sort_folders = i; presort(); }
+>>>>>>> upstream/bugfix-2.0.x
       //FORCE_INLINE static void setSortReverse(bool b) { sort_reverse = b; }
     #endif
   #else
@@ -213,7 +245,17 @@ public:
     }
   #endif
 
+<<<<<<< HEAD
   static void ls(const uint8_t lsflags=0);
+=======
+  static void ls(
+    TERN_(CUSTOM_FIRMWARE_UPLOAD, const bool onlyBin=false)
+    #if BOTH(CUSTOM_FIRMWARE_UPLOAD, LONG_FILENAME_HOST_SUPPORT)
+      ,
+    #endif
+    TERN_(LONG_FILENAME_HOST_SUPPORT, const bool includeLongNames=false)
+  );
+>>>>>>> upstream/bugfix-2.0.x
 
   #if ENABLED(POWER_LOSS_RECOVERY)
     static bool jobRecoverFileExists();
@@ -227,7 +269,11 @@ public:
 
   // Current Working Dir - Set by cd, cdup, cdroot, and diveToFile(true, ...)
   static char* getWorkDirName()  { workDir.getDosName(filename); return filename; }
+<<<<<<< HEAD
   static MediaFile& getWorkDir()    { return workDir.isOpen() ? workDir : root; }
+=======
+  static SdFile& getWorkDir()    { return workDir.isOpen() ? workDir : root; }
+>>>>>>> upstream/bugfix-2.0.x
 
   // Print File stats
   static uint32_t getFileSize()  { return filesize; }
@@ -345,11 +391,21 @@ private:
   // Directory items
   //
   static bool is_visible_entity(const dir_t &p OPTARG(CUSTOM_FIRMWARE_UPLOAD, const bool onlyBin=false));
+<<<<<<< HEAD
   static int16_t countVisibleItems(MediaFile dir);
   static void selectByIndex(MediaFile dir, const int16_t index);
   static void selectByName(MediaFile dir, const char * const match);
   static void printListing(
     MediaFile parent, const char * const prepend, const uint8_t lsflags
+=======
+  static int countItems(SdFile dir);
+  static void selectByIndex(SdFile dir, const uint8_t index);
+  static void selectByName(SdFile dir, const char * const match);
+  static void printListing(
+    SdFile parent, const char * const prepend
+    OPTARG(CUSTOM_FIRMWARE_UPLOAD, const bool onlyBin=false)
+    OPTARG(LONG_FILENAME_HOST_SUPPORT, const bool includeLongNames=false)
+>>>>>>> upstream/bugfix-2.0.x
     OPTARG(LONG_FILENAME_HOST_SUPPORT, const char * const prependLong=nullptr)
   );
 

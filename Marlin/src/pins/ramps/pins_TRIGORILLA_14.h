@@ -41,6 +41,7 @@
 //
 // PWM FETS
 //
+<<<<<<< HEAD
 #define MOSFET_B_PIN                          45  // HEATER1
 
 //
@@ -102,6 +103,45 @@
 #define EXP2_06_PIN                           51  // MOSI
 #define EXP2_07_PIN                           49  // SD_DET
 #define EXP2_08_PIN                           41  // KILL
+=======
+#if EITHER(FET_ORDER_EEF, FET_ORDER_EEB)
+  #define MOSFET_B_PIN                        45  // HEATER1
+#elif FET_ORDER_EFB
+  #define MOSFET_B_PIN                         9  // FAN0
+#else
+  #define MOSFET_B_PIN                         7  // FAN1
+#endif
+
+#if FET_ORDER_EEB
+  #define MOSFET_C_PIN                         8  // BED
+#elif FET_ORDER_EFB
+  #if DISABLED(ANYCUBIC_LCD_CHIRON)
+    #define MOSFET_C_PIN                       8
+  #else
+    #define MOSFET_C_PIN                      45
+  #endif
+#else                                             // EEF, EFF
+  #define MOSFET_C_PIN                         9
+#endif
+
+#if FET_ORDER_EEB
+  #define FAN_PIN                              9  // Override pin 4 in pins_RAMPS.h
+#endif
+
+//
+// Heaters / Fans
+//
+#if ANY(FET_ORDER_EEF, FET_ORDER_EEB, FET_ORDER_EFB)
+  #define FAN1_PIN                             7
+#endif
+#define FAN2_PIN                              44
+#ifndef E0_AUTO_FAN_PIN
+  #define E0_AUTO_FAN_PIN                     44  // Used in Anycubic Kossel example config
+#endif
+#if ENABLED(ANYCUBIC_LCD_I3MEGA)
+  #define CONTROLLER_FAN_PIN                   7
+#endif
+>>>>>>> upstream/bugfix-2.0.x
 
 //
 // AnyCubic pin mappings
@@ -182,3 +222,38 @@
 #endif
 
 #include "pins_RAMPS.h"
+<<<<<<< HEAD
+=======
+
+//
+// AnyCubic made the following changes to 1.1.0-RC8
+// If these are appropriate for your LCD let us know.
+//
+#if 0 && HAS_WIRED_LCD
+
+  // LCD Display output pins
+  #if BOTH(IS_NEWPANEL, PANEL_ONE)
+    #undef LCD_PINS_D6
+    #define LCD_PINS_D6                       57
+  #endif
+
+  // LCD Display input pins
+  #if IS_NEWPANEL
+    #if EITHER(VIKI2, miniVIKI)
+      #undef DOGLCD_A0
+      #define DOGLCD_A0                       23
+    #elif ENABLED(ELB_FULL_GRAPHIC_CONTROLLER)
+      #undef BEEPER_PIN
+      #define BEEPER_PIN                      33
+      #undef LCD_BACKLIGHT_PIN
+      #define LCD_BACKLIGHT_PIN               67
+    #endif
+  #elif ENABLED(MINIPANEL)
+    #undef BEEPER_PIN
+    #define BEEPER_PIN                        33
+    #undef DOGLCD_A0
+    #define DOGLCD_A0                         42
+  #endif
+
+#endif // HAS_WIRED_LCD
+>>>>>>> upstream/bugfix-2.0.x

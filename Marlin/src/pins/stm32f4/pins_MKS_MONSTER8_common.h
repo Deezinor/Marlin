@@ -64,10 +64,16 @@
 #define E4_DIAG_PIN                         -1    // Driver7 diag signal is not connected
 
 // Limit Switches for endstops
+<<<<<<< HEAD
+=======
+#define X_MIN_PIN                           PA14
+#define Y_MIN_PIN                           PA15
+>>>>>>> upstream/bugfix-2.0.x
 #define Z_MIN_PIN                           PB13
 #define Z_MAX_PIN                           PB12
 
 //
+<<<<<<< HEAD
 // Probe enable
 //
 #if ENABLED(PROBE_ENABLE_DISABLE) && !defined(PROBE_ENABLE_PIN)
@@ -75,6 +81,8 @@
 #endif
 
 //
+=======
+>>>>>>> upstream/bugfix-2.0.x
 // Steppers
 //
 #define X_ENABLE_PIN                        PC15  // Driver0
@@ -133,12 +141,17 @@
 #endif
 
 //
+<<<<<<< HEAD
 // Default pins for TMC software SPI
+=======
+// Software SPI pins for TMC2130 stepper drivers
+>>>>>>> upstream/bugfix-2.0.x
 // This board only supports SW SPI for stepper drivers
 //
 #if HAS_TMC_SPI
   #define TMC_USE_SW_SPI
 #endif
+<<<<<<< HEAD
 #if !defined(TMC_SPI_MOSI) || TMC_SPI_MOSI == -1
   #undef TMC_SPI_MOSI
   #define TMC_SPI_MOSI                      PE14
@@ -150,6 +163,18 @@
 #if !defined(TMC_SPI_SCK) || TMC_SPI_SCK == -1
   #undef TMC_SPI_SCK
   #define TMC_SPI_SCK                       PE12
+=======
+#if ENABLED(TMC_USE_SW_SPI)
+  #if !defined(TMC_SW_MOSI) || TMC_SW_MOSI == -1
+    #define TMC_SW_MOSI                     PE14
+  #endif
+  #if !defined(TMC_SW_MISO) || TMC_SW_MISO == -1
+    #define TMC_SW_MISO                     PE13
+  #endif
+  #if !defined(TMC_SW_SCK) || TMC_SW_SCK == -1
+    #define TMC_SW_SCK                      PE12
+  #endif
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #if HAS_TMC_UART
@@ -182,11 +207,16 @@
   #define E4_SERIAL_RX_PIN      E4_SERIAL_TX_PIN
 
   // Reduce baud rate to improve software serial reliability
+<<<<<<< HEAD
   #ifndef TMC_BAUD_RATE
     #define TMC_BAUD_RATE                  19200
   #endif
 
 #endif // HAS_TMC_UART
+=======
+  #define TMC_BAUD_RATE                    19200
+#endif
+>>>>>>> upstream/bugfix-2.0.x
 
 //
 // Temperature Sensors
@@ -204,7 +234,11 @@
 #define HEATER_2_PIN                        PA3   // HE2
 #define HEATER_BED_PIN                      PB10  // H-BED
 
+<<<<<<< HEAD
 #define FAN0_PIN                            PA2   // FAN0
+=======
+#define FAN_PIN                             PA2   // FAN0
+>>>>>>> upstream/bugfix-2.0.x
 #define FAN1_PIN                            PA1   // FAN1
 #define FAN2_PIN                            PA0   // FAN2
 
@@ -217,6 +251,12 @@
   #define KILL_PIN_STATE                    HIGH
 #endif
 
+<<<<<<< HEAD
+=======
+// Random Info
+#define USB_SERIAL                          -1    // USB Serial
+
+>>>>>>> upstream/bugfix-2.0.x
 /**
  *                  ------                                      ------
  *   (BEEPER) PB2  | 1  2 | PE10 (BTN_ENC)    (SPI1 MISO) PA6  | 1  2 | PA5 (SPI1 SCK)
@@ -245,6 +285,7 @@
 #define EXP2_07_PIN                         PB11
 #define EXP2_08_PIN                         -1    // RESET
 
+<<<<<<< HEAD
 //
 // SD Support
 //
@@ -359,6 +400,45 @@
 
   #define BTN_EN1                    EXP2_03_PIN
   #define BTN_EN2                    EXP2_05_PIN
+=======
+#if ENABLED(SDSUPPORT)
+  #ifndef SDCARD_CONNECTION
+    #define SDCARD_CONNECTION            ONBOARD
+  #endif
+  #if SD_CONNECTION_IS(ONBOARD)
+    #define ENABLE_SPI3
+    #define SD_SS_PIN                       -1
+    #define SDSS                            PC9
+    #define SD_SCK_PIN                      PC10
+    #define SD_MISO_PIN                     PC11
+    #define SD_MOSI_PIN                     PC12
+    #define SD_DETECT_PIN                   PC4   // SD_DETECT_PIN doesn't work with NO_SD_HOST_DRIVE disabled
+  #elif SD_CONNECTION_IS(LCD)
+    #define ENABLE_SPI1
+    #define SDSS                     EXP2_04_PIN
+    #define SD_SCK_PIN               EXP2_02_PIN
+    #define SD_MISO_PIN              EXP2_01_PIN
+    #define SD_MOSI_PIN              EXP2_06_PIN
+    #define SD_DETECT_PIN            EXP2_07_PIN
+  #endif
+#endif
+
+#if EITHER(TFT_COLOR_UI, TFT_CLASSIC_UI)
+  #define TFT_CS_PIN                 EXP1_07_PIN
+  #define TFT_SCK_PIN                EXP2_02_PIN
+  #define TFT_MISO_PIN               EXP2_01_PIN
+  #define TFT_MOSI_PIN               EXP2_06_PIN
+  #define TFT_DC_PIN                 EXP1_08_PIN
+  #define TFT_A0_PIN                  TFT_DC_PIN
+
+  #define TFT_RESET_PIN              EXP1_04_PIN
+
+  #define LCD_BACKLIGHT_PIN          EXP1_03_PIN
+  #define TFT_BACKLIGHT_PIN    LCD_BACKLIGHT_PIN
+
+  #define TOUCH_BUTTONS_HW_SPI
+  #define TOUCH_BUTTONS_HW_SPI_DEVICE          1
+>>>>>>> upstream/bugfix-2.0.x
 
   #ifndef TFT_WIDTH
     #define TFT_WIDTH                        480
@@ -367,6 +447,7 @@
     #define TFT_HEIGHT                       320
   #endif
 
+<<<<<<< HEAD
   #if ENABLED(BTT_TFT35_SPI_V1_0)
 
     /**
@@ -460,4 +541,87 @@
 
   #endif
 
+=======
+  #define TOUCH_CS_PIN               EXP1_05_PIN  // SPI1_NSS
+  #define TOUCH_SCK_PIN              EXP2_02_PIN  // SPI1_SCK
+  #define TOUCH_MISO_PIN             EXP2_01_PIN  // SPI1_MISO
+  #define TOUCH_MOSI_PIN             EXP2_06_PIN  // SPI1_MOSI
+
+  #define LCD_READ_ID                       0xD3
+  #define LCD_USE_DMA_SPI
+
+  #define TFT_BUFFER_SIZE                  14400
+
+  #ifndef TOUCH_CALIBRATION_X
+    #define TOUCH_CALIBRATION_X           -17253
+  #endif
+  #ifndef TOUCH_CALIBRATION_Y
+    #define TOUCH_CALIBRATION_Y            11579
+  #endif
+  #ifndef TOUCH_OFFSET_X
+    #define TOUCH_OFFSET_X                   514
+  #endif
+  #ifndef TOUCH_OFFSET_Y
+    #define TOUCH_OFFSET_Y                   -24
+  #endif
+  #ifndef TOUCH_ORIENTATION
+    #define TOUCH_ORIENTATION    TOUCH_LANDSCAPE
+  #endif
+
+#elif HAS_WIRED_LCD
+
+  #define LCD_PINS_ENABLE            EXP1_03_PIN
+  #define LCD_PINS_RS                EXP1_04_PIN
+  #define LCD_BACKLIGHT_PIN                 -1
+
+  // MKS MINI12864 and MKS LCD12864B; If using MKS LCD12864A (Need to remove RPK2 resistor)
+  #if ENABLED(MKS_MINI_12864)
+
+    #define ENABLE_SPI1
+    #define FORCE_SOFT_SPI
+    #define DOGLCD_A0                EXP1_07_PIN
+    #define DOGLCD_CS                EXP1_06_PIN
+    #define DOGLCD_SCK               EXP2_02_PIN
+    #define DOGLCD_MOSI              EXP2_06_PIN
+    //#define LCD_BACKLIGHT_PIN             -1
+    //#define LCD_RESET_PIN                 -1
+
+  #elif ENABLED(FYSETC_MINI_12864_2_1)
+
+    #define LCD_PINS_DC              EXP1_04_PIN
+    #define DOGLCD_CS                EXP1_03_PIN
+    #define DOGLCD_A0                LCD_PINS_DC
+    #define LCD_BACKLIGHT_PIN               -1
+    #define LCD_RESET_PIN            EXP1_05_PIN
+    #define NEOPIXEL_PIN             EXP1_06_PIN
+    #define DOGLCD_MOSI              EXP2_06_PIN
+    #define DOGLCD_SCK               EXP2_02_PIN
+    #if SD_CONNECTION_IS(ONBOARD)
+      #define FORCE_SOFT_SPI
+    #endif
+    //#define LCD_SCREEN_ROTATE              180  // 0, 90, 180, 270
+
+  #else
+
+    #define LCD_PINS_D4              EXP1_05_PIN
+    #if ENABLED(ULTIPANEL)
+      #define LCD_PINS_D5            EXP1_06_PIN
+      #define LCD_PINS_D6            EXP1_07_PIN
+      #define LCD_PINS_D7            EXP1_08_PIN
+    #endif
+
+    #define BOARD_ST7920_DELAY_1              96
+    #define BOARD_ST7920_DELAY_2              48
+    #define BOARD_ST7920_DELAY_3             600
+
+  #endif // !MKS_MINI_12864
+
+#endif // HAS_WIRED_LCD
+
+#if ANY(TFT_COLOR_UI, TFT_CLASSIC_UI, HAS_WIRED_LCD)
+  #define BEEPER_PIN                 EXP1_01_PIN
+  #define BTN_EN1                    EXP2_03_PIN
+  #define BTN_EN2                    EXP2_05_PIN
+  #define BTN_ENC                    EXP1_02_PIN
+>>>>>>> upstream/bugfix-2.0.x
 #endif

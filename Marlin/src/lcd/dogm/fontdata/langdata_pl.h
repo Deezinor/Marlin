@@ -40,6 +40,9 @@ static const uxg_fontinfo_t g_fontinfo_pl[] PROGMEM = {
   FONTDATA_ITEM(2, 153, 153, fontpage_2_153_153), // 'ę' -- 'ę'
   FONTDATA_ITEM(2, 193, 196, fontpage_2_193_196), // 'Ł' -- 'ń'
   FONTDATA_ITEM(2, 218, 219, fontpage_2_218_219), // 'Ś' -- 'ś'
+<<<<<<< HEAD
   FONTDATA_ITEM(2, 250, 250, fontpage_2_250_250), // 'ź' -- 'ź'
+=======
+>>>>>>> upstream/bugfix-2.0.x
   FONTDATA_ITEM(2, 252, 252, fontpage_2_252_252), // 'ż' -- 'ż'
 };

@@ -29,6 +29,13 @@
 
 #define BOARD_INFO_NAME "VORON Design v2"
 
+<<<<<<< HEAD
+=======
+#define MOSFET_C_PIN                          11
+
+#include "pins_RAMPS.h"
+
+>>>>>>> upstream/bugfix-2.0.x
 //
 // Heaters / Fans
 //

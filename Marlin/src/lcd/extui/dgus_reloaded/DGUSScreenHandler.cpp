@@ -22,7 +22,11 @@
 
 #include "../../../inc/MarlinConfigPre.h"
 
+<<<<<<< HEAD
 #if DGUS_LCD_UI_RELOADED
+=======
+#if ENABLED(DGUS_LCD_UI_RELOADED)
+>>>>>>> upstream/bugfix-2.0.x
 
 #include "DGUSScreenHandler.h"
 
@@ -34,7 +38,11 @@
 
 uint8_t DGUSScreenHandler::debug_count = 0;
 
+<<<<<<< HEAD
 #if HAS_MEDIA
+=======
+#if ENABLED(SDSUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
   ExtUI::FileList DGUSScreenHandler::filelist;
   uint16_t DGUSScreenHandler::filelist_offset = 0;
   int16_t DGUSScreenHandler::filelist_selected = -1;
@@ -51,17 +59,29 @@ uint16_t DGUSScreenHandler::filament_length = DGUS_DEFAULT_FILAMENT_LEN;
 char DGUSScreenHandler::gcode[] = "";
 
 DGUS_Data::Heater DGUSScreenHandler::pid_heater = DGUS_Data::Heater::H0;
+<<<<<<< HEAD
 celsius_t DGUSScreenHandler::pid_temp = DGUS_PLA_TEMP_HOTEND;
+=======
+uint16_t DGUSScreenHandler::pid_temp = DGUS_PLA_TEMP_HOTEND;
+>>>>>>> upstream/bugfix-2.0.x
 uint8_t DGUSScreenHandler::pid_cycles = 5;
 
 bool DGUSScreenHandler::settings_ready = false;
 bool DGUSScreenHandler::booted = false;
 
+<<<<<<< HEAD
 DGUS_ScreenID DGUSScreenHandler::current_screenID = DGUS_ScreenID::BOOT;
 DGUS_ScreenID DGUSScreenHandler::new_screenID = DGUS_ScreenID::BOOT;
 bool DGUSScreenHandler::full_update = false;
 
 DGUS_ScreenID DGUSScreenHandler::wait_return_screenID = DGUS_ScreenID::HOME;
+=======
+DGUS_Screen DGUSScreenHandler::current_screen = DGUS_Screen::BOOT;
+DGUS_Screen DGUSScreenHandler::new_screen = DGUS_Screen::BOOT;
+bool DGUSScreenHandler::full_update = false;
+
+DGUS_Screen DGUSScreenHandler::wait_return_screen = DGUS_Screen::HOME;
+>>>>>>> upstream/bugfix-2.0.x
 bool DGUSScreenHandler::wait_continue = false;
 
 bool DGUSScreenHandler::leveling_active = false;
@@ -69,6 +89,7 @@ bool DGUSScreenHandler::leveling_active = false;
 millis_t DGUSScreenHandler::status_expire = 0;
 millis_t DGUSScreenHandler::eeprom_save = 0;
 
+<<<<<<< HEAD
 void DGUSScreenHandler::init() {
   dgus.init();
 
@@ -82,10 +103,37 @@ void DGUSScreenHandler::ready() {
 void DGUSScreenHandler::loop() {
   if (!settings_ready || current_screenID == DGUS_ScreenID::KILL)
     return;
+=======
+const char DGUS_MSG_HOMING_REQUIRED[] PROGMEM = "Homing required",
+           DGUS_MSG_BUSY[] PROGMEM = "Busy",
+           DGUS_MSG_UNDEF[] PROGMEM = "-",
+           DGUS_MSG_HOMING[] PROGMEM = "Homing...",
+           DGUS_MSG_FW_OUTDATED[] PROGMEM = "DWIN GUI/OS update required",
+           DGUS_MSG_ABL_REQUIRED[] PROGMEM = "Auto bed leveling required";
+
+const char DGUS_CMD_HOME[] PROGMEM = "G28",
+           DGUS_CMD_EEPROM_SAVE[] PROGMEM = "M500";
+
+void DGUSScreenHandler::Init() {
+  dgus_display.Init();
+
+  MoveToScreen(DGUS_Screen::BOOT, true);
+}
+
+void DGUSScreenHandler::Ready() {
+  dgus_display.PlaySound(1);
+}
+
+void DGUSScreenHandler::Loop() {
+  if (!settings_ready || current_screen == DGUS_Screen::KILL) {
+    return;
+  }
+>>>>>>> upstream/bugfix-2.0.x
 
   const millis_t ms = ExtUI::safe_millis();
   static millis_t next_event_ms = 0;
 
+<<<<<<< HEAD
   if (new_screenID != DGUS_ScreenID::BOOT) {
     const DGUS_ScreenID screenID = new_screenID;
     new_screenID = DGUS_ScreenID::BOOT;
@@ -93,16 +141,32 @@ void DGUSScreenHandler::loop() {
       triggerFullUpdate();
     else
       moveToScreen(screenID);
+=======
+  if (new_screen != DGUS_Screen::BOOT) {
+    const DGUS_Screen screen = new_screen;
+    new_screen = DGUS_Screen::BOOT;
+    if (current_screen == screen)
+      TriggerFullUpdate();
+    else
+      MoveToScreen(screen);
+>>>>>>> upstream/bugfix-2.0.x
     return;
   }
 
   if (!booted && ELAPSED(ms, 3000)) {
     booted = true;
 
+<<<<<<< HEAD
     dgus.readVersions();
 
     if (current_screenID == DGUS_ScreenID::BOOT)
       moveToScreen(DGUS_ScreenID::HOME);
+=======
+    dgus_display.ReadVersions();
+
+    if (current_screen == DGUS_Screen::BOOT)
+      MoveToScreen(DGUS_Screen::HOME);
+>>>>>>> upstream/bugfix-2.0.x
 
     return;
   }
@@ -110,12 +174,18 @@ void DGUSScreenHandler::loop() {
   if (ELAPSED(ms, next_event_ms) || full_update) {
     next_event_ms = ms + DGUS_UPDATE_INTERVAL_MS;
 
+<<<<<<< HEAD
     if (!sendScreenVPData(current_screenID, full_update))
       DEBUG_ECHOLNPGM("sendScreenVPData failed");
+=======
+    if (!SendScreenVPData(current_screen, full_update))
+      DEBUG_ECHOLNPGM("SendScreenVPData failed");
+>>>>>>> upstream/bugfix-2.0.x
 
     return;
   }
 
+<<<<<<< HEAD
   if (current_screenID == DGUS_ScreenID::WAIT
       && ((wait_continue && !wait_for_user) || (!wait_continue && isPrinterIdle()))
   ) {
@@ -129,10 +199,27 @@ void DGUSScreenHandler::loop() {
     setStatusMessage(ExtUI::getLevelingIsValid() ? GET_TEXT_F(DGUS_MSG_PROBING_SUCCESS) : GET_TEXT_F(DGUS_MSG_PROBING_FAILED));
 
     moveToScreen(DGUS_ScreenID::LEVELING_AUTOMATIC);
+=======
+  if (current_screen == DGUS_Screen::WAIT
+      && ((wait_continue && !wait_for_user)
+          || (!wait_continue && IsPrinterIdle()))
+  ) {
+    MoveToScreen(wait_return_screen, true);
+    return;
+  }
+
+  if (current_screen == DGUS_Screen::LEVELING_PROBING && IsPrinterIdle()) {
+    dgus_display.PlaySound(3);
+
+    SetStatusMessage(ExtUI::getMeshValid() ? F("Probing successful") : F("Probing failed"));
+
+    MoveToScreen(DGUS_Screen::LEVELING_AUTOMATIC);
+>>>>>>> upstream/bugfix-2.0.x
     return;
   }
 
   if (status_expire > 0 && ELAPSED(ms, status_expire)) {
+<<<<<<< HEAD
     setStatusMessage(FPSTR(NUL_STR), 0);
     return;
   }
@@ -181,34 +268,103 @@ void DGUSScreenHandler::settingsReset() {
 }
 
 void DGUSScreenHandler::storeSettings(char *buff) {
+=======
+    SetStatusMessage(FPSTR(NUL_STR), 0);
+    return;
+  }
+
+  if (eeprom_save > 0 && ELAPSED(ms, eeprom_save) && IsPrinterIdle()) {
+    eeprom_save = 0;
+    queue.enqueue_now_P(DGUS_CMD_EEPROM_SAVE);
+    return;
+  }
+
+  dgus_display.Loop();
+}
+
+void DGUSScreenHandler::PrinterKilled(FSTR_P const error, FSTR_P const component) {
+  SetMessageLinePGM(FTOP(error), 1);
+  SetMessageLinePGM(FTOP(component), 2);
+  SetMessageLinePGM(NUL_STR, 3);
+  SetMessageLinePGM(GET_TEXT(MSG_PLEASE_RESET), 4);
+
+  dgus_display.PlaySound(3, 1, 200);
+
+  MoveToScreen(DGUS_Screen::KILL, true);
+}
+
+void DGUSScreenHandler::UserConfirmRequired(const char * const msg) {
+  dgus_screen_handler.SetMessageLinePGM(NUL_STR, 1);
+  dgus_screen_handler.SetMessageLine(msg, 2);
+  dgus_screen_handler.SetMessageLinePGM(NUL_STR, 3);
+  dgus_screen_handler.SetMessageLinePGM(NUL_STR, 4);
+
+  dgus_display.PlaySound(3);
+
+  dgus_screen_handler.ShowWaitScreen(current_screen, true);
+}
+
+void DGUSScreenHandler::SettingsReset() {
+  dgus_display.SetVolume(DGUS_DEFAULT_VOLUME);
+  dgus_display.SetBrightness(DGUS_DEFAULT_BRIGHTNESS);
+
+  if (!settings_ready) {
+    settings_ready = true;
+    Ready();
+  }
+
+  SetStatusMessage(F("EEPROM reset"));
+}
+
+void DGUSScreenHandler::StoreSettings(char *buff) {
+>>>>>>> upstream/bugfix-2.0.x
   eeprom_data_t data;
 
   static_assert(sizeof(data) <= ExtUI::eeprom_data_size, "sizeof(eeprom_data_t) > eeprom_data_size.");
 
   data.initialized = true;
+<<<<<<< HEAD
   data.volume = dgus.getVolume();
   data.brightness = dgus.getBrightness();
   data.abl_okay = (ExtUI::getLevelingActive() && ExtUI::getLevelingIsValid());
+=======
+  data.volume = dgus_display.GetVolume();
+  data.brightness = dgus_display.GetBrightness();
+  data.abl_okay = (ExtUI::getLevelingActive() && ExtUI::getMeshValid());
+>>>>>>> upstream/bugfix-2.0.x
 
   memcpy(buff, &data, sizeof(data));
 }
 
+<<<<<<< HEAD
 void DGUSScreenHandler::loadSettings(const char *buff) {
+=======
+void DGUSScreenHandler::LoadSettings(const char *buff) {
+>>>>>>> upstream/bugfix-2.0.x
   eeprom_data_t data;
 
   static_assert(sizeof(data) <= ExtUI::eeprom_data_size, "sizeof(eeprom_data_t) > eeprom_data_size.");
 
   memcpy(&data, buff, sizeof(data));
 
+<<<<<<< HEAD
   dgus.setVolume(data.initialized ? data.volume : DGUS_DEFAULT_VOLUME);
   dgus.setBrightness(data.initialized ? data.brightness : DGUS_DEFAULT_BRIGHTNESS);
 
   if (data.initialized) {
     leveling_active = (data.abl_okay && ExtUI::getLevelingIsValid());
+=======
+  dgus_display.SetVolume(data.initialized ? data.volume : DGUS_DEFAULT_VOLUME);
+  dgus_display.SetBrightness(data.initialized ? data.brightness : DGUS_DEFAULT_BRIGHTNESS);
+
+  if (data.initialized) {
+    leveling_active = (data.abl_okay && ExtUI::getMeshValid());
+>>>>>>> upstream/bugfix-2.0.x
     ExtUI::setLevelingActive(leveling_active);
   }
 }
 
+<<<<<<< HEAD
 void DGUSScreenHandler::configurationStoreWritten(bool success) {
   if (!success)
     setStatusMessage(GET_TEXT_F(DGUS_MSG_WRITE_EEPROM_FAILED));
@@ -237,12 +393,45 @@ void DGUSScreenHandler::meshUpdate(const int8_t xpos, const int8_t ypos) {
   if (current_screenID != DGUS_ScreenID::LEVELING_PROBING) {
     if (current_screenID == DGUS_ScreenID::LEVELING_AUTOMATIC)
       triggerFullUpdate();
+=======
+void DGUSScreenHandler::ConfigurationStoreWritten(bool success) {
+  if (!success)
+    SetStatusMessage(F("EEPROM write failed"));
+}
+
+void DGUSScreenHandler::ConfigurationStoreRead(bool success) {
+  if (!success) {
+    SetStatusMessage(F("EEPROM read failed"));
+  }
+  else if (!settings_ready) {
+    settings_ready = true;
+    Ready();
+  }
+}
+
+void DGUSScreenHandler::PlayTone(const uint16_t frequency, const uint16_t duration) {
+  UNUSED(duration);
+
+  if (frequency >= 1 && frequency <= 255) {
+    if (duration >= 1 && duration <= 255)
+      dgus_display.PlaySound((uint8_t)frequency, (uint8_t)duration);
+    else
+      dgus_display.PlaySound((uint8_t)frequency);
+  }
+}
+
+void DGUSScreenHandler::MeshUpdate(const int8_t xpos, const int8_t ypos) {
+  if (current_screen != DGUS_Screen::LEVELING_PROBING) {
+    if (current_screen == DGUS_Screen::LEVELING_AUTOMATIC)
+      TriggerFullUpdate();
+>>>>>>> upstream/bugfix-2.0.x
     return;
   }
 
   uint8_t point = ypos * GRID_MAX_POINTS_X + xpos;
   probing_icons[point < 16 ? 0 : 1] |= (1U << (point % 16));
 
+<<<<<<< HEAD
   if (xpos >= GRID_MAX_POINTS_X - 1 && ypos >= GRID_MAX_POINTS_Y - 1 && !ExtUI::getLevelingIsValid())
     probing_icons[0] = probing_icons[1] = 0;
 
@@ -323,16 +512,102 @@ void DGUSScreenHandler::filamentRunout(const ExtUI::extruder_t extruder) {
         break;
       case ExtUI::PID_DONE:
         setStatusMessage(GET_TEXT_F(MSG_PID_AUTOTUNE_DONE));
+=======
+  if (xpos >= GRID_MAX_POINTS_X - 1 && ypos >= GRID_MAX_POINTS_Y - 1 && !ExtUI::getMeshValid())
+    probing_icons[0] = probing_icons[1] = 0;
+
+  TriggerFullUpdate();
+}
+
+void DGUSScreenHandler::PrintTimerStarted() {
+  TriggerScreenChange(DGUS_Screen::PRINT_STATUS);
+}
+
+void DGUSScreenHandler::PrintTimerPaused() {
+  dgus_display.PlaySound(3);
+  TriggerFullUpdate();
+}
+
+void DGUSScreenHandler::PrintTimerStopped() {
+  if (current_screen != DGUS_Screen::PRINT_STATUS && current_screen != DGUS_Screen::PRINT_ADJUST)
+    return;
+
+  dgus_display.PlaySound(3);
+
+  TriggerScreenChange(DGUS_Screen::PRINT_FINISHED);
+}
+
+void DGUSScreenHandler::FilamentRunout(const ExtUI::extruder_t extruder) {
+  char buffer[21];
+  snprintf_P(buffer, sizeof(buffer), PSTR("Filament runout E%d"), extruder);
+
+  SetStatusMessage(buffer);
+
+  dgus_display.PlaySound(3);
+}
+
+#if ENABLED(SDSUPPORT)
+
+  void DGUSScreenHandler::SDCardInserted() {
+    if (current_screen == DGUS_Screen::HOME)
+      TriggerScreenChange(DGUS_Screen::PRINT);
+  }
+
+  void DGUSScreenHandler::SDCardRemoved() {
+    if (current_screen == DGUS_Screen::PRINT)
+      TriggerScreenChange(DGUS_Screen::HOME);
+  }
+
+  void DGUSScreenHandler::SDCardError() {
+    SetStatusMessage(GET_TEXT_F(MSG_MEDIA_READ_ERROR));
+    if (current_screen == DGUS_Screen::PRINT)
+      TriggerScreenChange(DGUS_Screen::HOME);
+  }
+
+#endif // SDSUPPORT
+
+#if ENABLED(POWER_LOSS_RECOVERY)
+
+  void DGUSScreenHandler::PowerLossResume() {
+    MoveToScreen(DGUS_Screen::POWERLOSS, true);
+  }
+
+#endif // POWER_LOSS_RECOVERY
+
+#if HAS_PID_HEATING
+
+  void DGUSScreenHandler::PidTuning(const ExtUI::result_t rst) {
+    switch (rst) {
+      case ExtUI::PID_STARTED:
+        SetStatusMessage(GET_TEXT_F(MSG_PID_AUTOTUNE));
+        break;
+      case ExtUI::PID_BAD_EXTRUDER_NUM:
+        SetStatusMessage(GET_TEXT_F(MSG_PID_BAD_EXTRUDER_NUM));
+        break;
+      case ExtUI::PID_TEMP_TOO_HIGH:
+        SetStatusMessage(GET_TEXT_F(MSG_PID_TEMP_TOO_HIGH));
+        break;
+      case ExtUI::PID_TUNING_TIMEOUT:
+        SetStatusMessage(GET_TEXT_F(MSG_PID_TIMEOUT));
+        break;
+      case ExtUI::PID_DONE:
+        SetStatusMessage(GET_TEXT_F(MSG_PID_AUTOTUNE_DONE));
+>>>>>>> upstream/bugfix-2.0.x
         break;
       default:
         return;
     }
 
+<<<<<<< HEAD
     dgus.playSound(3);
+=======
+    dgus_display.PlaySound(3);
+>>>>>>> upstream/bugfix-2.0.x
   }
 
 #endif // HAS_PID_HEATING
 
+<<<<<<< HEAD
 void DGUSScreenHandler::setMessageLine(const char * const msg, const uint8_t line) {
   switch (line) {
     default: return;
@@ -347,10 +622,27 @@ void DGUSScreenHandler::setMessageLine(const char * const msg, const uint8_t lin
       break;
     case 4:
       dgus.writeString((uint16_t)DGUS_Addr::MESSAGE_Line4, msg, DGUS_LINE_LEN, true, true);
+=======
+void DGUSScreenHandler::SetMessageLine(const char* msg, uint8_t line) {
+  switch (line) {
+    default: return;
+    case 1:
+      dgus_display.WriteString((uint16_t)DGUS_Addr::MESSAGE_Line1, msg, DGUS_LINE_LEN, true, true);
+      break;
+    case 2:
+      dgus_display.WriteString((uint16_t)DGUS_Addr::MESSAGE_Line2, msg, DGUS_LINE_LEN, true, true);
+      break;
+    case 3:
+      dgus_display.WriteString((uint16_t)DGUS_Addr::MESSAGE_Line3, msg, DGUS_LINE_LEN, true, true);
+      break;
+    case 4:
+      dgus_display.WriteString((uint16_t)DGUS_Addr::MESSAGE_Line4, msg, DGUS_LINE_LEN, true, true);
+>>>>>>> upstream/bugfix-2.0.x
       break;
   }
 }
 
+<<<<<<< HEAD
 void DGUSScreenHandler::setMessageLine_P(PGM_P const msg, const uint8_t line) {
   switch (line) {
     default: return;
@@ -365,10 +657,27 @@ void DGUSScreenHandler::setMessageLine_P(PGM_P const msg, const uint8_t line) {
       break;
     case 4:
       dgus.writeStringPGM((uint16_t)DGUS_Addr::MESSAGE_Line4, msg, DGUS_LINE_LEN, true, true);
+=======
+void DGUSScreenHandler::SetMessageLinePGM(PGM_P msg, uint8_t line) {
+  switch (line) {
+    default: return;
+    case 1:
+      dgus_display.WriteStringPGM((uint16_t)DGUS_Addr::MESSAGE_Line1, msg, DGUS_LINE_LEN, true, true);
+      break;
+    case 2:
+      dgus_display.WriteStringPGM((uint16_t)DGUS_Addr::MESSAGE_Line2, msg, DGUS_LINE_LEN, true, true);
+      break;
+    case 3:
+      dgus_display.WriteStringPGM((uint16_t)DGUS_Addr::MESSAGE_Line3, msg, DGUS_LINE_LEN, true, true);
+      break;
+    case 4:
+      dgus_display.WriteStringPGM((uint16_t)DGUS_Addr::MESSAGE_Line4, msg, DGUS_LINE_LEN, true, true);
+>>>>>>> upstream/bugfix-2.0.x
       break;
   }
 }
 
+<<<<<<< HEAD
 void DGUSScreenHandler::setStatusMessage(const char* msg, const millis_t duration) {
   dgus.writeString((uint16_t)DGUS_Addr::MESSAGE_Status, msg, DGUS_STATUS_LEN, false, true);
   status_expire = (duration > 0 ? ExtUI::safe_millis() + duration : 0);
@@ -417,26 +726,85 @@ bool DGUSScreenHandler::isPrinterIdle() {
 }
 
 const DGUS_Addr* DGUSScreenHandler::findScreenAddrList(const DGUS_ScreenID screenID) {
+=======
+void DGUSScreenHandler::SetStatusMessage(const char* msg, const millis_t duration) {
+  dgus_display.WriteString((uint16_t)DGUS_Addr::MESSAGE_Status, msg, DGUS_STATUS_LEN, false, true);
+
+  status_expire = (duration > 0 ? ExtUI::safe_millis() + duration : 0);
+}
+
+void DGUSScreenHandler::SetStatusMessage(FSTR_P const fmsg, const millis_t duration) {
+  dgus_display.WriteStringPGM((uint16_t)DGUS_Addr::MESSAGE_Status, FTOP(fmsg), DGUS_STATUS_LEN, false, true);
+
+  status_expire = (duration > 0 ? ExtUI::safe_millis() + duration : 0);
+}
+
+void DGUSScreenHandler::ShowWaitScreen(DGUS_Screen return_screen, bool has_continue) {
+  if (return_screen != DGUS_Screen::WAIT) {
+    wait_return_screen = return_screen;
+  }
+  wait_continue = has_continue;
+
+  TriggerScreenChange(DGUS_Screen::WAIT);
+}
+
+DGUS_Screen DGUSScreenHandler::GetCurrentScreen() {
+  return current_screen;
+}
+
+void DGUSScreenHandler::TriggerScreenChange(DGUS_Screen screen) {
+  new_screen = screen;
+}
+
+void DGUSScreenHandler::TriggerFullUpdate() {
+  full_update = true;
+}
+
+void DGUSScreenHandler::TriggerEEPROMSave() {
+  eeprom_save = ExtUI::safe_millis() + 500;
+}
+
+bool DGUSScreenHandler::IsPrinterIdle() {
+  return (!ExtUI::commandsInQueue()
+          && !ExtUI::isMoving());
+}
+
+const DGUS_Addr* DGUSScreenHandler::FindScreenAddrList(DGUS_Screen screen) {
+>>>>>>> upstream/bugfix-2.0.x
   DGUS_ScreenAddrList list;
   const DGUS_ScreenAddrList *map = screen_addr_list_map;
 
   do {
     memcpy_P(&list, map, sizeof(*map));
     if (!list.addr_list) break;
+<<<<<<< HEAD
     if (list.screenID == screenID) return list.addr_list;
+=======
+    if (list.screen == screen) {
+      return list.addr_list;
+    }
+>>>>>>> upstream/bugfix-2.0.x
   } while (++map);
 
   return nullptr;
 }
 
+<<<<<<< HEAD
 bool DGUSScreenHandler::callScreenSetup(const DGUS_ScreenID screenID) {
+=======
+bool DGUSScreenHandler::CallScreenSetup(DGUS_Screen screen) {
+>>>>>>> upstream/bugfix-2.0.x
   DGUS_ScreenSetup setup;
   const DGUS_ScreenSetup *list = screen_setup_list;
 
   do {
     memcpy_P(&setup, list, sizeof(*list));
     if (!setup.setup_fn) break;
+<<<<<<< HEAD
     if (setup.screenID == screenID) {
+=======
+    if (setup.screen == screen) {
+>>>>>>> upstream/bugfix-2.0.x
       return setup.setup_fn();
     }
   } while (++list);
@@ -444,6 +812,7 @@ bool DGUSScreenHandler::callScreenSetup(const DGUS_ScreenID screenID) {
   return true;
 }
 
+<<<<<<< HEAD
 void DGUSScreenHandler::moveToScreen(const DGUS_ScreenID screenID, bool abort_wait) {
   if (current_screenID == DGUS_ScreenID::KILL) return;
 
@@ -469,6 +838,42 @@ bool DGUSScreenHandler::sendScreenVPData(const DGUS_ScreenID screenID, bool comp
   if (complete_update) full_update = false;
 
   const DGUS_Addr *list = findScreenAddrList(screenID);
+=======
+void DGUSScreenHandler::MoveToScreen(DGUS_Screen screen, bool abort_wait) {
+  if (current_screen == DGUS_Screen::KILL) {
+    return;
+  }
+
+  if (current_screen == DGUS_Screen::WAIT) {
+    if (screen != DGUS_Screen::WAIT) {
+      wait_return_screen = screen;
+    }
+
+    if (!abort_wait) return;
+
+    if (wait_continue && wait_for_user) {
+      ExtUI::setUserConfirmed();
+    }
+  }
+
+  if (!CallScreenSetup(screen)) return;
+
+  if (!SendScreenVPData(screen, true)) {
+    DEBUG_ECHOLNPGM("SendScreenVPData failed");
+    return;
+  }
+
+  current_screen = screen;
+  dgus_display.SwitchScreen(current_screen);
+}
+
+bool DGUSScreenHandler::SendScreenVPData(DGUS_Screen screen, bool complete_update) {
+  if (complete_update) {
+    full_update = false;
+  }
+
+  const DGUS_Addr *list = FindScreenAddrList(screen);
+>>>>>>> upstream/bugfix-2.0.x
 
   while (true) {
     if (!list) return true; // Nothing left to send
@@ -477,17 +882,28 @@ bool DGUSScreenHandler::sendScreenVPData(const DGUS_ScreenID screenID, bool comp
     if (!addr) return true; // Nothing left to send
 
     DGUS_VP vp;
+<<<<<<< HEAD
     if (!populateVP((DGUS_Addr)addr, &vp)) continue; // Invalid VP
+=======
+    if (!DGUS_PopulateVP((DGUS_Addr)addr, &vp)) continue; // Invalid VP
+>>>>>>> upstream/bugfix-2.0.x
     if (!vp.tx_handler) continue; // Nothing to send
     if (!complete_update && !(vp.flags & VPFLAG_AUTOUPLOAD)) continue; // Unnecessary VP
 
     uint8_t expected_tx = 6 + vp.size; // 6 bytes header + payload.
     const millis_t try_until = ExtUI::safe_millis() + 1000;
 
+<<<<<<< HEAD
     while (expected_tx > dgus.getFreeTxBuffer()) {
       if (ELAPSED(ExtUI::safe_millis(), try_until)) return false; // Stop trying after 1 second
 
       dgus.flushTx(); // Flush the TX buffer
+=======
+    while (expected_tx > dgus_display.GetFreeTxBuffer()) {
+      if (ELAPSED(ExtUI::safe_millis(), try_until)) return false; // Stop trying after 1 second
+
+      dgus_display.FlushTx(); // Flush the TX buffer
+>>>>>>> upstream/bugfix-2.0.x
       delay(50);
     }
 

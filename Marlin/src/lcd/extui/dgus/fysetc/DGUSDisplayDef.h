@@ -23,6 +23,7 @@
 
 #include "../DGUSDisplayDef.h"
 
+<<<<<<< HEAD
 enum DGUS_ScreenID : uint8_t {
   DGUS_SCREEN_BOOT                =   0,
   DGUS_SCREEN_MAIN                =   1,
@@ -52,6 +53,37 @@ enum DGUS_ScreenID : uint8_t {
   DGUS_SCREEN_WAITING             = 251,
   DGUS_SCREEN_POPUP               = 252, ///< special target, popup screen will also return this code to say "return to previous screen"
   DGUS_SCREEN_UNUSED              = 255
+=======
+enum DGUSLCD_Screens : uint8_t {
+  DGUSLCD_SCREEN_BOOT                =   0,
+  DGUSLCD_SCREEN_MAIN                =   1,
+  DGUSLCD_SCREEN_STATUS              =   1,
+  DGUSLCD_SCREEN_STATUS2             =   1,
+  DGUSLCD_SCREEN_TEMPERATURE         =  10,
+  DGUSLCD_SCREEN_PREHEAT             =  18,
+  DGUSLCD_SCREEN_POWER_LOSS          = 100,
+  DGUSLCD_SCREEN_MANUALMOVE          = 192,
+  DGUSLCD_SCREEN_UTILITY             = 120,
+  DGUSLCD_SCREEN_FILAMENT_HEATING    = 146,
+  DGUSLCD_SCREEN_FILAMENT_LOADING    = 148,
+  DGUSLCD_SCREEN_FILAMENT_UNLOADING  = 158,
+  DGUSLCD_SCREEN_MANUALEXTRUDE       = 160,
+  DGUSLCD_SCREEN_SDFILELIST          =  71,
+  DGUSLCD_SCREEN_SDPRINTMANIPULATION =  73,
+  DGUSLCD_SCREEN_SDPRINTTUNE         =  75,
+  DGUSLCD_SCREEN_FLC_PREHEAT         =  94,
+  DGUSLCD_SCREEN_FLC_PRINTING        =  96,
+  DGUSLCD_SCREEN_STEPPERMM           = 212,
+  DGUSLCD_SCREEN_PID_E               = 214,
+  DGUSLCD_SCREEN_PID_BED             = 218,
+  DGUSLCD_SCREEN_Z_OFFSET            = 222,
+  DGUSLCD_SCREEN_INFOS               =  36,
+  DGUSLCD_SCREEN_CONFIRM             = 240,
+  DGUSLCD_SCREEN_KILL                = 250, ///< Kill Screen. Must always be 250 (to be able to display "Error wrong LCD Version")
+  DGUSLCD_SCREEN_WAITING             = 251,
+  DGUSLCD_SCREEN_POPUP               = 252, ///< special target, popup screen will also return this code to say "return to previous screen"
+  DGUSLCD_SCREEN_UNUSED              = 255
+>>>>>>> upstream/bugfix-2.0.x
 };
 
 // Display Memory layout used (T5UID)

@@ -23,8 +23,14 @@
 extern "C" {
 #endif // __cplusplus
 
+<<<<<<< HEAD
                  // | DIGITAL | ANALOG | USART     | TWI      | SPI                    | SPECIAL   |
                  // |---------|--------|-----------|----------|------------------------|-----------|
+=======
+
+//                  | DIGITAL | ANALOG | USART     | TWI      | SPI                    | SPECIAL   |
+//                  |---------|--------|-----------|----------|------------------------|-----------|
+>>>>>>> upstream/bugfix-2.0.x
 #define PA0  0   // | 0       | A0     |           |          |                        |           |
 #define PA1  1   // | 1       | A1     |           |          |                        |           |
 #define PA2  2   // | 2       | A2     | USART2_TX |          |                        |           |
@@ -41,7 +47,11 @@ extern "C" {
 #define PA13 13  // | 13      |        |           |          |                        | SWD_SWDIO |
 #define PA14 14  // | 14      |        |           |          |                        | SWD_SWCLK |
 #define PA15 15  // | 15      |        |           |          | SPI3_SS, (SPI1_SS)     |           |
+<<<<<<< HEAD
                  // |---------|--------|-----------|----------|------------------------|-----------|
+=======
+//                  |---------|--------|-----------|----------|------------------------|-----------|
+>>>>>>> upstream/bugfix-2.0.x
 #define PB0  16  // | 16      | A8     |           |          |                        |           |
 #define PB1  17  // | 17      | A9     |           |          |                        |           |
 #define PB2  18  // | 18      |        |           |          |                        | BOOT1     |
@@ -57,7 +67,11 @@ extern "C" {
 #define PB13 28  // | 28      |        |           |          | SPI2_SCK               |           |
 #define PB14 29  // | 29      |        |           |          | SPI2_MISO              |           |
 #define PB15 30  // | 30      |        |           |          | SPI2_MOSI              |           |
+<<<<<<< HEAD
                  // |---------|--------|-----------|----------|------------------------|-----------|
+=======
+//                  |---------|--------|-----------|----------|------------------------|-----------|
+>>>>>>> upstream/bugfix-2.0.x
 #define PC0  31  // | 31      | A10    |           |          |                        |           |
 #define PC1  32  // | 32      | A11    |           |          |                        |           |
 #define PC2  33  // | 33      | A12    |           |          | SPI2_MISO              |           |
@@ -74,12 +88,21 @@ extern "C" {
 #define PC13 44  // | 44      |        |           |          |                        |           |
 #define PC14 45  // | 45      |        |           |          |                        | OSC32_IN  |
 #define PC15 46  // | 46      |        |           |          |                        | OSC32_OUT |
+<<<<<<< HEAD
                  // |---------|--------|-----------|----------|------------------------|-----------|
 #define PD2  47  // | 47      |        |           |          |                        |           |
                  // |---------|--------|-----------|----------|------------------------|-----------|
 #define PH0  48  // | 48      |        |           |          |                        | OSC_IN    |
 #define PH1  49  // | 49      |        |           |          |                        | OSC_OUT   |
                  // |---------|--------|-----------|----------|------------------------|-----------|
+=======
+//                  |---------|--------|-----------|----------|------------------------|-----------|
+#define PD2  47  // | 47      |        |           |          |                        |           |
+//                  |---------|--------|-----------|----------|------------------------|-----------|
+#define PH0  48  // | 48      |        |           |          |                        | OSC_IN    |
+#define PH1  49  // | 49      |        |           |          |                        | OSC_OUT   |
+//                  |---------|--------|-----------|----------|------------------------|-----------|
+>>>>>>> upstream/bugfix-2.0.x
 
 // This must be a literal
 #define NUM_DIGITAL_PINS        50
@@ -111,7 +134,11 @@ extern "C" {
 #define PIN_SERIAL_RX           PA10
 #define PIN_SERIAL_TX           PA9
 
+<<<<<<< HEAD
 // Used when the user instantiates a hardware Serial using its peripheral name.
+=======
+// Used when user instanciate a hardware Serial using its peripheral name.
+>>>>>>> upstream/bugfix-2.0.x
 // Example: HardwareSerial mySerial(USART3);
 // will use PIN_SERIAL3_RX and PIN_SERIAL3_TX if defined.
 #define PIN_SERIAL1_RX          PA10
@@ -122,7 +149,10 @@ extern "C" {
 #ifdef __cplusplus
 } // extern "C"
 #endif
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 /*----------------------------------------------------------------------------
  *        Arduino objects - C++ only
  *----------------------------------------------------------------------------*/
@@ -148,4 +178,8 @@ extern "C" {
   #define SERIAL_PORT_HARDWARE_OPEN   Serial2
 #endif
 
+<<<<<<< HEAD
 #endif /* _VARIANT_ARDUINO_STM32_ */
+=======
+#endif /* _VARIANT_ARDUINO_STM32_ */
+>>>>>>> upstream/bugfix-2.0.x

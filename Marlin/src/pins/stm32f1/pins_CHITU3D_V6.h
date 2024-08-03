@@ -27,12 +27,16 @@
 #define Z2_STEP_PIN                         PF5
 #define Z2_DIR_PIN                          PF1
 
+<<<<<<< HEAD
 #define Z_STOP_PIN                          PA14
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #ifndef FIL_RUNOUT2_PIN
   #define FIL_RUNOUT2_PIN                   PF13
 #endif
 
+<<<<<<< HEAD
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                   PG9
 #endif
@@ -85,3 +89,6 @@
  *  |  30 | ETEMP     | 4k7Ω Pullup to +3V3 and 100nF to GND, then 4k7Ω to MCU Pin35 PA1 |
  *  --------------------------------------------------------------------------------------
  */
+=======
+#include "pins_CHITU3D_common.h"
+>>>>>>> upstream/bugfix-2.0.x

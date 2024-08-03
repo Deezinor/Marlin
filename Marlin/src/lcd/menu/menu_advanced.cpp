@@ -41,7 +41,11 @@
   #include "../../module/probe.h"
 #endif
 
+<<<<<<< HEAD
 #if HAS_PID_HEATING
+=======
+#if ANY(PIDTEMP, PIDTEMPBED, PIDTEMPCHAMBER)
+>>>>>>> upstream/bugfix-2.0.x
   #include "../../module/temperature.h"
 #endif
 
@@ -110,7 +114,11 @@ void menu_backlash();
     #if ENABLED(LIN_ADVANCE)
       #if DISTINCT_E < 2
         EDIT_ITEM(float42_52, MSG_ADVANCE_K, &planner.extruder_advance_K[0], 0, 10);
+<<<<<<< HEAD
       #else
+=======
+      #elif HAS_MULTI_EXTRUDER
+>>>>>>> upstream/bugfix-2.0.x
         EXTRUDER_LOOP()
           EDIT_ITEM_N(float42_52, e, MSG_ADVANCE_K_E, &planner.extruder_advance_K[e], 0, 10);
       #endif
@@ -123,7 +131,11 @@ void menu_backlash();
         EDIT_ITEM_FAST(float42_52, MSG_VOLUMETRIC_LIMIT, &planner.volumetric_extruder_limit[active_extruder], 0.0f, float(VOLUMETRIC_EXTRUDER_LIMIT_MAX), planner.calculate_volumetric_extruder_limits);
         #if HAS_MULTI_EXTRUDER
           EXTRUDER_LOOP()
+<<<<<<< HEAD
             EDIT_ITEM_FAST_N(float42_52, e, MSG_VOLUMETRIC_LIMIT_E, &planner.volumetric_extruder_limit[e], 0.0f, float(VOLUMETRIC_EXTRUDER_LIMIT_MAX), planner.calculate_volumetric_extruder_limits);
+=======
+            EDIT_ITEM_FAST_N(float42_52, e, MSG_VOLUMETRIC_LIMIT_E, &planner.volumetric_extruder_limit[e], 0.0f, 20.00f, planner.calculate_volumetric_extruder_limits);
+>>>>>>> upstream/bugfix-2.0.x
         #endif
       #endif
 
@@ -208,6 +220,7 @@ void menu_backlash();
 
 #if ENABLED(PID_EDIT_MENU)
 
+<<<<<<< HEAD
   // Placeholders for PID editing
   float raw_Kp, raw_Ki, raw_Kd;
   #if ENABLED(PID_EXTRUSION_SCALING)
@@ -229,11 +242,29 @@ void menu_backlash();
       default:
         #if ENABLED(PIDTEMP)
           SET_HOTEND_PID(Kp, e, raw_Kp);
+=======
+  float raw_Ki, raw_Kd; // place-holders for Ki and Kd edits
+
+  // Helpers for editing PID Ki & Kd values
+  // grab the PID value out of the temp variable; scale it; then update the PID driver
+  void copy_and_scalePID_i(const int8_t e) {
+    switch (e) {
+      #if ENABLED(PIDTEMPBED)
+        case H_BED: thermalManager.temp_bed.pid.Ki = scalePID_i(raw_Ki); break;
+      #endif
+      #if ENABLED(PIDTEMPCHAMBER)
+        case H_CHAMBER: thermalManager.temp_chamber.pid.Ki = scalePID_i(raw_Ki); break;
+      #endif
+      default:
+        #if ENABLED(PIDTEMP)
+          PID_PARAM(Ki, e) = scalePID_i(raw_Ki);
+>>>>>>> upstream/bugfix-2.0.x
           thermalManager.updatePID();
         #endif
         break;
     }
   }
+<<<<<<< HEAD
   void apply_PID_i(const int8_t e) {
     switch (e) {
       #if ENABLED(PIDTEMPBED)
@@ -261,6 +292,19 @@ void menu_backlash();
       default:
         #if ENABLED(PIDTEMP)
           SET_HOTEND_PID(Kd, e, raw_Kd);
+=======
+  void copy_and_scalePID_d(const int8_t e) {
+    switch (e) {
+      #if ENABLED(PIDTEMPBED)
+        case H_BED: thermalManager.temp_bed.pid.Kd = scalePID_d(raw_Kd); break;
+      #endif
+      #if ENABLED(PIDTEMPCHAMBER)
+        case H_CHAMBER: thermalManager.temp_chamber.pid.Kd = scalePID_d(raw_Kd); break;
+      #endif
+      default:
+        #if ENABLED(PIDTEMP)
+          PID_PARAM(Kd, e) = scalePID_d(raw_Kd);
+>>>>>>> upstream/bugfix-2.0.x
           thermalManager.updatePID();
         #endif
         break;
@@ -268,7 +312,11 @@ void menu_backlash();
   }
 #endif
 
+<<<<<<< HEAD
 #if ALL(AUTOTEMP, HAS_TEMP_HOTEND) || ANY(PID_AUTOTUNE_MENU, PID_EDIT_MENU, MPC_AUTOTUNE_MENU, MPC_EDIT_MENU)
+=======
+#if BOTH(AUTOTEMP, HAS_TEMP_HOTEND) || ANY(PID_AUTOTUNE_MENU, PID_EDIT_MENU, MPC_AUTOTUNE_MENU, MPC_EDIT_MENU)
+>>>>>>> upstream/bugfix-2.0.x
   #define SHOW_MENU_ADVANCED_TEMPERATURE 1
 #endif
 
@@ -277,10 +325,17 @@ void menu_backlash();
 //
 #if SHOW_MENU_ADVANCED_TEMPERATURE
 
+<<<<<<< HEAD
   #if ALL(MPC_EDIT_MENU, MPC_INCLUDE_FAN)
     #define MPC_EDIT_DEFS(N) editable.decimal = thermalManager.temp_hotend[N].fanCoefficient()
   #else
     #define MPC_EDIT_DEFS(...)
+=======
+  #if ENABLED(MPC_EDIT_MENU)
+    #define MPC_EDIT_DEFS(N) \
+      MPC_t &c = thermalManager.temp_hotend[N].constants; \
+      TERN_(MPC_INCLUDE_FAN, editable.decimal = c.ambient_xfer_coeff_fan0 + c.fan255_adjustment)
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 
   void menu_advanced_temperature() {
@@ -309,7 +364,11 @@ void menu_backlash();
     // PID-P E5, PID-I E5, PID-D E5, PID-C E5, PID Autotune E5
     //
 
+<<<<<<< HEAD
     #if ALL(PIDTEMP, PID_EDIT_MENU)
+=======
+    #if BOTH(PIDTEMP, PID_EDIT_MENU)
+>>>>>>> upstream/bugfix-2.0.x
       #define __PID_HOTEND_MENU_ITEMS(N) \
         raw_Kp = thermalManager.temp_hotend[N].pid.p(); \
         raw_Ki = thermalManager.temp_hotend[N].pid.i(); \
@@ -342,6 +401,7 @@ void menu_backlash();
 
     #endif
 
+<<<<<<< HEAD
     #if ENABLED(PID_EDIT_MENU) && ANY(PIDTEMPBED, PIDTEMPCHAMBER)
       #define _PID_EDIT_ITEMS_TMPL(N,T) \
         raw_Kp = T.pid.p(); \
@@ -350,6 +410,15 @@ void menu_backlash();
         EDIT_ITEM_FAST_N(float41sign, N, MSG_PID_P_E, &raw_Kp, 1, 9990, []{ apply_PID_p(N); }); \
         EDIT_ITEM_FAST_N(float52sign, N, MSG_PID_I_E, &raw_Ki, 0.01f, 9990, []{ apply_PID_i(N); }); \
         EDIT_ITEM_FAST_N(float41sign, N, MSG_PID_D_E, &raw_Kd, 1, 9990, []{ apply_PID_d(N); })
+=======
+    #if ENABLED(PID_EDIT_MENU) && EITHER(PIDTEMPBED, PIDTEMPCHAMBER)
+      #define _PID_EDIT_ITEMS_TMPL(N,T) \
+        raw_Ki = unscalePID_i(T.pid.Ki); \
+        raw_Kd = unscalePID_d(T.pid.Kd); \
+        EDIT_ITEM_FAST_N(float41sign, N, MSG_PID_P_E, &T.pid.Kp, 1, 9990); \
+        EDIT_ITEM_FAST_N(float52sign, N, MSG_PID_I_E, &raw_Ki, 0.01f, 9990, []{ copy_and_scalePID_i(N); }); \
+        EDIT_ITEM_FAST_N(float41sign, N, MSG_PID_D_E, &raw_Kd, 1, 9990, []{ copy_and_scalePID_d(N); })
+>>>>>>> upstream/bugfix-2.0.x
     #endif
 
     #if ENABLED(PIDTEMP)
@@ -370,17 +439,29 @@ void menu_backlash();
     #if ENABLED(MPC_EDIT_MENU)
 
       #define _MPC_EDIT_ITEMS(N) \
+<<<<<<< HEAD
         MPC_t &mpc = thermalManager.temp_hotend[MenuItemBase::itemIndex].mpc; \
         EDIT_ITEM_FAST_N(float41, N, MSG_MPC_POWER_E, &mpc.heater_power, 1, 200); \
         EDIT_ITEM_FAST_N(float31, N, MSG_MPC_BLOCK_HEAT_CAPACITY_E, &mpc.block_heat_capacity, 0, 40); \
         EDIT_ITEM_FAST_N(float43, N, MSG_SENSOR_RESPONSIVENESS_E, &mpc.sensor_responsiveness, 0, 1); \
         EDIT_ITEM_FAST_N(float43, N, MSG_MPC_AMBIENT_XFER_COEFF_E, &mpc.ambient_xfer_coeff_fan0, 0, 1)
+=======
+        EDIT_ITEM_FAST_N(float31sign, N, MSG_MPC_POWER_E, &c.heater_power, 1, 200); \
+        EDIT_ITEM_FAST_N(float31sign, N, MSG_MPC_BLOCK_HEAT_CAPACITY_E, &c.block_heat_capacity, 0, 40); \
+        EDIT_ITEM_FAST_N(float43, N, MSG_SENSOR_RESPONSIVENESS_E, &c.sensor_responsiveness, 0, 1); \
+        EDIT_ITEM_FAST_N(float43, N, MSG_MPC_AMBIENT_XFER_COEFF_E, &c.ambient_xfer_coeff_fan0, 0, 1)
+>>>>>>> upstream/bugfix-2.0.x
 
       #if ENABLED(MPC_INCLUDE_FAN)
         #define MPC_EDIT_ITEMS(N) \
           _MPC_EDIT_ITEMS(N); \
           EDIT_ITEM_FAST_N(float43, N, MSG_MPC_AMBIENT_XFER_COEFF_FAN_E, &editable.decimal, 0, 1, []{ \
+<<<<<<< HEAD
             thermalManager.temp_hotend[MenuItemBase::itemIndex].applyFanAdjustment(editable.decimal); \
+=======
+            MPC_t &c = thermalManager.temp_hotend[MenuItemBase::itemIndex].constants; \
+            c.fan255_adjustment = editable.decimal - c.ambient_xfer_coeff_fan0; \
+>>>>>>> upstream/bugfix-2.0.x
           })
       #else
         #define MPC_EDIT_ITEMS _MPC_EDIT_ITEMS
@@ -526,13 +607,21 @@ void menu_backlash();
     #define EDIT_AMAX(Q,L) EDIT_ITEM_FAST_N(long5_25, _AXIS(Q), MSG_AMAX_N, &planner.settings.max_acceleration_mm_per_s2[_AXIS(Q)], L, max_accel_edit_scaled[_AXIS(Q)], []{ planner.refresh_acceleration_rates(); })
     NUM_AXIS_CODE(
       EDIT_AMAX(A, 100), EDIT_AMAX(B, 100), EDIT_AMAX(C, 10),
+<<<<<<< HEAD
       EDIT_AMAX(I,  10), EDIT_AMAX(J,  10), EDIT_AMAX(K, 10),
       EDIT_AMAX(U,  10), EDIT_AMAX(V,  10), EDIT_AMAX(W, 10)
+=======
+      EDIT_AMAX(I,  10), EDIT_AMAX(J,  10), EDIT_AMAX(K, 10)
+>>>>>>> upstream/bugfix-2.0.x
     );
 
     #if ENABLED(DISTINCT_E_FACTORS)
       EDIT_ITEM_FAST(long5_25, MSG_AMAX_E, &planner.settings.max_acceleration_mm_per_s2[E_AXIS_N(active_extruder)], 100, max_accel_edit_scaled.e, []{ planner.refresh_acceleration_rates(); });
+<<<<<<< HEAD
       for (uint8_t n = 0; n < E_STEPPERS; ++n)
+=======
+      LOOP_L_N(n, E_STEPPERS)
+>>>>>>> upstream/bugfix-2.0.x
         EDIT_ITEM_FAST_N(long5_25, n, MSG_AMAX_EN, &planner.settings.max_acceleration_mm_per_s2[E_AXIS_N(n)], 100, max_accel_edit_scaled.e, []{
           if (MenuItemBase::itemIndex == active_extruder)
             planner.refresh_acceleration_rates();
@@ -585,6 +674,15 @@ void menu_backlash();
       START_MENU();
       BACK_ITEM(MSG_ADVANCED_SETTINGS);
 
+<<<<<<< HEAD
+=======
+      #if HAS_JUNCTION_DEVIATION
+        EDIT_ITEM(float43, MSG_JUNCTION_DEVIATION, &planner.junction_deviation_mm, 0.001f, TERN(LIN_ADVANCE, 0.3f, 0.5f)
+          OPTARG(LIN_ADVANCE, planner.recalculate_max_e_jerk)
+        );
+      #endif
+
+>>>>>>> upstream/bugfix-2.0.x
       constexpr xyze_float_t max_jerk_edit =
         #ifdef MAX_JERK_EDIT_VALUES
           MAX_JERK_EDIT_VALUES
@@ -597,7 +695,11 @@ void menu_backlash();
       ;
 
       LOOP_LOGICAL_AXES(a) {
+<<<<<<< HEAD
         if (TERN0(HAS_C_AXIS, a == C_AXIS) || TERN0(HAS_EXTRUDERS, a == E_AXIS))
+=======
+        if (a == C_AXIS || TERN0(HAS_EXTRUDERS, a == E_AXIS))
+>>>>>>> upstream/bugfix-2.0.x
           EDIT_ITEM_FAST_N(float52sign, a, MSG_VN_JERK, &planner.max_jerk[a], 0.1f, max_jerk_edit[a]);
         else
           EDIT_ITEM_FAST_N(float3, a, MSG_VN_JERK, &planner.max_jerk[a], 1.0f, max_jerk_edit[a]);
@@ -635,6 +737,7 @@ void menu_backlash();
 
 #if ENABLED(EDITABLE_STEPS_PER_UNIT)
 
+<<<<<<< HEAD
   // M92 Steps-per-mm
   void menu_advanced_steps_per_mm() {
     START_MENU();
@@ -642,6 +745,23 @@ void menu_backlash();
 
     LOOP_NUM_AXES(a)
       EDIT_ITEM_FAST_N(float72, a, MSG_N_STEPS, &planner.settings.axis_steps_per_mm[a], 5, 9999, []{ planner.refresh_positioning(); });
+=======
+  LOOP_NUM_AXES(a)
+    EDIT_ITEM_FAST_N(float61, a, MSG_N_STEPS, &planner.settings.axis_steps_per_mm[a], 5, 9999, []{ planner.refresh_positioning(); });
+
+  #if ENABLED(DISTINCT_E_FACTORS)
+    LOOP_L_N(n, E_STEPPERS)
+      EDIT_ITEM_FAST_N(float61, n, MSG_EN_STEPS, &planner.settings.axis_steps_per_mm[E_AXIS_N(n)], 5, 9999, []{
+        const uint8_t e = MenuItemBase::itemIndex;
+        if (e == active_extruder)
+          planner.refresh_positioning();
+        else
+          planner.mm_per_step[E_AXIS_N(e)] = 1.0f / planner.settings.axis_steps_per_mm[E_AXIS_N(e)];
+      });
+  #elif E_STEPPERS
+    EDIT_ITEM_FAST_N(float61, E_AXIS, MSG_N_STEPS, &planner.settings.axis_steps_per_mm[E_AXIS], 5, 9999, []{ planner.refresh_positioning(); });
+  #endif
+>>>>>>> upstream/bugfix-2.0.x
 
     #if ENABLED(DISTINCT_E_FACTORS)
       for (uint8_t n = 0; n < E_STEPPERS; ++n)
@@ -675,6 +795,7 @@ void menu_advanced_settings() {
 
   #if DISABLED(SLIM_LCD_MENUS)
 
+<<<<<<< HEAD
     #if ENABLED(POLARGRAPH)
       // M665 - Polargraph Settings
       if (!is_busy) {
@@ -689,6 +810,12 @@ void menu_advanced_settings() {
 
     #if HAS_HOME_OFFSET
       // M428 - Set Home Offsets
+=======
+    #if HAS_M206_COMMAND
+      //
+      // Set Home Offsets
+      //
+>>>>>>> upstream/bugfix-2.0.x
       ACTION_ITEM(MSG_SET_HOME_OFFSETS, []{ queue.inject(F("M428")); ui.return_to_status(); });
     #endif
 
@@ -708,7 +835,11 @@ void menu_advanced_settings() {
       SUBMENU(MSG_JERK, menu_advanced_jerk);
     #elif HAS_JUNCTION_DEVIATION
       EDIT_ITEM(float43, MSG_JUNCTION_DEVIATION, &planner.junction_deviation_mm, 0.001f, 0.3f
+<<<<<<< HEAD
         OPTARG(HAS_LINEAR_E_JERK, planner.recalculate_max_e_jerk)
+=======
+        OPTARG(LIN_ADVANCE, planner.recalculate_max_e_jerk)
+>>>>>>> upstream/bugfix-2.0.x
       );
     #endif
 

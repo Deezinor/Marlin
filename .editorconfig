@@ -16,14 +16,6 @@ charset = utf-8
 indent_style = space
 indent_size = 2
 
-[{Makefile}]
-indent_style = tab
-indent_size = 2
-
-[*.md]
-# Two spaces at the end of the line means newline in Markdown
-trim_trailing_whitespace = false
-
 [{*.py}]
 indent_style = space
 indent_size = 4

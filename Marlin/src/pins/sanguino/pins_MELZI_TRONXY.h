@@ -28,6 +28,7 @@
 
 #define BOARD_INFO_NAME "Melzi (Tronxy)"
 
+<<<<<<< HEAD
 #define Z_ENABLE_PIN                          14
 
 #define LCD_SDSS                              -1
@@ -54,5 +55,15 @@
   #define BOARD_ST7920_DELAY_2               125
   #define BOARD_ST7920_DELAY_3                 0
 #endif
+=======
+// Alter timing for graphical display
+#if IS_U8GLIB_ST7920
+  #define BOARD_ST7920_DELAY_1                 0
+  #define BOARD_ST7920_DELAY_2               125
+  #define BOARD_ST7920_DELAY_3                 0
+#endif
+
+#include "pins_MELZI.h" // ... SANGUINOLOLU_12 ... SANGUINOLOLU_11
+>>>>>>> upstream/bugfix-2.0.x
 
 #include "pins_MELZI.h" // ... SANGUINOLOLU_12 ... SANGUINOLOLU_11

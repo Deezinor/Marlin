@@ -30,7 +30,23 @@
 
 #include "leds.h"
 
+<<<<<<< HEAD
 #if ANY(CASE_LIGHT_USE_RGB_LED, CASE_LIGHT_USE_NEOPIXEL)
+=======
+#if ENABLED(BLINKM)
+  #include "blinkm.h"
+#endif
+
+#if ENABLED(PCA9632)
+  #include "pca9632.h"
+#endif
+
+#if ENABLED(PCA9533)
+  #include "pca9533.h"
+#endif
+
+#if EITHER(CASE_LIGHT_USE_RGB_LED, CASE_LIGHT_USE_NEOPIXEL)
+>>>>>>> upstream/bugfix-2.0.x
   #include "../../feature/caselight.h"
 #endif
 
@@ -176,7 +192,11 @@ void LEDLights::set_color(const LEDColor &incol
       #endif
     #endif
 
+<<<<<<< HEAD
     #if ALL(CASE_LIGHT_MENU, CASE_LIGHT_USE_NEOPIXEL)
+=======
+    #if BOTH(CASE_LIGHT_MENU, CASE_LIGHT_USE_NEOPIXEL)
+>>>>>>> upstream/bugfix-2.0.x
       // Update brightness only if caselight is ON or switching leds off
       if (caselight.on || incol.is_off())
     #endif
@@ -191,7 +211,11 @@ void LEDLights::set_color(const LEDColor &incol
       }
     #endif
 
+<<<<<<< HEAD
     #if ALL(CASE_LIGHT_MENU, CASE_LIGHT_USE_NEOPIXEL)
+=======
+    #if BOTH(CASE_LIGHT_MENU, CASE_LIGHT_USE_NEOPIXEL)
+>>>>>>> upstream/bugfix-2.0.x
       // Update color only if caselight is ON or switching leds off
       if (caselight.on || incol.is_off())
     #endif
@@ -239,7 +263,11 @@ void LEDLights::set_color(const LEDColor &incol
   void LEDLights::toggle() { if (lights_on) set_off(); else update(); }
 #endif
 
+<<<<<<< HEAD
 #if HAS_LED_POWEROFF_TIMEOUT
+=======
+#if LED_POWEROFF_TIMEOUT > 0
+>>>>>>> upstream/bugfix-2.0.x
 
   millis_t LEDLights::led_off_time; // = 0
 

@@ -162,5 +162,8 @@ void LoadChocolateScreen::onIdle() {
   }
   BaseScreen::onIdle();
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #endif // COCOA_LOAD_CHOCOLATE_SCREEN

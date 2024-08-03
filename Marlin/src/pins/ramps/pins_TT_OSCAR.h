@@ -20,17 +20,24 @@
  *
  */
 #pragma once
+<<<<<<< HEAD
 
 /**
  * TT OSCAR by YM Tech.LTD
  *
  * ATmega2560
  */
+=======
+>>>>>>> upstream/bugfix-2.0.x
 
 #include "env_validate.h"
 
 #if HOTENDS > 5 || E_STEPPERS > 5
+<<<<<<< HEAD
   #error "TT OSCAR supports up to 5 hotends / E steppers."
+=======
+  #error "TTOSCAR supports up to 5 hotends / E steppers."
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #define BOARD_INFO_NAME      "TT OSCAR"
@@ -182,7 +189,11 @@
 #endif
 
 // SPI for MAX Thermocouple
+<<<<<<< HEAD
 //#if !HAS_MEDIA
+=======
+//#if DISABLED(SDSUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
 //  #define TEMP_0_CS_PIN    66   // Don't use 53 if using Display/SD card
 //#else
 //  #define TEMP_0_CS_PIN    66   // Don't use 49 (SD_DETECT_PIN)
@@ -232,12 +243,21 @@
 //
 #if HAS_CUTTER && !PIN_EXISTS(SPINDLE_LASER_ENA)
   #if !NUM_SERVOS                                 // Prefer the servo connector
+<<<<<<< HEAD
     #define SPINDLE_LASER_PWM_PIN              6  // Hardware PWM
     #define SPINDLE_LASER_ENA_PIN              4  // Pullup or pulldown!
     #define SPINDLE_DIR_PIN                    5
   #elif HAS_FREE_AUX2_PINS                        // Try to use AUX 2
     #define SPINDLE_LASER_PWM_PIN             44  // Hardware PWM
     #define SPINDLE_LASER_ENA_PIN             40  // Pullup or pulldown!
+=======
+    #define SPINDLE_LASER_ENA_PIN              4  // Pullup or pulldown!
+    #define SPINDLE_LASER_PWM_PIN              6  // Hardware PWM
+    #define SPINDLE_DIR_PIN                    5
+  #elif HAS_FREE_AUX2_PINS                        // Try to use AUX 2
+    #define SPINDLE_LASER_ENA_PIN             40  // Pullup or pulldown!
+    #define SPINDLE_LASER_PWM_PIN             44  // Hardware PWM
+>>>>>>> upstream/bugfix-2.0.x
     #define SPINDLE_DIR_PIN                   65
   #endif
 #endif
@@ -261,6 +281,7 @@
     #define E_MUX0_PIN                        58  // Y_CS_PIN
   #endif
   #ifndef E_MUX1_PIN
+<<<<<<< HEAD
     #define E_MUX1_PIN                        53  // EXP2-4
   #endif
   #ifndef E_MUX2_PIN
@@ -294,6 +315,14 @@
 #define EXP1_06_PIN                           25  // D4
 #define EXP1_07_PIN                           27  // RS
 #define EXP1_08_PIN                           29  // EN
+=======
+    #define E_MUX1_PIN                        53  // Z_CS_PIN
+  #endif
+  #ifndef E_MUX2_PIN
+    #define E_MUX2_PIN                        49  // En_CS_PIN
+  #endif
+#endif
+>>>>>>> upstream/bugfix-2.0.x
 
 #define EXP2_01_PIN                           44  // MISO
 #define EXP2_02_PIN                           52  // SCK

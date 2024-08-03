@@ -25,12 +25,18 @@
 #include "../sd/cardreader.h"
 #include "../module/motion.h"
 #include "../libs/buzzer.h"
+<<<<<<< HEAD
 #include "buttons.h"
 
 #if ENABLED(EEPROM_SETTINGS)
   #include "../module/settings.h"
 #endif
 
+=======
+
+#include "buttons.h"
+
+>>>>>>> upstream/bugfix-2.0.x
 #if ENABLED(TOUCH_SCREEN_CALIBRATION)
   #include "tft_io/touch_calibration.h"
 #endif
@@ -45,6 +51,15 @@
 
 #if ENABLED(ADVANCED_PAUSE_FEATURE)
   #include "../feature/pause.h"
+<<<<<<< HEAD
+=======
+#endif
+
+#if ENABLED(DWIN_CREALITY_LCD)
+  #include "e3v2/creality/dwin.h"
+#elif ENABLED(DWIN_LCD_PROUI)
+  #include "e3v2/proui/dwin.h"
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #if ENABLED(DWIN_CREALITY_LCD)
@@ -56,6 +71,8 @@
 #if ALL(HAS_STATUS_MESSAGE, IS_DWIN_MARLINUI)
   #include "e3v2/marlinui/marlinui_dwin.h" // for LCD_WIDTH
 #endif
+
+typedef bool (*statusResetFunc_t)();
 
 typedef bool (*statusResetFunc_t)();
 
@@ -90,9 +107,14 @@ typedef bool (*statusResetFunc_t)();
 
 #endif // HAS_WIRED_LCD
 
+<<<<<<< HEAD
 #if ANY(HAS_WIRED_LCD, DWIN_CREALITY_LCD_JYERSUI)
   #define LCD_WITH_BLINK 1
   #define LCD_UPDATE_INTERVAL DIV_TERN(DOUBLE_LCD_FRAMERATE, TERN(HAS_TOUCH_BUTTONS, 50, 100), 2)
+=======
+#if EITHER(HAS_WIRED_LCD, DWIN_CREALITY_LCD_JYERSUI)
+  #define LCD_UPDATE_INTERVAL TERN(HAS_TOUCH_BUTTONS, 50, 100)
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #if HAS_MARLINUI_U8GLIB
@@ -182,7 +204,11 @@ typedef bool (*statusResetFunc_t)();
       static bool constexpr processing = false;
     #endif
     static void task();
+<<<<<<< HEAD
     static void soon(const AxisEnum move_axis OPTARG(MULTI_E_MANUAL, const int8_t eindex=active_extruder));
+=======
+    static void soon(const AxisEnum axis OPTARG(MULTI_E_MANUAL, const int8_t eindex=active_extruder));
+>>>>>>> upstream/bugfix-2.0.x
   };
 
   void lcd_move_axis(const AxisEnum);
@@ -207,11 +233,16 @@ public:
 
   #if HAS_DISPLAY || HAS_DWIN_E3V2
     static void init_lcd();
+<<<<<<< HEAD
     // Erase the LCD contents. Do the lowest-level thing required to clear the LCD.
     static void clear_lcd();
   #else
     static void init_lcd() {}
     static void clear_lcd() {}
+=======
+  #else
+    static void init_lcd() {}
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 
   static void reinit_lcd() { TERN_(REINIT_NOISY_LCD, init_lcd()); }
@@ -238,7 +269,11 @@ public:
   #endif
 
   #if USE_MARLINUI_BUZZER
+<<<<<<< HEAD
     static void buzz(const long duration, const uint16_t freq=0);
+=======
+    static void buzz(const long duration, const uint16_t freq);
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 
   static void chirp() {
@@ -249,7 +284,14 @@ public:
     static void update_indicators();
   #endif
 
+<<<<<<< HEAD
   #if ALL(HAS_MARLINUI_MENU, TOUCH_SCREEN_CALIBRATION)
+=======
+  // LCD implementations
+  static void clear_lcd();
+
+  #if BOTH(HAS_MARLINUI_MENU, TOUCH_SCREEN_CALIBRATION)
+>>>>>>> upstream/bugfix-2.0.x
     static void check_touch_calibration() {
       if (touch_calibration.need_calibration()) currentScreen = touch_calibration_screen;
     }
@@ -280,6 +322,7 @@ public:
     static void _set_brightness(); // Implementation-specific
     static void set_brightness(const uint8_t value);
     FORCE_INLINE static void refresh_brightness() { set_brightness(brightness); }
+<<<<<<< HEAD
   #endif
 
   #if HAS_BACKLIGHT_TIMEOUT
@@ -318,6 +361,34 @@ public:
     #define PROGRESS_MASK 0x7F
   #endif
 
+=======
+  #endif
+
+  #if LCD_BACKLIGHT_TIMEOUT
+    #define LCD_BKL_TIMEOUT_MIN 1u
+    #define LCD_BKL_TIMEOUT_MAX UINT16_MAX // Slightly more than 18 hours
+    static uint16_t lcd_backlight_timeout;
+    static millis_t backlight_off_ms;
+    static void refresh_backlight_timeout();
+  #elif HAS_DISPLAY_SLEEP
+    #define SLEEP_TIMEOUT_MIN 0
+    #define SLEEP_TIMEOUT_MAX 99
+    static uint8_t sleep_timeout_minutes;
+    static millis_t screen_timeout_millis;
+    static void refresh_screen_timeout();
+    static void sleep_on();
+    static void sleep_off();
+  #endif
+
+  #if HAS_DWIN_E3V2_BASIC
+    static void refresh();
+  #else
+    FORCE_INLINE static void refresh() {
+      TERN_(HAS_WIRED_LCD, refresh(LCDVIEW_CLEAR_CALL_REDRAW));
+    }
+  #endif
+
+>>>>>>> upstream/bugfix-2.0.x
   #if HAS_PRINT_PROGRESS
     #if ENABLED(SET_PROGRESS_PERCENT)
       static progress_t progress_override;
@@ -325,24 +396,35 @@ public:
       static void set_progress_done() { progress_override = (PROGRESS_MASK + 1U) + 100U * (PROGRESS_SCALE); }
       static void progress_reset() { if (progress_override & (PROGRESS_MASK + 1U)) set_progress(0); }
     #endif
+<<<<<<< HEAD
     #if ANY(SHOW_REMAINING_TIME, SET_PROGRESS_MANUALLY)
+=======
+    #if ENABLED(SHOW_REMAINING_TIME)
+>>>>>>> upstream/bugfix-2.0.x
       static uint32_t _calculated_remaining_time() {
         const duration_t elapsed = print_job_timer.duration();
         const progress_t progress = _get_progress();
         return progress ? elapsed.value * (100 * (PROGRESS_SCALE) - progress) / progress : 0;
       }
+<<<<<<< HEAD
       #if ENABLED(SET_REMAINING_TIME)
+=======
+      #if ENABLED(USE_M73_REMAINING_TIME)
+>>>>>>> upstream/bugfix-2.0.x
         static uint32_t remaining_time;
         FORCE_INLINE static void set_remaining_time(const uint32_t r) { remaining_time = r; }
         FORCE_INLINE static uint32_t get_remaining_time() { return remaining_time ?: _calculated_remaining_time(); }
         FORCE_INLINE static void reset_remaining_time() { set_remaining_time(0); }
       #else
         FORCE_INLINE static uint32_t get_remaining_time() { return _calculated_remaining_time(); }
+<<<<<<< HEAD
       #endif
       #if ENABLED(SET_INTERACTION_TIME)
         static uint32_t interaction_time;
         FORCE_INLINE static void set_interaction_time(const uint32_t r) { interaction_time = r; }
         FORCE_INLINE static void reset_interaction_time() { set_interaction_time(0); }
+=======
+>>>>>>> upstream/bugfix-2.0.x
       #endif
     #endif
     static progress_t _get_progress();
@@ -377,7 +459,11 @@ public:
 
   #if HAS_STATUS_MESSAGE
 
+<<<<<<< HEAD
     #if ANY(HAS_WIRED_LCD, DWIN_LCD_PROUI)
+=======
+    #if EITHER(HAS_WIRED_LCD, DWIN_LCD_PROUI)
+>>>>>>> upstream/bugfix-2.0.x
       #if ENABLED(STATUS_MESSAGE_SCROLLING)
         #define MAX_MESSAGE_LENGTH _MAX(LONG_FILENAME_LENGTH, MAX_LANG_CHARSIZE * 2 * (LCD_WIDTH))
       #else
@@ -387,7 +473,11 @@ public:
       #define MAX_MESSAGE_LENGTH 63
     #endif
 
+<<<<<<< HEAD
     static MString<MAX_MESSAGE_LENGTH> status_message;
+=======
+    static char status_message[];
+>>>>>>> upstream/bugfix-2.0.x
     static uint8_t alert_level; // Higher levels block lower levels
 
     #if HAS_STATUS_MESSAGE_TIMEOUT
@@ -411,15 +501,23 @@ public:
     static bool set_alert_level(int8_t &level);
 
     static void reset_status(const bool no_welcome=false);
+<<<<<<< HEAD
+=======
+    static void set_alert_status(FSTR_P const fstr);
+>>>>>>> upstream/bugfix-2.0.x
     static void reset_alert_level() { alert_level = 0; }
 
     static statusResetFunc_t status_reset_callback;
     static void set_status_reset_fn(const statusResetFunc_t fn=nullptr) { status_reset_callback = fn; }
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
   #else
 
     #define MAX_MESSAGE_LENGTH 1
     static constexpr bool has_status() { return false; }
+<<<<<<< HEAD
 
     static bool set_alert_level(int8_t) { return false; }
 
@@ -523,6 +621,21 @@ public:
 
     // Clear the LCD before new drawing. Some LCDs do nothing because they redraw frequently.
     static void clear_for_drawing();
+=======
+    static void reset_status(const bool=false) {}
+    static void set_alert_status(FSTR_P const) {}
+    static void reset_alert_level() {}
+    static void set_status_reset_fn(const statusResetFunc_t=nullptr) {}
+  #endif
+
+  static void set_status(const char * const cstr, const bool persist=false);
+  static void set_status(FSTR_P const fstr, const int8_t level=0);
+  static void status_printf(int8_t level, FSTR_P const fmt, ...);
+
+  #if HAS_DISPLAY
+
+    static void update();
+>>>>>>> upstream/bugfix-2.0.x
 
     static void abort_print();
     static void pause_print();
@@ -537,6 +650,14 @@ public:
     #endif
 
     #if LCD_WITH_BLINK
+      static bool get_blink();
+    #endif
+
+    #if BOTH(HAS_MARLINUI_MENU, PSU_CONTROL)
+      static void poweroff();
+    #endif
+
+    #if EITHER(HAS_WIRED_LCD, DWIN_CREALITY_LCD_JYERSUI)
       static bool get_blink();
     #endif
 
@@ -596,7 +717,20 @@ public:
         static void pause_filament_display(const millis_t ms=millis()) { next_filament_display = ms + 5000UL; }
       #endif
 
+<<<<<<< HEAD
       static void quick_feedback(const bool clear_buttons=true);
+=======
+      #if HAS_TOUCH_SLEEP
+        static void wakeup_screen();
+      #endif
+
+      static void quick_feedback(const bool clear_buttons=true);
+      #if HAS_SOUND
+        static void completion_feedback(const bool good=true);
+      #else
+        static void completion_feedback(const bool=true) { TERN_(HAS_TOUCH_SLEEP, wakeup_screen()); }
+      #endif
+>>>>>>> upstream/bugfix-2.0.x
 
       #if ENABLED(ADVANCED_PAUSE_FEATURE)
         static void draw_hotend_status(const uint8_t row, const uint8_t extruder);
@@ -619,9 +753,16 @@ public:
 
     #if IS_DWIN_MARLINUI
       static bool did_first_redraw;
+<<<<<<< HEAD
     #endif
 
     #if ANY(BABYSTEP_GFX_OVERLAY, MESH_EDIT_GFX_OVERLAY)
+=======
+      static bool old_is_printing;
+    #endif
+
+    #if EITHER(BABYSTEP_ZPROBE_GFX_OVERLAY, MESH_EDIT_GFX_OVERLAY)
+>>>>>>> upstream/bugfix-2.0.x
       static void zoffset_overlay(const int8_t dir);
       static void zoffset_overlay(const_float_t zvalue);
     #endif
@@ -634,11 +775,16 @@ public:
 
   #else // No LCD
 
+<<<<<<< HEAD
     static void clear_for_drawing() {}
+=======
+    static void update() {}
+>>>>>>> upstream/bugfix-2.0.x
     static void kill_screen(FSTR_P const, FSTR_P const) {}
 
   #endif
 
+<<<<<<< HEAD
   #if !HAS_WIRED_LCD
     static void quick_feedback(const bool=true) {}
   #endif
@@ -647,6 +793,10 @@ public:
 
   #if HAS_MEDIA
     #if ALL(SCROLL_LONG_FILENAMES, HAS_MARLINUI_MENU)
+=======
+  #if ENABLED(SDSUPPORT)
+    #if BOTH(SCROLL_LONG_FILENAMES, HAS_MARLINUI_MENU)
+>>>>>>> upstream/bugfix-2.0.x
       #define MARLINUI_SCROLL_NAME 1
     #endif
     static const char * scrolled_filename(CardReader &theCard, const uint8_t maxlen, const bool doScroll);
@@ -665,6 +815,7 @@ public:
   #endif
 
   static void reset_status_timeout(const millis_t ms) {
+<<<<<<< HEAD
     TERN(HAS_SCREEN_TIMEOUT, return_to_status_ms = ms + LCD_TIMEOUT_TO_STATUS, UNUSED(ms));
   }
 
@@ -675,6 +826,11 @@ public:
     static void enable_encoder_multiplier(const bool) {}
   #endif
 
+=======
+    TERN(SCREENS_CAN_TIME_OUT, return_to_status_ms = ms + LCD_TIMEOUT_TO_STATUS, UNUSED(ms));
+  }
+
+>>>>>>> upstream/bugfix-2.0.x
   #if HAS_MARLINUI_MENU
 
     #if HAS_TOUCH_BUTTONS
@@ -714,11 +870,19 @@ public:
     #endif
 
     FORCE_INLINE static bool screen_is_sticky() {
+<<<<<<< HEAD
       return TERN1(HAS_SCREEN_TIMEOUT, defer_return_to_status);
     }
 
     FORCE_INLINE static void defer_status_screen(const bool defer=true) {
       TERN(HAS_SCREEN_TIMEOUT, defer_return_to_status = defer, UNUSED(defer));
+=======
+      return TERN1(SCREENS_CAN_TIME_OUT, defer_return_to_status);
+    }
+
+    FORCE_INLINE static void defer_status_screen(const bool defer=true) {
+      TERN(SCREENS_CAN_TIME_OUT, defer_return_to_status = defer, UNUSED(defer));
+>>>>>>> upstream/bugfix-2.0.x
     }
 
     static void goto_previous_screen_no_defer() {
@@ -739,13 +903,26 @@ public:
       static float ubl_mesh_value();
     #endif
 
+<<<<<<< HEAD
     static void draw_select_screen_prompt(FSTR_P const fpre, const char * const string=nullptr, FSTR_P const fsuf=nullptr);
 
   #else // !HAS_MARLINUI_MENU
+=======
+    static void draw_select_screen_prompt(FSTR_P const pref, const char * const string=nullptr, FSTR_P const suff=nullptr);
+
+  #else
+>>>>>>> upstream/bugfix-2.0.x
 
     static void return_to_status() {}
 
     static constexpr bool on_status_screen() { return true; }
+<<<<<<< HEAD
+=======
+
+    #if HAS_WIRED_LCD
+      FORCE_INLINE static void run_current_screen() { status_screen(); }
+    #endif
+>>>>>>> upstream/bugfix-2.0.x
 
     #if HAS_WIRED_LCD
       FORCE_INLINE static void run_current_screen() { status_screen(); }
@@ -765,7 +942,23 @@ public:
     static bool use_click() { return false; }
   #endif
 
+<<<<<<< HEAD
   #if ENABLED(ADVANCED_PAUSE_FEATURE) && ANY(HAS_MARLINUI_MENU, EXTENSIBLE_UI, DWIN_CREALITY_LCD_JYERSUI)
+=======
+  #if EITHER(HAS_MARLINUI_MENU, EXTENSIBLE_UI)
+    static bool lcd_clicked;
+    static bool use_click() {
+      const bool click = lcd_clicked;
+      lcd_clicked = false;
+      return click;
+    }
+  #else
+    static constexpr bool lcd_clicked = false;
+    static bool use_click() { return false; }
+  #endif
+
+  #if ENABLED(ADVANCED_PAUSE_FEATURE) && ANY(HAS_MARLINUI_MENU, EXTENSIBLE_UI, DWIN_LCD_PROUI, DWIN_CREALITY_LCD_JYERSUI)
+>>>>>>> upstream/bugfix-2.0.x
     static void pause_show_message(const PauseMessage message, const PauseMode mode=PAUSE_MODE_SAME, const uint8_t extruder=active_extruder);
   #else
     static void _pause_show_message() {}
@@ -785,13 +978,26 @@ public:
       static void load_settings();
       static void store_settings();
     #endif
+<<<<<<< HEAD
     static void eeprom_alert(const EEPROM_Error) TERN_(EEPROM_AUTO_INIT, {});
+=======
+    #if DISABLED(EEPROM_AUTO_INIT)
+      static void eeprom_alert(const uint8_t msgid);
+      static void eeprom_alert_crc()     { eeprom_alert(0); }
+      static void eeprom_alert_index()   { eeprom_alert(1); }
+      static void eeprom_alert_version() { eeprom_alert(2); }
+    #endif
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 
   //
   // Special handling if a move is underway
   //
+<<<<<<< HEAD
   #if ANY(DELTA_CALIBRATION_MENU, DELTA_AUTO_CALIBRATION, PROBE_OFFSET_WIZARD, X_AXIS_TWIST_COMPENSATION) || (ENABLED(LCD_BED_LEVELING) && ANY(PROBE_MANUALLY, MESH_BED_LEVELING))
+=======
+  #if ANY(DELTA_CALIBRATION_MENU, DELTA_AUTO_CALIBRATION, PROBE_OFFSET_WIZARD, X_AXIS_TWIST_COMPENSATION) || (ENABLED(LCD_BED_LEVELING) && EITHER(PROBE_MANUALLY, MESH_BED_LEVELING))
+>>>>>>> upstream/bugfix-2.0.x
     #define LCD_HAS_WAIT_FOR_MOVE 1
     static bool wait_for_move;
   #else
@@ -801,7 +1007,11 @@ public:
   //
   // Block interaction while under external control
   //
+<<<<<<< HEAD
   #if HAS_MARLINUI_MENU && ANY(AUTO_BED_LEVELING_UBL, G26_MESH_VALIDATION)
+=======
+  #if HAS_MARLINUI_MENU && EITHER(AUTO_BED_LEVELING_UBL, G26_MESH_VALIDATION)
+>>>>>>> upstream/bugfix-2.0.x
     static bool external_control;
     FORCE_INLINE static void capture() { external_control = true; }
     FORCE_INLINE static void release() { external_control = false; }
@@ -826,7 +1036,15 @@ public:
 
     static void update_buttons();
 
+<<<<<<< HEAD
     #if ENABLED(ENCODER_NOISE_FILTER)
+=======
+    #if HAS_ENCODER_NOISE
+      #ifndef ENCODER_SAMPLES
+        #define ENCODER_SAMPLES 10
+      #endif
+
+>>>>>>> upstream/bugfix-2.0.x
       /**
        * Some printers may have issues with EMI noise especially using a motherboard with 3.3V logic levels
        * it may cause the logical LOW to float into the undefined region and register as a logical HIGH
@@ -834,7 +1052,11 @@ public:
        * printer unusable in practice.
        */
       static bool hw_button_pressed() {
+<<<<<<< HEAD
         for (uint8_t s = 0; s < ENCODER_SAMPLES; ++s) {
+=======
+        LOOP_L_N(s, ENCODER_SAMPLES) {
+>>>>>>> upstream/bugfix-2.0.x
           if (!BUTTON_CLICK()) return false;
           safe_delay(1);
         }
@@ -844,7 +1066,11 @@ public:
       static bool hw_button_pressed() { return BUTTON_CLICK(); }
     #endif
 
+<<<<<<< HEAD
     #if ANY(AUTO_BED_LEVELING_UBL, G26_MESH_VALIDATION)
+=======
+    #if EITHER(AUTO_BED_LEVELING_UBL, G26_MESH_VALIDATION)
+>>>>>>> upstream/bugfix-2.0.x
       static void wait_for_release();
     #endif
 
@@ -891,7 +1117,11 @@ public:
 
 private:
 
+<<<<<<< HEAD
   #if HAS_SCREEN_TIMEOUT
+=======
+  #if SCREENS_CAN_TIME_OUT
+>>>>>>> upstream/bugfix-2.0.x
     static millis_t return_to_status_ms;
     static bool defer_return_to_status;
   #else
@@ -915,7 +1145,12 @@ private:
 
 #define LCD_MESSAGE_F(S)       ui.set_status(F(S))
 #define LCD_MESSAGE(M)         ui.set_status(GET_TEXT_F(M))
+<<<<<<< HEAD
 #define LCD_MESSAGE_MIN(M)     ui.set_min_status(GET_TEXT_F(M))
 #define LCD_MESSAGE_MAX(M)     ui.set_max_status(GET_TEXT_F(M))
 #define LCD_ALERTMESSAGE_F(S)  ui.set_alert(F(S))
 #define LCD_ALERTMESSAGE(M)    ui.set_alert(GET_TEXT_F(M))
+=======
+#define LCD_ALERTMESSAGE_F(S)  ui.set_alert_status(F(S))
+#define LCD_ALERTMESSAGE(M)    ui.set_alert_status(GET_TEXT_F(M))
+>>>>>>> upstream/bugfix-2.0.x

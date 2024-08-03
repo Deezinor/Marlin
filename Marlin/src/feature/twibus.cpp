@@ -93,7 +93,12 @@ void TWIBus::send() {
 // static
 void TWIBus::echoprefix(uint8_t bytes, FSTR_P const pref, uint8_t adr) {
   SERIAL_ECHO_START();
+<<<<<<< HEAD
   SERIAL_ECHO(pref, F(": from:"), adr, F(" bytes:"), bytes, F(" data:"));
+=======
+  SERIAL_ECHOF(pref);
+  SERIAL_ECHOPGM(": from:", adr, " bytes:", bytes, " data:");
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 // static
@@ -144,7 +149,11 @@ void TWIBus::echodata(uint8_t bytes, FSTR_P const pref, uint8_t adr, const uint8
 
 void TWIBus::echobuffer(FSTR_P const prefix, uint8_t adr) {
   echoprefix(buffer_s, prefix, adr);
+<<<<<<< HEAD
   for (uint8_t i = 0; i < buffer_s; ++i) SERIAL_CHAR(buffer[i]);
+=======
+  LOOP_L_N(i, buffer_s) SERIAL_CHAR(buffer[i]);
+>>>>>>> upstream/bugfix-2.0.x
   SERIAL_EOL();
 }
 

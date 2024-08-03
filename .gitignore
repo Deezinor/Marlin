@@ -21,13 +21,9 @@
 
 # Generated files
 _Version.h
-bdf2u8g.exe
-genpages.exe
+bdf2u8g
 marlin_config.json
 mczip.h
-language*.csv
-out-csv/
-out-language/
 *.gen
 *.sublime-workspace
 
@@ -35,7 +31,23 @@ out-language/
 applet/
 .DS_Store
 
-# Compiled C++ Object files
+#
+# Misc
+#
+*~
+*.orig
+*.rej
+*.bak
+*.idea
+*.i
+*.ii
+*.swp
+tags
+
+#
+# C++
+#
+# Compiled Object files
 *.slo
 *.lo
 *.o
@@ -126,14 +138,12 @@ vc-fileutils.settings
 .vscode/*
 !.vscode/extensions.json
 
-# Simulation files
+#Simulation
 imgui.ini
 eeprom.dat
 spi_flash.bin
-fs.img
 
-# CMake
-buildroot/share/cmake/*
+#cmake
 CMakeLists.txt
 !buildroot/share/cmake/CMakeLists.txt
 src/CMakeLists.txt
@@ -155,16 +165,3 @@ __pycache__
 
 # IOLogger logs
 *_log.csv
-
-# Misc.
-*~
-*.orig
-*.rej
-*.bak
-*.idea
-*.i
-*.ii
-*.swp
-tags
-*.logs
-*.bak

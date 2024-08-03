@@ -1450,6 +1450,10 @@ const u8g_fntpgm_uint8_t fontpage_510_154_154[30] U8G_FONT_SECTION("fontpage_510
   0x00,0x02,0x07,0x07,0x0C,0x06,0x01,0xC0,0xC0,0x00,0x00,0x00,0xC0,0xC0};
 
 static const uxg_fontinfo_t g_fontinfo_zh_CN[] PROGMEM = {
+<<<<<<< HEAD
+=======
+  FONTDATA_ITEM(64, 157, 157, fontpage_64_157_157), // '”' -- '”'
+>>>>>>> upstream/bugfix-2.0.x
   FONTDATA_ITEM(69, 191, 191, fontpage_69_191_191), // '⊿' -- '⊿'
   FONTDATA_ITEM(156, 128, 128, fontpage_156_128_128), // '一' -- '一'
   FONTDATA_ITEM(156, 137, 139, fontpage_156_137_139), // '三' -- '下'
@@ -1537,6 +1541,10 @@ static const uxg_fontinfo_t g_fontinfo_zh_CN[] PROGMEM = {
   FONTDATA_ITEM(171, 183, 183, fontpage_171_183_183), // '喷' -- '喷'
   FONTDATA_ITEM(172, 180, 180, fontpage_172_180_180), // '嘴' -- '嘴'
   FONTDATA_ITEM(172, 232, 232, fontpage_172_232_232), // '器' -- '器'
+<<<<<<< HEAD
+=======
+  FONTDATA_ITEM(172, 244, 244, fontpage_172_244_244), // '噴' -- '噴'
+>>>>>>> upstream/bugfix-2.0.x
   FONTDATA_ITEM(173, 222, 222, fontpage_173_222_222), // '回' -- '回'
   FONTDATA_ITEM(173, 224, 224, fontpage_173_224_224), // '因' -- '因'
   FONTDATA_ITEM(173, 250, 250, fontpage_173_250_250), // '固' -- '固'
@@ -1625,6 +1633,10 @@ static const uxg_fontinfo_t g_fontinfo_zh_CN[] PROGMEM = {
   FONTDATA_ITEM(202, 240, 240, fontpage_202_240_240), // '数' -- '数'
   FONTDATA_ITEM(202, 242, 242, fontpage_202_242_242), // '敲' -- '敲'
   FONTDATA_ITEM(202, 244, 244, fontpage_202_244_244), // '整' -- '整'
+<<<<<<< HEAD
+=======
+  FONTDATA_ITEM(203, 135, 135, fontpage_203_135_135), // '文' -- '文'
+>>>>>>> upstream/bugfix-2.0.x
   FONTDATA_ITEM(203, 153, 153, fontpage_203_153_153), // '料' -- '料'
   FONTDATA_ITEM(203, 156, 156, fontpage_203_156_156), // '斜' -- '斜'
   FONTDATA_ITEM(203, 173, 173, fontpage_203_173_173), // '断' -- '断'
@@ -1700,6 +1712,10 @@ static const uxg_fontinfo_t g_fontinfo_zh_CN[] PROGMEM = {
   FONTDATA_ITEM(245, 239, 239, fontpage_245_239_239), // '端' -- '端'
   FONTDATA_ITEM(246, 172, 172, fontpage_246_172_172), // '第' -- '第'
   FONTDATA_ITEM(246, 201, 201, fontpage_246_201_201), // '等' -- '等'
+<<<<<<< HEAD
+=======
+  FONTDATA_ITEM(247, 128, 128, fontpage_247_128_128), // '简' -- '简'
+>>>>>>> upstream/bugfix-2.0.x
   FONTDATA_ITEM(247, 177, 177, fontpage_247_177_177), // '箱' -- '箱'
   FONTDATA_ITEM(248, 251, 251, fontpage_248_251_251), // '类' -- '类'
   FONTDATA_ITEM(250, 162, 162, fontpage_250_162_162), // '索' -- '索'

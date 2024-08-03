@@ -61,12 +61,15 @@ void save_reset_reason() {
   wdt_disable();
 }
 
+<<<<<<< HEAD
 #include "registers.h"
 
 MarlinHAL::MarlinHAL() {
   TERN_(HAL_AVR_DIRTY_INIT, _ATmega_resetperipherals()); // Clean-wipe the device state.
 }
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 void MarlinHAL::init() {
   // Init Servo Pins
   #if HAS_SERVO_0
@@ -101,6 +104,8 @@ void MarlinHAL::init() {
 
     OUT_WRITE(BEEPER_PIN, LOW);
   #endif
+
+  init_pwm_timers();   // Init user timers to default frequency - 1000HZ
 }
 
 void MarlinHAL::reboot() {
@@ -168,7 +173,11 @@ void MarlinHAL::reboot() {
 // Free Memory Accessor
 // ------------------------
 
+<<<<<<< HEAD
 #if HAS_MEDIA
+=======
+#if ENABLED(SDSUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
 
   #include "../../sd/SdFatUtil.h"
   int freeMemory() { return SdFatUtil::FreeRam(); }

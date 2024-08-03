@@ -23,10 +23,13 @@
 
 /**
  * BIQU BQ111-A4 pin assignments
+<<<<<<< HEAD
  *
  * Applies to the following boards:
  *
  *  BOARD_BIQU_BQ111_A4 (Hotend, Fan, Bed)
+=======
+>>>>>>> upstream/bugfix-2.0.x
  */
 
 #include "env_validate.h"

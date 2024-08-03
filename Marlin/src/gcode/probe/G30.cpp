@@ -38,6 +38,14 @@
   #define VERBOSE_SINGLE_PROBE
 #endif
 
+#if HAS_PTC
+  #include "../../feature/probe_temp_comp.h"
+#endif
+
+#if ENABLED(DWIN_LCD_PROUI)
+  #include "../../lcd/marlinui.h"
+#endif
+
 /**
  * G30: Do a single Z probe at the given XY (default: current)
  *
@@ -53,17 +61,49 @@ void GcodeSuite::G30() {
   xy_pos_t old_pos = current_position,
            probepos = current_position;
 
+<<<<<<< HEAD
   const bool seenX = parser.seenval('X');
   if (seenX) probepos.x = RAW_X_POSITION(parser.value_linear_units());
   const bool seenY = parser.seenval('Y');
   if (seenY) probepos.y = RAW_Y_POSITION(parser.value_linear_units());
+=======
+  if (!probe.can_reach(pos)) {
+    #if ENABLED(DWIN_LCD_PROUI)
+      SERIAL_ECHOLNF(GET_EN_TEXT_F(MSG_ZPROBE_OUT));
+      LCD_MESSAGE(MSG_ZPROBE_OUT);
+    #endif
+    return;
+  }
+>>>>>>> upstream/bugfix-2.0.x
 
   probe.use_probing_tool();
 
   if (probe.can_reach(probepos)) {
 
+<<<<<<< HEAD
     if (seenX) old_pos.x = probepos.x;
     if (seenY) old_pos.y = probepos.y;
+=======
+  TERN_(DWIN_LCD_PROUI, process_subcommands_now(F("G28O")));
+
+  const ProbePtRaise raise_after = parser.boolval('E', true) ? PROBE_PT_STOW : PROBE_PT_NONE;
+
+  TERN_(HAS_PTC, ptc.set_enabled(!parser.seen('C') || parser.value_bool()));
+  const float measured_z = probe.probe_at_point(pos, raise_after, 1);
+  TERN_(HAS_PTC, ptc.set_enabled(true));
+  if (!isnan(measured_z)) {
+    SERIAL_ECHOLNPGM("Bed X: ", pos.x, " Y: ", pos.y, " Z: ", measured_z);
+    #if ENABLED(DWIN_LCD_PROUI)
+      char msg[31], str_1[6], str_2[6], str_3[6];
+      sprintf_P(msg, PSTR("X:%s, Y:%s, Z:%s"),
+        dtostrf(pos.x, 1, 1, str_1),
+        dtostrf(pos.y, 1, 1, str_2),
+        dtostrf(measured_z, 1, 2, str_3)
+      );
+      ui.set_status(msg);
+    #endif
+  }
+>>>>>>> upstream/bugfix-2.0.x
 
     // Disable leveling so the planner won't mess with us
     TERN_(HAS_LEVELING, set_bed_leveling_enabled(false));

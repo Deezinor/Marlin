@@ -44,6 +44,7 @@
 
 EncoderRate encoderRate;
 
+<<<<<<< HEAD
 // TODO: Replace with ui.quick_feedback
 void Encoder_tick() {
   TERN_(HAS_BEEPER, if (ui.sound_on) buzzer.click(10));
@@ -51,10 +52,42 @@ void Encoder_tick() {
 
 // Analyze encoder value and return state
 EncoderState encoderReceiveAnalyze() {
+=======
+ENCODER_Rate EncoderRate;
+
+// TODO: Replace with ui.quick_feedback
+void Encoder_tick() {
+  TERN_(HAS_BEEPER, if (ui.sound_on) buzzer.click(10));
+}
+
+// Encoder initialization
+void Encoder_Configuration() {
+  #if BUTTON_EXISTS(EN1)
+    SET_INPUT_PULLUP(BTN_EN1);
+  #endif
+  #if BUTTON_EXISTS(EN2)
+    SET_INPUT_PULLUP(BTN_EN2);
+  #endif
+  #if BUTTON_EXISTS(ENC)
+    SET_INPUT_PULLUP(BTN_ENC);
+  #endif
+  #if HAS_BEEPER
+    SET_OUTPUT(BEEPER_PIN);     // TODO: Use buzzer.h which already inits this
+  #endif
+}
+
+// Analyze encoder value and return state
+EncoderState Encoder_ReceiveAnalyze() {
+>>>>>>> upstream/bugfix-2.0.x
   const millis_t now = millis();
   static int8_t temp_diff = 0; // Cleared on each full step, as configured
 
   EncoderState temp_diffState = ENCODER_DIFF_NO;
+<<<<<<< HEAD
+=======
+  if (BUTTON_PRESSED(EN1)) newbutton |= EN_A;
+  if (BUTTON_PRESSED(EN2)) newbutton |= EN_B;
+>>>>>>> upstream/bugfix-2.0.x
   if (BUTTON_PRESSED(ENC)) {
     static millis_t next_click_update_ms;
     if (ELAPSED(now, next_click_update_ms)) {
@@ -63,11 +96,15 @@ EncoderState encoderReceiveAnalyze() {
       #if PIN_EXISTS(LCD_LED)
         //LED_Action();
       #endif
+<<<<<<< HEAD
       TERN_(HAS_BACKLIGHT_TIMEOUT, ui.refresh_backlight_timeout());
       if (!ui.backlight) {
         ui.refresh_brightness();
         return ENCODER_DIFF_NO;
       }
+=======
+      if (!ui.backlight) ui.refresh_brightness();
+>>>>>>> upstream/bugfix-2.0.x
       const bool was_waiting = wait_for_user;
       wait_for_user = false;
       return was_waiting ? ENCODER_DIFF_NO : ENCODER_DIFF_ENTER;
@@ -75,6 +112,7 @@ EncoderState encoderReceiveAnalyze() {
     else return ENCODER_DIFF_NO;
   }
 
+<<<<<<< HEAD
   temp_diff += ui.get_encoder_delta();
 
   const int8_t abs_diff = ABS(temp_diff);
@@ -84,11 +122,17 @@ EncoderState encoderReceiveAnalyze() {
       : TERN(REVERSE_ENCODER_DIRECTION, ENCODER_DIFF_CW,  ENCODER_DIFF_CCW);
 
     int32_t encoder_multiplier = 1;
+=======
+  if (ABS(temp_diff) >= ENCODER_PULSES_PER_STEP) {
+    if (temp_diff > 0) temp_diffState = TERN(REVERSE_ENCODER_DIRECTION, ENCODER_DIFF_CCW, ENCODER_DIFF_CW);
+    else temp_diffState = TERN(REVERSE_ENCODER_DIRECTION, ENCODER_DIFF_CW, ENCODER_DIFF_CCW);
+>>>>>>> upstream/bugfix-2.0.x
 
     #if ENABLED(ENCODER_RATE_MULTIPLIER)
 
       const millis_t ms = millis();
 
+<<<<<<< HEAD
       // Encoder rate multiplier
       if (encoderRate.enabled) {
         // Note that the rate is always calculated between two passes through the
@@ -101,6 +145,23 @@ EncoderState encoderReceiveAnalyze() {
           encoder_multiplier = 10;
         else if (ENCODER_5X_STEPS_PER_SEC > 0 && encoderStepRate >= ENCODER_5X_STEPS_PER_SEC)
           encoder_multiplier = 5;
+=======
+      // if must encoder rati multiplier
+      if (EncoderRate.enabled) {
+        const float abs_diff = ABS(temp_diff),
+                    encoderMovementSteps = abs_diff / (ENCODER_PULSES_PER_STEP);
+        if (EncoderRate.lastEncoderTime) {
+          // Note that the rate is always calculated between two passes through the
+          // loop and that the abs of the temp_diff value is tracked.
+          const float encoderStepRate = encoderMovementSteps / float(ms - EncoderRate.lastEncoderTime) * 1000;
+               if (encoderStepRate >= ENCODER_100X_STEPS_PER_SEC) encoderMultiplier = 100;
+          else if (encoderStepRate >= ENCODER_10X_STEPS_PER_SEC)  encoderMultiplier = 10;
+          #if ENCODER_5X_STEPS_PER_SEC
+            else if (encoderStepRate >= ENCODER_5X_STEPS_PER_SEC) encoderMultiplier = 5;
+          #endif
+        }
+        EncoderRate.lastEncoderTime = ms;
+>>>>>>> upstream/bugfix-2.0.x
       }
 
     #endif

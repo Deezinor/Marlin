@@ -26,6 +26,7 @@
 
 namespace DGUSRxHandler {
 
+<<<<<<< HEAD
   void screenChange(DGUS_VP &, void *);
 
   #if HAS_MEDIA
@@ -98,6 +99,80 @@ namespace DGUSRxHandler {
 
   template<typename T>
   void integerToExtra(DGUS_VP &vp, void *data_ptr) {
+=======
+  void ScreenChange(DGUS_VP &, void *);
+
+  #if ENABLED(SDSUPPORT)
+    void Scroll(DGUS_VP &, void *);
+    void SelectFile(DGUS_VP &, void *);
+    void PrintFile(DGUS_VP &, void *);
+  #endif
+
+  void PrintAbort(DGUS_VP &, void *);
+  void PrintPause(DGUS_VP &, void *);
+  void PrintResume(DGUS_VP &, void *);
+
+  void Feedrate(DGUS_VP &, void *);
+  void Flowrate(DGUS_VP &, void *);
+  void BabystepSet(DGUS_VP &, void *);
+  void Babystep(DGUS_VP &, void *);
+
+  void TempPreset(DGUS_VP &, void *);
+  void TempTarget(DGUS_VP &, void *);
+  void TempCool(DGUS_VP &, void *);
+
+  void Steppers(DGUS_VP &, void *);
+
+  void ZOffset(DGUS_VP &, void *);
+  void ZOffsetStep(DGUS_VP &, void *);
+  void ZOffsetSetStep(DGUS_VP &, void *);
+
+  void MoveToPoint(DGUS_VP &, void *);
+
+  void Probe(DGUS_VP &, void *);
+  void DisableABL(DGUS_VP &, void *);
+
+  void FilamentSelect(DGUS_VP &, void *);
+  void FilamentLength(DGUS_VP &, void *);
+  void FilamentMove(DGUS_VP &, void *);
+
+  void Home(DGUS_VP &, void *);
+  void Move(DGUS_VP &, void *);
+  void MoveStep(DGUS_VP &, void *);
+  void MoveSetStep(DGUS_VP &, void *);
+
+  void GcodeClear(DGUS_VP &, void *);
+  void GcodeExecute(DGUS_VP &, void *);
+
+  void ResetEEPROM(DGUS_VP &, void *);
+
+  void SettingsExtra(DGUS_VP &, void *);
+
+  void PIDSelect(DGUS_VP &, void *);
+  void PIDSetTemp(DGUS_VP &, void *);
+  void PIDRun(DGUS_VP &, void *);
+
+  #if ENABLED(POWER_LOSS_RECOVERY)
+    void PowerLossAbort(DGUS_VP &, void *);
+    void PowerLossResume(DGUS_VP &, void *);
+  #endif
+
+  void WaitAbort(DGUS_VP &, void *);
+  void WaitContinue(DGUS_VP &, void *);
+
+  void FanSpeed(DGUS_VP &, void *);
+
+  void Volume(DGUS_VP &, void *);
+
+  void Brightness(DGUS_VP &, void *);
+
+  void Debug(DGUS_VP &, void *);
+
+  void StringToExtra(DGUS_VP &, void *);
+
+  template<typename T>
+  void IntegerToExtra(DGUS_VP &vp, void *data_ptr) {
+>>>>>>> upstream/bugfix-2.0.x
     if (!vp.size || !vp.extra) return;
     switch (vp.size) {
       default: return;
@@ -107,12 +182,20 @@ namespace DGUSRxHandler {
         break;
       }
       case 2: {
+<<<<<<< HEAD
         const uint16_t data = BE16_P(data_ptr);
+=======
+        const uint16_t data = Swap16(*(uint16_t*)data_ptr);
+>>>>>>> upstream/bugfix-2.0.x
         *(T*)vp.extra = (T)data;
         break;
       }
       case 4: {
+<<<<<<< HEAD
         const uint32_t data = dgus.swapBytes(*(uint32_t*)data_ptr);
+=======
+        const uint32_t data = dgus_display.SwapBytes(*(uint32_t*)data_ptr);
+>>>>>>> upstream/bugfix-2.0.x
         *(T*)vp.extra = (T)data;
         break;
       }

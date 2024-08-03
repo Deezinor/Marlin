@@ -37,7 +37,16 @@ bool GcodeSuite::select_coordinate_system(const int8_t _new) {
   xyz_float_t new_offset{0};
   if (WITHIN(_new, 0, MAX_COORDINATE_SYSTEMS - 1))
     new_offset = coordinate_system[_new];
+<<<<<<< HEAD
   workspace_offset = new_offset;
+=======
+  LOOP_NUM_AXES(i) {
+    if (position_shift[i] != new_offset[i]) {
+      position_shift[i] = new_offset[i];
+      update_workspace_offset((AxisEnum)i);
+    }
+  }
+>>>>>>> upstream/bugfix-2.0.x
   return true;
 }
 

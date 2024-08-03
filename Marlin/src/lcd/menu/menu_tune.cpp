@@ -72,12 +72,20 @@
           #if ENABLED(TFT_COLOR_UI)
             lcd_moveto(4, 3);
             lcd_put_u8str(GET_TEXT_F(MSG_BABYSTEP_TOTAL));
+<<<<<<< HEAD
             lcd_put_u8str(F(":"));
+=======
+            lcd_put_lchar(':');
+>>>>>>> upstream/bugfix-2.0.x
             lcd_moveto(10, 3);
           #else
             lcd_moveto(0, TERN(HAS_MARLINUI_U8GLIB, LCD_PIXEL_HEIGHT - MENU_FONT_DESCENT, LCD_HEIGHT - 1));
             lcd_put_u8str(GET_TEXT_F(MSG_BABYSTEP_TOTAL));
+<<<<<<< HEAD
             lcd_put_u8str(F(":"));
+=======
+            lcd_put_lchar(':');
+>>>>>>> upstream/bugfix-2.0.x
           #endif
           lcd_put_u8str(BABYSTEP_TO_STR(mps * babystep.axis_total[BS_TOTAL_IND(axis)]));
         }
@@ -115,8 +123,13 @@ void menu_tune() {
   //
   // Manual bed leveling, Bed Z:
   //
+<<<<<<< HEAD
   #if ALL(MESH_BED_LEVELING, LCD_BED_LEVELING)
     EDIT_ITEM(float43, MSG_MESH_Z_OFFSET, &bedlevel.z_offset, -1, 1);
+=======
+  #if BOTH(MESH_BED_LEVELING, LCD_BED_LEVELING)
+    EDIT_ITEM(float43, MSG_BED_Z, &bedlevel.z_offset, -1, 1);
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 
   //
@@ -131,7 +144,11 @@ void menu_tune() {
   #endif
 
   #if ENABLED(SINGLENOZZLE_STANDBY_TEMP)
+<<<<<<< HEAD
     for (uint8_t e = 1; e < EXTRUDERS; ++e)
+=======
+    LOOP_S_L_N(e, 1, EXTRUDERS)
+>>>>>>> upstream/bugfix-2.0.x
       EDIT_ITEM_FAST_N(int3, e, MSG_NOZZLE_STANDBY, &thermalManager.singlenozzle_temp[e], 0, thermalManager.hotend_max_target(0));
   #endif
 
@@ -202,11 +219,19 @@ void menu_tune() {
   // Flow:
   //
   #if HAS_EXTRUDERS
+<<<<<<< HEAD
     EDIT_ITEM(int3, MSG_FLOW, &planner.flow_percentage[active_extruder], FLOW_EDIT_MIN, FLOW_EDIT_MAX, []{ planner.refresh_e_factor(active_extruder); });
     // Flow En:
     #if HAS_MULTI_EXTRUDER
       EXTRUDER_LOOP()
         EDIT_ITEM_N(int3, e, MSG_FLOW_N, &planner.flow_percentage[e], FLOW_EDIT_MIN, FLOW_EDIT_MAX, []{ planner.refresh_e_factor(MenuItemBase::itemIndex); });
+=======
+    EDIT_ITEM(int3, MSG_FLOW, &planner.flow_percentage[active_extruder], 10, 999, []{ planner.refresh_e_factor(active_extruder); });
+    // Flow En:
+    #if HAS_MULTI_EXTRUDER
+      EXTRUDER_LOOP()
+        EDIT_ITEM_N(int3, e, MSG_FLOW_N, &planner.flow_percentage[e], 10, 999, []{ planner.refresh_e_factor(MenuItemBase::itemIndex); });
+>>>>>>> upstream/bugfix-2.0.x
     #endif
   #endif
 
@@ -216,7 +241,11 @@ void menu_tune() {
   #if ENABLED(LIN_ADVANCE) && DISABLED(SLIM_LCD_MENUS)
     #if DISTINCT_E < 2
       EDIT_ITEM(float42_52, MSG_ADVANCE_K, &planner.extruder_advance_K[0], 0, 10);
+<<<<<<< HEAD
     #else
+=======
+    #elif HAS_MULTI_EXTRUDER
+>>>>>>> upstream/bugfix-2.0.x
       EXTRUDER_LOOP()
         EDIT_ITEM_N(float42_52, e, MSG_ADVANCE_K_E, &planner.extruder_advance_K[e], 0, 10);
     #endif

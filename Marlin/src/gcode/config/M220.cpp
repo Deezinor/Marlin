@@ -47,4 +47,12 @@ void GcodeSuite::M220() {
   if (parser.seen_test('B')) backup_feedrate_percentage = now_feedrate_perc;
   if (parser.seenval('S')) feedrate_percentage = parser.value_int();
 
+<<<<<<< HEAD
+=======
+  if (!parser.seen_any()) {
+    SERIAL_ECHOPGM("FR:", feedrate_percentage);
+    SERIAL_CHAR('%');
+    SERIAL_EOL();
+  }
+>>>>>>> upstream/bugfix-2.0.x
 }

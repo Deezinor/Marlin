@@ -33,16 +33,60 @@
 
 #define _AXIS(A) (A##_AXIS)
 
+<<<<<<< HEAD
+=======
+#define _XSTOP_  0x01
+#define _YSTOP_  0x02
+#define _ZSTOP_  0x03
+#define _ISTOP_  0x04
+#define _JSTOP_  0x05
+#define _KSTOP_  0x06
+#define _XMIN_   0x11
+#define _YMIN_   0x12
+#define _ZMIN_   0x13
+#define _IMIN_   0x14
+#define _JMIN_   0x15
+#define _KMIN_   0x16
+#define _XMAX_   0x21
+#define _YMAX_   0x22
+#define _ZMAX_   0x23
+#define _IMAX_   0x24
+#define _JMAX_   0x25
+#define _KMAX_   0x26
+#define _XDIAG_  0x31
+#define _YDIAG_  0x32
+#define _ZDIAG_  0x33
+#define _IDIAG_  0x34
+#define _JDIAG_  0x35
+#define _KDIAG_  0x36
+#define _E0DIAG_ 0xE0
+#define _E1DIAG_ 0xE1
+#define _E2DIAG_ 0xE2
+#define _E3DIAG_ 0xE3
+#define _E4DIAG_ 0xE4
+#define _E5DIAG_ 0xE5
+#define _E6DIAG_ 0xE6
+#define _E7DIAG_ 0xE7
+
+>>>>>>> upstream/bugfix-2.0.x
 #define _FORCE_INLINE_ __attribute__((__always_inline__)) __inline__
 #define  FORCE_INLINE  __attribute__((always_inline)) inline
 #define NO_INLINE      __attribute__((noinline))
 #define _UNUSED      __attribute__((unused))
+<<<<<<< HEAD
 #define __O0         __attribute__((optimize("O0")))  // No optimization and less debug info
 #define __Og         __attribute__((optimize("Og")))  // Optimize the debugging experience
 #define __Os         __attribute__((optimize("Os")))  // Optimize for size
 #define __O1         __attribute__((optimize("O1")))  // Try to reduce size and cycles; nothing that takes a lot of time to compile
 #define __O2         __attribute__((optimize("O2")))  // Optimize even more
 #define __O3         __attribute__((optimize("O3")))  // Optimize yet more
+=======
+#define __O0         __attribute__((optimize("O0")))
+#define __Os         __attribute__((optimize("Os")))
+#define __O1         __attribute__((optimize("O1")))
+#define __O2         __attribute__((optimize("O2")))
+#define __O3         __attribute__((optimize("O3")))
+>>>>>>> upstream/bugfix-2.0.x
 
 #define IS_CONSTEXPR(...) __builtin_constant_p(__VA_ARGS__) // Only valid solution with C++14. Should use std::is_constant_evaluated() in C++20 instead
 
@@ -209,7 +253,10 @@
 #define ___TERN(P,V...)     THIRD(P,V)              // If first argument has a comma, A. Else B.
 #define IF_DISABLED(O,A)    TERN(O,,A)
 
+<<<<<<< HEAD
 // Macros to conditionally emit array items and function arguments
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #define _OPTITEM(A...)      A,
 #define OPTITEM(O,A...)     TERN_(O,DEFER4(_OPTITEM)(A))
 #define _OPTARG(A...)       , A
@@ -217,7 +264,11 @@
 #define _OPTCODE(A)         A;
 #define OPTCODE(O,A)        TERN_(O,DEFER4(_OPTCODE)(A))
 
+<<<<<<< HEAD
 // Macros to avoid operations that aren't always optimized away (e.g., 'f + 0.0' and 'f * 1.0').
+=======
+// Macros to avoid 'f + 0.0' which is not always optimized away. Minus included for symmetry.
+>>>>>>> upstream/bugfix-2.0.x
 // Compiler flags -fno-signed-zeros -ffinite-math-only also cover 'f * 1.0', 'f - f', etc.
 #define PLUS_TERN0(O,A)     _TERN(_ENA_1(O),,+ (A)) // OPTION ? '+ (A)' : '<nul>'
 #define MINUS_TERN0(O,A)    _TERN(_ENA_1(O),,- (A)) // OPTION ? '- (A)' : '<nul>'
@@ -256,7 +307,10 @@
     memcpy(&a[0],&b[0],_MIN(sizeof(a),sizeof(b))); \
   }while(0)
 
+<<<<<<< HEAD
 // Expansion of some code
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #define CODE_16( A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,...) A; B; C; D; E; F; G; H; I; J; K; L; M; N; O; P
 #define CODE_15( A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,...) A; B; C; D; E; F; G; H; I; J; K; L; M; N; O
 #define CODE_14( A,B,C,D,E,F,G,H,I,J,K,L,M,N,...) A; B; C; D; E; F; G; H; I; J; K; L; M; N
@@ -277,7 +331,10 @@
 #define _CODE_N(N,V...) CODE_##N(V)
 #define CODE_N(N,V...) _CODE_N(N,V)
 
+<<<<<<< HEAD
 // Expansion of some non-delimited content
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #define GANG_16(A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,...) A B C D E F G H I J K L M N O P
 #define GANG_15(A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,...) A B C D E F G H I J K L M N O
 #define GANG_14(A,B,C,D,E,F,G,H,I,J,K,L,M,N,...) A B C D E F G H I J K L M N
@@ -299,6 +356,7 @@
 #define GANG_N(N,V...) _GANG_N(N,V)
 #define GANG_N_1(N,K) _GANG_N(N,K,K,K,K,K,K,K,K,K,K,K,K,K,K,K,K)
 
+<<<<<<< HEAD
 // Expansion of some list items
 #define LIST_26(A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,...) A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z
 #define LIST_25(A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,...) A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y
@@ -306,6 +364,9 @@
 #define LIST_23(A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,...) A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W
 #define LIST_22(A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,...) A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V
 #define LIST_21(A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,...) A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U
+=======
+// Macros for initializing arrays
+>>>>>>> upstream/bugfix-2.0.x
 #define LIST_20(A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,...) A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T
 #define LIST_19(A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,...) A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S
 #define LIST_18(A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,...) A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R
@@ -386,8 +447,11 @@
     extern "C++" {
 
       // C++11 solution that is standards compliant. Return type is deduced automatically
+<<<<<<< HEAD
       template <class N> static constexpr N _MIN(const N val) { return val; }
       template <class N> static constexpr N _MAX(const N val) { return val; }
+=======
+>>>>>>> upstream/bugfix-2.0.x
       template <class L, class R> static constexpr auto _MIN(const L lhs, const R rhs) -> decltype(lhs + rhs) {
         return lhs < rhs ? lhs : rhs;
       }
@@ -445,6 +509,7 @@
     template<>          struct _is_integral<long long> { enum { value = true }; };
     template<typename T> struct is_integral : public _is_integral<typename remove_cv<T>::type> {};
   }
+<<<<<<< HEAD
 
   // enum type check and regression to its underlying integral.
   namespace Private {
@@ -456,6 +521,8 @@
     template<typename T> struct underlying_type : public _underlying_type<T> { };
   }
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
   // C++11 solution using SFINAE to detect the existence of a member in a class at compile time.
   // It creates a HasMember<Type> structure containing 'value' set to true if the member exists
   #define HAS_MEMBER_IMPL(Member) \
@@ -713,6 +780,7 @@
 #define RREPEAT2_S(S,N,OP,V...) EVAL1024(_RREPEAT2(S,SUB##S(N),OP,V))
 #define RREPEAT2(N,OP,V...)     RREPEAT2_S(0,N,OP,V)
 
+<<<<<<< HEAD
 // Emit a list of N OP(I) items with ascending counter.
 #define _REPLIST(_RPT_I,_RPT_N,_RPT_OP)                          \
   _RPT_OP(_RPT_I)                                                \
@@ -726,6 +794,8 @@
 #define REPLIST(N,OP)           REPLIST_S(0,N,OP)
 #define REPLIST_1(N,OP)         REPLIST_S(1,INCREMENT(N),OP)
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 // Call OP(A) with each item as an argument
 #define _MAP(_MAP_OP,A,V...)       \
   _MAP_OP(A)                       \
@@ -745,6 +815,7 @@
 #define __MAPLIST() _MAPLIST
 
 #define MAPLIST(OP,V...) EVAL(_MAPLIST(OP,V))
+<<<<<<< HEAD
 
 // Temperature Sensor Config
 #define TEMP_SENSOR(N) TEMP_SENSOR_##N
@@ -762,3 +833,5 @@
 #define _UI_E3S1PRO     107
 #define _DGUS_UI_IS(N) || (CAT(_UI_, DGUS_LCD_UI) == CAT(_UI_, N))
 #define DGUS_UI_IS(V...) (0 MAP(_DGUS_UI_IS, V))
+=======
+>>>>>>> upstream/bugfix-2.0.x

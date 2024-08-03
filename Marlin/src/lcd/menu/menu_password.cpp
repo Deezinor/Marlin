@@ -26,7 +26,11 @@
 
 #include "../../inc/MarlinConfigPre.h"
 
+<<<<<<< HEAD
 #if ALL(HAS_MARLINUI_MENU, PASSWORD_FEATURE)
+=======
+#if BOTH(HAS_MARLINUI_MENU, PASSWORD_FEATURE)
+>>>>>>> upstream/bugfix-2.0.x
 
 #include "../../feature/password/password.h"
 
@@ -61,10 +65,17 @@ void Password::menu_password_entry() {
   FSTR_P const label = GET_TEXT_F(MSG_ENTER_DIGIT);
   EDIT_ITEM_F(uint8, label, &editable.uint8, 0, 9, digit_entered);
   MENU_ITEM_ADDON_START(utf8_strlen(label) + 1);
+<<<<<<< HEAD
     lcd_put_u8str(F(" "));
     lcd_put_lchar('1' + digit_no);
     SETCURSOR_X(LCD_WIDTH - 2);
     lcd_put_u8str(F(">"));
+=======
+    lcd_put_lchar(' ');
+    lcd_put_lchar('1' + digit_no);
+    SETCURSOR_X(LCD_WIDTH - 2);
+    lcd_put_lchar('>');
+>>>>>>> upstream/bugfix-2.0.x
   MENU_ITEM_ADDON_END();
 
   ACTION_ITEM(MSG_START_OVER, start_over);

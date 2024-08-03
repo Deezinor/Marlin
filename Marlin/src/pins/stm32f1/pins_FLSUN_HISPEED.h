@@ -69,9 +69,14 @@
 #define SD_SCK_PIN                          PB13  // SPI2
 #define SD_MISO_PIN                         PB14  // SPI2
 #define SD_MOSI_PIN                         PB15  // SPI2
+<<<<<<< HEAD
+=======
+#define SPI_DEVICE                             2
+>>>>>>> upstream/bugfix-2.0.x
 
 //
 // SPI Flash
+<<<<<<< HEAD
 //
 #define SPI_FLASH
 #if ENABLED(SPI_FLASH)
@@ -80,6 +85,16 @@
   #define SPI_FLASH_SCK_PIN                 PB13
   #define SPI_FLASH_MISO_PIN                PB14
   #define SPI_FLASH_MOSI_PIN                PB15
+=======
+#define HAS_SPI_FLASH                          1
+#if HAS_SPI_FLASH
+  // SPI 2
+  #define SPI_FLASH_CS_PIN                  PB12  // SPI2_NSS / Flash chip-select
+  #define SPI_FLASH_MOSI_PIN                PB15
+  #define SPI_FLASH_MISO_PIN                PB14
+  #define SPI_FLASH_SCK_PIN                 PB13
+  #define SPI_FLASH_SIZE               0x1000000  // 16MB
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 //
@@ -132,9 +147,13 @@
   #define Y_SERIAL_RX_PIN        Y_SERIAL_TX_PIN
   #define Z_SERIAL_TX_PIN                   PC7   // IO1
   #define Z_SERIAL_RX_PIN        Z_SERIAL_TX_PIN
+<<<<<<< HEAD
   #ifndef TMC_BAUD_RATE
     #define TMC_BAUD_RATE                  19200
   #endif
+=======
+  #define TMC_BAUD_RATE                    19200
+>>>>>>> upstream/bugfix-2.0.x
 #else
   // Motor current PWM pins
   #define MOTOR_CURRENT_PWM_XY_PIN          PA6   // VREF2/3 CONTROL XY
@@ -301,6 +320,11 @@
   #define TFT_BACKLIGHT_PIN                 PD13
 
   #define LCD_USE_DMA_FSMC                        // Use DMA transfers to send data to the TFT
+<<<<<<< HEAD
+=======
+  #define FSMC_DMA_DEV                      DMA2
+  #define FSMC_DMA_CHANNEL               DMA_CH5
+>>>>>>> upstream/bugfix-2.0.x
 
   #define FSMC_CS_PIN                       PD7   // NE4
   #define FSMC_RS_PIN                       PD11  // A0
@@ -308,13 +332,21 @@
   #define TFT_CS_PIN                 FSMC_CS_PIN
   #define TFT_RS_PIN                 FSMC_RS_PIN
 
+<<<<<<< HEAD
   #if ENABLED(TFT_CLASSIC_UI)
+=======
+  #ifdef TFT_CLASSIC_UI
+>>>>>>> upstream/bugfix-2.0.x
     #define TFT_MARLINBG_COLOR            0x3186  // Grey
     #define TFT_MARLINUI_COLOR            0xC7B6  // Green
     #define TFT_BTARROWS_COLOR            0xDEE6  // Yellow
     #define TFT_BTOKMENU_COLOR            0x145F  // Cyan
   #endif
+<<<<<<< HEAD
   #define TFT_BUFFER_WORDS                 14400
+=======
+  #define TFT_BUFFER_SIZE                  14400
+>>>>>>> upstream/bugfix-2.0.x
 
 #elif HAS_GRAPHICAL_TFT
 

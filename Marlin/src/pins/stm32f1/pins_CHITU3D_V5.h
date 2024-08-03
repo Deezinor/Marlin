@@ -23,6 +23,7 @@
 
 #define BOARD_INFO_NAME "Chitu3D V5"
 
+<<<<<<< HEAD
 //
 // Servos
 //
@@ -32,5 +33,8 @@
 // Limit Switches
 //
 #define Z_STOP_PIN                          PA14  // Pinout [+12/24v|G|S]
+=======
+#define Z_STOP_PIN                          PA14
+>>>>>>> upstream/bugfix-2.0.x
 
 #include "pins_CHITU3D_common.h"

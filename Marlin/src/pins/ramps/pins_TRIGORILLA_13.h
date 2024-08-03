@@ -28,6 +28,7 @@
 
 #define BOARD_INFO_NAME "Anycubic RAMPS 1.3"
 
+<<<<<<< HEAD
 #define MOSFET_B_PIN                          44
 
 #define E1_STEP_PIN                           -1
@@ -36,6 +37,16 @@
 #define E1_CS_PIN                             -1
 
 #define FAN2_PIN                               9
+=======
+#define MOSFET_B_PIN                         44
+
+#define E1_STEP_PIN                          -1
+#define E1_DIR_PIN                           -1
+#define E1_ENABLE_PIN                        -1
+#define E1_CS_PIN                            -1
+
+#define FAN2_PIN                              9
+>>>>>>> upstream/bugfix-2.0.x
 
 #ifndef E0_AUTO_FAN_PIN
   #define E0_AUTO_FAN_PIN                      9

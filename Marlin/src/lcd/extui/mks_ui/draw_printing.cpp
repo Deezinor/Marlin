@@ -39,7 +39,11 @@
   #include "../../../feature/powerloss.h"
 #endif
 
+<<<<<<< HEAD
 #if ENABLED(SET_REMAINING_TIME)
+=======
+#if BOTH(LCD_SET_PROGRESS_MANUALLY, USE_M73_REMAINING_TIME)
+>>>>>>> upstream/bugfix-2.0.x
   #include "../../marlinui.h"
 #endif
 
@@ -309,7 +313,11 @@ void setProBarRate() {
           if (gCfgItems.finish_power_off) {
             gcode.process_subcommands_now(F("M1001"));
             queue.inject(F("M81"));
+<<<<<<< HEAD
             marlin_state = MarlinState::MF_RUNNING;
+=======
+            marlin_state = MF_RUNNING;
+>>>>>>> upstream/bugfix-2.0.x
           }
         #endif
       }

@@ -21,9 +21,18 @@
  */
 #pragma once
 
+// TODO: Make AVR-compatible with separate ROM / RAM string methods
+
 #include <stdint.h>
 
+<<<<<<< HEAD
 #include "../utf8.h"
+=======
+#include "../fontutils.h"
+
+extern const uint8_t ISO10646_1_5x7[];
+extern const uint8_t font10x20[];
+>>>>>>> upstream/bugfix-2.0.x
 
 #define NO_GLYPH  0xFF
 
@@ -91,6 +100,7 @@ class TFT_String {
       static uint16_t extra_count;
     #endif
 
+<<<<<<< HEAD
     static uint16_t data[MAX_STRING_LENGTH + 1];
     static uint16_t span;   // in pixels
 
@@ -99,10 +109,21 @@ class TFT_String {
 
   public:
     static uint8_t  length;  // in characters
+=======
+    static char data[MAX_STRING_LENGTH + 1];
+    static uint16_t span;   // in pixels
+
+    static void add_character(const char character);
+    static void eol() { data[length] = '\0'; }
+
+  public:
+    static uint8_t length;  // in characters
+>>>>>>> upstream/bugfix-2.0.x
 
     static void set_font(const uint8_t *font);
     static void add_glyphs(const uint8_t *font);
 
+<<<<<<< HEAD
     static uint8_t  font_type() { return font_header->format; };
     static uint16_t font_ascent() { return font_header->fontAscent; }
     static uint16_t font_height() { return font_header->fontAscent - font_header->fontDescent; }
@@ -110,17 +131,32 @@ class TFT_String {
     static glyph_t *glyph(uint16_t character);
     static glyph_t *glyph(uint16_t *character) { return glyph(*character); }
 
+=======
+    static font_t *font() { return font_header; };
+    static uint16_t font_height() { return font_header->FontAscent - font_header->FontDescent; }
+    static glyph_t *glyph(uint8_t character) { return glyphs[character] ?: glyphs[0x3F]; }  /* Use '?' for unknown glyphs */
+    static glyph_t *glyph(uint8_t *character) { return glyph(*character); }
+
+>>>>>>> upstream/bugfix-2.0.x
     /**
      * @brief Set the string empty
      */
     static void set();
 
     /**
+<<<<<<< HEAD
      * @brief Append an unicode character and EOL
      *
      * @param character The unicode character
      */
     static void add(const uint16_t character) { add_character(character); eol(); }
+=======
+     * @brief Append an ASCII character and EOL
+     *
+     * @param character The ASCII character
+     */
+    static void add(const char character) { add_character(character); eol(); }
+>>>>>>> upstream/bugfix-2.0.x
     static void set(const lchar_t &character) { set(); add(character); }
 
     /**
@@ -163,6 +199,7 @@ class TFT_String {
     static void add(FSTR_P const ftpl, const int8_t index, const char *cstr=nullptr, FSTR_P const fstr=nullptr) { add(FTOP(ftpl), index, cstr, fstr); }
     static void set(FSTR_P const ftpl, const int8_t index, const char *cstr=nullptr, FSTR_P const fstr=nullptr) { set(); add(ftpl, index, cstr, fstr); }
 
+<<<<<<< HEAD
     // Common string operations
     static void trim(const uint16_t character=' ');
     static void rtrim(const uint16_t character=' ');
@@ -177,6 +214,18 @@ class TFT_String {
       const uint16_t mid = (height + font_header->capitalAHeight + 1) / 2;
       return mid > font_header->fontAscent ? mid - font_header->fontAscent : 0;
     }
+=======
+    // Common string ops
+    static void trim(const char character=' ');
+    static void rtrim(const char character=' ');
+    static void ltrim(const char character=' ');
+    static void truncate(const uint8_t maxlen) { if (length > maxlen) { length = maxlen; eol(); } }
+
+    // Accessors
+    static char *string() { return data; }
+    static uint16_t width() { return span; }
+    static uint16_t center(const uint16_t width) { return span > width ? 0 : (width - span) / 2; }
+>>>>>>> upstream/bugfix-2.0.x
 };
 
 extern TFT_String tft_string;

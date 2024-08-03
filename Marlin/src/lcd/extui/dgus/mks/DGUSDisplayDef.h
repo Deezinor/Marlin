@@ -234,6 +234,7 @@ enum DGUS_ScreenID : uint8_t {
 
   #endif
 
+<<<<<<< HEAD
   DGUS_SCREEN_CONFIRM                = 240,
   DGUS_SCREEN_KILL                   = 250, ///< Kill Screen. Must always be 250 (to be able to display "Error wrong LCD Version")
   DGUS_SCREEN_WAITING                = 251,
@@ -241,6 +242,16 @@ enum DGUS_ScreenID : uint8_t {
   DGUS_SCREEN_UNUSED                 = 255
 };
 
+=======
+  DGUSLCD_SCREEN_CONFIRM                = 240,
+  DGUSLCD_SCREEN_KILL                   = 250, ///< Kill Screen. Must always be 250 (to be able to display "Error wrong LCD Version")
+  DGUSLCD_SCREEN_WAITING                = 251,
+  DGUSLCD_SCREEN_POPUP                  = 252, ///< special target, popup screen will also return this code to say "return to previous screen"
+  DGUSLCD_SCREEN_UNUSED                 = 255
+};
+
+
+>>>>>>> upstream/bugfix-2.0.x
 // Place for status messages.
 constexpr uint16_t VP_M117 = 0x7020;
 constexpr uint8_t VP_M117_LEN = 0x20;

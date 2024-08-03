@@ -40,10 +40,17 @@
  *        included in the command, print it in the header.
  */
 void GcodeSuite::M75() {
+<<<<<<< HEAD
   startOrResumeJob(); // ... ExtUI::onPrintTimerStarted()
   #if ENABLED(DWIN_LCD_PROUI)
     // TODO: Remove if M75 <string> is never used
     if (!IS_SD_PRINTING()) dwinPrintHeader(parser.string_arg && parser.string_arg[0] ? parser.string_arg : GET_TEXT(MSG_HOST_START_PRINT));
+=======
+  startOrResumeJob();
+  #if ENABLED(DWIN_LCD_PROUI)
+    DWIN_Print_Started(false);
+    if (!IS_SD_PRINTING()) DWIN_Print_Header(parser.string_arg && parser.string_arg[0] ? parser.string_arg : GET_TEXT(MSG_HOST_START_PRINT));
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 }
 
@@ -51,8 +58,14 @@ void GcodeSuite::M75() {
  * M76: Pause print timer
  */
 void GcodeSuite::M76() {
+<<<<<<< HEAD
   print_job_timer.pause(); // ... ExtUI::onPrintTimerPaused()
   TERN_(HOST_PAUSE_M76, hostui.pause());
+=======
+  print_job_timer.pause();
+  TERN_(HOST_PAUSE_M76, hostui.pause());
+  TERN_(DWIN_LCD_PROUI, DWIN_Print_Pause());
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 /**
@@ -60,6 +73,7 @@ void GcodeSuite::M76() {
  */
 void GcodeSuite::M77() {
   print_job_timer.stop();
+  TERN_(DWIN_LCD_PROUI, DWIN_Print_Finished());
 }
 
 #if ENABLED(PRINTCOUNTER)

@@ -27,6 +27,7 @@
 
 #define BOARD_INFO_NAME "Panda_ZHU"
 
+<<<<<<< HEAD
 #if E_STEPPERS > 5
   #error "PANDA ZHU supports up to 5 E steppers."
 #endif
@@ -34,6 +35,8 @@
   #error "PANDA ZHU only supports 1 hotend."
 #endif
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #include "pins_PANDA_common.h"
 
 //

@@ -40,15 +40,20 @@
 
 #define DATASIZE_8BIT  SPI_DATASIZE_8BIT
 #define DATASIZE_16BIT SPI_DATASIZE_16BIT
+<<<<<<< HEAD
 #define DATASIZE_32BIT SPI_DATASIZE_32BIT
 #define TFT_IO_DRIVER  TFT_SPI
 #define DMA_MAX_WORDS  0xFFFF
+=======
+#define TFT_IO_DRIVER  TFT_SPI
+>>>>>>> upstream/bugfix-2.0.x
 
 class TFT_SPI {
 private:
   static SPI_HandleTypeDef SPIx;
-  static DMA_HandleTypeDef DMAtx;
 
+
+<<<<<<< HEAD
   static uint32_t readID(const uint16_t inReg);
   static void transmit(uint16_t data);
   static void transmit(uint32_t memoryIncrease, uint16_t *data, uint16_t count);
@@ -60,6 +65,20 @@ private:
 public:
   static void init();
   static uint32_t getID();
+=======
+  static uint32_t ReadID(uint16_t Reg);
+  static void Transmit(uint16_t Data);
+  static void TransmitDMA(uint32_t MemoryIncrease, uint16_t *Data, uint16_t Count);
+  #if ENABLED(USE_SPI_DMA_TC)
+    static void TransmitDMA_IT(uint32_t MemoryIncrease, uint16_t *Data, uint16_t Count);
+  #endif
+
+public:
+  static DMA_HandleTypeDef DMAtx;
+
+  static void Init();
+  static uint32_t GetID();
+>>>>>>> upstream/bugfix-2.0.x
   static bool isBusy();
   static void abort();
 
@@ -70,6 +89,7 @@ public:
   static void writeData(uint16_t data) { transmit(data); }
   static void writeReg(const uint16_t inReg) { WRITE(TFT_A0_PIN, LOW); transmit(inReg); WRITE(TFT_A0_PIN, HIGH); }
 
+<<<<<<< HEAD
   static void writeSequence_DMA(uint16_t *data, uint16_t count) { transmitDMA(DMA_MINC_ENABLE, data, count); }
   static void writeMultiple_DMA(uint16_t color, uint16_t count) { static uint16_t data; data = color; transmitDMA(DMA_MINC_DISABLE, &data, count); }
 
@@ -83,6 +103,20 @@ public:
     while (count > 0) {
       transmit(DMA_MINC_DISABLE, &color, count > DMA_MAX_WORDS ? DMA_MAX_WORDS : count);
       count = count > DMA_MAX_WORDS ? count - DMA_MAX_WORDS : 0;
+=======
+  static void WriteSequence(uint16_t *Data, uint16_t Count) { TransmitDMA(DMA_MINC_ENABLE, Data, Count); }
+
+  #if ENABLED(USE_SPI_DMA_TC)
+    static void WriteSequenceIT(uint16_t *Data, uint16_t Count) { TransmitDMA_IT(DMA_MINC_ENABLE, Data, Count); }
+  #endif
+
+  static void WriteMultiple(uint16_t Color, uint16_t Count) { static uint16_t Data; Data = Color; TransmitDMA(DMA_MINC_DISABLE, &Data, Count); }
+  static void WriteMultiple(uint16_t Color, uint32_t Count) {
+    static uint16_t Data; Data = Color;
+    while (Count > 0) {
+      TransmitDMA(DMA_MINC_DISABLE, &Data, Count > 0xFFFF ? 0xFFFF : Count);
+      Count = Count > 0xFFFF ? Count - 0xFFFF : 0;
+>>>>>>> upstream/bugfix-2.0.x
     }
   }
 };

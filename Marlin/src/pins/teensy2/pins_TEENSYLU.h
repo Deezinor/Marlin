@@ -148,7 +148,10 @@
 //
 // LCD / Controller
 //
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #if HAS_WIRED_LCD && IS_NEWPANEL
 
   #define BEEPER_PIN                          -1

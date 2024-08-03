@@ -31,7 +31,11 @@
 
 #define BOARD_INFO_NAME "BTT GTR V1.0"
 
+<<<<<<< HEAD
 #define USES_DIAG_PINS                            // DIAG jumpers rendered useless due to a board design error
+=======
+#define USES_DIAG_JUMPERS
+>>>>>>> upstream/bugfix-2.0.x
 #define HAS_OTG_USB_HOST_SUPPORT                  // USB Flash Drive support
 #define M5_EXTENDER                               // The M5 extender is attached
 
@@ -323,9 +327,15 @@
 //#define TEMP_0_MOSI_PIN                   ...   // For MAX31865
 
 #define TEMP_1_CS_PIN                       PH2   // M5 K-TEMP
+<<<<<<< HEAD
 #define TEMP_1_SCK_PIN            TEMP_0_SCK_PIN
 #define TEMP_1_MISO_PIN          TEMP_0_MISO_PIN
 //#define TEMP_1_MOSI_PIN        TEMP_0_MOSI_PIN
+=======
+#define TEMP_1_SCK_PIN           TEMP_0_SCK_PIN
+#define TEMP_1_MISO_PIN         TEMP_0_MISO_PIN
+//#define TEMP_1_MOSI_PIN       TEMP_0_MOSI_PIN
+>>>>>>> upstream/bugfix-2.0.x
 
 //
 // Heaters / Fans
@@ -413,7 +423,10 @@
 //
 // LCD / Controller
 //
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #if ANY(TFT_COLOR_UI, TFT_LVGL_UI, TFT_CLASSIC_UI)
 
   #define TFT_CS_PIN                 EXP2_04_PIN
@@ -441,7 +454,11 @@
     #define BTN_EN1                  EXP1_03_PIN
     #define BTN_EN2                  EXP1_05_PIN
 
+<<<<<<< HEAD
     #define LCD_PINS_EN              EXP1_08_PIN
+=======
+    #define LCD_PINS_ENABLE          EXP1_08_PIN
+>>>>>>> upstream/bugfix-2.0.x
     #define LCD_PINS_D4              EXP1_06_PIN
 
   #elif ENABLED(MKS_MINI_12864)
@@ -460,7 +477,11 @@
     #define BTN_EN1                  EXP2_03_PIN
     #define BTN_EN2                  EXP2_05_PIN
 
+<<<<<<< HEAD
     #define LCD_PINS_EN              EXP1_03_PIN
+=======
+    #define LCD_PINS_ENABLE          EXP1_03_PIN
+>>>>>>> upstream/bugfix-2.0.x
     #define LCD_PINS_D4              EXP1_05_PIN
 
     #if ENABLED(FYSETC_MINI_12864)
@@ -473,7 +494,11 @@
 
       //#define LCD_BACKLIGHT_PIN           -1
       #define LCD_RESET_PIN          EXP1_05_PIN  // Must be high or open for LCD to operate normally.
+<<<<<<< HEAD
       #if ANY(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
+=======
+      #if EITHER(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
+>>>>>>> upstream/bugfix-2.0.x
         #ifndef RGB_LED_R_PIN
           #define RGB_LED_R_PIN      EXP1_06_PIN
         #endif

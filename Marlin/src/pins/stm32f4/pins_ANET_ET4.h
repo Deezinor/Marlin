@@ -133,12 +133,20 @@
 //
 // LCD / Controller
 //
+<<<<<<< HEAD
 
 #if HAS_SPI_TFT || HAS_FSMC_TFT
   #define TFT_RESET_PIN                     PE6
   #define TFT_CS_PIN                        PD7
   #define TFT_RS_PIN                        PD13
 
+=======
+#if HAS_SPI_TFT || HAS_FSMC_TFT
+  #define TFT_RESET_PIN                     PE6
+  #define TFT_CS_PIN                        PD7
+  #define TFT_RS_PIN                        PD13
+
+>>>>>>> upstream/bugfix-2.0.x
   #if HAS_FSMC_TFT
     #define LCD_USE_DMA_FSMC                      // Use DMA transfers to send data to the TFT
     #define FSMC_CS_PIN               TFT_CS_PIN
@@ -204,10 +212,16 @@
 
 #if HAS_MEDIA
 
+<<<<<<< HEAD
   #if DISABLED(ONBOARD_SDIO)
     #define SOFTWARE_SPI
     #define SDSS                            PC11
     #define SD_SS_PIN                       SDSS
+=======
+  #if DISABLED(SDIO_SUPPORT)
+    #define SOFTWARE_SPI
+    #define SDSS                            PC11
+>>>>>>> upstream/bugfix-2.0.x
     #define SD_SCK_PIN                      PC12
     #define SD_MISO_PIN                     PC8
     #define SD_MOSI_PIN                     PD2

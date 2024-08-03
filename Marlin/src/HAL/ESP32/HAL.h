@@ -171,7 +171,11 @@ void _delay_ms(const int ms);
 // MarlinHAL Class
 // ------------------------
 
+<<<<<<< HEAD
 #define HAL_ADC_VREF_MV   3300
+=======
+#define HAL_ADC_VREF         3.3
+>>>>>>> upstream/bugfix-2.0.x
 #define HAL_ADC_RESOLUTION  10
 
 class MarlinHAL {

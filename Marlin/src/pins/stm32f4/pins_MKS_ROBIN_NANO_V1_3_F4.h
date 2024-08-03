@@ -40,4 +40,9 @@
   //#define FLASH_EEPROM_EMULATION                // Use Flash-based EEPROM emulation
 #endif
 
+<<<<<<< HEAD
+=======
+#define LED_PIN                             PB1
+
+>>>>>>> upstream/bugfix-2.0.x
 #include "../stm32f1/pins_MKS_ROBIN_NANO_common.h"

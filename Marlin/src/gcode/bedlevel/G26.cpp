@@ -162,8 +162,13 @@ float g26_random_deviation = 0.0;
    */
   bool user_canceled() {
     if (!ui.button_pressed()) return false; // Return if the button isn't pressed
+<<<<<<< HEAD
     LCD_MESSAGE_MAX(MSG_G26_CANCELED);
     ui.quick_feedback();
+=======
+    ui.set_status(GET_TEXT_F(MSG_G26_CANCELED), 99);
+    TERN_(HAS_MARLINUI_MENU, ui.quick_feedback());
+>>>>>>> upstream/bugfix-2.0.x
     ui.wait_for_release();
     return true;
   }
@@ -321,9 +326,17 @@ typedef struct {
     #if HAS_HEATED_BED
 
       if (bed_temp > 25) {
+<<<<<<< HEAD
         LCD_MESSAGE_MAX(MSG_G26_HEATING_BED);
         ui.quick_feedback();
         TERN_(HAS_MARLINUI_MENU, ui.capture());
+=======
+        #if HAS_WIRED_LCD
+          ui.set_status(GET_TEXT_F(MSG_G26_HEATING_BED), 99);
+          ui.quick_feedback();
+          TERN_(HAS_MARLINUI_MENU, ui.capture());
+        #endif
+>>>>>>> upstream/bugfix-2.0.x
         thermalManager.setTargetBed(bed_temp);
 
         // Wait for the temperature to stabilize
@@ -338,8 +351,15 @@ typedef struct {
     #endif // HAS_HEATED_BED
 
     // Start heating the active nozzle
+<<<<<<< HEAD
     LCD_MESSAGE_MAX(MSG_G26_HEATING_NOZZLE);
     ui.quick_feedback();
+=======
+    #if HAS_WIRED_LCD
+      ui.set_status(GET_TEXT_F(MSG_G26_HEATING_NOZZLE), 99);
+      ui.quick_feedback();
+    #endif
+>>>>>>> upstream/bugfix-2.0.x
     thermalManager.setTargetHotend(hotend_temp, active_extruder);
 
     // Wait for the temperature to stabilize
@@ -365,7 +385,11 @@ typedef struct {
 
       if (prime_flag == -1) {  // The user wants to control how much filament gets purged
         ui.capture();
+<<<<<<< HEAD
         LCD_MESSAGE_MAX(MSG_G26_MANUAL_PRIME);
+=======
+        ui.set_status(GET_TEXT_F(MSG_G26_MANUAL_PRIME), 99);
+>>>>>>> upstream/bugfix-2.0.x
         ui.chirp();
 
         destination = current_position;
@@ -392,15 +416,26 @@ typedef struct {
 
         ui.wait_for_release();
 
+<<<<<<< HEAD
         LCD_MESSAGE_MAX(MSG_G26_PRIME_DONE);
+=======
+        ui.set_status(GET_TEXT_F(MSG_G26_PRIME_DONE), 99);
+>>>>>>> upstream/bugfix-2.0.x
         ui.quick_feedback();
         ui.release();
       }
       else
     #endif
     {
+<<<<<<< HEAD
       LCD_MESSAGE_MAX(MSG_G26_FIXED_LENGTH);
       ui.quick_feedback();
+=======
+      #if HAS_WIRED_LCD
+        ui.set_status(GET_TEXT_F(MSG_G26_FIXED_LENGTH), 99);
+        ui.quick_feedback();
+      #endif
+>>>>>>> upstream/bugfix-2.0.x
       destination = current_position;
       destination.e += prime_length;
       prepare_internal_move_to_destination(fr_slow_e);
@@ -532,7 +567,11 @@ void GcodeSuite::G26() {
 
     if (bedtemp) {
       if (!WITHIN(bedtemp, 40, BED_MAX_TARGET)) {
+<<<<<<< HEAD
         SERIAL_ECHOLNPGM(GCODE_ERR_MSG("Specified bed temperature not plausible (40-", BED_MAX_TARGET, "C)."));
+=======
+        SERIAL_ECHOLNPGM("?Specified bed temperature not plausible (40-", BED_MAX_TARGET, "C).");
+>>>>>>> upstream/bugfix-2.0.x
         return;
       }
       g26.bed_temp = bedtemp;
@@ -630,14 +669,22 @@ void GcodeSuite::G26() {
   }
 
   // Get repeat from 'R', otherwise do one full circuit
+<<<<<<< HEAD
   grid_count_t g26_repeats;
+=======
+  int16_t g26_repeats;
+>>>>>>> upstream/bugfix-2.0.x
   #if HAS_MARLINUI_MENU
     g26_repeats = parser.intval('R', GRID_MAX_POINTS + 1);
   #else
     if (parser.seen('R'))
       g26_repeats = parser.has_value() ? parser.value_int() : GRID_MAX_POINTS + 1;
     else {
+<<<<<<< HEAD
       SERIAL_ECHOLNPGM(GCODE_ERR_MSG("(R)epeat must be specified when not using an LCD."));
+=======
+      SERIAL_ECHOLNPGM("?(R)epeat must be specified when not using an LCD.");
+>>>>>>> upstream/bugfix-2.0.x
       return;
     }
   #endif
@@ -847,7 +894,11 @@ void GcodeSuite::G26() {
   } while (--g26_repeats && location.valid());
 
   LEAVE:
+<<<<<<< HEAD
   LCD_MESSAGE_MIN(MSG_G26_LEAVING);
+=======
+  ui.set_status(GET_TEXT_F(MSG_G26_LEAVING), -1);
+>>>>>>> upstream/bugfix-2.0.x
   TERN_(EXTENSIBLE_UI, ExtUI::onMeshUpdate(location, ExtUI::G26_FINISH));
 
   g26.retract_filament(destination);

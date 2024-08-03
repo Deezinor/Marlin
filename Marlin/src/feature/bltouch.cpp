@@ -29,7 +29,11 @@
 BLTouch bltouch;
 
 bool BLTouch::od_5v_mode;         // Initialized by settings.load, 0 = Open Drain; 1 = 5V Drain
+<<<<<<< HEAD
 #if HAS_BLTOUCH_HS_MODE
+=======
+#ifdef BLTOUCH_HS_MODE
+>>>>>>> upstream/bugfix-2.0.x
   bool BLTouch::high_speed_mode;  // Initialized by settings.load, 0 = Low Speed; 1 = High Speed
 #else
   constexpr bool BLTouch::high_speed_mode;
@@ -42,6 +46,7 @@ bool BLTouch::od_5v_mode;         // Initialized by settings.load, 0 = Open Drai
 #include "../core/debug_out.h"
 
 bool BLTouch::command(const BLTCommand cmd, const millis_t &ms) {
+<<<<<<< HEAD
   const BLTCommand current = servo[Z_PROBE_SERVO_NR].read();
   if (DEBUGGING(LEVELING)) SERIAL_ECHOLNPGM("BLTouch from ", current, " to ", cmd);
   // If the new command is the same, skip it (and the delay).
@@ -50,6 +55,11 @@ bool BLTouch::command(const BLTCommand cmd, const millis_t &ms) {
     servo[Z_PROBE_SERVO_NR].move(cmd);
     safe_delay(_MAX(ms, (uint32_t)BLTOUCH_DELAY)); // BLTOUCH_DELAY is also the *minimum* delay
   }
+=======
+  if (DEBUGGING(LEVELING)) SERIAL_ECHOLNPGM("BLTouch Command :", cmd);
+  servo[Z_PROBE_SERVO_NR].move(cmd);
+  safe_delay(_MAX(ms, (uint32_t)BLTOUCH_DELAY)); // BLTOUCH_DELAY is also the *minimum* delay
+>>>>>>> upstream/bugfix-2.0.x
   return triggered();
 }
 

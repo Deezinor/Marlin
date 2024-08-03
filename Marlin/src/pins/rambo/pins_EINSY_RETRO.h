@@ -166,6 +166,7 @@
   #define E_MUX1_PIN                          16
   #define E_MUX2_PIN                          78  // 84 in MK2 Firmware, with BEEPER as 78
 #endif
+<<<<<<< HEAD
 
 //
 // EXP Headers
@@ -196,6 +197,8 @@
 #define EXP3_06_PIN                           16  // RX2
 #define EXP3_07_PIN                           -1  // GND
 #define EXP3_08_PIN                           17  // TX2
+=======
+>>>>>>> upstream/bugfix-2.0.x
 
 //
 // LCD / Controller

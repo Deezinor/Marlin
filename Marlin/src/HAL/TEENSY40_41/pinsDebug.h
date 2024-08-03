@@ -30,6 +30,7 @@
 #define NUMBER_PINS_TOTAL NUM_DIGITAL_PINS
 
 #define digitalRead_mod(p) extDigitalRead(p)  // AVR digitalRead disabled PWM before it read the pin
+<<<<<<< HEAD
 #define printPinNameByIndex(x) do{ sprintf_P(buffer, PSTR("%-" STRINGIFY(MAX_NAME_LENGTH) "s"), pin_array[x].name); SERIAL_ECHO(buffer); }while(0)
 #define printPinNumber(p) do{ sprintf_P(buffer, PSTR("%02d"), p); SERIAL_ECHO(buffer); }while(0)
 #define printPinAnalog(p) do{ sprintf_P(buffer, PSTR(" (A%2d)  "), digitalPinToAnalogIndex(pin)); SERIAL_ECHO(buffer); }while(0)
@@ -38,6 +39,19 @@
 #define isValidPin(pin) (pin >= 0 && pin < int8_t(NUMBER_PINS_TOTAL))
 #define digitalPinToAnalogIndex(p) int(p - analogInputToDigitalPin(0))
 #define getValidPinMode(PIN) (isValidPin(pin) && IS_OUTPUT(pin))
+=======
+#define PRINT_PORT(p)
+#define PRINT_ARRAY_NAME(x) do{ sprintf_P(buffer, PSTR("%-" STRINGIFY(MAX_NAME_LENGTH) "s"), pin_array[x].name); SERIAL_ECHO(buffer); }while(0)
+#define PRINT_PIN(p) do{ sprintf_P(buffer, PSTR("%02d"), p); SERIAL_ECHO(buffer); }while(0)
+#define PRINT_PIN_ANALOG(p) do{ sprintf_P(buffer, PSTR(" (A%2d)  "), DIGITAL_PIN_TO_ANALOG_PIN(pin)); SERIAL_ECHO(buffer); }while(0)
+#define GET_ARRAY_PIN(p) pin_array[p].pin
+#define GET_ARRAY_IS_DIGITAL(p) pin_array[p].is_digital
+#define VALID_PIN(pin) (pin >= 0 && pin < (int8_t)NUMBER_PINS_TOTAL ? 1 : 0)
+#define DIGITAL_PIN_TO_ANALOG_PIN(p) int(p - analogInputToDigitalPin(0))
+#define IS_ANALOG(P) ((P) >= analogInputToDigitalPin(0) && (P) <= analogInputToDigitalPin(13)) || ((P) >= analogInputToDigitalPin(14) && (P) <= analogInputToDigitalPin(17))
+#define pwm_status(pin) HAL_pwm_status(pin)
+#define GET_PINMODE(PIN) (VALID_PIN(pin) && IS_OUTPUT(pin))
+>>>>>>> upstream/bugfix-2.0.x
 #define MULTI_NAME_PAD 16 // space needed to be pretty if not first name assigned to a pin
 
 #define isAnalogPin(P) (pin_t(P) >= analogInputToDigitalPin(0) && pin_t(P) <= analogInputToDigitalPin(13)) || (pin_t(P) >= analogInputToDigitalPin(14) && pin_t(P) <= analogInputToDigitalPin(17))

@@ -75,12 +75,30 @@ GcodeSuite gcode;
 millis_t GcodeSuite::previous_move_ms = 0,
          GcodeSuite::max_inactive_time = 0;
 
+<<<<<<< HEAD
 #if HAS_DISABLE_IDLE_AXES
   millis_t GcodeSuite::stepper_inactive_time = SEC_TO_MS(DEFAULT_STEPPER_TIMEOUT_SEC);
 #endif
 
 // Relative motion mode for each logical axis
 relative_t GcodeSuite::axis_relative; // Init in constructor
+=======
+#if HAS_DISABLE_INACTIVE_AXIS
+  millis_t GcodeSuite::stepper_inactive_time = SEC_TO_MS(DEFAULT_STEPPER_DEACTIVE_TIME);
+#endif
+
+// Relative motion mode for each logical axis
+static constexpr xyze_bool_t ar_init = AXIS_RELATIVE_MODES;
+axis_bits_t GcodeSuite::axis_relative = 0 LOGICAL_AXIS_GANG(
+  | (ar_init.e << REL_E),
+  | (ar_init.x << REL_X),
+  | (ar_init.y << REL_Y),
+  | (ar_init.z << REL_Z),
+  | (ar_init.i << REL_I),
+  | (ar_init.j << REL_J),
+  | (ar_init.k << REL_K)
+);
+>>>>>>> upstream/bugfix-2.0.x
 
 #if ANY(HAS_AUTO_REPORTING, HOST_KEEPALIVE_FEATURE)
   bool GcodeSuite::autoreport_paused; // = false
@@ -105,7 +123,12 @@ void GcodeSuite::report_heading(const bool forReplay, FSTR_P const fstr, const b
   if (forReplay) return;
   if (fstr) {
     SERIAL_ECHO_START();
+<<<<<<< HEAD
     SERIAL_ECHO(F("; "), fstr);
+=======
+    SERIAL_ECHOPGM("; ");
+    SERIAL_ECHOF(fstr);
+>>>>>>> upstream/bugfix-2.0.x
   }
   if (eol) { SERIAL_CHAR(':'); SERIAL_EOL(); }
 }
@@ -122,6 +145,7 @@ void GcodeSuite::say_units() {
  * Return -1 if the T parameter is out of range
  */
 int8_t GcodeSuite::get_target_extruder_from_command() {
+<<<<<<< HEAD
   #if HAS_TOOLCHANGE
     if (parser.seenval('T')) {
       const int8_t e = parser.value_byte();
@@ -132,6 +156,16 @@ int8_t GcodeSuite::get_target_extruder_from_command() {
       return -1;
     }
   #endif
+=======
+  if (parser.seenval('T')) {
+    const int8_t e = parser.value_byte();
+    if (e < EXTRUDERS) return e;
+    SERIAL_ECHO_START();
+    SERIAL_CHAR('M'); SERIAL_ECHO(parser.codenum);
+    SERIAL_ECHOLNPGM(" " STR_INVALID_EXTRUDER " ", e);
+    return -1;
+  }
+>>>>>>> upstream/bugfix-2.0.x
   return active_extruder;
 }
 
@@ -155,7 +189,11 @@ int8_t GcodeSuite::get_target_e_stepper_from_command(const int8_t dval/*=-1*/) {
 }
 
 /**
+<<<<<<< HEAD
  * Set XYZ...E destination and feedrate from the current G-Code command
+=======
+ * Set XYZ...E destination and feedrate from the current GCode command
+>>>>>>> upstream/bugfix-2.0.x
  *
  *  - Set destination from included axis codes
  *  - Set to current for missing axis codes
@@ -205,7 +243,11 @@ void GcodeSuite::get_destination_from_command() {
     TERN_(LASER_FEATURE, cutter.feedrate_mm_m = MMS_TO_MMM(feedrate_mm_s));
   }
 
+<<<<<<< HEAD
   #if ALL(PRINTCOUNTER, HAS_EXTRUDERS)
+=======
+  #if BOTH(PRINTCOUNTER, HAS_EXTRUDERS)
+>>>>>>> upstream/bugfix-2.0.x
     if (!DEBUGGING(DRYRUN) && !skip_move)
       print_job_timer.incFilamentUsed(destination.e - current_position.e);
   #endif
@@ -222,7 +264,11 @@ void GcodeSuite::get_destination_from_command() {
       if (WITHIN(parser.codenum, 1, TERN(ARC_SUPPORT, 3, 1)) || TERN0(BEZIER_CURVE_SUPPORT, parser.codenum == 5)) {
         planner.laser_inline.status.isPowered = true;
         if (parser.seen('I')) cutter.set_enabled(true);       // This is set for backward LightBurn compatibility.
+<<<<<<< HEAD
         if (parser.seenval('S')) {
+=======
+        if (parser.seen('S')) {
+>>>>>>> upstream/bugfix-2.0.x
           const float v = parser.value_float(),
                       u = TERN(LASER_POWER_TRAP, v, cutter.power_to_range(v));
           cutter.menuPower = cutter.unitPower = u;
@@ -297,6 +343,7 @@ void GcodeSuite::dwell(millis_t time) {
       --retries;
     }
 
+<<<<<<< HEAD
     if (fail) {
       event_probe_failure();
       TERN_(G29_HALT_ON_FAILURE, return);
@@ -310,6 +357,13 @@ void GcodeSuite::dwell(millis_t time) {
 
     TERN_(HAS_DWIN_E3V2_BASIC, dwinLevelingDone());
     TERN_(EXTENSIBLE_UI, ExtUI::onLevelingDone());
+=======
+    TERN_(HOST_PROMPT_SUPPORT, hostui.prompt_end());
+
+    #ifdef G29_SUCCESS_COMMANDS
+      process_subcommands_now(F(G29_SUCCESS_COMMANDS));
+    #endif
+>>>>>>> upstream/bugfix-2.0.x
   }
 
 #endif // G29_RETRY_AND_RECOVER
@@ -448,7 +502,11 @@ void GcodeSuite::process_parsed_command(const bool no_ok/*=false*/) {
         case 61: G61(); break;                                    // G61:  Apply/restore saved coordinates.
       #endif
 
+<<<<<<< HEAD
       #if ALL(PTC_PROBE, PTC_BED)
+=======
+      #if BOTH(PTC_PROBE, PTC_BED)
+>>>>>>> upstream/bugfix-2.0.x
         case 76: G76(); break;                                    // G76: Calibrate first layer compensation values
       #endif
 
@@ -490,11 +548,19 @@ void GcodeSuite::process_parsed_command(const bool no_ok/*=false*/) {
         case 7: M7(); break;                                      // M7: Coolant Mist ON
       #endif
 
+<<<<<<< HEAD
       #if ANY(AIR_ASSIST, COOLANT_FLOOD)
         case 8: M8(); break;                                      // M8: Air Assist / Coolant Flood ON
       #endif
 
       #if ANY(AIR_ASSIST, COOLANT_CONTROL)
+=======
+      #if EITHER(AIR_ASSIST, COOLANT_FLOOD)
+        case 8: M8(); break;                                      // M8: Air Assist / Coolant Flood ON
+      #endif
+
+      #if EITHER(AIR_ASSIST, COOLANT_CONTROL)
+>>>>>>> upstream/bugfix-2.0.x
         case 9: M9(); break;                                      // M9: Air Assist / Coolant OFF
       #endif
 
@@ -571,11 +637,15 @@ void GcodeSuite::process_parsed_command(const bool no_ok/*=false*/) {
         case 100: M100(); break;                                  // M100: Free Memory Report
       #endif
 
+<<<<<<< HEAD
       #if ENABLED(BD_SENSOR)
         case 102: M102(); break;                                  // M102: Configure Bed Distance Sensor
       #endif
 
       #if HAS_HOTEND
+=======
+      #if HAS_EXTRUDERS
+>>>>>>> upstream/bugfix-2.0.x
         case 104: M104(); break;                                  // M104: Set hot end temperature
         case 109: M109(); break;                                  // M109: Wait for hotend temperature to reach target
       #endif
@@ -634,7 +704,11 @@ void GcodeSuite::process_parsed_command(const bool no_ok/*=false*/) {
         case 154: M154(); break;                                  // M154: Set position auto-report interval
       #endif
 
+<<<<<<< HEAD
       #if ALL(AUTO_REPORT_TEMPERATURES, HAS_TEMP_SENSOR)
+=======
+      #if BOTH(AUTO_REPORT_TEMPERATURES, HAS_TEMP_SENSOR)
+>>>>>>> upstream/bugfix-2.0.x
         case 155: M155(); break;                                  // M155: Set temperature auto-report interval
       #endif
 
@@ -665,7 +739,10 @@ void GcodeSuite::process_parsed_command(const bool no_ok/*=false*/) {
         case 82: M82(); break;                                    // M82: Set E axis normal mode (same as other axes)
         case 83: M83(); break;                                    // M83: Set E axis relative mode
       #endif
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
       case 18: case 84: M18_M84(); break;                         // M18/M84: Disable Steppers / Set Timeout
       case 85: M85(); break;                                      // M85: Set inactivity stepper shutdown timeout
 
@@ -679,10 +756,14 @@ void GcodeSuite::process_parsed_command(const bool no_ok/*=false*/) {
       #endif
 
       case 114: M114(); break;                                    // M114: Report current position
+<<<<<<< HEAD
 
       #if ENABLED(CAPABILITIES_REPORT)
         case 115: M115(); break;                                  // M115: Report capabilities
       #endif
+=======
+      case 115: M115(); break;                                    // M115: Report capabilities
+>>>>>>> upstream/bugfix-2.0.x
 
       case 117: TERN_(HAS_STATUS_MESSAGE, M117()); break;         // M117: Set LCD message text, if possible
 
@@ -806,10 +887,13 @@ void GcodeSuite::process_parsed_command(const bool no_ok/*=false*/) {
         case 250: M250(); break;                                  // M250: Set LCD contrast
       #endif
 
+<<<<<<< HEAD
       #if ENABLED(EDITABLE_DISPLAY_TIMEOUT)
         case 255: M255(); break;                                  // M255: Set LCD Sleep/Backlight Timeout (Minutes)
       #endif
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
       #if HAS_LCD_BRIGHTNESS
         case 256: M256(); break;                                  // M256: Set LCD brightness
       #endif
@@ -1042,6 +1126,17 @@ void GcodeSuite::process_parsed_command(const bool no_ok/*=false*/) {
           case 914: M914(); break;                                // M914: Set StallGuard sensitivity.
         #endif
         case 919: M919(); break;                                  // M919: Set stepper Chopper Times
+<<<<<<< HEAD
+=======
+      #endif
+
+      #if HAS_L64XX
+        case 122: M122(); break;                                   // M122: Report status
+        case 906: M906(); break;                                   // M906: Set or get motor drive level
+        case 916: M916(); break;                                   // M916: L6470 tuning: Increase drive level until thermal warning
+        case 917: M917(); break;                                   // M917: L6470 tuning: Find minimum current thresholds
+        case 918: M918(); break;                                   // M918: L6470 tuning: Increase speed until max or error
+>>>>>>> upstream/bugfix-2.0.x
       #endif
 
       #if HAS_MICROSTEPS
@@ -1114,10 +1209,13 @@ void GcodeSuite::process_parsed_command(const bool no_ok/*=false*/) {
         case 1002: M1002(); break;                                // M1002: [INTERNAL] Tool-change and Relative E Move
       #endif
 
+<<<<<<< HEAD
       #if ENABLED(ONE_CLICK_PRINT)
         case 1003: M1003(); break;                                // M1003: [INTERNAL] Set the current dir to /
       #endif
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
       #if ENABLED(UBL_MESH_WIZARD)
         case 1004: M1004(); break;                                // M1004: UBL Mesh Wizard
       #endif
@@ -1200,7 +1298,14 @@ void GcodeSuite::process_subcommands_now(FSTR_P fgcode) {
   for (;;) {
     PGM_P const delim = strchr_P(pgcode, '\n');       // Get address of next newline
     const size_t len = delim ? delim - pgcode : strlen_P(pgcode); // Get the command length
+<<<<<<< HEAD
     parser.parse(MString<MAX_CMD_SIZE>().setn_P(pgcode, len));    // Parse the command
+=======
+    char cmd[len + 1];                                // Allocate a stack buffer
+    strncpy_P(cmd, pgcode, len);                      // Copy the command to the stack
+    cmd[len] = '\0';                                  // End with a nul
+    parser.parse(cmd);                                // Parse the command
+>>>>>>> upstream/bugfix-2.0.x
     process_parsed_command(true);                     // Process it (no "ok")
     if (!delim) break;                                // Last command?
     pgcode = delim + 1;                               // Get the next command

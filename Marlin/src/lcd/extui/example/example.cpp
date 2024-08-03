@@ -47,8 +47,12 @@ namespace ExtUI {
   }
   void onIdle() {}
   void onPrinterKilled(FSTR_P const error, FSTR_P const component) {}
+<<<<<<< HEAD
 
   void onMediaMounted() {}
+=======
+  void onMediaInserted() {}
+>>>>>>> upstream/bugfix-2.0.x
   void onMediaError() {}
   void onMediaRemoved() {}
 
@@ -84,7 +88,10 @@ namespace ExtUI {
 
   void onHomingStart() {}
   void onHomingDone() {}
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
   void onPrintDone() {}
 
   void onFactoryReset() {}
@@ -113,16 +120,25 @@ namespace ExtUI {
     // Called after loading or resetting stored settings
   }
 
+<<<<<<< HEAD
   void onSettingsStored(const bool success) {
+=======
+  void onSettingsStored(bool success) {
+>>>>>>> upstream/bugfix-2.0.x
     // Called after the entire EEPROM has been written,
     // whether successful or not.
   }
 
+<<<<<<< HEAD
   void onSettingsLoaded(const bool success) {
+=======
+  void onSettingsLoaded(bool success) {
+>>>>>>> upstream/bugfix-2.0.x
     // Called after the entire EEPROM has been read,
     // whether successful or not.
   }
 
+<<<<<<< HEAD
   #if HAS_LEVELING
     void onLevelingStart() {}
     void onLevelingDone() {}
@@ -130,6 +146,11 @@ namespace ExtUI {
       celsius_t getLevelingBedTemp() { return LEVELING_BED_TEMP; }
     #endif
   #endif
+=======
+  #if HAS_MESH
+    void onLevelingStart() {}
+    void onLevelingDone() {}
+>>>>>>> upstream/bugfix-2.0.x
 
   #if HAS_MESH
     void onMeshUpdate(const int8_t xpos, const int8_t ypos, const_float_t zval) {
@@ -161,6 +182,7 @@ namespace ExtUI {
     void onPIDTuning(const pidresult_t rst) {
       // Called for temperature PID tuning result
       switch (rst) {
+<<<<<<< HEAD
         case PID_STARTED:
         case PID_BED_STARTED:
         case PID_CHAMBER_STARTED: break;
@@ -172,6 +194,14 @@ namespace ExtUI {
     }
     void onStartM303(const int count, const heater_id_t hid, const celsius_t temp) {
       // Called by M303 to update the UI
+=======
+        case PID_STARTED:          break;
+        case PID_BAD_EXTRUDER_NUM: break;
+        case PID_TEMP_TOO_HIGH:    break;
+        case PID_TUNING_TIMEOUT:   break;
+        case PID_DONE:             break;
+      }
+>>>>>>> upstream/bugfix-2.0.x
     }
   #endif
 

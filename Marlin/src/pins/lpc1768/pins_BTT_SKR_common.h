@@ -27,8 +27,13 @@
 // https://github.com/bigtreetech/BTT-Expansion-module/tree/master/BTT%20EXP-MOT
 //#define BTT_MOTOR_EXPANSION
 
+<<<<<<< HEAD
 #if ALL(HAS_WIRED_LCD, BTT_MOTOR_EXPANSION)
   #if ANY(CR10_STOCKDISPLAY, ENDER2_STOCKDISPLAY)
+=======
+#if BOTH(HAS_WIRED_LCD, BTT_MOTOR_EXPANSION)
+  #if EITHER(CR10_STOCKDISPLAY, ENDER2_STOCKDISPLAY)
+>>>>>>> upstream/bugfix-2.0.x
     #define EXP_MOT_USE_EXP2_ONLY 1
   #else
     #error "You can't use both an LCD and a Motor Expansion Module on EXP1/EXP2 at the same time."
@@ -120,7 +125,11 @@
 // SD Support
 //
 #ifndef SDCARD_CONNECTION
+<<<<<<< HEAD
   #if HAS_WIRED_LCD && DISABLED(NO_LCD_SDCARD)
+=======
+  #if HAS_WIRED_LCD
+>>>>>>> upstream/bugfix-2.0.x
     #define SDCARD_CONNECTION                LCD
   #else
     #define SDCARD_CONNECTION            ONBOARD

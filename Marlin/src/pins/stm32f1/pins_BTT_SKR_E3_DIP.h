@@ -212,7 +212,13 @@
 
   #elif ENABLED(ZONESTAR_LCD)                     // ANET A8 LCD Controller - Must convert to 3.3V - CONNECTING TO 5V WILL DAMAGE THE BOARD!
 
+<<<<<<< HEAD
     CONTROLLER_WARNING("BTT_SKR_E3_DIP", "ZONESTAR_LCD")
+=======
+    #ifndef NO_CONTROLLER_CUSTOM_WIRING_WARNING
+      #error "CAUTION! ZONESTAR_LCD requires wiring modifications. See 'pins_BTT_SKR_MINI_E3_DIP.h' for details. (Define NO_CONTROLLER_CUSTOM_WIRING_WARNING to suppress this warning.)"
+    #endif
+>>>>>>> upstream/bugfix-2.0.x
 
     #define LCD_PINS_RS              EXP1_06_PIN
     #define LCD_PINS_EN              EXP1_02_PIN
@@ -308,14 +314,24 @@
     #define FORCE_SOFT_SPI
 
   #else
+<<<<<<< HEAD
     #error "Only CR10_STOCKDISPLAY, ZONESTAR_LCD, ENDER2_STOCKDISPLAY, MKS_MINI_12864, FYSETC_MINI_12864_2_1 and MKS_LCD12864A/B are currently supported on the SKR E3 DIP."
+=======
+    #error "Only CR10_STOCKDISPLAY, ZONESTAR_LCD, ENDER2_STOCKDISPLAY, MKS_MINI_12864, and MKS_LCD12864A/B are currently supported on the BIGTREE_SKR_E3_DIP."
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 
 #endif // HAS_WIRED_LCD
 
 #if ALL(TOUCH_UI_FTDI_EVE, LCD_FYSETC_TFT81050)
 
+<<<<<<< HEAD
   CONTROLLER_WARNING("BTT_SKR_E3_DIP", "LCD_FYSETC_TFT81050")
+=======
+  #ifndef NO_CONTROLLER_CUSTOM_WIRING_WARNING
+    #error "CAUTION! LCD_FYSETC_TFT81050 requires wiring modifications. See 'pins_BTT_SKR_E3_DIP.h' for details. (Define NO_CONTROLLER_CUSTOM_WIRING_WARNING to suppress this warning.)"
+  #endif
+>>>>>>> upstream/bugfix-2.0.x
 
   /** FYSETC TFT TFT81050 display pinout
    *
@@ -366,9 +382,15 @@
   #define SD_SCK_PIN                        PA5
   #define SD_MISO_PIN                       PA6
   #define SD_MOSI_PIN                       PA7
+<<<<<<< HEAD
 #elif SD_CONNECTION_IS(LCD) && ALL(TOUCH_UI_FTDI_EVE, LCD_FYSETC_TFT81050)
   #define SD_DETECT_PIN              EXP1_01_PIN
   #define SD_SS_PIN                  EXP1_05_PIN
+=======
+#elif SD_CONNECTION_IS(LCD) && BOTH(TOUCH_UI_FTDI_EVE, LCD_FYSETC_TFT81050)
+  #define SD_DETECT_PIN                     PA15
+  #define SD_SS_PIN                         PA10
+>>>>>>> upstream/bugfix-2.0.x
 #elif SD_CONNECTION_IS(CUSTOM_CABLE)
   #error "SD CUSTOM_CABLE is not compatible with SKR E3 DIP."
 #endif

@@ -35,8 +35,19 @@
 #undef DEBUG_ECHOLN
 #undef DEBUG_ECHOPGM
 #undef DEBUG_ECHOLNPGM
+<<<<<<< HEAD
 #undef DEBUG_ECHOPGM_P
 #undef DEBUG_ECHOLNPGM_P
+=======
+#undef DEBUG_ECHOF
+#undef DEBUG_ECHOLNF
+#undef DEBUG_ECHOPGM_P
+#undef DEBUG_ECHOLNPGM_P
+#undef DEBUG_ECHOPAIR_F
+#undef DEBUG_ECHOPAIR_F_P
+#undef DEBUG_ECHOLNPAIR_F
+#undef DEBUG_ECHOLNPAIR_F_P
+>>>>>>> upstream/bugfix-2.0.x
 #undef DEBUG_ECHO_MSG
 #undef DEBUG_ERROR_MSG
 #undef DEBUG_WARN_MSG
@@ -61,10 +72,23 @@
   #define DEBUG_ECHOLN            SERIAL_ECHOLN
   #define DEBUG_ECHOPGM           SERIAL_ECHOPGM
   #define DEBUG_ECHOLNPGM         SERIAL_ECHOLNPGM
+<<<<<<< HEAD
   #define DEBUG_ECHOPGM           SERIAL_ECHOPGM
   #define DEBUG_ECHOPGM_P         SERIAL_ECHOPGM_P
   #define DEBUG_ECHOLNPGM         SERIAL_ECHOLNPGM
   #define DEBUG_ECHOLNPGM_P       SERIAL_ECHOLNPGM_P
+=======
+  #define DEBUG_ECHOF             SERIAL_ECHOF
+  #define DEBUG_ECHOLNF           SERIAL_ECHOLNF
+  #define DEBUG_ECHOPGM           SERIAL_ECHOPGM
+  #define DEBUG_ECHOPGM_P         SERIAL_ECHOPGM_P
+  #define DEBUG_ECHOPAIR_F        SERIAL_ECHOPAIR_F
+  #define DEBUG_ECHOPAIR_F_P      SERIAL_ECHOPAIR_F_P
+  #define DEBUG_ECHOLNPGM         SERIAL_ECHOLNPGM
+  #define DEBUG_ECHOLNPGM_P       SERIAL_ECHOLNPGM_P
+  #define DEBUG_ECHOLNPAIR_F      SERIAL_ECHOLNPAIR_F
+  #define DEBUG_ECHOLNPAIR_F_P    SERIAL_ECHOLNPAIR_F_P
+>>>>>>> upstream/bugfix-2.0.x
   #define DEBUG_ECHO_MSG          SERIAL_ECHO_MSG
   #define DEBUG_ERROR_MSG         SERIAL_ERROR_MSG
   #define DEBUG_WARN_MSG          SERIAL_WARN_MSG
@@ -87,8 +111,19 @@
   #define DEBUG_ECHOLN(...)         NOOP
   #define DEBUG_ECHOPGM(...)        NOOP
   #define DEBUG_ECHOLNPGM(...)      NOOP
+<<<<<<< HEAD
   #define DEBUG_ECHOPGM_P(...)      NOOP
   #define DEBUG_ECHOLNPGM_P(...)    NOOP
+=======
+  #define DEBUG_ECHOF(...)          NOOP
+  #define DEBUG_ECHOLNF(...)        NOOP
+  #define DEBUG_ECHOPGM_P(...)      NOOP
+  #define DEBUG_ECHOLNPGM_P(...)    NOOP
+  #define DEBUG_ECHOPAIR_F(...)     NOOP
+  #define DEBUG_ECHOPAIR_F_P(...)   NOOP
+  #define DEBUG_ECHOLNPAIR_F(...)   NOOP
+  #define DEBUG_ECHOLNPAIR_F_P(...) NOOP
+>>>>>>> upstream/bugfix-2.0.x
   #define DEBUG_ECHO_MSG(...)       NOOP
   #define DEBUG_ERROR_MSG(...)      NOOP
   #define DEBUG_WARN_MSG(...)       NOOP

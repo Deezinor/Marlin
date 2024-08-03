@@ -23,7 +23,11 @@
 
 #include "../../inc/MarlinConfigPre.h"
 
+<<<<<<< HEAD
 #if ANY(RESTORE_LEVELING_AFTER_G28, ENABLE_LEVELING_AFTER_G28)
+=======
+#if EITHER(RESTORE_LEVELING_AFTER_G28, ENABLE_LEVELING_AFTER_G28)
+>>>>>>> upstream/bugfix-2.0.x
   #define CAN_SET_LEVELING_AFTER_G28 1
 #endif
 
@@ -69,7 +73,11 @@ class TemporaryBedLevelingState {
     #include "mbl/mesh_bed_leveling.h"
   #endif
 
+<<<<<<< HEAD
   #if ANY(AUTO_BED_LEVELING_BILINEAR, MESH_BED_LEVELING)
+=======
+  #if EITHER(AUTO_BED_LEVELING_BILINEAR, MESH_BED_LEVELING)
+>>>>>>> upstream/bugfix-2.0.x
 
     #include <stdint.h>
 

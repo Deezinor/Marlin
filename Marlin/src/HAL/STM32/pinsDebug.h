@@ -108,6 +108,7 @@ const XrefInfo pin_xref[] PROGMEM = {
  * Translation of routines & variables used by pinsDebug.h
  */
 
+<<<<<<< HEAD
 #if NUM_ANALOG_FIRST >= NUM_DIGITAL_PINS
   #define HAS_HIGH_ANALOG_PINS 1
 #endif
@@ -120,6 +121,18 @@ const XrefInfo pin_xref[] PROGMEM = {
 #define printPinNumber(Q)
 #define printPinAnalog(p) do{ sprintf_P(buffer, PSTR(" (A%2d)  "), digitalPinToAnalogIndex(pin)); SERIAL_ECHO(buffer); }while(0)
 #define digitalPinToAnalogIndex(ANUM) -1  // will report analog pin number in the print port routine
+=======
+#if PA0 >= NUM_DIGITAL_PINS
+  #define HAS_HIGH_ANALOG_PINS 1
+#endif
+#define NUMBER_PINS_TOTAL NUM_DIGITAL_PINS + TERN0(HAS_HIGH_ANALOG_PINS, NUM_ANALOG_INPUTS)
+#define VALID_PIN(ANUM) ((ANUM) >= 0 && (ANUM) < NUMBER_PINS_TOTAL)
+#define digitalRead_mod(Ard_num) extDigitalRead(Ard_num)  // must use Arduino pin numbers when doing reads
+#define PRINT_PIN(Q)
+#define PRINT_PIN_ANALOG(p) do{ sprintf_P(buffer, PSTR(" (A%2d)  "), DIGITAL_PIN_TO_ANALOG_PIN(pin)); SERIAL_ECHO(buffer); }while(0)
+#define PRINT_PORT(ANUM) port_print(ANUM)
+#define DIGITAL_PIN_TO_ANALOG_PIN(ANUM) -1  // will report analog pin number in the print port routine
+>>>>>>> upstream/bugfix-2.0.x
 
 // x is a variable used to search pin_array
 #define getPinIsDigitalByIndex(x) ((bool) pin_array[x].is_digital)
@@ -170,10 +183,17 @@ bool getValidPinMode(const pin_t Ard_num) {
 }
 
 int8_t digital_pin_to_analog_pin(const pin_t Ard_num) {
+<<<<<<< HEAD
   if (WITHIN(Ard_num, NUM_ANALOG_FIRST, NUM_ANALOG_LAST))
     return Ard_num - NUM_ANALOG_FIRST;
 
   const int8_t ind = digitalPinToAnalogIndex(Ard_num);
+=======
+  if (WITHIN(Ard_num, NUM_ANALOG_FIRST, NUM_ANALOG_FIRST + NUM_ANALOG_INPUTS - 1))
+    return Ard_num - NUM_ANALOG_FIRST;
+
+  const uint32_t ind = digitalPinToAnalogInput(Ard_num);
+>>>>>>> upstream/bugfix-2.0.x
   return (ind < NUM_ANALOG_INPUTS) ? ind : -1;
 }
 
@@ -208,11 +228,16 @@ void printPinPort(const pin_t Ard_num) {
     SERIAL_ECHO_SP(7);
 
   // Print number to be used with M42
+<<<<<<< HEAD
   int calc_p = Ard_num;
   if (Ard_num > NUM_DIGITAL_PINS) {
     calc_p -= NUM_ANALOG_FIRST;
     if (calc_p > 7) calc_p += 8;
   }
+=======
+  int calc_p = Ard_num % (NUM_DIGITAL_PINS + 1);
+  if (Ard_num > NUM_DIGITAL_PINS && calc_p > 7) calc_p += 8;
+>>>>>>> upstream/bugfix-2.0.x
   SERIAL_ECHOPGM(" M42 P", calc_p);
   SERIAL_CHAR(' ');
   if (calc_p < 100) {

@@ -31,6 +31,10 @@
  * resulted in using about about 25% of the CPU's time.
  */
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/bugfix-2.0.x
 #ifdef __cplusplus
   extern "C" {
 #endif

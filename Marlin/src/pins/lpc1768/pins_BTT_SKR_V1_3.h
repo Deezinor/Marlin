@@ -23,7 +23,10 @@
 
 /**
  * BigTreeTech SKR 1.3 pin assignments
+<<<<<<< HEAD
  * Schematic: https://github.com/bigtreetech/BIGTREETECH-SKR-V1.3/blob/master/BTT%20SKR%20V1.3/hardware/SKR-V1.3-SCH.pdf
+=======
+>>>>>>> upstream/bugfix-2.0.x
  */
 
 #define BOARD_INFO_NAME "BTT SKR V1.3"
@@ -232,7 +235,13 @@
 
   #elif ENABLED(ANET_FULL_GRAPHICS_LCD)
 
+<<<<<<< HEAD
     CONTROLLER_WARNING("BTT_SKR_V1_3", "ANET_FULL_GRAPHICS_LCD")
+=======
+    #ifndef NO_CONTROLLER_CUSTOM_WIRING_WARNING
+      #error "CAUTION! ANET_FULL_GRAPHICS_LCD requires wiring modifications. See 'pins_BTT_SKR_V1_3.h' for details. (Define NO_CONTROLLER_CUSTOM_WIRING_WARNING to suppress this warning.)"
+    #endif
+>>>>>>> upstream/bugfix-2.0.x
 
    /**
     * 1. Cut the tab off the LCD connector so it can be plugged into the "EXP1" connector the other way.
@@ -261,12 +270,22 @@
     #define BTN_EN2                  EXP1_07_PIN
     #define BTN_ENC                  EXP1_03_PIN
 
+<<<<<<< HEAD
     #define LCD_PINS_EN              EXP1_06_PIN
+=======
+    #define LCD_PINS_ENABLE          EXP1_06_PIN
+>>>>>>> upstream/bugfix-2.0.x
     #define LCD_PINS_D4              EXP1_04_PIN
 
   #elif ENABLED(WYH_L12864)
 
+<<<<<<< HEAD
     CONTROLLER_WARNING("BTT_SKR_V1_3", "WYH_L12864")
+=======
+    #ifndef NO_CONTROLLER_CUSTOM_WIRING_WARNING
+      #error "CAUTION! WYH_L12864 requires wiring modifications. See 'pins_BTT_SKR_V1_3.h' for details. (Define NO_CONTROLLER_CUSTOM_WIRING_WARNING to suppress this warning.)"
+    #endif
+>>>>>>> upstream/bugfix-2.0.x
 
     /**
      * 1. Cut the tab off the LCD connector so it can be plugged into the "EXP1" connector the other way.
@@ -287,19 +306,30 @@
      *                  ------                     ------
      *                   LCD                        LCD
      */
+<<<<<<< HEAD
     #define BTN_ENC                  EXP1_03_PIN
     #define BTN_EN1                  EXP1_05_PIN
     #define BTN_EN2                  EXP1_07_PIN
 
+=======
+    #define BTN_EN1                  EXP1_05_PIN
+    #define BTN_EN2                  EXP1_07_PIN
+    #define BTN_ENC                  EXP1_03_PIN
+>>>>>>> upstream/bugfix-2.0.x
     #define DOGLCD_CS                EXP1_08_PIN
     #define DOGLCD_A0                EXP1_06_PIN
     #define DOGLCD_SCK               EXP1_04_PIN
     #define DOGLCD_MOSI              EXP1_01_PIN
+<<<<<<< HEAD
     #define LCD_BACKLIGHT_PIN              -1
+=======
+    #define LCD_BACKLIGHT_PIN            -1
+>>>>>>> upstream/bugfix-2.0.x
 
   #elif ENABLED(CR10_STOCKDISPLAY)
 
     #define LCD_PINS_RS              EXP1_07_PIN
+<<<<<<< HEAD
 
     #define BTN_EN1                  EXP1_03_PIN
     #define BTN_EN2                  EXP1_05_PIN
@@ -359,9 +389,16 @@
       #define TOUCH_MISO_PIN         EXP1_06_PIN
       #define TOUCH_MOSI_PIN         EXP1_03_PIN
       #define TOUCH_INT_PIN          EXP1_07_PIN
+=======
+
+    #define BTN_EN1                  EXP1_03_PIN
+    #define BTN_EN2                  EXP1_05_PIN
+    #define BTN_ENC                  EXP1_02_PIN  // (58) open-drain
+>>>>>>> upstream/bugfix-2.0.x
 
     #elif ENABLED(MKS_TS35_V2_0)
 
+<<<<<<< HEAD
       CONTROLLER_WARNING("BTT_SKR_V1_3", "MKS_TS35_V2_0", " The SKR 1.3 EXP ports are rotated 180°.")
 
       /**                      ------                                   ------
@@ -407,6 +444,56 @@
       #endif
       #ifndef TOUCH_OFFSET_Y
         #define TOUCH_OFFSET_Y              -352
+=======
+  #elif HAS_ADC_BUTTONS
+
+    #error "ADC BUTTONS do not work unmodified on SKR 1.3, The ADC ports cannot take more than 3.3v."
+
+  #elif HAS_SPI_TFT                               // Config for Classic UI (emulated DOGM) and Color UI
+
+    #define TFT_A0_PIN               EXP1_08_PIN
+    #define TFT_DC_PIN               EXP1_08_PIN
+    #define TFT_CS_PIN               EXP1_07_PIN
+    #define TFT_RESET_PIN            EXP1_04_PIN
+    #define TFT_BACKLIGHT_PIN        EXP1_03_PIN
+
+    //#define TFT_RST_PIN            EXP2_07_PIN
+    #define TFT_MOSI_PIN             EXP2_06_PIN
+    #define TFT_SCK_PIN              EXP2_02_PIN
+    #define TFT_MISO_PIN             EXP2_01_PIN
+
+    #define BTN_EN2                  EXP2_05_PIN
+    #define BTN_EN1                  EXP2_03_PIN
+    #define BTN_ENC                  EXP1_02_PIN
+
+    #define TOUCH_BUTTONS_HW_SPI
+    #define TOUCH_BUTTONS_HW_SPI_DEVICE        1
+
+    #define TFT_BUFFER_SIZE                 2400
+
+    #ifndef TFT_WIDTH
+      #define TFT_WIDTH                      480
+    #endif
+    #ifndef TFT_HEIGHT
+      #define TFT_HEIGHT                     320
+    #endif
+
+    #define LCD_READ_ID                     0xD3
+    #define LCD_USE_DMA_SPI
+
+    #if ENABLED(TFT_CLASSIC_UI)
+      #ifndef TOUCH_CALIBRATION_X
+        #define TOUCH_CALIBRATION_X       -11386
+      #endif
+      #ifndef TOUCH_CALIBRATION_Y
+        #define TOUCH_CALIBRATION_Y         8684
+      #endif
+      #ifndef TOUCH_OFFSET_X
+        #define TOUCH_OFFSET_X               689
+      #endif
+      #ifndef TOUCH_OFFSET_Y
+        #define TOUCH_OFFSET_Y              -273
+>>>>>>> upstream/bugfix-2.0.x
       #endif
     #elif ENABLED(TFT_COLOR_UI)
       #ifndef TOUCH_CALIBRATION_X
@@ -421,7 +508,11 @@
       #ifndef TOUCH_OFFSET_Y
         #define TOUCH_OFFSET_Y              -367
       #endif
+<<<<<<< HEAD
       #define TFT_BUFFER_WORDS              2400
+=======
+      #define TFT_BUFFER_SIZE               2400
+>>>>>>> upstream/bugfix-2.0.x
     #endif
 
   #elif IS_TFTGLCD_PANEL
@@ -431,7 +522,11 @@
 
     #define SD_DETECT_PIN            EXP2_07_PIN
 
+<<<<<<< HEAD
   #else // !CR10_STOCKDISPLAY
+=======
+  #else                                           // !CR10_STOCKDISPLAY
+>>>>>>> upstream/bugfix-2.0.x
 
     #define LCD_PINS_RS              EXP1_04_PIN
 
@@ -439,7 +534,11 @@
     #define BTN_EN2                  EXP2_05_PIN  // (33) J3-4 & AUX-4
     #define BTN_ENC                  EXP1_02_PIN  // (58) open-drain
 
+<<<<<<< HEAD
     #define LCD_PINS_EN              EXP1_03_PIN
+=======
+    #define LCD_PINS_ENABLE          EXP1_03_PIN
+>>>>>>> upstream/bugfix-2.0.x
     #define LCD_PINS_D4              EXP1_05_PIN
 
     #define LCD_SDSS                 EXP2_04_PIN  // (16) J3-7 & AUX-4
@@ -450,6 +549,11 @@
       #define DOGLCD_A0              EXP1_04_PIN
       #define DOGLCD_SCK             EXP2_02_PIN
       #define DOGLCD_MOSI            EXP2_06_PIN
+<<<<<<< HEAD
+=======
+
+      #define LCD_BACKLIGHT_PIN            -1
+>>>>>>> upstream/bugfix-2.0.x
 
       #define FORCE_SOFT_SPI                      // Use this if default of hardware SPI causes display problems
                                                   //   results in LCD soft SPI mode 3, SD soft SPI mode 0
@@ -522,6 +626,17 @@
 
 #endif // HAS_WIRED_LCD
 
+<<<<<<< HEAD
+=======
+#if NEED_TOUCH_PINS
+  #define TOUCH_CS_PIN               EXP1_05_PIN
+  #define TOUCH_SCK_PIN              EXP2_02_PIN
+  #define TOUCH_MOSI_PIN             EXP2_06_PIN
+  #define TOUCH_MISO_PIN             EXP2_01_PIN
+  #define TOUCH_INT_PIN              EXP1_06_PIN
+#endif
+
+>>>>>>> upstream/bugfix-2.0.x
 /**
  * Special pins
  *   P1_30  (37) (NOT 5V tolerant)

@@ -28,7 +28,11 @@
 
 #include "../../inc/MarlinConfigPre.h"
 
+<<<<<<< HEAD
 #if HAS_HOTEND
+=======
+#if HAS_EXTRUDERS
+>>>>>>> upstream/bugfix-2.0.x
 
 #include "../gcode.h"
 #include "../../module/temperature.h"

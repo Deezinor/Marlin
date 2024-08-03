@@ -61,8 +61,11 @@ void GcodeSuite::M603() {
 }
 
 void GcodeSuite::M603_report(const bool forReplay/*=true*/) {
+<<<<<<< HEAD
   TERN_(MARLIN_SMALL_BUILD, return);
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
   report_heading(forReplay, F(STR_FILAMENT_LOAD_UNLOAD));
 
   #if EXTRUDERS == 1
@@ -78,4 +81,8 @@ void GcodeSuite::M603_report(const bool forReplay/*=true*/) {
   #endif
 }
 
+<<<<<<< HEAD
 #endif // CONFIGURE_FILAMENT_CHANGE
+=======
+#endif // ADVANCED_PAUSE_FEATURE
+>>>>>>> upstream/bugfix-2.0.x

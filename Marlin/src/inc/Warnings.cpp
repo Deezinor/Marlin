@@ -31,6 +31,7 @@
 // Warnings! Located here so they will appear just once in the build output.
 //
 
+<<<<<<< HEAD
 // static_warning works like a static_assert but only emits a (messy) warning.
 #ifdef __GNUC__
   namespace mfwarn {
@@ -74,6 +75,14 @@
 
 #if NUM_AXES_WARNING
   #warning "Note: NUM_AXES is now based on the *_DRIVER_TYPE settings so you can remove NUM_AXES from Configuration.h."
+=======
+#if ENABLED(MARLIN_DEV_MODE)
+  #warning "WARNING! Disable MARLIN_DEV_MODE for the final build!"
+#endif
+
+#if LINEAR_AXES_WARNING
+  #warning "Note: LINEAR_AXES is now based on the *_DRIVER_TYPE settings so you can remove LINEAR_AXES from Configuration.h."
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 // Safety Features
@@ -92,15 +101,23 @@
 #if HAS_COOLER && DISABLED(THERMAL_PROTECTION_COOLER)
   #warning "Safety Alert! Enable THERMAL_PROTECTION_COOLER for the final build!"
 #endif
+<<<<<<< HEAD
 #if ENABLED(IGNORE_THERMOCOUPLE_ERRORS)
   #warning "Safety Alert! Disable IGNORE_THERMOCOUPLE_ERRORS for the final build!"
 #endif
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #if ANY_THERMISTOR_IS(998) || ANY_THERMISTOR_IS(999)
   #warning "Warning! Don't use dummy thermistors (998/999) for final build!"
 #endif
 
+<<<<<<< HEAD
 #if NONE(HAS_RESUME_CONTINUE, HOST_PROMPT_SUPPORT, UNIT_TEST, NO_USER_FEEDBACK_WARNING)
   #warning "Your Configuration provides no method to acquire user feedback! (Define NO_USER_FEEDBACK_WARNING to suppress this warning.)"
+=======
+#if NONE(HAS_RESUME_CONTINUE, HOST_PROMPT_SUPPORT)
+  #warning "Your Configuration provides no method to acquire user feedback!"
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #if MB(DUE3DOM_MINI) && PIN_EXISTS(TEMP_2) && !TEMP_SENSOR_BOARD
@@ -131,6 +148,7 @@
     #warning "Note: Auto-assigned X2_CS_PIN to an unused En_CS_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
   #endif
   #if AUTO_ASSIGNED_X2_DIAG
+<<<<<<< HEAD
     #if X2_STOP_PIN == X_MIN_PIN
       #warning "Note: Auto-assigned X2 sensorless endstop to X_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
     #elif X2_STOP_PIN == X_MAX_PIN
@@ -165,6 +183,48 @@
       #warning "Note: Auto-assigned X2 sensorless endstop to E6_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
     #elif X2_STOP_PIN == E7_DIAG_PIN
       #warning "Note: Auto-assigned X2 sensorless endstop to E7_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+=======
+    #if X2_USE_ENDSTOP == _XMIN_
+      #warning "Note: Auto-assigned X2_DIAG_PIN to X_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif X2_USE_ENDSTOP == _XMAX_
+      #warning "Note: Auto-assigned X2_DIAG_PIN to X_MAX_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif X2_USE_ENDSTOP == _XSTOP_
+      #warning "Note: Auto-assigned X2_DIAG_PIN to X_STOP_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif X2_USE_ENDSTOP == _YMIN_
+      #warning "Note: Auto-assigned X2_DIAG_PIN to Y_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif X2_USE_ENDSTOP == _YMAX_
+      #warning "Note: Auto-assigned X2_DIAG_PIN to Y_MAX_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif X2_USE_ENDSTOP == _YSTOP_
+      #warning "Note: Auto-assigned X2_DIAG_PIN to Y_STOP_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif X2_USE_ENDSTOP == _ZMIN_
+      #warning "Note: Auto-assigned X2_DIAG_PIN to Z_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif X2_USE_ENDSTOP == _ZMAX_
+      #warning "Note: Auto-assigned X2_DIAG_PIN to Z_MAX_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif X2_USE_ENDSTOP == _ZSTOP_
+      #warning "Note: Auto-assigned X2_DIAG_PIN to Z_STOP_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif X2_USE_ENDSTOP == _XDIAG_
+      #warning "Note: Auto-assigned X2_DIAG_PIN to X_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif X2_USE_ENDSTOP == _YDIAG_
+      #warning "Note: Auto-assigned X2_DIAG_PIN to Y_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif X2_USE_ENDSTOP == _ZDIAG_
+      #warning "Note: Auto-assigned X2_DIAG_PIN to Z_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif X2_USE_ENDSTOP == _E0DIAG_
+      #warning "Note: Auto-assigned X2_DIAG_PIN to E0_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif X2_USE_ENDSTOP == _E1DIAG_
+      #warning "Note: Auto-assigned X2_DIAG_PIN to E1_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif X2_USE_ENDSTOP == _E2DIAG_
+      #warning "Note: Auto-assigned X2_DIAG_PIN to E2_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif X2_USE_ENDSTOP == _E3DIAG_
+      #warning "Note: Auto-assigned X2_DIAG_PIN to E3_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif X2_USE_ENDSTOP == _E4DIAG_
+      #warning "Note: Auto-assigned X2_DIAG_PIN to E4_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif X2_USE_ENDSTOP == _E5DIAG_
+      #warning "Note: Auto-assigned X2_DIAG_PIN to E5_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif X2_USE_ENDSTOP == _E6DIAG_
+      #warning "Note: Auto-assigned X2_DIAG_PIN to E6_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif X2_USE_ENDSTOP == _E7DIAG_
+      #warning "Note: Auto-assigned X2_DIAG_PIN to E7_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+>>>>>>> upstream/bugfix-2.0.x
     #endif
   #endif
   #if AUTO_ASSIGNED_Y2_STEPPER
@@ -183,6 +243,7 @@
     #warning "Note: Auto-assigned Y2_CS_PIN to an unused En_CS_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
   #endif
   #if AUTO_ASSIGNED_Y2_DIAG
+<<<<<<< HEAD
     #if Y2_USE_ENDSTOP == X_MIN_PIN
       #warning "Note: Auto-assigned Y2 sensorless endstop to X_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
     #elif Y2_STOP_PIN == X_MAX_PIN
@@ -217,6 +278,48 @@
       #warning "Note: Auto-assigned Y2 sensorless endstop to E6_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
     #elif Y2_STOP_PIN == E7_DIAG_PIN
       #warning "Note: Auto-assigned Y2 sensorless endstop to E7_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+=======
+    #if Y2_USE_ENDSTOP == _XMIN_
+      #warning "Note: Auto-assigned Y2_DIAG_PIN to X_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Y2_USE_ENDSTOP == _XMAX_
+      #warning "Note: Auto-assigned Y2_DIAG_PIN to X_MAX_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Y2_USE_ENDSTOP == _XSTOP_
+      #warning "Note: Auto-assigned Y2_DIAG_PIN to X_STOP_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Y2_USE_ENDSTOP == _YMIN_
+      #warning "Note: Auto-assigned Y2_DIAG_PIN to Y_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Y2_USE_ENDSTOP == _YMAX_
+      #warning "Note: Auto-assigned Y2_DIAG_PIN to Y_MAX_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Y2_USE_ENDSTOP == _YSTOP_
+      #warning "Note: Auto-assigned Y2_DIAG_PIN to Y_STOP_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Y2_USE_ENDSTOP == _ZMIN_
+      #warning "Note: Auto-assigned Y2_DIAG_PIN to Z_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Y2_USE_ENDSTOP == _ZMAX_
+      #warning "Note: Auto-assigned Y2_DIAG_PIN to Z_MAX_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Y2_USE_ENDSTOP == _ZSTOP_
+      #warning "Note: Auto-assigned Y2_DIAG_PIN to Z_STOP_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Y2_USE_ENDSTOP == _XDIAG_
+      #warning "Note: Auto-assigned Y2_DIAG_PIN to X_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Y2_USE_ENDSTOP == _YDIAG_
+      #warning "Note: Auto-assigned Y2_DIAG_PIN to Y_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Y2_USE_ENDSTOP == _ZDIAG_
+      #warning "Note: Auto-assigned Y2_DIAG_PIN to Z_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Y2_USE_ENDSTOP == _E0DIAG_
+      #warning "Note: Auto-assigned Y2_DIAG_PIN to E0_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Y2_USE_ENDSTOP == _E1DIAG_
+      #warning "Note: Auto-assigned Y2_DIAG_PIN to E1_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Y2_USE_ENDSTOP == _E2DIAG_
+      #warning "Note: Auto-assigned Y2_DIAG_PIN to E2_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Y2_USE_ENDSTOP == _E3DIAG_
+      #warning "Note: Auto-assigned Y2_DIAG_PIN to E3_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Y2_USE_ENDSTOP == _E4DIAG_
+      #warning "Note: Auto-assigned Y2_DIAG_PIN to E4_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Y2_USE_ENDSTOP == _E5DIAG_
+      #warning "Note: Auto-assigned Y2_DIAG_PIN to E5_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Y2_USE_ENDSTOP == _E6DIAG_
+      #warning "Note: Auto-assigned Y2_DIAG_PIN to E6_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Y2_USE_ENDSTOP == _E7DIAG_
+      #warning "Note: Auto-assigned Y2_DIAG_PIN to E7_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+>>>>>>> upstream/bugfix-2.0.x
     #endif
   #endif
   #if AUTO_ASSIGNED_Z2_STEPPER
@@ -235,6 +338,7 @@
     #warning "Note: Auto-assigned Z2_CS_PIN to an unused En_CS_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
   #endif
   #if AUTO_ASSIGNED_Z2_DIAG
+<<<<<<< HEAD
     #if Z2_USE_ENDSTOP == X_MIN_PIN
       #warning "Note: Auto-assigned Z2 sensorless endstop to X_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
     #elif Z2_STOP_PIN == X_MAX_PIN
@@ -269,6 +373,48 @@
       #warning "Note: Auto-assigned Z2 sensorless endstop to E6_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
     #elif Z2_STOP_PIN == E7_DIAG_PIN
       #warning "Note: Auto-assigned Z2 sensorless endstop to E7_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+=======
+    #if Z2_USE_ENDSTOP == _XMIN_
+      #warning "Note: Auto-assigned Z2_DIAG_PIN to X_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z2_USE_ENDSTOP == _XMAX_
+      #warning "Note: Auto-assigned Z2_DIAG_PIN to X_MAX_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z2_USE_ENDSTOP == _XSTOP_
+      #warning "Note: Auto-assigned Z2_DIAG_PIN to X_STOP_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z2_USE_ENDSTOP == _YMIN_
+      #warning "Note: Auto-assigned Z2_DIAG_PIN to Y_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z2_USE_ENDSTOP == _YMAX_
+      #warning "Note: Auto-assigned Z2_DIAG_PIN to Y_MAX_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z2_USE_ENDSTOP == _YSTOP_
+      #warning "Note: Auto-assigned Z2_DIAG_PIN to Y_STOP_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z2_USE_ENDSTOP == _ZMIN_
+      #warning "Note: Auto-assigned Z2_DIAG_PIN to Z_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z2_USE_ENDSTOP == _ZMAX_
+      #warning "Note: Auto-assigned Z2_DIAG_PIN to Z_MAX_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z2_USE_ENDSTOP == _ZSTOP_
+      #warning "Note: Auto-assigned Z2_DIAG_PIN to Z_STOP_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z2_USE_ENDSTOP == _XDIAG_
+      #warning "Note: Auto-assigned Z2_DIAG_PIN to X_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z2_USE_ENDSTOP == _YDIAG_
+      #warning "Note: Auto-assigned Z2_DIAG_PIN to Y_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z2_USE_ENDSTOP == _ZDIAG_
+      #warning "Note: Auto-assigned Z2_DIAG_PIN to Z_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z2_USE_ENDSTOP == _E0DIAG_
+      #warning "Note: Auto-assigned Z2_DIAG_PIN to E0_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z2_USE_ENDSTOP == _E1DIAG_
+      #warning "Note: Auto-assigned Z2_DIAG_PIN to E1_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z2_USE_ENDSTOP == _E2DIAG_
+      #warning "Note: Auto-assigned Z2_DIAG_PIN to E2_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z2_USE_ENDSTOP == _E3DIAG_
+      #warning "Note: Auto-assigned Z2_DIAG_PIN to E3_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z2_USE_ENDSTOP == _E4DIAG_
+      #warning "Note: Auto-assigned Z2_DIAG_PIN to E4_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z2_USE_ENDSTOP == _E5DIAG_
+      #warning "Note: Auto-assigned Z2_DIAG_PIN to E5_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z2_USE_ENDSTOP == _E6DIAG_
+      #warning "Note: Auto-assigned Z2_DIAG_PIN to E6_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z2_USE_ENDSTOP == _E7DIAG_
+      #warning "Note: Auto-assigned Z2_DIAG_PIN to E7_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+>>>>>>> upstream/bugfix-2.0.x
     #endif
   #endif
   #if AUTO_ASSIGNED_Z3_STEPPER
@@ -287,6 +433,7 @@
     #warning "Note: Auto-assigned Z3_MS3_PIN to an unused En_MS3_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
   #endif
   #if AUTO_ASSIGNED_Z3_DIAG
+<<<<<<< HEAD
     #if Z3_USE_ENDSTOP == X_MIN_PIN
       #warning "Note: Auto-assigned Z3 sensorless endstop to X_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
     #elif Z3_STOP_PIN == X_MAX_PIN
@@ -321,6 +468,48 @@
       #warning "Note: Auto-assigned Z3 sensorless endstop to E6_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
     #elif Z3_STOP_PIN == E7_DIAG_PIN
       #warning "Note: Auto-assigned Z3 sensorless endstop to E7_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+=======
+    #if Z3_USE_ENDSTOP == _XMIN_
+      #warning "Note: Auto-assigned Z3_DIAG_PIN to X_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z3_USE_ENDSTOP == _XMAX_
+      #warning "Note: Auto-assigned Z3_DIAG_PIN to X_MAX_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z3_USE_ENDSTOP == _XSTOP_
+      #warning "Note: Auto-assigned Z3_DIAG_PIN to X_STOP_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z3_USE_ENDSTOP == _YMIN_
+      #warning "Note: Auto-assigned Z3_DIAG_PIN to Y_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z3_USE_ENDSTOP == _YMAX_
+      #warning "Note: Auto-assigned Z3_DIAG_PIN to Y_MAX_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z3_USE_ENDSTOP == _YSTOP_
+      #warning "Note: Auto-assigned Z3_DIAG_PIN to Y_STOP_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z3_USE_ENDSTOP == _ZMIN_
+      #warning "Note: Auto-assigned Z3_DIAG_PIN to Z_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z3_USE_ENDSTOP == _ZMAX_
+      #warning "Note: Auto-assigned Z3_DIAG_PIN to Z_MAX_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z3_USE_ENDSTOP == _ZSTOP_
+      #warning "Note: Auto-assigned Z3_DIAG_PIN to Z_STOP_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z3_USE_ENDSTOP == _XDIAG_
+      #warning "Note: Auto-assigned Z3_DIAG_PIN to X_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z3_USE_ENDSTOP == _YDIAG_
+      #warning "Note: Auto-assigned Z3_DIAG_PIN to Y_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z3_USE_ENDSTOP == _ZDIAG_
+      #warning "Note: Auto-assigned Z3_DIAG_PIN to Z_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z3_USE_ENDSTOP == _E0DIAG_
+      #warning "Note: Auto-assigned Z3_DIAG_PIN to E0_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z3_USE_ENDSTOP == _E1DIAG_
+      #warning "Note: Auto-assigned Z3_DIAG_PIN to E1_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z3_USE_ENDSTOP == _E2DIAG_
+      #warning "Note: Auto-assigned Z3_DIAG_PIN to E2_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z3_USE_ENDSTOP == _E3DIAG_
+      #warning "Note: Auto-assigned Z3_DIAG_PIN to E3_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z3_USE_ENDSTOP == _E4DIAG_
+      #warning "Note: Auto-assigned Z3_DIAG_PIN to E4_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z3_USE_ENDSTOP == _E5DIAG_
+      #warning "Note: Auto-assigned Z3_DIAG_PIN to E5_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z3_USE_ENDSTOP == _E6DIAG_
+      #warning "Note: Auto-assigned Z3_DIAG_PIN to E6_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z3_USE_ENDSTOP == _E7DIAG_
+      #warning "Note: Auto-assigned Z3_DIAG_PIN to E7_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+>>>>>>> upstream/bugfix-2.0.x
     #endif
   #endif
   #if AUTO_ASSIGNED_Z4_STEPPER
@@ -339,6 +528,7 @@
     #warning "Note: Auto-assigned Z4_MS3_PIN to an unused En_MS3_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
   #endif
   #if AUTO_ASSIGNED_Z4_DIAG
+<<<<<<< HEAD
     #if Z4_USE_ENDSTOP == X_MIN_PIN
       #warning "Note: Auto-assigned Z4 sensorless endstop to X_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
     #elif Z4_STOP_PIN == X_MAX_PIN
@@ -373,6 +563,48 @@
       #warning "Note: Auto-assigned Z4 sensorless endstop to E6_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
     #elif Z4_STOP_PIN == E7_DIAG_PIN
       #warning "Note: Auto-assigned Z4 sensorless endstop to E7_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+=======
+    #if Z4_USE_ENDSTOP == _XMIN_
+      #warning "Note: Auto-assigned Z4_DIAG_PIN to X_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z4_USE_ENDSTOP == _XMAX_
+      #warning "Note: Auto-assigned Z4_DIAG_PIN to X_MAX_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z4_USE_ENDSTOP == _XSTOP_
+      #warning "Note: Auto-assigned Z4_DIAG_PIN to X_STOP_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z4_USE_ENDSTOP == _YMIN_
+      #warning "Note: Auto-assigned Z4_DIAG_PIN to Y_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z4_USE_ENDSTOP == _YMAX_
+      #warning "Note: Auto-assigned Z4_DIAG_PIN to Y_MAX_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z4_USE_ENDSTOP == _YSTOP_
+      #warning "Note: Auto-assigned Z4_DIAG_PIN to Y_STOP_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z4_USE_ENDSTOP == _ZMIN_
+      #warning "Note: Auto-assigned Z4_DIAG_PIN to Z_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z4_USE_ENDSTOP == _ZMAX_
+      #warning "Note: Auto-assigned Z4_DIAG_PIN to Z_MAX_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z4_USE_ENDSTOP == _ZSTOP_
+      #warning "Note: Auto-assigned Z4_DIAG_PIN to Z_STOP_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z4_USE_ENDSTOP == _XDIAG_
+      #warning "Note: Auto-assigned Z4_DIAG_PIN to X_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z4_USE_ENDSTOP == _YDIAG_
+      #warning "Note: Auto-assigned Z4_DIAG_PIN to Y_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z4_USE_ENDSTOP == _ZDIAG_
+      #warning "Note: Auto-assigned Z4_DIAG_PIN to Z_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z4_USE_ENDSTOP == _E0DIAG_
+      #warning "Note: Auto-assigned Z4_DIAG_PIN to E0_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z4_USE_ENDSTOP == _E1DIAG_
+      #warning "Note: Auto-assigned Z4_DIAG_PIN to E1_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z4_USE_ENDSTOP == _E2DIAG_
+      #warning "Note: Auto-assigned Z4_DIAG_PIN to E2_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z4_USE_ENDSTOP == _E3DIAG_
+      #warning "Note: Auto-assigned Z4_DIAG_PIN to E3_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z4_USE_ENDSTOP == _E4DIAG_
+      #warning "Note: Auto-assigned Z4_DIAG_PIN to E4_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z4_USE_ENDSTOP == _E5DIAG_
+      #warning "Note: Auto-assigned Z4_DIAG_PIN to E5_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z4_USE_ENDSTOP == _E6DIAG_
+      #warning "Note: Auto-assigned Z4_DIAG_PIN to E6_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif Z4_USE_ENDSTOP == _E7DIAG_
+      #warning "Note: Auto-assigned Z4_DIAG_PIN to E7_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+>>>>>>> upstream/bugfix-2.0.x
     #endif
   #endif
   #if AUTO_ASSIGNED_I_STEPPER
@@ -391,6 +623,7 @@
     #warning "Note: Auto-assigned I_MS3_PIN to an unused En_MS3_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
   #endif
   #if AUTO_ASSIGNED_I_DIAG
+<<<<<<< HEAD
     #if I_STOP_PIN == X_MIN_PIN
       #warning "Note: Auto-assigned I sensorless endstop to X_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
     #elif I_STOP_PIN == X_MAX_PIN
@@ -425,6 +658,48 @@
       #warning "Note: Auto-assigned I sensorless endstop to E6_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
     #elif I_STOP_PIN == E7_DIAG_PIN
       #warning "Note: Auto-assigned I sensorless endstop to E7_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+=======
+    #if I_USE_ENDSTOP == _XMIN_
+      #warning "Note: Auto-assigned I_DIAG_PIN to X_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif I_USE_ENDSTOP == _XMAX_
+      #warning "Note: Auto-assigned I_DIAG_PIN to X_MAX_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif I_USE_ENDSTOP == _XSTOP_
+      #warning "Note: Auto-assigned I_DIAG_PIN to X_STOP_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif I_USE_ENDSTOP == _YMIN_
+      #warning "Note: Auto-assigned I_DIAG_PIN to Y_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif I_USE_ENDSTOP == _YMAX_
+      #warning "Note: Auto-assigned I_DIAG_PIN to Y_MAX_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif I_USE_ENDSTOP == _YSTOP_
+      #warning "Note: Auto-assigned I_DIAG_PIN to Y_STOP_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif I_USE_ENDSTOP == _ZMIN_
+      #warning "Note: Auto-assigned I_DIAG_PIN to Z_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif I_USE_ENDSTOP == _ZMAX_
+      #warning "Note: Auto-assigned I_DIAG_PIN to Z_MAX_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif I_USE_ENDSTOP == _ZSTOP_
+      #warning "Note: Auto-assigned I_DIAG_PIN to Z_STOP_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif I_USE_ENDSTOP == _XDIAG_
+      #warning "Note: Auto-assigned I_DIAG_PIN to X_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif I_USE_ENDSTOP == _YDIAG_
+      #warning "Note: Auto-assigned I_DIAG_PIN to Y_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif I_USE_ENDSTOP == _ZDIAG_
+      #warning "Note: Auto-assigned I_DIAG_PIN to Z_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif I_USE_ENDSTOP == _E0DIAG_
+      #warning "Note: Auto-assigned I_DIAG_PIN to E0_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif I_USE_ENDSTOP == _E1DIAG_
+      #warning "Note: Auto-assigned I_DIAG_PIN to E1_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif I_USE_ENDSTOP == _E2DIAG_
+      #warning "Note: Auto-assigned I_DIAG_PIN to E2_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif I_USE_ENDSTOP == _E3DIAG_
+      #warning "Note: Auto-assigned I_DIAG_PIN to E3_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif I_USE_ENDSTOP == _E4DIAG_
+      #warning "Note: Auto-assigned I_DIAG_PIN to E4_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif I_USE_ENDSTOP == _E5DIAG_
+      #warning "Note: Auto-assigned I_DIAG_PIN to E5_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif I_USE_ENDSTOP == _E6DIAG_
+      #warning "Note: Auto-assigned I_DIAG_PIN to E6_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif I_USE_ENDSTOP == _E7DIAG_
+      #warning "Note: Auto-assigned I_DIAG_PIN to E7_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+>>>>>>> upstream/bugfix-2.0.x
     #endif
   #endif
   #if AUTO_ASSIGNED_J_STEPPER
@@ -443,6 +718,7 @@
     #warning "Note: Auto-assigned J_MS3_PIN to an unused En_MS3_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
   #endif
   #if AUTO_ASSIGNED_J_DIAG
+<<<<<<< HEAD
     #if J_STOP_PIN == X_MIN_PIN
       #warning "Note: Auto-assigned J sensorless endstop to X_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
     #elif J_STOP_PIN == X_MAX_PIN
@@ -477,6 +753,48 @@
       #warning "Note: Auto-assigned J sensorless endstop to E6_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
     #elif J_STOP_PIN == E7_DIAG_PIN
       #warning "Note: Auto-assigned J sensorless endstop to E7_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+=======
+    #if J_USE_ENDSTOP == _XMIN_
+      #warning "Note: Auto-assigned J_DIAG_PIN to X_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif J_USE_ENDSTOP == _XMAX_
+      #warning "Note: Auto-assigned J_DIAG_PIN to X_MAX_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif J_USE_ENDSTOP == _XSTOP_
+      #warning "Note: Auto-assigned J_DIAG_PIN to X_STOP_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif J_USE_ENDSTOP == _YMIN_
+      #warning "Note: Auto-assigned J_DIAG_PIN to Y_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif J_USE_ENDSTOP == _YMAX_
+      #warning "Note: Auto-assigned J_DIAG_PIN to Y_MAX_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif J_USE_ENDSTOP == _YSTOP_
+      #warning "Note: Auto-assigned J_DIAG_PIN to Y_STOP_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif J_USE_ENDSTOP == _ZMIN_
+      #warning "Note: Auto-assigned J_DIAG_PIN to Z_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif J_USE_ENDSTOP == _ZMAX_
+      #warning "Note: Auto-assigned J_DIAG_PIN to Z_MAX_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif J_USE_ENDSTOP == _ZSTOP_
+      #warning "Note: Auto-assigned J_DIAG_PIN to Z_STOP_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif J_USE_ENDSTOP == _XDIAG_
+      #warning "Note: Auto-assigned J_DIAG_PIN to X_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif J_USE_ENDSTOP == _YDIAG_
+      #warning "Note: Auto-assigned J_DIAG_PIN to Y_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif J_USE_ENDSTOP == _ZDIAG_
+      #warning "Note: Auto-assigned J_DIAG_PIN to Z_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif J_USE_ENDSTOP == _E0DIAG_
+      #warning "Note: Auto-assigned J_DIAG_PIN to E0_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif J_USE_ENDSTOP == _E1DIAG_
+      #warning "Note: Auto-assigned J_DIAG_PIN to E1_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif J_USE_ENDSTOP == _E2DIAG_
+      #warning "Note: Auto-assigned J_DIAG_PIN to E2_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif J_USE_ENDSTOP == _E3DIAG_
+      #warning "Note: Auto-assigned J_DIAG_PIN to E3_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif J_USE_ENDSTOP == _E4DIAG_
+      #warning "Note: Auto-assigned J_DIAG_PIN to E4_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif J_USE_ENDSTOP == _E5DIAG_
+      #warning "Note: Auto-assigned J_DIAG_PIN to E5_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif J_USE_ENDSTOP == _E6DIAG_
+      #warning "Note: Auto-assigned J_DIAG_PIN to E6_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif J_USE_ENDSTOP == _E7DIAG_
+      #warning "Note: Auto-assigned J_DIAG_PIN to E7_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+>>>>>>> upstream/bugfix-2.0.x
     #endif
   #endif
   #if AUTO_ASSIGNED_K_STEPPER
@@ -495,6 +813,7 @@
     #warning "Note: Auto-assigned K_MS3_PIN to an unused En_MS3_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
   #endif
   #if AUTO_ASSIGNED_K_DIAG
+<<<<<<< HEAD
     #if K_STOP_PIN == X_MIN_PIN
       #warning "Note: Auto-assigned K sensorless endstop to X_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
     #elif K_STOP_PIN == X_MAX_PIN
@@ -668,6 +987,48 @@
       #warning "Note: Auto-assigned W sensorless endstop to E6_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
     #elif W_STOP_PIN == E7_DIAG_PIN
       #warning "Note: Auto-assigned W sensorless endstop to E7_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+=======
+    #if K_USE_ENDSTOP == _XMIN_
+      #warning "Note: Auto-assigned K_DIAG_PIN to X_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif K_USE_ENDSTOP == _XMAX_
+      #warning "Note: Auto-assigned K_DIAG_PIN to X_MAX_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif K_USE_ENDSTOP == _XSTOP_
+      #warning "Note: Auto-assigned K_DIAG_PIN to X_STOP_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif K_USE_ENDSTOP == _YMIN_
+      #warning "Note: Auto-assigned K_DIAG_PIN to Y_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif K_USE_ENDSTOP == _YMAX_
+      #warning "Note: Auto-assigned K_DIAG_PIN to Y_MAX_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif K_USE_ENDSTOP == _YSTOP_
+      #warning "Note: Auto-assigned K_DIAG_PIN to Y_STOP_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif K_USE_ENDSTOP == _ZMIN_
+      #warning "Note: Auto-assigned K_DIAG_PIN to Z_MIN_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif K_USE_ENDSTOP == _ZMAX_
+      #warning "Note: Auto-assigned K_DIAG_PIN to Z_MAX_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif K_USE_ENDSTOP == _ZSTOP_
+      #warning "Note: Auto-assigned K_DIAG_PIN to Z_STOP_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif K_USE_ENDSTOP == _XDIAG_
+      #warning "Note: Auto-assigned K_DIAG_PIN to X_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif K_USE_ENDSTOP == _YDIAG_
+      #warning "Note: Auto-assigned K_DIAG_PIN to Y_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif K_USE_ENDSTOP == _ZDIAG_
+      #warning "Note: Auto-assigned K_DIAG_PIN to Z_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif K_USE_ENDSTOP == _E0DIAG_
+      #warning "Note: Auto-assigned K_DIAG_PIN to E0_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif K_USE_ENDSTOP == _E1DIAG_
+      #warning "Note: Auto-assigned K_DIAG_PIN to E1_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif K_USE_ENDSTOP == _E2DIAG_
+      #warning "Note: Auto-assigned K_DIAG_PIN to E2_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif K_USE_ENDSTOP == _E3DIAG_
+      #warning "Note: Auto-assigned K_DIAG_PIN to E3_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif K_USE_ENDSTOP == _E4DIAG_
+      #warning "Note: Auto-assigned K_DIAG_PIN to E4_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif K_USE_ENDSTOP == _E5DIAG_
+      #warning "Note: Auto-assigned K_DIAG_PIN to E5_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif K_USE_ENDSTOP == _E6DIAG_
+      #warning "Note: Auto-assigned K_DIAG_PIN to E6_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+    #elif K_USE_ENDSTOP == _E7DIAG_
+      #warning "Note: Auto-assigned K_DIAG_PIN to E7_DIAG_PIN. (Define NO_AUTO_ASSIGN_WARNING to suppress this warning.)"
+>>>>>>> upstream/bugfix-2.0.x
     #endif
   #endif
 
@@ -681,6 +1042,7 @@
   #warning "Don't forget to update your TFT settings in Configuration.h."
 #endif
 
+<<<<<<< HEAD
 #if ENABLED(EMIT_CREALITY_422_WARNING) && DISABLED(NO_CREALITY_422_DRIVER_WARNING)
   // Driver labels: A=TMC2208, B=TMC2209, C=HR4988, E=A4988, H=TMC2225, H8=HR4988
   #warning "Creality 4.2.2 boards come with a variety of stepper drivers. Check the board label (typically on SD Card module) and set the correct *_DRIVER_TYPE! (A/H: TMC2208_STANDALONE  B: TMC2209_STANDALONE  C/E/H8: A4988). (Define NO_CREALITY_422_DRIVER_WARNING to suppress this warning.)"
@@ -700,30 +1062,58 @@
 
 #if ENABLED(BIQU_MICROPROBE_V2) && NONE(Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN, NO_MICROPROBE_WARNING)
   #warning "BIQU MicroProbe V2 detect signal requires a strong pull-up. Some processors have weak internal pull-up capabilities, so we recommended connecting MicroProbe SIGNAL / GND to Z-MIN / Z-STOP instead of the dedicated PROBE port. (Define NO_MICROPROBE_WARNING to suppress this warning.)"
+=======
+// Ender 3 Pro (but, apparently all Creality 4.2.2 boards)
+#if ENABLED(EMIT_CREALITY_422_WARNING) || MB(CREALITY_V4)
+  #warning "Creality 4.2.2 boards come with a variety of stepper drivers. Check the board label and set the correct *_DRIVER_TYPE! (C=HR4988, E=A4988, A=TMC2208, B=TMC2209, H=TMC2225)."
+#endif
+
+#if PRINTCOUNTER_SYNC
+  #warning "To prevent step loss, motion will pause for PRINTCOUNTER auto-save."
+#endif
+
+#if HOMING_Z_WITH_PROBE && IS_CARTESIAN && DISABLED(Z_SAFE_HOMING)
+  #error "Z_SAFE_HOMING is recommended when homing with a probe. Enable Z_SAFE_HOMING or comment out this line to continue."
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 //
 // Warn users of potential endstop/DIAG pin conflicts to prevent homing issues when not using sensorless homing
 //
+<<<<<<< HEAD
 #if !USE_SENSORLESS && HAS_DIAG_PINS
   #if ENABLED(USES_DIAG_JUMPERS) && DISABLED(DIAG_JUMPERS_REMOVED)
     #warning "Motherboard DIAG jumpers must be removed when SENSORLESS_HOMING is disabled. (Define DIAG_JUMPERS_REMOVED to suppress this warning.)"
   #endif
   #if ENABLED(USES_DIAG_PINS) && DISABLED(DIAG_PINS_REMOVED)
+=======
+#if !USE_SENSORLESS
+  #if ENABLED(USES_DIAG_JUMPERS) && DISABLED(DIAG_JUMPERS_REMOVED)
+    #warning "Motherboard DIAG jumpers must be removed when SENSORLESS_HOMING is disabled. (Define DIAG_JUMPERS_REMOVED to suppress this warning.)"
+  #elif ENABLED(USES_DIAG_PINS) && DISABLED(DIAG_PINS_REMOVED)
+>>>>>>> upstream/bugfix-2.0.x
     #warning "Driver DIAG pins must be physically removed unless SENSORLESS_HOMING is enabled. (See https://bit.ly/2ZPRlt0) (Define DIAG_PINS_REMOVED to suppress this warning.)"
   #endif
 #endif
 
+<<<<<<< HEAD
 #if ENABLED(QUICK_HOME) && (X_SPI_SENSORLESS || Y_SPI_SENSORLESS)
   #warning "SPI_ENDSTOPS may be unreliable with QUICK_HOME. Adjust back-offs for better results."
 #endif
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #if CANNOT_EMBED_CONFIGURATION
   #warning "Disabled CONFIGURATION_EMBEDDING because the target usually has less flash storage. Define FORCE_CONFIG_EMBED to override."
 #endif
 
+<<<<<<< HEAD
 #if HAS_LCD_CONTRAST && LCD_CONTRAST_MIN >= LCD_CONTRAST_MAX && DISABLED(NO_LCD_CONTRAST_WARNING)
   #warning "Contrast cannot be changed when LCD_CONTRAST_MIN >= LCD_CONTRAST_MAX. (Define NO_LCD_CONTRAST_WARNING to suppress this warning.)"
+=======
+#if HAS_LCD_CONTRAST && LCD_CONTRAST_MIN >= LCD_CONTRAST_MAX
+  #warning "Contrast cannot be changed when LCD_CONTRAST_MIN >= LCD_CONTRAST_MAX."
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #if PROGRESS_MSG_EXPIRE > 0 && HAS_STATUS_MESSAGE_TIMEOUT
@@ -731,6 +1121,7 @@
 #endif
 
 /**
+<<<<<<< HEAD
  * FYSETC/MKS/BTT/BEEZ Mini Panel backlighting
  */
 #if ANY(FYSETC_242_OLED_12864, FYSETC_MINI_12864_2_1) && !ALL(NEOPIXEL_LED, LED_CONTROL_MENU, LED_USER_PRESET_STARTUP, LED_COLOR_PRESETS)
@@ -744,13 +1135,32 @@
 #endif
 
 #if ANY(FYSETC_242_OLED_12864, FYSETC_MINI_12864) && ALL(PSU_CONTROL, HAS_COLOR_LEDS) && !LED_POWEROFF_TIMEOUT
+=======
+ * FYSETC/MKS/BTT Mini Panel backlighting
+ */
+#if EITHER(FYSETC_242_OLED_12864, FYSETC_MINI_12864_2_1) && !ALL(NEOPIXEL_LED, LED_CONTROL_MENU, LED_USER_PRESET_STARTUP, LED_COLOR_PRESETS)
+  #warning "Your FYSETC/MKS/BTT Mini Panel works best with NEOPIXEL_LED, LED_CONTROL_MENU, LED_USER_PRESET_STARTUP, and LED_COLOR_PRESETS."
+#endif
+
+#if EITHER(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0) && DISABLED(RGB_LED)
+  #warning "Your FYSETC Mini Panel works best with RGB_LED."
+#elif EITHER(FYSETC_MINI_12864_2_0, FYSETC_MINI_12864_2_1) && DISABLED(LED_USER_PRESET_STARTUP)
+  #warning "Your FYSETC Mini Panel works best with LED_USER_PRESET_STARTUP."
+#endif
+
+#if EITHER(FYSETC_242_OLED_12864, FYSETC_MINI_12864) && BOTH(PSU_CONTROL, HAS_COLOR_LEDS) && !LED_POWEROFF_TIMEOUT
+>>>>>>> upstream/bugfix-2.0.x
   #warning "Your FYSETC display with PSU_CONTROL works best with LED_POWEROFF_TIMEOUT."
 #endif
 
 /**
  * Maple environment
  */
+<<<<<<< HEAD
 #if defined(__STM32F1__) && DISABLED(NO_MAPLE_WARNING)
+=======
+#ifdef __STM32F1__
+>>>>>>> upstream/bugfix-2.0.x
   #warning "Maple build environments are deprecated. Please use a non-Maple build environment. Report issues to the Marlin Firmware project."
 #endif
 
@@ -760,6 +1170,7 @@
 #if MB(BTT_BTT002_V1_0, EINSY_RAMBO) && DISABLED(NO_MK3_FAN_PINS_WARNING)
   #warning "Define MK3_FAN_PINS to swap hotend and part cooling fan pins. (Define NO_MK3_FAN_PINS_WARNING to suppress this warning.)"
 #endif
+<<<<<<< HEAD
 
 /**
  * GD32 is not exactly like STM32
@@ -880,3 +1291,5 @@
 #if defined(ARDUINO_ARCH_HC32) && F_CPU == 200000000
   #warning "HC32 clock is assumed to be 200MHz. If this isn't the case for your board please submit a report so we can add support."
 #endif
+=======
+>>>>>>> upstream/bugfix-2.0.x

@@ -1,6 +1,10 @@
 /**
  * Marlin 3D Printer Firmware
+<<<<<<<< HEAD:Marlin/tests/feature/test_runout.cpp
  * Copyright (c) 2024 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+========
+ * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/gcode/lcd/M256.cpp
  *
  * Based on Sprinter and grbl.
  * Copyright (c) 2011 Camiel Gubbels / Erik van der Zalm
@@ -19,6 +23,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
+<<<<<<<< HEAD:Marlin/tests/feature/test_runout.cpp
 
 #include "../test/unit_tests.h"
 
@@ -34,3 +39,28 @@ MARLIN_TEST(runout, poll_runout_states) {
 }
 
 #endif
+========
+#include "../../inc/MarlinConfig.h"
+
+#if HAS_LCD_BRIGHTNESS
+
+#include "../gcode.h"
+#include "../../lcd/marlinui.h"
+
+/**
+ * M256: Set the LCD brightness
+ */
+void GcodeSuite::M256() {
+  if (parser.seenval('B'))
+    ui.set_brightness(parser.value_int());
+  else
+    M256_report();
+}
+
+void GcodeSuite::M256_report(const bool forReplay/*=true*/) {
+  report_heading_etc(forReplay, F(STR_LCD_BRIGHTNESS));
+  SERIAL_ECHOLNPGM("  M256 B", ui.brightness);
+}
+
+#endif // HAS_LCD_BRIGHTNESS
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/gcode/lcd/M256.cpp

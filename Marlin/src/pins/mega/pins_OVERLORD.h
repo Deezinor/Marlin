@@ -121,7 +121,10 @@
 //
 // LCD / Controller
 //
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #if HAS_WIRED_LCD
   // OVERLORD OLED pins
   #define LCD_PINS_RS                         20

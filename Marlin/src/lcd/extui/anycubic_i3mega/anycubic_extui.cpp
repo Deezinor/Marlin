@@ -35,6 +35,7 @@
 
 namespace ExtUI {
 
+<<<<<<< HEAD
   void onStartup()        { anycubicTFT.onSetup(); }
   void onIdle()           { anycubicTFT.onCommandScan(); }
   void onPrinterKilled(FSTR_P const error, FSTR_P const component) { anycubicTFT.onKillTFT(); }
@@ -77,11 +78,30 @@ namespace ExtUI {
     }
   #endif
 
+=======
+  void onStartup()        { AnycubicTFT.OnSetup(); }
+  void onIdle()           { AnycubicTFT.OnCommandScan(); }
+  void onPrinterKilled(FSTR_P const error, FSTR_P const component) { AnycubicTFT.OnKillTFT(); }
+  void onMediaInserted()  { AnycubicTFT.OnSDCardStateChange(true); }
+  void onMediaError()     { AnycubicTFT.OnSDCardError(); }
+  void onMediaRemoved()   { AnycubicTFT.OnSDCardStateChange(false); }
+  void onPlayTone(const uint16_t frequency, const uint16_t duration) {
+    TERN_(SPEAKER, ::tone(BEEPER_PIN, frequency, duration));
+  }
+  void onPrintTimerStarted()  { AnycubicTFT.OnPrintTimerStarted(); }
+  void onPrintTimerPaused()   { AnycubicTFT.OnPrintTimerPaused(); }
+  void onPrintTimerStopped()  { AnycubicTFT.OnPrintTimerStopped(); }
+  void onFilamentRunout(const extruder_t extruder)   { AnycubicTFT.OnFilamentRunout(); }
+  void onUserConfirmRequired(const char * const msg) { AnycubicTFT.OnUserConfirmRequired(msg); }
+>>>>>>> upstream/bugfix-2.0.x
   void onStatusChanged(const char * const msg) {}
 
   void onHomingStart() {}
   void onHomingDone() {}
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
   void onPrintDone() {}
 
   void onFactoryReset() {}
@@ -110,16 +130,25 @@ namespace ExtUI {
     // Called after loading or resetting stored settings
   }
 
+<<<<<<< HEAD
   void onSettingsStored(const bool success) {
+=======
+  void onSettingsStored(bool success) {
+>>>>>>> upstream/bugfix-2.0.x
     // Called after the entire EEPROM has been written,
     // whether successful or not.
   }
 
+<<<<<<< HEAD
   void onSettingsLoaded(const bool success) {
+=======
+  void onSettingsLoaded(bool success) {
+>>>>>>> upstream/bugfix-2.0.x
     // Called after the entire EEPROM has been read,
     // whether successful or not.
   }
 
+<<<<<<< HEAD
   #if HAS_LEVELING
     void onLevelingStart() {}
     void onLevelingDone() {}
@@ -129,6 +158,13 @@ namespace ExtUI {
   #endif
 
   #if HAS_MESH
+=======
+  #if HAS_MESH
+
+    void onLevelingStart() {}
+    void onLevelingDone() {}
+
+>>>>>>> upstream/bugfix-2.0.x
     void onMeshUpdate(const int8_t xpos, const int8_t ypos, const_float_t zval) {
       // Called when any mesh points are updated
     }
@@ -138,6 +174,7 @@ namespace ExtUI {
     }
   #endif
 
+<<<<<<< HEAD
   #if ENABLED(PREVENT_COLD_EXTRUSION)
     void onSetMinExtrusionTemp(const celsius_t) {}
   #endif
@@ -149,12 +186,16 @@ namespace ExtUI {
     void onPowerLoss() {
       // Called when power-loss state is detected
     }
+=======
+  #if ENABLED(POWER_LOSS_RECOVERY)
+>>>>>>> upstream/bugfix-2.0.x
     void onPowerLossResume() {
       // Called on resume from power-loss
     }
   #endif
 
   #if HAS_PID_HEATING
+<<<<<<< HEAD
     void onPIDTuning(const pidresult_t rst) {
       // Called for temperature PID tuning result
     }
@@ -177,6 +218,15 @@ namespace ExtUI {
   void onSteppersEnabled() {}
   void onAxisDisabled(const axis_t) {}
   void onAxisEnabled(const axis_t) {}
+=======
+    void onPidTuning(const result_t rst) {
+      // Called for temperature PID tuning result
+    }
+  #endif
+
+  void onSteppersDisabled() {}
+  void onSteppersEnabled()  {}
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 #endif // ANYCUBIC_LCD_I3MEGA

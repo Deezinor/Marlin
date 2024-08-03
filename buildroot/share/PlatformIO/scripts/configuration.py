@@ -1,9 +1,16 @@
+<<<<<<< HEAD
 #!/usr/bin/env python3
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #
 # configuration.py
 # Apply options from config.ini to the existing Configuration headers
 #
+<<<<<<< HEAD
 import re, shutil, configparser, datetime
+=======
+import re, shutil, configparser
+>>>>>>> upstream/bugfix-2.0.x
 from pathlib import Path
 
 verbose = 0
@@ -11,7 +18,11 @@ def blab(str,level=1):
     if verbose >= level: print(f"[config] {str}")
 
 def config_path(cpath):
+<<<<<<< HEAD
     return Path("Marlin", cpath)
+=======
+    return Path("Marlin", cpath, encoding='utf-8')
+>>>>>>> upstream/bugfix-2.0.x
 
 # Apply a single name = on/off ; name = value ; etc.
 # TODO: Limit to the given (optional) configuration
@@ -19,6 +30,7 @@ def apply_opt(name, val, conf=None):
     if name == "lcd": name, val = val, "on"
 
     # Create a regex to match the option and capture parts of the line
+<<<<<<< HEAD
     # 1: Indentation
     # 2: Comment
     # 3: #define and whitespace
@@ -29,6 +41,9 @@ def apply_opt(name, val, conf=None):
     # 8: Whitespace after value
     # 9: End comment
     regex = re.compile(rf'^(\s*)(//\s*)?(#define\s+)({name}\b)(\s?)(\s*)(.*?)(\s*)(//.*)?$', re.IGNORECASE)
+=======
+    regex = re.compile(rf'^(\s*)(//\s*)?(#define\s+)({name}\b)(\s*)(.*?)(\s*)(//.*)?$', re.IGNORECASE)
+>>>>>>> upstream/bugfix-2.0.x
 
     # Find and enable and/or update all matches
     for file in ("Configuration.h", "Configuration_adv.h"):
@@ -44,6 +59,7 @@ def apply_opt(name, val, conf=None):
                 if val in ("on", "", None):
                     newline = re.sub(r'^(\s*)//+\s*(#define)(\s{1,3})?(\s*)', r'\1\2 \4', line)
                 elif val == "off":
+<<<<<<< HEAD
                     # TODO: Comment more lines in a multi-line define with \ continuation
                     newline = re.sub(r'^(\s*)(#define)(\s{1,3})?(\s*)', r'\1//\2 \4', line)
                 else:
@@ -53,6 +69,15 @@ def apply_opt(name, val, conf=None):
                     if match[9]:
                         sp = match[8] if match[8] else ' '
                         newline += sp + match[9]
+=======
+                    newline = re.sub(r'^(\s*)(#define)(\s{1,3})?(\s*)', r'\1//\2 \4', line)
+                else:
+                    # For options with values, enable and set the value
+                    newline = match[1] + match[3] + match[4] + match[5] + val
+                    if match[8]:
+                        sp = match[7] if match[7] else ' '
+                        newline += sp + match[8]
+>>>>>>> upstream/bugfix-2.0.x
                 lines[i] = newline
                 blab(f"Set {name} to {val}")
 
@@ -90,6 +115,7 @@ def apply_opt(name, val, conf=None):
                 elif not isdef:
                     break
                 linenum += 1
+<<<<<<< HEAD
             currtime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             lines.insert(linenum, f"{prefix}#define {added:30} // Added by config.ini {currtime}\n")
             fullpath.write_text(''.join(lines), encoding='utf-8')
@@ -122,6 +148,11 @@ def disable_all_options():
         if found:
             fullpath.write_text('\n'.join(lines), encoding='utf-8')
 
+=======
+            lines.insert(linenum, f"{prefix}#define {added:30} // Added by config.ini\n")
+            fullpath.write_text(''.join(lines), encoding='utf-8')
+
+>>>>>>> upstream/bugfix-2.0.x
 # Fetch configuration files from GitHub given the path.
 # Return True if any files were fetched.
 def fetch_example(url):
@@ -161,7 +192,11 @@ def fetch_example(url):
 def section_items(cp, sectkey):
     return cp.items(sectkey) if sectkey in cp.sections() else []
 
+<<<<<<< HEAD
 # Apply all items from a config section. Ignore ini_ items outside of config:base and config:root.
+=======
+# Apply all items from a config section
+>>>>>>> upstream/bugfix-2.0.x
 def apply_ini_by_name(cp, sect):
     iniok = True
     if sect in ('config:base', 'config:root'):
@@ -223,9 +258,15 @@ def apply_config_ini(cp):
             sect = 'base'
             if '@' in ckey: sect, ckey = map(str.strip, ckey.split('@'))
             cp2 = configparser.ConfigParser()
+<<<<<<< HEAD
             cp2.read(config_path(ckey), encoding='utf-8')
             apply_sections(cp2, sect)
             ckey = 'base'
+=======
+            cp2.read(config_path(ckey))
+            apply_sections(cp2, sect)
+            ckey = 'base';
+>>>>>>> upstream/bugfix-2.0.x
 
         # (Allow 'example/' as a shortcut for 'examples/')
         elif ckey.startswith('example/'):
@@ -237,6 +278,7 @@ def apply_config_ini(cp):
             fetch_example(ckey)
             ckey = 'base'
 
+<<<<<<< HEAD
         #
         # [flatten] Write out Configuration.h and Configuration_adv.h files with
         #           just the enabled options and all other content removed.
@@ -248,6 +290,9 @@ def apply_config_ini(cp):
             disable_all_options()
 
         elif ckey == 'all':
+=======
+        if ckey == 'all':
+>>>>>>> upstream/bugfix-2.0.x
             apply_sections(cp)
 
         else:
@@ -270,7 +315,11 @@ if __name__ == "__main__":
 
     if ini_file:
         user_ini = configparser.ConfigParser()
+<<<<<<< HEAD
         user_ini.read(ini_file, encoding='utf-8')
+=======
+        user_ini.read(ini_file)
+>>>>>>> upstream/bugfix-2.0.x
         apply_config_ini(user_ini)
 
 else:
@@ -279,8 +328,16 @@ else:
     #
     import pioutil
     if pioutil.is_pio_build():
+<<<<<<< HEAD
         try:
             verbose = int(pioutil.env.GetProjectOption('custom_verbose'))
+=======
+
+        Import("env")
+
+        try:
+            verbose = int(env.GetProjectOption('custom_verbose'))
+>>>>>>> upstream/bugfix-2.0.x
         except:
             pass
 

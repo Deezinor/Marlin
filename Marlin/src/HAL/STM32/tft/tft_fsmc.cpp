@@ -37,9 +37,15 @@ LCD_CONTROLLER_TypeDef *TFT_FSMC::LCD;
 
 void TFT_FSMC::init() {
   uint32_t controllerAddress;
+<<<<<<< HEAD
   FMC_OR_FSMC(NORSRAM_TimingTypeDef) timing, extTiming;
 
   uint32_t nsBank = (uint32_t)pinmap_peripheral(digitalPinToPinName(TFT_CS_PIN), pinMap_FSMC_CS);
+=======
+  FSMC_NORSRAM_TimingTypeDef Timing, ExtTiming;
+
+  uint32_t NSBank = (uint32_t)pinmap_peripheral(digitalPinToPinName(TFT_CS_PIN), PinMap_FSMC_CS);
+>>>>>>> upstream/bugfix-2.0.x
 
   // Perform the SRAM1 memory initialization sequence
   SRAMx.Instance = FMC_OR_FSMC(NORSRAM_DEVICE);

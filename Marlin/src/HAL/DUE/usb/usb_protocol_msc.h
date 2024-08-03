@@ -124,10 +124,17 @@ struct usb_msc_cbw {
  */
 //@{
 struct usb_msc_csw {
+<<<<<<< HEAD
   le32_t dCSWSignature; //!< Must contain 'USBS'
   le32_t dCSWTag; //!< Same as dCBWTag
   le32_t dCSWDataResidue; //!< Number of bytes not transferred
   uint8_t bCSWStatus; //!< Status code
+=======
+	le32_t dCSWSignature;	//!< Must contain 'USBS'
+	le32_t dCSWTag;	//!< Same as dCBWTag
+	le32_t dCSWDataResidue;	//!< Number of bytes not transferred
+	uint8_t bCSWStatus;	//!< Status code
+>>>>>>> upstream/bugfix-2.0.x
 };
 
 #define USB_CSW_SIGNATURE           0x55534253  //!< dCSWSignature value

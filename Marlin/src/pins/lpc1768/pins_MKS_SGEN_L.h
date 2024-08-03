@@ -23,7 +23,10 @@
 
 /**
  * Makerbase MKS SGEN-L pin assignments
+<<<<<<< HEAD
  * Schematic: https://github.com/makerbase-mks/SGEN_L/blob/master/Hardware/MKS%20SGEN_L%20V1.0_001/MKS%20SGEN_L%20V1.0_001%20SCH.pdf
+=======
+>>>>>>> upstream/bugfix-2.0.x
  */
 
 #include "env_validate.h"
@@ -232,6 +235,15 @@
 #endif
 
 //
+// Power Supply Control
+//
+#if ENABLED(MKS_PWC)
+  #define PS_ON_PIN                        P2_00  // SERVO1
+  #define KILL_PIN                         P1_24  // Z+
+  #define KILL_PIN_STATE                    HIGH
+#endif
+
+//
 // Misc. Functions
 //
 #define LED_PIN                            P1_18  // Used as a status indicator
@@ -296,13 +308,22 @@
     #define BTN_EN1                  EXP1_03_PIN
     #define BTN_EN2                  EXP1_05_PIN
 
+<<<<<<< HEAD
     #define LCD_PINS_EN              EXP1_08_PIN
+=======
+    #define LCD_PINS_ENABLE          EXP1_08_PIN
+>>>>>>> upstream/bugfix-2.0.x
     #define LCD_PINS_D4              EXP1_06_PIN
 
   #elif HAS_SPI_TFT                               // Config for Classic UI (emulated DOGM) and Color UI
     #define TFT_CS_PIN               EXP1_07_PIN
+<<<<<<< HEAD
     #define TFT_DC_PIN               EXP1_08_PIN
     #define TFT_A0_PIN                TFT_DC_PIN
+=======
+    #define TFT_A0_PIN               EXP1_08_PIN
+    #define TFT_DC_PIN               EXP1_08_PIN
+>>>>>>> upstream/bugfix-2.0.x
     #define TFT_MISO_PIN             EXP2_01_PIN
     #define TFT_BACKLIGHT_PIN        EXP1_03_PIN
     #define TFT_RESET_PIN            EXP1_04_PIN
@@ -360,7 +381,11 @@
 
       #define LCD_PINS_RS            EXP1_04_PIN
 
+<<<<<<< HEAD
       #define LCD_PINS_EN            EXP1_03_PIN
+=======
+      #define LCD_PINS_ENABLE        EXP1_03_PIN
+>>>>>>> upstream/bugfix-2.0.x
       #define LCD_PINS_D4            EXP1_05_PIN
 
       #if ENABLED(FYSETC_MINI_12864)

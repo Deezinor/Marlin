@@ -174,11 +174,19 @@ bool BedMeshEditScreen::onTouchEnd(uint8_t tag) {
     case 1:
       // On Cancel, reload saved mesh, discarding changes
       GOTO_PREVIOUS();
+<<<<<<< HEAD
       injectCommands(F(TERN(AUTO_BED_LEVELING_UBL, "G29 L1", "M501")));
       return true;
     case 2:
       saveAdjustedHighlightedValue();
       injectCommands(F(TERN(AUTO_BED_LEVELING_UBL, "G29 S1", "M500")));
+=======
+      injectCommands(F("G29 L1"));
+      return true;
+    case 2:
+      saveAdjustedHighlightedValue();
+      injectCommands(F("G29 S1"));
+>>>>>>> upstream/bugfix-2.0.x
       mydata.needSave = false;
       return true;
     case 3:
@@ -191,7 +199,11 @@ bool BedMeshEditScreen::onTouchEnd(uint8_t tag) {
 
 void BedMeshEditScreen::show() {
   // On entry, always home (to account for possible Z offset changes) and save current mesh
+<<<<<<< HEAD
   SpinnerDialogBox::enqueueAndWait(F("G28\n" TERN(AUTO_BED_LEVELING_UBL, "G29 S1", "M500")));
+=======
+  SpinnerDialogBox::enqueueAndWait(F("G28\nG29 S1"));
+>>>>>>> upstream/bugfix-2.0.x
   // After the spinner, go to this screen.
   current_screen.forget();
   PUSH_SCREEN(BedMeshEditScreen);

@@ -28,11 +28,18 @@
  */
 void GcodeSuite::M111() {
   if (parser.seenval('S')) marlin_debug_flags = parser.value_byte();
+<<<<<<< HEAD
   #if ENABLED(DEBUG_FLAGS_GCODE)
     static PGMSTR(str_debug_1, STR_DEBUG_ECHO);
     static PGMSTR(str_debug_2, STR_DEBUG_INFO);
     static PGMSTR(str_debug_4, STR_DEBUG_ERRORS);
   #endif
+=======
+
+  static PGMSTR(str_debug_1, STR_DEBUG_ECHO);
+  static PGMSTR(str_debug_2, STR_DEBUG_INFO);
+  static PGMSTR(str_debug_4, STR_DEBUG_ERRORS);
+>>>>>>> upstream/bugfix-2.0.x
   static PGMSTR(str_debug_8, STR_DEBUG_DRYRUN);
   #if ENABLED(DEBUG_FLAGS_GCODE)
     static PGMSTR(str_debug_16, STR_DEBUG_COMMUNICATION);
@@ -42,11 +49,15 @@ void GcodeSuite::M111() {
   #endif
 
   static PGM_P const debug_strings[] PROGMEM = {
+<<<<<<< HEAD
     TERN(DEBUG_FLAGS_GCODE, str_debug_1, nullptr),
     TERN(DEBUG_FLAGS_GCODE, str_debug_2, nullptr),
     TERN(DEBUG_FLAGS_GCODE, str_debug_4, nullptr),
     str_debug_8,
     TERN(DEBUG_FLAGS_GCODE, str_debug_16, nullptr),
+=======
+    str_debug_1, str_debug_2, str_debug_4, str_debug_8, str_debug_16,
+>>>>>>> upstream/bugfix-2.0.x
     TERN_(DEBUG_LEVELING_FEATURE, str_debug_detail)
   };
 
@@ -58,7 +69,11 @@ void GcodeSuite::M111() {
       PGM_P const pstr = (PGM_P)pgm_read_ptr(&debug_strings[i]);
       if (pstr && TEST(marlin_debug_flags, i)) {
         if (comma++) SERIAL_CHAR(',');
+<<<<<<< HEAD
         SERIAL_ECHOPGM_P(pstr);
+=======
+        SERIAL_ECHOPGM_P((PGM_P)pgm_read_ptr(&debug_strings[i]));
+>>>>>>> upstream/bugfix-2.0.x
       }
     }
   }

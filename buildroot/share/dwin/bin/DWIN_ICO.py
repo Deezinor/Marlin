@@ -76,19 +76,37 @@ class DWIN_ICO_File():
             self._parseHeader(infile)
             self._splitEntryData(infile, outDir)
 
+<<<<<<< HEAD
     def _parseHeader(self, infile):
         maxEntries = 256
         count = 0
         icon_nums = _iconNames.keys()
+=======
+        return
+
+    def _parseHeader(self, infile):
+        maxEntries = 256
+        count = 0
+        validEntries = 0
+>>>>>>> upstream/bugfix-2.0.x
         while count < maxEntries:
             rawBytes = infile.read(16)
             entry = Entry()
             entry.parseRawData(rawBytes)
             # check that it is valid: is offset nonzero?
+<<<<<<< HEAD
             # Special case: treat missing numbers as valid
             if (entry.offset > 0) or count not in icon_nums:
                 self.entries.append(entry)
             count += 1
+=======
+            # Special case: treat 39 as valid
+            if (entry.offset > 0) or (count == 39):
+                validEntries += 1
+                self.entries.append(entry)
+            count += 1
+        return
+>>>>>>> upstream/bugfix-2.0.x
 
     def _splitEntryData(self, infile, outDir):
         print('Splitting Entry Data...')
@@ -106,11 +124,20 @@ class DWIN_ICO_File():
             if entry.length == 0:
                 count += 1
                 continue
+<<<<<<< HEAD
             outfilename = os.path.join(outDir, '%03d-ICON_%s.jpg' % (count, _iconNames.get(count, "UNKNOWN")))
+=======
+            # Seek file position, read length bytes, and write to new output file.
+            print('%02d: offset: 0x%06x len: 0x%04x width: %d height: %d' %
+                  (count, entry.offset, entry.length, entry.width, entry.height))
+            outfilename = os.path.join(outDir,
+                                       '%03d-%s.jpg' % (count, _iconNames[count]))
+>>>>>>> upstream/bugfix-2.0.x
             with open(outfilename, 'wb') as outfile:
                 infile.seek(entry.offset)
                 blob = infile.read(entry.length)
                 outfile.write(blob)
+<<<<<<< HEAD
                 # Seek file position, read length bytes, and write to new output file.
                 print('(%3d: width=%3d height=%3d offset=%6d len=%4d) ... %s' %
                       (count, entry.width, entry.height, entry.offset, entry.length, os.path.basename(outfilename)))
@@ -119,13 +146,26 @@ class DWIN_ICO_File():
 
     def createFile(self, iconDir, filename):
         """Create a new .ico file from the contents of iconDir.
+=======
+                print('Wrote %d bytes to %s' % (entry.length, outfilename))
+
+            count += 1
+        return
+
+    def createFile(self, iconDir, filename):
+        '''Create a new .ico file from the contents of iconDir.
+>>>>>>> upstream/bugfix-2.0.x
 
         The contents of iconDir are processed to get image
         resolution, and a new entry is created for each.
 
         Each filename must have a leading number followed by a
         dash, which is the icon index. E.g., "071-ICON_StepX.jpg".
+<<<<<<< HEAD
         """
+=======
+        '''
+>>>>>>> upstream/bugfix-2.0.x
         self.entries = [Entry() for i in range(0,256)]
         # 1. Scan icon directory and record all valid files
         print('Scanning icon directory', iconDir)
@@ -140,7 +180,11 @@ class DWIN_ICO_File():
                 if not (0 <= index <= 255):
                     print('...Ignoring invalid index on', dirEntry.path)
                     continue
+<<<<<<< HEAD
                 # dirEntry.path is iconDir/name
+=======
+                #dirEntry.path is iconDir/name
+>>>>>>> upstream/bugfix-2.0.x
                 w,h = getJpegResolution(dirEntry.path)
                 length = dirEntry.stat().st_size
                 e = self.entries[index]
@@ -171,8 +215,14 @@ class DWIN_ICO_File():
                 continue
             e.offset = offset
             offset += e.length
+<<<<<<< HEAD
             # print('%03d: (%d x %d) len=%d off=%d' %
             #      (i, e.width, e.height, e.length, e.offset))
+=======
+            #print('%03d: (%d x %d) len=%d off=%d' %
+            #      (i, e.width, e.height, e.length, e.offset))
+        return
+>>>>>>> upstream/bugfix-2.0.x
 
     def _combineAndWriteIcoFile(self, filename):
         """Write out final .ico file.
@@ -191,6 +241,10 @@ class DWIN_ICO_File():
                 if 0 == e.length: continue
                 guts = self._getFileContents(e.filename, e.length)
                 outfile.write(guts)
+<<<<<<< HEAD
+=======
+        return
+>>>>>>> upstream/bugfix-2.0.x
 
     def _getFileContents(self, filename, length):
         """Read contents of filename, and return bytes"""
@@ -201,17 +255,30 @@ class DWIN_ICO_File():
             return contents
 
 class Entry():
+<<<<<<< HEAD
     """Entry objects record resolution and size information
     about each icon stored in an ICO file.
     """
     __slots__ = ('width', 'height', 'offset', 'length', 'filename')
 
     def __init__(self, w=0, h=0, length=0, offset=0, filename=None):
+=======
+    '''Entry objects record resolution and size information
+    about each icon stored in an ICO file.
+    '''
+    __slots__ = ('width', 'height', 'offset', 'length', 'filename')
+
+    def __init__(self, w=0, h=0, length=0, offset=0):
+>>>>>>> upstream/bugfix-2.0.x
         self.width = w
         self.height = h
         self.offset = offset
         self.length = length
+<<<<<<< HEAD
         self.filename = filename
+=======
+        self.filename = None
+>>>>>>> upstream/bugfix-2.0.x
 
     def parseRawData(self, rawEntryBytes):
         if len(rawEntryBytes) != 16:
@@ -224,6 +291,10 @@ class Entry():
         self.height = h
         self.offset = off
         self.length = len3 * 65536 + len21
+<<<<<<< HEAD
+=======
+        return
+>>>>>>> upstream/bugfix-2.0.x
 
     def serialize(self):
         """Convert this Entry's information into a 16-byte
@@ -237,6 +308,7 @@ class Entry():
         return rawdata
 
 _iconNames = {
+<<<<<<< HEAD
       0 : "LOGO_Creality",
       1 : "Print_0",
       2 : "Print_1",
@@ -345,3 +417,98 @@ _iconNames = {
     253 : "AxisTL",
     254 : "AxisC"
 }
+=======
+    0 : 'ICON_LOGO',
+    1 : 'ICON_Print_0',
+    2 : 'ICON_Print_1',
+    3 : 'ICON_Prepare_0',
+    4 : 'ICON_Prepare_1',
+    5 : 'ICON_Control_0',
+    6 : 'ICON_Control_1',
+    7 : 'ICON_Leveling_0',
+    8 : 'ICON_Leveling_1',
+    9 : 'ICON_HotendTemp',
+    10 : 'ICON_BedTemp',
+    11 : 'ICON_Speed',
+    12 : 'ICON_Zoffset',
+    13 : 'ICON_Back',
+    14 : 'ICON_File',
+    15 : 'ICON_PrintTime',
+    16 : 'ICON_RemainTime',
+    17 : 'ICON_Setup_0',
+    18 : 'ICON_Setup_1',
+    19 : 'ICON_Pause_0',
+    20 : 'ICON_Pause_1',
+    21 : 'ICON_Continue_0',
+    22 : 'ICON_Continue_1',
+    23 : 'ICON_Stop_0',
+    24 : 'ICON_Stop_1',
+    25 : 'ICON_Bar',
+    26 : 'ICON_More',
+    27 : 'ICON_Axis',
+    28 : 'ICON_CloseMotor',
+    29 : 'ICON_Homing',
+    30 : 'ICON_SetHome',
+    31 : 'ICON_PLAPreheat',
+    32 : 'ICON_ABSPreheat',
+    33 : 'ICON_Cool',
+    34 : 'ICON_Language',
+    35 : 'ICON_MoveX',
+    36 : 'ICON_MoveY',
+    37 : 'ICON_MoveZ',
+    38 : 'ICON_Extruder',
+    # no 39
+    40 : 'ICON_Temperature',
+    41 : 'ICON_Motion',
+    42 : 'ICON_WriteEEPROM',
+    43 : 'ICON_ReadEEPROM',
+    44 : 'ICON_ResumeEEPROM',
+    45 : 'ICON_Info',
+    46 : 'ICON_SetEndTemp',
+    47 : 'ICON_SetBedTemp',
+    48 : 'ICON_FanSpeed',
+    49 : 'ICON_SetPLAPreheat',
+    50 : 'ICON_SetABSPreheat',
+    51 : 'ICON_MaxSpeed',
+    52 : 'ICON_MaxAccelerated',
+    53 : 'ICON_MaxJerk',
+    54 : 'ICON_Step',
+    55 : 'ICON_PrintSize',
+    56 : 'ICON_Version',
+    57 : 'ICON_Contact',
+    58 : 'ICON_StockConfiguraton',
+    59 : 'ICON_MaxSpeedX',
+    60 : 'ICON_MaxSpeedY',
+    61 : 'ICON_MaxSpeedZ',
+    62 : 'ICON_MaxSpeedE',
+    63 : 'ICON_MaxAccX',
+    64 : 'ICON_MaxAccY',
+    65 : 'ICON_MaxAccZ',
+    66 : 'ICON_MaxAccE',
+    67 : 'ICON_MaxSpeedJerkX',
+    68 : 'ICON_MaxSpeedJerkY',
+    69 : 'ICON_MaxSpeedJerkZ',
+    70 : 'ICON_MaxSpeedJerkE',
+    71 : 'ICON_StepX',
+    72 : 'ICON_StepY',
+    73 : 'ICON_StepZ',
+    74 : 'ICON_StepE',
+    75 : 'ICON_Setspeed',
+    76 : 'ICON_SetZOffset',
+    77 : 'ICON_Rectangle',
+    78 : 'ICON_BLTouch',
+    79 : 'ICON_TempTooLow',
+    80 : 'ICON_AutoLeveling',
+    81 : 'ICON_TempTooHigh',
+    82 : 'ICON_NoTips_C',
+    83 : 'ICON_NoTips_E',
+    84 : 'ICON_Continue_C',
+    85 : 'ICON_Continue_E',
+    86 : 'ICON_Cancel_C',
+    87 : 'ICON_Cancel_E',
+    88 : 'ICON_Confirm_C',
+    89 : 'ICON_Confirm_E',
+    90 : 'ICON_Info_0',
+    91 : 'ICON_Info_1'
+    }
+>>>>>>> upstream/bugfix-2.0.x

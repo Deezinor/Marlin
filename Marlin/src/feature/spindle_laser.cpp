@@ -67,7 +67,11 @@ cutter_frequency_t SpindleLaser::frequency;                           // PWM fre
 void SpindleLaser::init() {
   #if ENABLED(SPINDLE_SERVO)
     servo[SPINDLE_SERVO_NR].move(SPINDLE_SERVO_MIN);
+<<<<<<< HEAD
   #elif PIN_EXISTS(SPINDLE_LASER_ENA)
+=======
+  #else
+>>>>>>> upstream/bugfix-2.0.x
     OUT_WRITE(SPINDLE_LASER_ENA_PIN, !SPINDLE_LASER_ACTIVE_STATE);    // Init spindle to off
   #endif
   #if ENABLED(SPINDLE_CHANGE_DIR)
@@ -141,7 +145,11 @@ void SpindleLaser::apply_power(const uint8_t opwr) {
       else
         ocr_off();
     #elif ENABLED(SPINDLE_SERVO)
+<<<<<<< HEAD
       servo[SPINDLE_SERVO_NR].move(opwr);
+=======
+      MOVE_SERVO(SPINDLE_SERVO_NR, power);
+>>>>>>> upstream/bugfix-2.0.x
     #else
       WRITE(SPINDLE_LASER_ENA_PIN, enabled() ? SPINDLE_LASER_ACTIVE_STATE : !SPINDLE_LASER_ACTIVE_STATE);
       isReadyForUI = true;

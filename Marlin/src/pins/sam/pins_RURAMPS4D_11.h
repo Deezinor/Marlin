@@ -145,7 +145,11 @@
 
 // SPI for MAX Thermocouple
 /*
+<<<<<<< HEAD
 #if !HAS_MEDIA
+=======
+#if DISABLED(SDSUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
   #define TEMP_0_CS_PIN              EXP1_08_PIN
 #else
   #define TEMP_0_CS_PIN                       49
@@ -195,6 +199,7 @@
  *              ------                                ------
  *               EXP1                                  EXP2
  */
+<<<<<<< HEAD
 #define EXP1_01_PIN                           62  // BEEPER
 #define EXP1_02_PIN                           40  // ENC
 #define EXP1_03_PIN                           64  // LCD_EN
@@ -211,6 +216,24 @@
 #define EXP2_05_PIN                           42  // EN2
 #define EXP2_06_PIN                           75  // MOSI
 #define EXP2_07_PIN                           51  // SD DET
+=======
+#define EXP1_01_PIN                           62
+#define EXP1_02_PIN                           40
+#define EXP1_03_PIN                           64
+#define EXP1_04_PIN                           63
+#define EXP1_05_PIN                           48
+#define EXP1_06_PIN                           50
+#define EXP1_07_PIN                           52
+#define EXP1_08_PIN                           53
+
+#define EXP2_01_PIN                           74  // MISO
+#define EXP2_02_PIN                           76  // SCK
+#define EXP2_03_PIN                           44
+#define EXP2_04_PIN                           10
+#define EXP2_05_PIN                           42
+#define EXP2_06_PIN                           75  // MOSI
+#define EXP2_07_PIN                           51
+>>>>>>> upstream/bugfix-2.0.x
 #define EXP2_08_PIN                           -1  // RESET
 
 //
@@ -231,12 +254,20 @@
   #if ANY(RADDS_DISPLAY, IS_RRD_SC)
 
     #define LCD_PINS_RS              EXP1_04_PIN
+<<<<<<< HEAD
     #define LCD_PINS_EN              EXP1_03_PIN
+=======
+    #define LCD_PINS_ENABLE          EXP1_03_PIN
+>>>>>>> upstream/bugfix-2.0.x
 
   #elif IS_RRD_FG_SC
 
     #define LCD_PINS_RS              EXP1_07_PIN
+<<<<<<< HEAD
     #define LCD_PINS_EN              EXP1_08_PIN
+=======
+    #define LCD_PINS_ENABLE          EXP1_08_PIN
+>>>>>>> upstream/bugfix-2.0.x
 
   #elif HAS_U8GLIB_I2C_OLED
 

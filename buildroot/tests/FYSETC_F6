@@ -10,6 +10,7 @@ set -e
 # Build with the default config plus DGUS_LCD_UI FYSETC
 #
 restore_configs
+<<<<<<< HEAD
 opt_set MOTHERBOARD BOARD_FYSETC_F6_13 LCD_SERIAL_PORT 1 DGUS_LCD_UI FYSETC
 exec_test $1 $2 "DGUS (FYSETC)" "$3"
 
@@ -28,6 +29,11 @@ exec_test $1 $2 "ABL | DGUS (RELOADED)" "$3"
 use_example_configs delta/FLSUN/auto_calibrate
 opt_set MOTHERBOARD BOARD_FYSETC_F6_13
 exec_test $1 $2 "DELTA / FLSUN Auto-Calibrate" "$3"
+=======
+opt_set MOTHERBOARD BOARD_FYSETC_F6_13 LCD_SERIAL_PORT 1
+opt_enable DGUS_LCD_UI_FYSETC
+exec_test $1 $2 "FYSETC F6 1.3 with DGUS" "$3"
+>>>>>>> upstream/bugfix-2.0.x
 
 #
 # Delta Config (generic) + UBL + ALLEN_KEY + EEPROM_SETTINGS + OLED_PANEL_TINYBOY2
@@ -36,8 +42,13 @@ use_example_configs delta/generic
 opt_set MOTHERBOARD BOARD_FYSETC_F6_13 LCD_LANGUAGE ko_KR
 opt_enable RESTORE_LEVELING_AFTER_G28 EEPROM_SETTINGS EEPROM_CHITCHAT \
            Z_PROBE_ALLEN_KEY AUTO_BED_LEVELING_UBL UBL_MESH_WIZARD \
+<<<<<<< HEAD
            OLED_PANEL_TINYBOY2 MESH_EDIT_GFX_OVERLAY DELTA_CALIBRATION_MENU BABYSTEPPING
 exec_test $1 $2 "DELTA | UBL | Allen Key | EEPROM | OLED_PANEL_TINYBOY2..." "$3"
+=======
+           OLED_PANEL_TINYBOY2 MESH_EDIT_GFX_OVERLAY DELTA_CALIBRATION_MENU
+exec_test $1 $2 "DELTA, RAMPS, L6470, UBL, Allen Key, EEPROM, OLED_PANEL_TINYBOY2..." "$3"
+>>>>>>> upstream/bugfix-2.0.x
 
 #
 # Test mixed TMC config

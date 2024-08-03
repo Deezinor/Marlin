@@ -90,8 +90,13 @@ typedef struct {
   //! This buffer must be word align for DATA IN phase (use prefix COMPILER_WORD_ALIGNED for buffer)
   uint8_t *payload;
 
+<<<<<<< HEAD
   //! Size of buffer to send or fill, and content the number of byte transferred
   uint16_t payload_size;
+=======
+	//! Size of buffer to send or fill, and content the number of byte transferred
+	uint16_t payload_size;
+>>>>>>> upstream/bugfix-2.0.x
 
   //! Callback called after reception of ZLP from setup request
   void (*callback)(void);
@@ -130,7 +135,12 @@ typedef void (*udd_callback_halt_cleared_t)(void);
  * \param status     UDD_EP_TRANSFER_ABORT, if transfer is aborted
  * \param n          number of data transferred
  */
+<<<<<<< HEAD
 typedef void (*udd_callback_trans_t) (udd_ep_status_t status, iram_size_t nb_transferred, udd_ep_id_t ep);
+=======
+typedef void (*udd_callback_trans_t) (udd_ep_status_t status,
+		iram_size_t nb_transferred, udd_ep_id_t ep);
+>>>>>>> upstream/bugfix-2.0.x
 
 /**
  * \brief Authorizes the VBUS event

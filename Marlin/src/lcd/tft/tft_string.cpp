@@ -40,7 +40,11 @@ unifont_t *TFT_String::font_header;
   uint16_t TFT_String::extra_count;
 #endif
 
+<<<<<<< HEAD
 uint16_t TFT_String::data[];
+=======
+char TFT_String::data[];
+>>>>>>> upstream/bugfix-2.0.x
 uint16_t TFT_String::span;
 uint8_t TFT_String::length;
 
@@ -50,6 +54,7 @@ void TFT_String::set_font(const uint8_t *font) {
 
   for (glyph = 0; glyph < 256; glyph++) glyphs[glyph] = nullptr;
 
+<<<<<<< HEAD
   #if EXTRA_GLYPHS
     font_header_extra = nullptr;
     extra_count = 0;
@@ -63,6 +68,23 @@ void TFT_String::set_font(const uint8_t *font) {
   DEBUG_ECHOLNPGM("fontEndEncoding: ",   ((unifont_t *)font_header)->fontEndEncoding);
   DEBUG_ECHOLNPGM("fontAscent: ",        ((unifont_t *)font_header)->fontAscent);
   DEBUG_ECHOLNPGM("fontDescent: ",       ((unifont_t *)font_header)->fontDescent);
+=======
+  DEBUG_ECHOLNPGM("Format: ",            font_header->Format);
+  DEBUG_ECHOLNPGM("BBXWidth: ",          font_header->BBXWidth);
+  DEBUG_ECHOLNPGM("BBXHeight: ",         font_header->BBXHeight);
+  DEBUG_ECHOLNPGM("BBXOffsetX: ",        font_header->BBXOffsetX);
+  DEBUG_ECHOLNPGM("BBXOffsetY: ",        font_header->BBXOffsetY);
+  DEBUG_ECHOLNPGM("CapitalAHeight: ",    font_header->CapitalAHeight);
+  DEBUG_ECHOLNPGM("Encoding65Pos: ",     font_header->Encoding65Pos);
+  DEBUG_ECHOLNPGM("Encoding97Pos: ",     font_header->Encoding97Pos);
+  DEBUG_ECHOLNPGM("FontStartEncoding: ", font_header->FontStartEncoding);
+  DEBUG_ECHOLNPGM("FontEndEncoding: ",   font_header->FontEndEncoding);
+  DEBUG_ECHOLNPGM("LowerGDescent: ",     font_header->LowerGDescent);
+  DEBUG_ECHOLNPGM("FontAscent: ",        font_header->FontAscent);
+  DEBUG_ECHOLNPGM("FontDescent: ",       font_header->FontDescent);
+  DEBUG_ECHOLNPGM("FontXAscent: ",       font_header->FontXAscent);
+  DEBUG_ECHOLNPGM("FontXDescent: ",      font_header->FontXDescent);
+>>>>>>> upstream/bugfix-2.0.x
 
   add_glyphs(font);
 }
@@ -178,7 +200,11 @@ void TFT_String::set() {
  * Add a string, applying substitutions for the following characters:
  *
  *   $ displays the string given by fstr or cstr
+<<<<<<< HEAD
  *   { displays  '0'....'10' for indexes 0 - 10
+=======
+ *   = displays  '0'....'10' for indexes 0 - 10
+>>>>>>> upstream/bugfix-2.0.x
  *   ~ displays  '1'....'11' for indexes 0 - 10
  *   * displays 'E1'...'E11' for indexes 0 - 10 (By default. Uses LCD_FIRST_TOOL)
  *   @ displays an axis name such as XYZUVW, or E for an extruder
@@ -188,7 +214,12 @@ void TFT_String::add(const char *tpl, const int8_t index, const char *cstr/*=nul
 
   while (*tpl) {
     tpl = get_utf8_value_cb(tpl, read_byte_ram, wc);
+<<<<<<< HEAD
     const uint16_t ch = uint16_t(wc);
+=======
+    if (wc > 255) wc |= 0x0080;
+    const uint8_t ch = uint8_t(wc & 0x00FF);
+>>>>>>> upstream/bugfix-2.0.x
 
     if (ch == '{' || ch == '~' || ch == '*') {
       if (index >= 0) {
@@ -216,18 +247,27 @@ void TFT_String::add(const char *cstr, uint8_t max_len/*=MAX_STRING_LENGTH*/) {
   lchar_t wc;
   while (*cstr && max_len) {
     cstr = get_utf8_value_cb(cstr, read_byte_ram, wc);
+<<<<<<< HEAD
     const uint16_t ch = uint16_t(wc);
+=======
+    if (wc > 255) wc |= 0x0080;
+    const uint8_t ch = uint8_t(wc & 0x00FF);
+>>>>>>> upstream/bugfix-2.0.x
     add_character(ch);
     max_len--;
   }
   eol();
 }
 
+<<<<<<< HEAD
 void TFT_String::add_character(const uint16_t character) {
   // Combining Diacritical Marks are not supported
   if (character >= 0x0300 && character <= 0x036f)
     return;
 
+=======
+void TFT_String::add_character(const char character) {
+>>>>>>> upstream/bugfix-2.0.x
   if (length < MAX_STRING_LENGTH) {
     data[length] = character;
     length++;
@@ -235,7 +275,11 @@ void TFT_String::add_character(const uint16_t character) {
   }
 }
 
+<<<<<<< HEAD
 void TFT_String::rtrim(const uint16_t character) {
+=======
+void TFT_String::rtrim(const char character) {
+>>>>>>> upstream/bugfix-2.0.x
   while (length) {
     if (data[length - 1] == 0x20 || data[length - 1] == character) {
       length--;
@@ -247,7 +291,11 @@ void TFT_String::rtrim(const uint16_t character) {
   }
 }
 
+<<<<<<< HEAD
 void TFT_String::ltrim(const uint16_t character) {
+=======
+void TFT_String::ltrim(const char character) {
+>>>>>>> upstream/bugfix-2.0.x
   uint16_t i, j;
   for (i = 0; (i < length) && (data[i] == 0x20 || data[i] == character); i++) {
     span -= glyph(data[i])->dWidth;
@@ -258,7 +306,11 @@ void TFT_String::ltrim(const uint16_t character) {
   eol();
 }
 
+<<<<<<< HEAD
 void TFT_String::trim(const uint16_t character) {
+=======
+void TFT_String::trim(const char character) {
+>>>>>>> upstream/bugfix-2.0.x
   rtrim(character);
   ltrim(character);
 }

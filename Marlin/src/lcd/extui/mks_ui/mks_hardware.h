@@ -26,7 +26,11 @@
 #include <lvgl.h>
 
 // Functions for MKS_TEST
+<<<<<<< HEAD
 #if ALL(MKS_TEST, HAS_MEDIA)
+=======
+#if BOTH(MKS_TEST, SDSUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
   void mks_hardware_test();
   void mks_test_get();
   void mks_gpio_test();

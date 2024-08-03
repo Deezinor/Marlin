@@ -62,6 +62,8 @@
 
 #if ENABLED(EXTENSIBLE_UI)
   #include "../lcd/extui/ui_api.h"
+#elif ENABLED(DWIN_LCD_PROUI)
+  #include "../lcd/e3v2/proui/dwin.h"
 #endif
 
 #include "../lcd/marlinui.h"
@@ -203,7 +205,11 @@ bool load_filament(const_float_t slow_load_length/*=0*/, const_float_t fast_load
     KEEPALIVE_STATE(PAUSED_FOR_USER);
     wait_for_user = true;    // LCD click or M108 will clear this
 
+<<<<<<< HEAD
     TERN_(EXTENSIBLE_UI, ExtUI::onUserConfirmRequired(GET_TEXT_F(MSG_FILAMENTLOAD)));
+=======
+    TERN_(EXTENSIBLE_UI, ExtUI::onUserConfirmRequired(F("Load Filament")));
+>>>>>>> upstream/bugfix-2.0.x
 
     #if ENABLED(HOST_PROMPT_SUPPORT)
       const char tool = '0' + TERN0(MULTI_FILAMENT_SENSOR, active_extruder);
@@ -212,8 +218,13 @@ bool load_filament(const_float_t slow_load_length/*=0*/, const_float_t fast_load
 
     while (wait_for_user) {
       impatient_beep(max_beep_count);
+<<<<<<< HEAD
       #if ALL(FILAMENT_CHANGE_RESUME_ON_INSERT, FILAMENT_RUNOUT_SENSOR)
         #if MULTI_FILAMENT_SENSOR
+=======
+      #if BOTH(FILAMENT_CHANGE_RESUME_ON_INSERT, FILAMENT_RUNOUT_SENSOR)
+        #if ENABLED(MULTI_FILAMENT_SENSOR)
+>>>>>>> upstream/bugfix-2.0.x
           #define _CASE_INSERTED(N) case N-1: if (READ(FIL_RUNOUT##N##_PIN) != FIL_RUNOUT##N##_STATE) wait_for_user = false; break;
           switch (active_extruder) {
             REPEAT_1(NUM_RUNOUT_SENSORS, _CASE_INSERTED)
@@ -236,8 +247,11 @@ bool load_filament(const_float_t slow_load_length/*=0*/, const_float_t fast_load
 
   TERN_(BELTPRINTER, do_blocking_move_to_xy(0.00, 50.00));
 
+<<<<<<< HEAD
   TERN_(MPCTEMP, MPC::e_paused = true);
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
   // Slow Load filament
   if (slow_load_length) unscaled_e_move(slow_load_length, FILAMENT_CHANGE_SLOW_LOAD_FEEDRATE);
 
@@ -264,7 +278,11 @@ bool load_filament(const_float_t slow_load_length/*=0*/, const_float_t fast_load
     if (show_lcd) ui.pause_show_message(PAUSE_MESSAGE_PURGE);
 
     TERN_(EXTENSIBLE_UI, ExtUI::onUserConfirmRequired(GET_TEXT_F(MSG_FILAMENT_CHANGE_PURGE)));
+<<<<<<< HEAD
     TERN_(HOST_PROMPT_SUPPORT, hostui.continue_prompt(GET_TEXT_F(MSG_FILAMENT_CHANGE_PURGE)));
+=======
+    TERN_(HOST_PROMPT_SUPPORT, hostui.prompt_do(PROMPT_USER_CONTINUE, GET_TEXT_F(MSG_FILAMENT_CHANGE_PURGE), FPSTR(CONTINUE_STR)));
+>>>>>>> upstream/bugfix-2.0.x
     wait_for_user = true; // A click or M108 breaks the purge_length loop
     for (float purge_count = purge_length; purge_count > 0 && wait_for_user; --purge_count)
       unscaled_e_move(1, ADVANCED_PAUSE_PURGE_FEEDRATE);
@@ -288,8 +306,13 @@ bool load_filament(const_float_t slow_load_length/*=0*/, const_float_t fast_load
           // Show "Purge More" / "Resume" menu and wait for reply
           KEEPALIVE_STATE(PAUSED_FOR_USER);
           wait_for_user = false;
+<<<<<<< HEAD
           #if ANY(HAS_MARLINUI_MENU, EXTENSIBLE_UI)
             ui.pause_show_message(PAUSE_MESSAGE_OPTION); // MarlinUI and MKS UI also set PAUSE_RESPONSE_WAIT_FOR
+=======
+          #if EITHER(HAS_MARLINUI_MENU, DWIN_LCD_PROUI)
+            ui.pause_show_message(PAUSE_MESSAGE_OPTION); // Also sets PAUSE_RESPONSE_WAIT_FOR
+>>>>>>> upstream/bugfix-2.0.x
           #else
             pause_menu_response = PAUSE_RESPONSE_WAIT_FOR;
           #endif
@@ -301,9 +324,12 @@ bool load_filament(const_float_t slow_load_length/*=0*/, const_float_t fast_load
     } while (TERN0(M600_PURGE_MORE_RESUMABLE, pause_menu_response == PAUSE_RESPONSE_EXTRUDE_MORE));
 
   #endif
+<<<<<<< HEAD
 
   TERN_(MPCTEMP, MPC::e_paused = false);
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
   TERN_(HOST_PROMPT_SUPPORT, hostui.prompt_end());
 
   return true;
@@ -339,12 +365,20 @@ bool unload_filament(const_float_t unload_length, const bool show_lcd/*=false*/,
 ) {
   DEBUG_SECTION(uf, "unload_filament", true);
   DEBUG_ECHOLNPGM("... unloadlen:", unload_length, " showlcd:", show_lcd, " mode:", mode
+<<<<<<< HEAD
     #if ALL(FILAMENT_UNLOAD_ALL_EXTRUDERS, MIXING_EXTRUDER)
+=======
+    #if BOTH(FILAMENT_UNLOAD_ALL_EXTRUDERS, MIXING_EXTRUDER)
+>>>>>>> upstream/bugfix-2.0.x
       , " mixmult:", mix_multiplier
     #endif
   );
 
+<<<<<<< HEAD
   #if !ALL(FILAMENT_UNLOAD_ALL_EXTRUDERS, MIXING_EXTRUDER)
+=======
+  #if !BOTH(FILAMENT_UNLOAD_ALL_EXTRUDERS, MIXING_EXTRUDER)
+>>>>>>> upstream/bugfix-2.0.x
     constexpr float mix_multiplier = 1.0f;
   #endif
 
@@ -403,6 +437,11 @@ uint8_t did_pause_print = 0;
 bool pause_print(const_float_t retract, const xyz_pos_t &park_point, const bool show_lcd/*=false*/, const_float_t unload_length/*=0*/ DXC_ARGS) {
   DEBUG_SECTION(pp, "pause_print", true);
   DEBUG_ECHOLNPGM("... park.x:", park_point.x, " y:", park_point.y, " z:", park_point.z, " unloadlen:", unload_length, " showlcd:", show_lcd DXC_SAY);
+<<<<<<< HEAD
+=======
+
+  UNUSED(show_lcd);
+>>>>>>> upstream/bugfix-2.0.x
 
   if (did_pause_print) return false; // already paused
 
@@ -415,12 +454,20 @@ bool pause_print(const_float_t retract, const xyz_pos_t &park_point, const bool 
   #endif
 
   TERN_(HOST_PROMPT_SUPPORT, hostui.prompt_open(PROMPT_INFO, F("Pause"), FPSTR(DISMISS_STR)));
+<<<<<<< HEAD
+=======
+  TERN_(DWIN_LCD_PROUI, DWIN_Print_Pause());
+>>>>>>> upstream/bugfix-2.0.x
 
   // Indicate that the printer is paused
   ++did_pause_print;
 
   // Pause the print job and timer
+<<<<<<< HEAD
   #if HAS_MEDIA
+=======
+  #if ENABLED(SDSUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
     const bool was_sd_printing = IS_SD_PRINTING();
     if (was_sd_printing) {
       card.pauseSDPrint();
@@ -465,7 +512,10 @@ bool pause_print(const_float_t retract, const xyz_pos_t &park_point, const bool 
 
   // If axes don't need to home then the nozzle can park
   if (do_park) nozzle.park(0, park_point); // Park the nozzle by doing a Minimum Z Raise followed by an XY Move
+<<<<<<< HEAD
   if (!do_park) LCD_MESSAGE(MSG_PARK_FAILED);
+=======
+>>>>>>> upstream/bugfix-2.0.x
 
   #if ENABLED(DUAL_X_CARRIAGE)
     const int8_t saved_ext        = active_extruder;
@@ -504,7 +554,11 @@ void show_continue_prompt(const bool is_reload) {
 
   ui.pause_show_message(is_reload ? PAUSE_MESSAGE_INSERT : PAUSE_MESSAGE_WAITING);
   SERIAL_ECHO_START();
+<<<<<<< HEAD
   SERIAL_ECHO(is_reload ? F(_PMSG(STR_FILAMENT_CHANGE_INSERT) "\n") : F(_PMSG(STR_FILAMENT_CHANGE_WAIT) "\n"));
+=======
+  SERIAL_ECHOF(is_reload ? F(_PMSG(STR_FILAMENT_CHANGE_INSERT) "\n") : F(_PMSG(STR_FILAMENT_CHANGE_WAIT) "\n"));
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 void wait_for_confirmation(const bool is_reload/*=false*/, const int8_t max_beep_count/*=0*/ DXC_ARGS) {
@@ -530,7 +584,11 @@ void wait_for_confirmation(const bool is_reload/*=false*/, const int8_t max_beep
 
   // Wait for filament insert by user and press button
   KEEPALIVE_STATE(PAUSED_FOR_USER);
+<<<<<<< HEAD
   TERN_(HOST_PROMPT_SUPPORT, hostui.continue_prompt(GET_TEXT_F(MSG_NOZZLE_PARKED)));
+=======
+  TERN_(HOST_PROMPT_SUPPORT, hostui.prompt_do(PROMPT_USER_CONTINUE, GET_TEXT_F(MSG_NOZZLE_PARKED), FPSTR(CONTINUE_STR)));
+>>>>>>> upstream/bugfix-2.0.x
   TERN_(EXTENSIBLE_UI, ExtUI::onUserConfirmRequired(GET_TEXT_F(MSG_NOZZLE_PARKED)));
   wait_for_user = true;    // LCD click or M108 will clear this
   while (wait_for_user) {
@@ -548,17 +606,27 @@ void wait_for_confirmation(const bool is_reload/*=false*/, const int8_t max_beep
 
       TERN_(HOST_PROMPT_SUPPORT, hostui.prompt_do(PROMPT_USER_CONTINUE, GET_TEXT_F(MSG_HEATER_TIMEOUT), GET_TEXT_F(MSG_REHEAT)));
 
+<<<<<<< HEAD
       #if ENABLED(TOUCH_UI_FTDI_EVE)
         ExtUI::onUserConfirmRequired(GET_TEXT_F(MSG_FTDI_HEATER_TIMEOUT));
       #elif ENABLED(EXTENSIBLE_UI)
         ExtUI::onUserConfirmRequired(GET_TEXT_F(MSG_HEATER_TIMEOUT));
       #endif
+=======
+      TERN_(EXTENSIBLE_UI, ExtUI::onUserConfirmRequired(GET_TEXT_F(MSG_HEATER_TIMEOUT)));
+>>>>>>> upstream/bugfix-2.0.x
 
       TERN_(HAS_RESUME_CONTINUE, wait_for_user_response(0, true)); // Wait for LCD click or M108
 
       TERN_(HOST_PROMPT_SUPPORT, hostui.prompt_do(PROMPT_INFO, GET_TEXT_F(MSG_REHEATING)));
 
+<<<<<<< HEAD
       LCD_MESSAGE(MSG_REHEATING);
+=======
+      TERN_(EXTENSIBLE_UI, ExtUI::onStatusChanged(GET_TEXT_F(MSG_REHEATING)));
+
+      TERN_(DWIN_LCD_PROUI, LCD_MESSAGE(MSG_REHEATING));
+>>>>>>> upstream/bugfix-2.0.x
 
       // Re-enable the heaters if they timed out
       HOTEND_LOOP() thermalManager.reset_hotend_idle_timer(e);
@@ -574,12 +642,18 @@ void wait_for_confirmation(const bool is_reload/*=false*/, const int8_t max_beep
 
       HOTEND_LOOP() thermalManager.heater_idle[e].start(nozzle_timeout);
 
+<<<<<<< HEAD
       TERN_(HOST_PROMPT_SUPPORT, hostui.continue_prompt(GET_TEXT_F(MSG_REHEATDONE)));
       #if ENABLED(EXTENSIBLE_UI)
         ExtUI::onUserConfirmRequired(GET_TEXT_F(MSG_REHEATDONE));
       #else
         LCD_MESSAGE(MSG_REHEATDONE);
       #endif
+=======
+      TERN_(HOST_PROMPT_SUPPORT, hostui.prompt_do(PROMPT_USER_CONTINUE, GET_TEXT_F(MSG_REHEATDONE), FPSTR(CONTINUE_STR)));
+      TERN_(EXTENSIBLE_UI, ExtUI::onUserConfirmRequired(GET_TEXT_F(MSG_REHEATDONE)));
+      TERN_(DWIN_LCD_PROUI, LCD_MESSAGE(MSG_REHEATDONE));
+>>>>>>> upstream/bugfix-2.0.x
 
       IF_DISABLED(PAUSE_REHEAT_FAST_RESUME, wait_for_user = true);
 
@@ -701,11 +775,19 @@ void resume_print(const_float_t slow_load_length/*=0*/, const_float_t fast_load_
   --did_pause_print;
 
   TERN_(HOST_PROMPT_SUPPORT, hostui.prompt_open(PROMPT_INFO, F("Resuming"), FPSTR(DISMISS_STR)));
+<<<<<<< HEAD
 
   // Resume the print job timer if it was running
   if (print_job_timer.isPaused()) print_job_timer.start();
 
   #if HAS_MEDIA
+=======
+
+  // Resume the print job timer if it was running
+  if (print_job_timer.isPaused()) print_job_timer.start();
+
+  #if ENABLED(SDSUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
     if (did_pause_print) {
       --did_pause_print;
       card.startOrResumeFilePrinting();
@@ -720,8 +802,18 @@ void resume_print(const_float_t slow_load_length/*=0*/, const_float_t fast_load_
 
   TERN_(HAS_FILAMENT_SENSOR, runout.reset());
 
+<<<<<<< HEAD
   ui.reset_status();
   ui.return_to_status();
+=======
+  #if ENABLED(DWIN_LCD_PROUI)
+    DWIN_Print_Resume();
+    HMI_ReturnScreen();
+  #else
+    ui.reset_status();
+    ui.return_to_status();
+  #endif
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 #endif // ADVANCED_PAUSE_FEATURE

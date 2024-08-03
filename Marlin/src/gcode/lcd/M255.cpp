@@ -21,7 +21,11 @@
  */
 #include "../../inc/MarlinConfig.h"
 
+<<<<<<< HEAD
 #if ENABLED(EDITABLE_DISPLAY_TIMEOUT)
+=======
+#if HAS_GCODE_M255
+>>>>>>> upstream/bugfix-2.0.x
 
 #include "../gcode.h"
 #include "../../lcd/marlinui.h"
@@ -32,11 +36,20 @@
  */
 void GcodeSuite::M255() {
   if (parser.seenval('S')) {
+<<<<<<< HEAD
     const int m = parser.value_int();
     #if HAS_DISPLAY_SLEEP
       ui.sleep_timeout_minutes = constrain(m, ui.sleep_timeout_min, ui.sleep_timeout_max);
     #else
       ui.backlight_timeout_minutes = constrain(m, ui.backlight_timeout_min, ui.backlight_timeout_max);
+=======
+    #if HAS_DISPLAY_SLEEP
+      const int m = parser.value_int();
+      ui.sleep_timeout_minutes = constrain(m, SLEEP_TIMEOUT_MIN, SLEEP_TIMEOUT_MAX);
+    #else
+      const unsigned int s = parser.value_ushort() * 60;
+      ui.lcd_backlight_timeout = constrain(s, LCD_BKL_TIMEOUT_MIN, LCD_BKL_TIMEOUT_MAX);
+>>>>>>> upstream/bugfix-2.0.x
     #endif
   }
   else
@@ -44,6 +57,7 @@ void GcodeSuite::M255() {
 }
 
 void GcodeSuite::M255_report(const bool forReplay/*=true*/) {
+<<<<<<< HEAD
   TERN_(MARLIN_SMALL_BUILD, return);
   report_heading_etc(forReplay, F(STR_DISPLAY_SLEEP));
   SERIAL_ECHOLNPGM("  M255 S",
@@ -53,3 +67,16 @@ void GcodeSuite::M255_report(const bool forReplay/*=true*/) {
 }
 
 #endif // EDITABLE_DISPLAY_TIMEOUT
+=======
+  report_heading_etc(forReplay, F(STR_DISPLAY_SLEEP));
+  SERIAL_ECHOLNPGM("  M255 S",
+    #if HAS_DISPLAY_SLEEP
+      ui.sleep_timeout_minutes, " ; (minutes)"
+    #else
+      ui.lcd_backlight_timeout, " ; (seconds)"
+    #endif
+  );
+}
+
+#endif // HAS_GCODE_M255
+>>>>>>> upstream/bugfix-2.0.x

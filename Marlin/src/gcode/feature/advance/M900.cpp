@@ -114,24 +114,44 @@ void GcodeSuite::M900() {
 
     #if ENABLED(ADVANCE_K_EXTRA)
 
+<<<<<<< HEAD
       #if DISTINCT_E < 2
+=======
+      #if EXTRUDERS < 2
+>>>>>>> upstream/bugfix-2.0.x
         SERIAL_ECHOLNPGM("Advance S", new_slot, " K", kref, "(S", !new_slot, " K", lref, ")");
       #else
         EXTRUDER_LOOP() {
           const bool slot = TEST(lin_adv_slot, e);
           SERIAL_ECHOLNPGM("Advance T", e, " S", slot, " K", planner.extruder_advance_K[e],
+<<<<<<< HEAD
                            "(S", !slot, " K", other_extruder_advance_K[e], ")");
+=======
+                            "(S", !slot, " K", other_extruder_advance_K[e], ")");
+          SERIAL_EOL();
+>>>>>>> upstream/bugfix-2.0.x
         }
       #endif
 
     #else
 
       SERIAL_ECHO_START();
+<<<<<<< HEAD
       #if DISTINCT_E < 2
         SERIAL_ECHOLNPGM("Advance K=", planner.extruder_advance_K[0]);
       #else
         SERIAL_ECHOPGM("Advance K");
         EXTRUDER_LOOP() SERIAL_ECHO(C(' '), C('0' + e), C(':'), planner.extruder_advance_K[e]);
+=======
+      #if EXTRUDERS < 2
+        SERIAL_ECHOLNPGM("Advance K=", planner.extruder_advance_K[0]);
+      #else
+        SERIAL_ECHOPGM("Advance K");
+        EXTRUDER_LOOP() {
+          SERIAL_CHAR(' ', '0' + e, ':');
+          SERIAL_DECIMAL(planner.extruder_advance_K[e]);
+        }
+>>>>>>> upstream/bugfix-2.0.x
         SERIAL_EOL();
       #endif
 
@@ -141,10 +161,15 @@ void GcodeSuite::M900() {
 }
 
 void GcodeSuite::M900_report(const bool forReplay/*=true*/) {
+<<<<<<< HEAD
   TERN_(MARLIN_SMALL_BUILD, return);
 
   report_heading(forReplay, F(STR_LINEAR_ADVANCE));
   #if DISTINCT_E < 2
+=======
+  report_heading(forReplay, F(STR_LINEAR_ADVANCE));
+  #if EXTRUDERS < 2
+>>>>>>> upstream/bugfix-2.0.x
     report_echo_start(forReplay);
     SERIAL_ECHOLNPGM("  M900 K", planner.extruder_advance_K[0]);
   #else

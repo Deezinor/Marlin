@@ -32,8 +32,11 @@
 #include "../../../libs/W25Qxx.h"
 #include "../../../sd/cardreader.h"
 #include "../../../MarlinCore.h"
+<<<<<<< HEAD
 
 #include <string.h>
+=======
+>>>>>>> upstream/bugfix-2.0.x
 
 extern uint16_t DeviceCode;
 
@@ -404,8 +407,13 @@ uint32_t picInfoWrite(uint8_t *P_name, uint32_t P_size) {
   #define ASSET_TYPE_TITLE_LOGO 2
   #define ASSET_TYPE_G_PREVIEW  3
   #define ASSET_TYPE_FONT       4
+<<<<<<< HEAD
   static void loadAsset(MediaFile &dir, dir_t& entry, FSTR_P const fn, int8_t assetType) {
     MediaFile file;
+=======
+  static void loadAsset(SdFile &dir, dir_t& entry, FSTR_P const fn, int8_t assetType) {
+    SdFile file;
+>>>>>>> upstream/bugfix-2.0.x
     char dosFilename[FILENAME_LENGTH];
     createFilename(dosFilename, entry);
     if (!file.open(&dir, dosFilename, O_READ)) {
@@ -430,14 +438,22 @@ uint32_t picInfoWrite(uint8_t *P_name, uint32_t P_size) {
       do {
         hal.watchdog_refresh();
         pbr = file.read(public_buf, BMP_WRITE_BUF_LEN);
+<<<<<<< HEAD
         picLogoWrite((uint8_t*)fn, public_buf, pbr);
+=======
+        Pic_Logo_Write((uint8_t*)fn, public_buf, pbr);
+>>>>>>> upstream/bugfix-2.0.x
       } while (pbr >= BMP_WRITE_BUF_LEN);
     }
     else if (assetType == ASSET_TYPE_TITLE_LOGO) {
       do {
         hal.watchdog_refresh();
         pbr = file.read(public_buf, BMP_WRITE_BUF_LEN);
+<<<<<<< HEAD
         picTitleLogoWrite((uint8_t*)fn, public_buf, pbr);
+=======
+        Pic_TitleLogo_Write((uint8_t*)fn, public_buf, pbr);
+>>>>>>> upstream/bugfix-2.0.x
       } while (pbr >= BMP_WRITE_BUF_LEN);
     }
     else if (assetType == ASSET_TYPE_G_PREVIEW) {
@@ -448,7 +464,11 @@ uint32_t picInfoWrite(uint8_t *P_name, uint32_t P_size) {
       } while (pbr >= BMP_WRITE_BUF_LEN);
     }
     else if (assetType == ASSET_TYPE_ICON) {
+<<<<<<< HEAD
       Pic_Write_Addr = picInfoWrite((uint8_t*)fn, pfileSize);
+=======
+      Pic_Write_Addr = Pic_Info_Write((uint8_t*)fn, pfileSize);
+>>>>>>> upstream/bugfix-2.0.x
       SPIFlash.beginWrite(Pic_Write_Addr);
       #if HAS_SPI_FLASH_COMPRESSION
         do {

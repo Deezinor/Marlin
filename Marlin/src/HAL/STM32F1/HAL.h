@@ -143,6 +143,7 @@
   #endif
 #endif
 
+<<<<<<< HEAD
 #ifdef RS485_SERIAL_PORT
   #if RS485_SERIAL_PORT == -1
     #define RS485_SERIAL UsbSerial
@@ -154,6 +155,8 @@
   #endif
 #endif
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 /**
  * TODO: review this to return 1 for pins that are not analog input
  */
@@ -200,7 +203,11 @@ typedef int8_t pin_t;
   #define HAL_ADC_RESOLUTION 12
 #endif
 
+<<<<<<< HEAD
 #define HAL_ADC_VREF_MV   3300
+=======
+#define HAL_ADC_VREF         3.3
+>>>>>>> upstream/bugfix-2.0.x
 
 uint16_t analogRead(const pin_t pin); // need hal.adc_enable() first
 void analogWrite(const pin_t pin, int pwm_val8); // PWM only! mul by 257 in maple!?
@@ -215,9 +222,13 @@ void analogWrite(const pin_t pin, int pwm_val8); // PWM only! mul by 257 in mapl
 #define JTAG_DISABLE()    afio_cfg_debug_ports(AFIO_DEBUG_SW_ONLY)
 #define JTAGSWD_DISABLE() afio_cfg_debug_ports(AFIO_DEBUG_NONE)
 
+<<<<<<< HEAD
 #ifndef PLATFORM_M997_SUPPORT
   #define PLATFORM_M997_SUPPORT
 #endif
+=======
+#define PLATFORM_M997_SUPPORT
+>>>>>>> upstream/bugfix-2.0.x
 void flashFirmware(const int16_t);
 
 #define HAL_CAN_SET_PWM_FREQ      // This HAL supports PWM Frequency adjustment
@@ -232,9 +243,20 @@ void flashFirmware(const int16_t);
 // Memory related
 #define __bss_end __bss_end__
 
+<<<<<<< HEAD
 extern "C" char* _sbrk(int incr);
 
 void NVIC_SetPriorityGrouping(uint32_t PriorityGroup);
+
+#pragma GCC diagnostic push
+#if GCC_VERSION <= 50000
+  #pragma GCC diagnostic ignored "-Wunused-function"
+#endif
+=======
+void _delay_ms(const int ms);
+
+extern "C" char* _sbrk(int incr);
+>>>>>>> upstream/bugfix-2.0.x
 
 #pragma GCC diagnostic push
 #if GCC_VERSION <= 50000
@@ -319,6 +341,7 @@ public:
   static void set_pwm_frequency(const pin_t pin, const uint16_t f_desired);
 
 };
+<<<<<<< HEAD
 
 // ------------------------
 // Types
@@ -365,3 +388,5 @@ public:
 
 #define SCB_AIRCR_PRIGROUP_Pos              8                                             /*!< SCB AIRCR: PRIGROUP Position */
 #define SCB_AIRCR_PRIGROUP_Msk             (7UL << SCB_AIRCR_PRIGROUP_Pos)                /*!< SCB AIRCR: PRIGROUP Mask */
+=======
+>>>>>>> upstream/bugfix-2.0.x

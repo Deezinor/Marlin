@@ -334,9 +334,17 @@
 #else // UBL_SEGMENTED
 
   #if IS_SCARA
+<<<<<<< HEAD
     #define SEGMENT_MIN_LENGTH 0.25 // SCARA minimum segment size is 0.25mm
   #elif IS_KINEMATIC
     #define SEGMENT_MIN_LENGTH 0.10 // (mm) Still subject to DEFAULT_SEGMENTS_PER_SECOND
+=======
+    #define DELTA_SEGMENT_MIN_LENGTH 0.25 // SCARA minimum segment size is 0.25mm
+  #elif ENABLED(DELTA)
+    #define DELTA_SEGMENT_MIN_LENGTH 0.10 // mm (still subject to DELTA_SEGMENTS_PER_SECOND)
+  #elif ENABLED(POLARGRAPH)
+    #define DELTA_SEGMENT_MIN_LENGTH 0.10 // mm (still subject to DELTA_SEGMENTS_PER_SECOND)
+>>>>>>> upstream/bugfix-2.0.x
   #else // CARTESIAN
     #ifdef LEVELED_SEGMENT_LENGTH
       #define SEGMENT_MIN_LENGTH LEVELED_SEGMENT_LENGTH
@@ -370,12 +378,21 @@
       uint16_t segments = LROUND(cart_xy_mm * RECIPROCAL(SEGMENT_MIN_LENGTH)); // Cartesian fixed segment length
     #endif
 
+<<<<<<< HEAD
     NOLESS(segments, 1U);                                                      // Must have at least one segment
     const float inv_segments = 1.0f / segments;                                // Reciprocal to save calculation
 
     // Add hints to help optimize the move
     PlannerHints hints(SQRT(cart_xy_mm_2 + sq(total.z)) * inv_segments);       // Length of each segment
     #if ENABLED(FEEDRATE_SCALING)
+=======
+    NOLESS(segments, 1U);                                                            // Must have at least one segment
+    const float inv_segments = 1.0f / segments;                                      // Reciprocal to save calculation
+
+    // Add hints to help optimize the move
+    PlannerHints hints(SQRT(cart_xy_mm_2 + sq(total.z)) * inv_segments);             // Length of each segment
+    #if ENABLED(SCARA_FEEDRATE_SCALING)
+>>>>>>> upstream/bugfix-2.0.x
       hints.inv_duration = scaled_fr_mm_s / hints.millimeters;
     #endif
 

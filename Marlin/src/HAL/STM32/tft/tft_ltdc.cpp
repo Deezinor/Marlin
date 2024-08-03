@@ -365,12 +365,21 @@ void TFT_LTDC::transmit(uint32_t memoryIncrease, uint16_t *data, uint16_t count)
   uint16_t x_end_cnt = count - (width * height);
 
   if (height) {
+<<<<<<< HEAD
     if (memoryIncrease == DMA_PINC_ENABLE) {
       drawImage(x_min, y_cur, x_min + width, y_cur + height, data);
       data += width * height;
     }
     else
       drawRect(x_min, y_cur, x_min + width, y_cur + height, *data);
+=======
+    if (MemoryIncrease == DMA_PINC_ENABLE) {
+      DrawImage(x_min, y_cur, x_min + width, y_cur + height, Data);
+      Data += width * height;
+    }
+    else
+      DrawRect(x_min, y_cur, x_min + width, y_cur + height, *Data);
+>>>>>>> upstream/bugfix-2.0.x
     y_cur += height;
   }
 

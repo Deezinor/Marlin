@@ -34,6 +34,10 @@
 #include "../../module/probe.h"
 #include "../../feature/bedlevel/bedlevel.h"
 #include "../../module/temperature.h"
+<<<<<<< HEAD
+=======
+#include "../../module/probe.h"
+>>>>>>> upstream/bugfix-2.0.x
 #include "../../feature/probe_temp_comp.h"
 #include "../../lcd/marlinui.h"
 
@@ -81,7 +85,11 @@
  *  - `P` - Run probe temperature calibration.
  */
 
+<<<<<<< HEAD
 #if ALL(PTC_PROBE, PTC_BED)
+=======
+#if BOTH(PTC_PROBE, PTC_BED)
+>>>>>>> upstream/bugfix-2.0.x
 
   static void say_waiting_for()               { SERIAL_ECHOPGM("Waiting for "); }
   static void say_waiting_for_probe_heating() { say_waiting_for(); SERIAL_ECHOLNPGM("probe heating."); }
@@ -107,13 +115,21 @@
     };
 
     auto g76_probe = [](const TempSensorID sid, celsius_t &targ, const xy_pos_t &nozpos) {
+<<<<<<< HEAD
+=======
+      do_z_clearance(5.0); // Raise nozzle before probing
+>>>>>>> upstream/bugfix-2.0.x
       ptc.set_enabled(false);
       const float measured_z = probe.probe_at_point(nozpos, PROBE_PT_STOW, 0, false);  // verbose=0, probe_relative=false
       ptc.set_enabled(true);
       if (isnan(measured_z))
         SERIAL_ECHOLNPGM("!Received NAN. Aborting.");
       else {
+<<<<<<< HEAD
         SERIAL_ECHOLNPGM("Measured: ", p_float_t(measured_z, 2));
+=======
+        SERIAL_ECHOLNPAIR_F("Measured: ", measured_z);
+>>>>>>> upstream/bugfix-2.0.x
         if (targ == ProbeTempComp::cali_info[sid].start_temp)
           ptc.prepare_new_calibration(measured_z);
         else
@@ -256,7 +272,11 @@
 
         say_waiting_for_probe_heating();
         SERIAL_ECHOLNPGM(" Bed:", target_bed, " Probe:", target_probe);
+<<<<<<< HEAD
         const millis_t probe_timeout_ms = millis() + MIN_TO_MS(15);
+=======
+        const millis_t probe_timeout_ms = millis() + SEC_TO_MS(900UL);
+>>>>>>> upstream/bugfix-2.0.x
         while (thermalManager.degProbe() < target_probe) {
           if (report_temps(next_temp_report, probe_timeout_ms)) {
             SERIAL_ECHOLNPGM("!Probe heating timed out.");

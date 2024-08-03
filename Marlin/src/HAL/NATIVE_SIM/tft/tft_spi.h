@@ -31,22 +31,36 @@
 #endif
 
 #define DATASIZE_8BIT    8
+<<<<<<< HEAD
 #define DATASIZE_16BIT  16
 #define TFT_IO_DRIVER   TFT_SPI
 #define DMA_MAX_WORDS   0xFFFF
 
 #define DMA_MINC_ENABLE  1
+=======
+#define DATASIZE_16BIT   16
+#define TFT_IO_DRIVER TFT_SPI
+
+#define DMA_MINC_ENABLE 1
+>>>>>>> upstream/bugfix-2.0.x
 #define DMA_MINC_DISABLE 0
 
 class TFT_SPI {
 private:
+<<<<<<< HEAD
   static uint32_t readID(const uint16_t inReg);
   static void transmit(uint16_t data);
   static void transmitDMA(uint32_t memoryIncrease, uint16_t *data, uint16_t count);
+=======
+  static uint32_t ReadID(uint16_t Reg);
+  static void Transmit(uint16_t Data);
+  static void TransmitDMA(uint32_t MemoryIncrease, uint16_t *Data, uint16_t Count);
+>>>>>>> upstream/bugfix-2.0.x
 
 public:
   // static SPIClass SPIx;
 
+<<<<<<< HEAD
   static void init();
   static uint32_t getID();
   static bool isBusy();
@@ -64,4 +78,21 @@ public:
 
   static void writeSequence(uint16_t *data, uint16_t count);
   static void writeMultiple(uint16_t color, uint32_t count);
+=======
+  static void Init();
+  static uint32_t GetID();
+  static bool isBusy();
+  static void Abort();
+
+  static void DataTransferBegin(uint16_t DataWidth = DATASIZE_16BIT);
+  static void DataTransferEnd();
+  static void DataTransferAbort();
+
+  static void WriteData(uint16_t Data);
+  static void WriteReg(uint16_t Reg);
+
+  static void WriteSequence(uint16_t *Data, uint16_t Count);
+  // static void WriteMultiple(uint16_t Color, uint16_t Count);
+  static void WriteMultiple(uint16_t Color, uint32_t Count);
+>>>>>>> upstream/bugfix-2.0.x
 };

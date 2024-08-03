@@ -112,12 +112,19 @@ struct duration_t {
   #endif
 
   /**
+<<<<<<< HEAD
    * @brief Format the duration as a string
+=======
+   * @brief Formats the duration as a string
+>>>>>>> upstream/bugfix-2.0.x
    * @details String will be formatted using a "full" representation of duration
    *
    * @param buffer The array pointed to must be able to accommodate 22 bytes
    *               (21 for the string, 1 more for the terminating nul)
+<<<<<<< HEAD
    * @param dense Whether to skip spaces in the resulting string
+=======
+>>>>>>> upstream/bugfix-2.0.x
    *
    * Output examples:
    *  123456789012345678901 (strlen)
@@ -143,6 +150,7 @@ struct duration_t {
   }
 
   /**
+<<<<<<< HEAD
    * @brief Format the duration as a compact string
    * @details String will be formatted using a "full" representation of duration
    *
@@ -175,6 +183,9 @@ struct duration_t {
 
   /**
    * @brief Format the duration as a string
+=======
+   * @brief Formats the duration as a string
+>>>>>>> upstream/bugfix-2.0.x
    * @details String will be formatted using a "digital" representation of duration
    *
    * @param buffer The array pointed to must be able to accommodate 10 bytes
@@ -194,7 +205,16 @@ struct duration_t {
     if (with_days) {
       const uint16_t d = this->day();
       sprintf_P(buffer, PSTR("%hud %02hu:%02hu"), d, h % 24, m);  // 1d 23:45
+<<<<<<< HEAD
       return strlen_P(buffer);
+    }
+    else if (!h) {
+      const uint16_t s = uint16_t(this->second() % 60UL);
+      sprintf_P(buffer, PSTR("%02hu'%02hu"), m, s);     // 12'34
+      return 5;
+=======
+      return d >= 10 ? 9 : 8;
+>>>>>>> upstream/bugfix-2.0.x
     }
     else if (!h) {
       const uint16_t s = uint16_t(this->second() % 60UL);

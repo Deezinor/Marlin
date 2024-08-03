@@ -52,6 +52,12 @@ DGUSDisplay dgus;
   #define DEBUGLCDCOMM_ECHOPGM(...) NOOP
 #endif
 
+#ifdef DEBUG_DGUSLCD_COMM
+  #define DEBUGLCDCOMM_ECHOPGM DEBUG_ECHOPGM
+#else
+  #define DEBUGLCDCOMM_ECHOPGM(...) NOOP
+#endif
+
 // Preamble... 2 Bytes, usually 0x5A 0xA5, but configurable
 constexpr uint8_t DGUS_HEADER1 = 0x5A;
 constexpr uint8_t DGUS_HEADER2 = 0xA5;
@@ -109,7 +115,11 @@ void DGUSDisplay::writeVariable(uint16_t adr, int8_t value) {
   writeVariable(adr, static_cast<const void*>(&value), sizeof(int8_t));
 }
 
+<<<<<<< HEAD
 void DGUSDisplay::writeVariable(uint16_t adr, long value) {
+=======
+void DGUSDisplay::WriteVariable(uint16_t adr, long value) {
+>>>>>>> upstream/bugfix-2.0.x
   union { long l; char lb[4]; } endian;
   char tmp[4];
   endian.l = value;
@@ -204,11 +214,21 @@ void DGUSDisplay::processRx() {
         |           Command          DataLen (in Words) */
         if (command == DGUS_CMD_READVAR) {
           const uint16_t vp = tmp[0] << 8 | tmp[1];
+<<<<<<< HEAD
+=======
+          //const uint8_t dlen = tmp[2] << 1;  // Convert to Bytes. (Display works with words)
+          //DEBUG_ECHOPGM(" vp=", vp, " dlen=", dlen);
+>>>>>>> upstream/bugfix-2.0.x
           DGUS_VP_Variable ramcopy;
           if (populate_VPVar(vp, &ramcopy)) {
             if (ramcopy.set_by_display_handler)
               ramcopy.set_by_display_handler(ramcopy, &tmp[3]);
           }
+<<<<<<< HEAD
+=======
+          else
+            DEBUG_ECHOLNPGM(" VPVar not found:", vp);
+>>>>>>> upstream/bugfix-2.0.x
 
           rx_datagram_state = DGUS_IDLE;
           break;
@@ -236,7 +256,11 @@ void DGUSDisplay::writePGM(const char str[], uint8_t len) {
 }
 
 void DGUSDisplay::loop() {
+<<<<<<< HEAD
   // Protect against recursion. processRx() may indirectly call idle() when injecting G-code commands.
+=======
+  // Protect against recursion. ProcessRx() may indirectly call idle() when injecting G-code commands.
+>>>>>>> upstream/bugfix-2.0.x
   if (!no_reentrance) {
     no_reentrance = true;
     processRx();
@@ -246,14 +270,24 @@ void DGUSDisplay::loop() {
 
 rx_datagram_state_t DGUSDisplay::rx_datagram_state = DGUS_IDLE;
 uint8_t DGUSDisplay::rx_datagram_len = 0;
+<<<<<<< HEAD
 bool DGUSDisplay::initialized = false,
+=======
+bool DGUSDisplay::Initialized = false,
+>>>>>>> upstream/bugfix-2.0.x
      DGUSDisplay::no_reentrance = false;
 
 // A SW memory barrier, to ensure GCC does not overoptimize loops
 #define sw_barrier() asm volatile("": : :"memory");
 
 bool populate_VPVar(const uint16_t VP, DGUS_VP_Variable * const ramcopy) {
+<<<<<<< HEAD
   const DGUS_VP_Variable *pvp = findVPVar(VP);
+=======
+  //DEBUG_ECHOPGM("populate_VPVar ", VP);
+  const DGUS_VP_Variable *pvp = DGUSLCD_FindVPVar(VP);
+  //DEBUG_ECHOLNPGM(" pvp ", (uint16_t )pvp);
+>>>>>>> upstream/bugfix-2.0.x
   if (!pvp) return false;
   memcpy_P(ramcopy, pvp, sizeof(DGUS_VP_Variable));
   return true;

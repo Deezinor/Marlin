@@ -38,6 +38,14 @@
 
   #include "e3v2/marlinui/marlinui_dwin.h"
 
+<<<<<<< HEAD
+=======
+  #define LCD_PIXEL_WIDTH     DWIN_WIDTH
+  #define LCD_PIXEL_HEIGHT    DWIN_HEIGHT
+  #define LCD_WIDTH           ((LCD_PIXEL_WIDTH)  / (MENU_FONT_WIDTH))
+  #define LCD_HEIGHT          ((LCD_PIXEL_HEIGHT) / (MENU_LINE_HEIGHT))
+
+>>>>>>> upstream/bugfix-2.0.x
   // The DWIN lcd_moveto function uses row / column, not pixels
   #define LCD_COL_X(col)    (col)
   #define LCD_ROW_Y(row)    (row)
@@ -201,6 +209,7 @@ inline int lcd_put_u8str(const lcd_uint_t col, const lcd_uint_t row, FSTR_P cons
 }
 
 /**
+<<<<<<< HEAD
  * @brief Expand a string with optional substitution
  * @details Expand a string with optional substitutions:
  *   $ : the clipped string given by fstr or cstr
@@ -231,6 +240,15 @@ inline lcd_uint_t expand_u8str(char * const outstr, FSTR_P const ftpl, const int
  *   ~ :  '1'....'11' for indexes 0 - 10
  *   * : 'E1'...'E11' for indexes 0 - 10 (By default. Uses LCD_FIRST_TOOL)
  *   @ : an axis name such as XYZUVW, or E for an extruder
+=======
+ * @brief Draw a string with optional substitution
+ * @details Print a string with optional substitutions:
+ *   $ displays the clipped string given by fstr or cstr
+ *   = displays  '0'....'10' for indexes 0 - 10
+ *   ~ displays  '1'....'11' for indexes 0 - 10
+ *   * displays 'E1'...'E11' for indexes 0 - 10 (By default. Uses LCD_FIRST_TOOL)
+ *   @ displays an axis name such as XYZUVW, or E for an extruder
+>>>>>>> upstream/bugfix-2.0.x
  *
  * @param ptpl A ROM string (template)
  * @param ind An index value to use for = ~ * substitution

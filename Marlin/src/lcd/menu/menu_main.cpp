@@ -246,8 +246,48 @@ void menu_main() {
   START_MENU();
   BACK_ITEM(MSG_INFO_SCREEN);
 
+<<<<<<< HEAD
   #if HAS_MEDIA && !defined(MEDIA_MENU_AT_TOP) && !HAS_MARLINUI_ENCODER
     #define MEDIA_MENU_AT_TOP
+=======
+  #if ENABLED(SDSUPPORT)
+
+    #if !defined(MEDIA_MENU_AT_TOP) && !HAS_ENCODER_WHEEL
+      #define MEDIA_MENU_AT_TOP
+    #endif
+
+    auto sdcard_menu_items = [&]{
+      #if ENABLED(MENU_ADDAUTOSTART)
+        ACTION_ITEM(MSG_RUN_AUTO_FILES, card.autofile_begin); // Run Auto Files
+      #endif
+
+      if (card_detected) {
+        if (!card_open) {
+          #if HAS_SD_DETECT
+            GCODES_ITEM(MSG_CHANGE_MEDIA, F("M21"));        // M21 Change Media
+          #else                                             // - or -
+            ACTION_ITEM(MSG_RELEASE_MEDIA, []{              // M22 Release Media
+              queue.inject(F("M22"));
+              #if ENABLED(TFT_COLOR_UI)
+                // Menu display issue on item removal with multi language selection menu
+                if (encoderTopLine > 0) encoderTopLine--;
+                ui.refresh(LCDVIEW_CALL_REDRAW_NEXT);
+              #endif
+            });
+          #endif
+          SUBMENU(MSG_MEDIA_MENU, MEDIA_MENU_GATEWAY);      // Media Menu (or Password First)
+        }
+      }
+      else {
+        #if HAS_SD_DETECT
+          ACTION_ITEM(MSG_NO_MEDIA, nullptr);               // "No Media"
+        #else
+          GCODES_ITEM(MSG_ATTACH_MEDIA, F("M21"));          // M21 Attach Media
+        #endif
+      }
+    };
+
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 
   if (busy) {
@@ -276,6 +316,7 @@ void menu_main() {
     #endif
   }
   else {
+<<<<<<< HEAD
     #if ALL(HAS_MEDIA, MEDIA_MENU_AT_TOP)
       // BEGIN MEDIA MENU
       if (card_detected) {
@@ -315,6 +356,11 @@ void menu_main() {
         #endif
       }
       // END MEDIA MENU
+=======
+
+    #if BOTH(SDSUPPORT, MEDIA_MENU_AT_TOP)
+      sdcard_menu_items();
+>>>>>>> upstream/bugfix-2.0.x
     #endif
 
     if (TERN0(MACHINE_CAN_PAUSE, printingIsPaused()))
@@ -367,6 +413,20 @@ void menu_main() {
     }
   #endif
 
+<<<<<<< HEAD
+=======
+  #if ENABLED(ADVANCED_PAUSE_FEATURE)
+    #if E_STEPPERS == 1 && DISABLED(FILAMENT_LOAD_UNLOAD_GCODES)
+      YESNO_ITEM(MSG_FILAMENTCHANGE,
+        menu_change_filament, nullptr,
+        GET_TEXT_F(MSG_FILAMENTCHANGE), (const char *)nullptr, F("?")
+      );
+    #else
+      SUBMENU(MSG_FILAMENTCHANGE, menu_change_filament);
+    #endif
+  #endif
+
+>>>>>>> upstream/bugfix-2.0.x
   #if ENABLED(LCD_INFO_MENU)
     SUBMENU(MSG_INFO_MENU, menu_info);
   #endif
@@ -393,6 +453,7 @@ void menu_main() {
       GCODES_ITEM(MSG_SWITCH_PS_ON, F("M80"));
   #endif
 
+<<<<<<< HEAD
   #if HAS_MEDIA && DISABLED(MEDIA_MENU_AT_TOP)
     // BEGIN MEDIA MENU
     if (card_detected) {
@@ -432,6 +493,10 @@ void menu_main() {
       #endif
     }
     // END MEDIA MENU
+=======
+  #if ENABLED(SDSUPPORT) && DISABLED(MEDIA_MENU_AT_TOP)
+    sdcard_menu_items();
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 
   #if HAS_SERVICE_INTERVALS

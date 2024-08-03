@@ -253,7 +253,11 @@
 #endif
 
 #if SD_CONNECTION_IS(ONBOARD)
+<<<<<<< HEAD
   #define ONBOARD_SDIO
+=======
+  #define SDIO_SUPPORT
+>>>>>>> upstream/bugfix-2.0.x
   #define SDIO_CLOCK                     4500000  // 4.5 MHz
   #define SD_DETECT_PIN                     PD12
   #define ONBOARD_SD_CS_PIN                 PC11
@@ -319,6 +323,7 @@
 
 #elif HAS_WIRED_LCD
 
+<<<<<<< HEAD
   #define BEEPER_PIN                 EXP1_01_PIN
 
   #define BTN_ENC                    EXP1_02_PIN
@@ -327,6 +332,27 @@
 
   #define LCD_PINS_EN                EXP1_03_PIN
   #define LCD_PINS_RS                EXP1_04_PIN
+=======
+#if ENABLED(TFT_CLASSIC_UI)
+  // Emulated DOGM SPI
+  #define LCD_PINS_ENABLE            EXP1_03_PIN
+  #define LCD_PINS_RS                EXP1_04_PIN
+  #define BTN_ENC                    EXP1_02_PIN
+  #define BTN_EN1                    EXP2_03_PIN
+  #define BTN_EN2                    EXP2_05_PIN
+#elif ENABLED(TFT_COLOR_UI)
+  #define TFT_BUFFER_SIZE                  14400
+#endif
+
+#if HAS_WIRED_LCD && !HAS_SPI_TFT
+  #define BEEPER_PIN                 EXP1_01_PIN
+  #define BTN_ENC                    EXP1_02_PIN
+  #define LCD_PINS_ENABLE            EXP1_03_PIN
+  #define LCD_PINS_RS                EXP1_04_PIN
+  #define BTN_EN1                    EXP2_03_PIN
+  #define BTN_EN2                    EXP2_05_PIN
+  #define LCD_BACKLIGHT_PIN                 -1
+>>>>>>> upstream/bugfix-2.0.x
 
   #if ENABLED(MKS_MINI_12864)
 
@@ -341,6 +367,8 @@
     #define DOGLCD_MOSI              EXP2_06_PIN
 
   #elif IS_TFTGLCD_PANEL
+<<<<<<< HEAD
+=======
 
     #if ENABLED(TFTGLCD_PANEL_SPI)
       #define PIN_SPI_SCK            EXP2_02_PIN
@@ -366,9 +394,38 @@
       #define FORCE_SOFT_SPI
     #endif
     //#define LCD_SCREEN_ROTATE              180  // 0, 90, 180, 270
+>>>>>>> upstream/bugfix-2.0.x
+
+    #if ENABLED(TFTGLCD_PANEL_SPI)
+      #define PIN_SPI_SCK            EXP2_02_PIN
+      #define PIN_TFT_MISO           EXP2_01_PIN
+      #define PIN_TFT_MOSI           EXP2_06_PIN
+      #define TFTGLCD_CS             EXP2_03_PIN
+    #endif
+
+<<<<<<< HEAD
+    #ifndef BEEPER_PIN
+      #define BEEPER_PIN                    -1
+    #endif
+
+  #elif ENABLED(FYSETC_MINI_12864_2_1)
+    #define LCD_PINS_DC              EXP1_04_PIN
+    #define DOGLCD_CS                EXP1_03_PIN
+    #define DOGLCD_A0                  DOGLCD_A0
+    #define LCD_BACKLIGHT_PIN               -1
+    #define LCD_RESET_PIN            EXP1_05_PIN
+    #define NEOPIXEL_PIN             EXP1_06_PIN
+    #define DOGLCD_MOSI              EXP2_06_PIN
+    #define DOGLCD_SCK               EXP2_02_PIN
+    #if SD_CONNECTION_IS(ONBOARD)
+      #define FORCE_SOFT_SPI
+    #endif
+    //#define LCD_SCREEN_ROTATE              180  // 0, 90, 180, 270
 
   #else // !FYSETC_MINI_12864_2_1
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
     #define LCD_PINS_D4              EXP1_05_PIN
     #if IS_ULTIPANEL
       #define LCD_PINS_D5            EXP1_06_PIN
@@ -397,9 +454,19 @@
 #if ENABLED(SPI_FLASH)
   #define SPI_FLASH_SIZE               0x1000000  // 16MB
   #define SPI_FLASH_CS_PIN                  PB12
+<<<<<<< HEAD
   #define SPI_FLASH_SCK_PIN                 PB13
   #define SPI_FLASH_MISO_PIN                PB14
   #define SPI_FLASH_MOSI_PIN                PB15
+=======
+  #define SPI_FLASH_MOSI_PIN                PB15
+  #define SPI_FLASH_MISO_PIN                PB14
+  #define SPI_FLASH_SCK_PIN                 PB13
+#endif
+
+#ifndef BEEPER_PIN
+  #define BEEPER_PIN                 EXP1_01_PIN
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #if ENABLED(SPEAKER) && BEEPER_PIN == PC5

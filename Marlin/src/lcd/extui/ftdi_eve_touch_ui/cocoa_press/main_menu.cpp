@@ -23,7 +23,10 @@
 
 #include "../config.h"
 #include "../screens.h"
+<<<<<<< HEAD
 #include "../../../../module/stepper.h"
+=======
+>>>>>>> upstream/bugfix-2.0.x
 
 #ifdef COCOA_MAIN_MENU
 
@@ -58,7 +61,11 @@ void MainMenu::onRedraw(draw_mode_t what) {
        .font(Theme::font_medium)
        .tag( 2).button(MOVE_XYZ_POS,          GET_TEXT_F(MSG_XYZ_MOVE))
        .tag( 3).button(TEMPERATURE_POS,       GET_TEXT_F(MSG_TEMPERATURE))
+<<<<<<< HEAD
                .enabled(ALL(HAS_LEVELING, HAS_BED_PROBE))
+=======
+               .enabled(BOTH(HAS_LEVELING, HAS_BED_PROBE))
+>>>>>>> upstream/bugfix-2.0.x
        .tag( 4).button(ZPROBE_ZOFFSET_POS,    GET_TEXT_F(MSG_ZPROBE_ZOFFSET))
        .tag( 5).button(MOVE_E_POS,            GET_TEXT_F(MSG_E_MOVE))
        .tag( 6).button(SPEED_POS,             GET_TEXT_F(MSG_PRINT_SPEED))
@@ -102,6 +109,7 @@ bool MainMenu::onTouchEnd(uint8_t tag) {
   return true;
 }
 
+<<<<<<< HEAD
 void MainMenu::onIdle() {
   if (refresh_timer.elapsed(STATUS_UPDATE_INTERVAL)) {
     if (!EventLoop::is_touch_held())
@@ -110,4 +118,6 @@ void MainMenu::onIdle() {
   }
 }
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #endif // COCOA_MAIN_MENU

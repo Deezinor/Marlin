@@ -28,7 +28,11 @@
   #define PSU_TRACK_STATE_MS 1
 #endif
 
+<<<<<<< HEAD
 #if ANY(AUTO_POWER_CONTROL, POWER_OFF_TIMER, PSU_TRACK_STATE_MS)
+=======
+#if EITHER(AUTO_POWER_CONTROL, POWER_OFF_TIMER)
+>>>>>>> upstream/bugfix-2.0.x
   #include "../core/millis_t.h"
 #endif
 
@@ -40,11 +44,15 @@ class Power {
     static void power_on();
     static void power_off();
 
+<<<<<<< HEAD
     #if PSU_TRACK_STATE_MS
       static millis_t last_state_change_ms;
     #endif
 
     #if ANY(POWER_OFF_TIMER, POWER_OFF_WAIT_FOR_COOLDOWN)
+=======
+    #if EITHER(POWER_OFF_TIMER, POWER_OFF_WAIT_FOR_COOLDOWN)
+>>>>>>> upstream/bugfix-2.0.x
       #if ENABLED(POWER_OFF_TIMER)
         static millis_t power_off_time;
         static void setPowerOffTimer(const millis_t delay_ms);

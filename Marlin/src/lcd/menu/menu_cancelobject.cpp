@@ -26,7 +26,11 @@
 
 #include "../../inc/MarlinConfigPre.h"
 
+<<<<<<< HEAD
 #if ALL(HAS_MARLINUI_MENU, CANCEL_OBJECTS)
+=======
+#if BOTH(HAS_MARLINUI_MENU, CANCEL_OBJECTS)
+>>>>>>> upstream/bugfix-2.0.x
 
 #include "menu_item.h"
 #include "menu_addon.h"

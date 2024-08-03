@@ -1,6 +1,10 @@
 /**
  * Marlin 3D Printer Firmware
+<<<<<<<< HEAD:Marlin/src/gcode/sd/M1003.cpp
  * Copyright (c) 2024 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+========
+ * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/gcode/host/M154.cpp
  *
  * Based on Sprinter and grbl.
  * Copyright (c) 2011 Camiel Gubbels / Erik van der Zalm
@@ -20,8 +24,9 @@
  *
  */
 
-#include "../../inc/MarlinConfig.h"
+#include "../../inc/MarlinConfigPre.h"
 
+<<<<<<<< HEAD:Marlin/src/gcode/sd/M1003.cpp
 #if ENABLED(ONE_CLICK_PRINT)
 
 #include "../gcode.h"
@@ -34,3 +39,21 @@
 void GcodeSuite::M1003() { card.cdroot(); }
 
 #endif // ONE_CLICK_PRINT
+========
+#if ENABLED(AUTO_REPORT_POSITION)
+
+#include "../gcode.h"
+#include "../../module/motion.h"
+
+/**
+ * M154: Set position auto-report interval. M154 S<seconds>
+ */
+void GcodeSuite::M154() {
+
+  if (parser.seenval('S'))
+    position_auto_reporter.set_interval(parser.value_byte());
+
+}
+
+#endif // AUTO_REPORT_POSITION
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/gcode/host/M154.cpp

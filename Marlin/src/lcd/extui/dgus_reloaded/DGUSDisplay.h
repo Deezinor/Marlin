@@ -21,18 +21,25 @@
  */
 #pragma once
 
+<<<<<<< HEAD
 /**
  * DGUS implementation written by coldtobi in 2019.
  * Updated for STM32G0B1RE by Protomosh in 2022.
  */
 
 #include "config/DGUS_ScreenID.h"
+=======
+/* DGUS implementation written by coldtobi in 2019 for Marlin */
+
+#include "config/DGUS_Screen.h"
+>>>>>>> upstream/bugfix-2.0.x
 #include "config/DGUS_Control.h"
 #include "definition/DGUS_VP.h"
 
 #include "../../../inc/MarlinConfigPre.h"
 #include "../../../MarlinCore.h"
 
+<<<<<<< HEAD
 //#define DEBUG_DGUSLCD // Uncomment for debug messages
 #define DEBUG_OUT ENABLED(DEBUG_DGUSLCD)
 #include "../../../core/debug_out.h"
@@ -40,6 +47,13 @@
 // New endianness swap for 32bit mcu (tested with STM32G0B1RE)
 #define BE16_P(V) ( ((uint8_t*)(V))[0] << 8U | ((uint8_t*)(V))[1] )
 #define BE32_P(V) ( ((uint8_t*)(V))[0] << 24U | ((uint8_t*)(V))[1] << 16U | ((uint8_t*)(V))[2] << 8U | ((uint8_t*)(V))[3] )
+=======
+#define DEBUG_OUT ENABLED(DEBUG_DGUSLCD)
+#include "../../../core/debug_out.h"
+
+#define Swap16(val) ((uint16_t)(((uint16_t)(val) >> 8) |\
+                                ((uint16_t)(val) << 8)))
+>>>>>>> upstream/bugfix-2.0.x
 
 // Low-Level access to the display.
 class DGUSDisplay {
@@ -47,6 +61,7 @@ public:
 
   enum DGUS_ControlType : uint8_t {
     VARIABLE_DATA_INPUT = 0x00,
+<<<<<<< HEAD
     POPUP_WINDOW        = 0x01,
     INCREMENTAL_ADJUST  = 0x02,
     SLIDER_ADJUST       = 0x03,
@@ -54,10 +69,20 @@ public:
     RETURN_KEY_CODE     = 0x05,
     TEXT_INPUT          = 0x06,
     FIRMWARE_SETTINGS   = 0x07
+=======
+    POPUP_WINDOW = 0x01,
+    INCREMENTAL_ADJUST = 0x02,
+    SLIDER_ADJUST = 0x03,
+    RTC_SETTINGS = 0x04,
+    RETURN_KEY_CODE = 0x05,
+    TEXT_INPUT = 0x06,
+    FIRMWARE_SETTINGS = 0x07
+>>>>>>> upstream/bugfix-2.0.x
   };
 
   DGUSDisplay() = default;
 
+<<<<<<< HEAD
   static void init();
 
   static void read(uint16_t addr, uint8_t size);
@@ -82,10 +107,34 @@ public:
 
   // Force display into another screen.
   static void switchScreen(const DGUS_ScreenID screenID);
+=======
+  static void Init();
+
+  static void Read(uint16_t addr, uint8_t size);
+  static void Write(uint16_t addr, const void* data_ptr, uint8_t size);
+
+  static void WriteString(uint16_t addr, const void* data_ptr, uint8_t size, bool left = true, bool right = false, bool use_space = true);
+  static void WriteStringPGM(uint16_t addr, const void* data_ptr, uint8_t size, bool left = true, bool right = false, bool use_space = true);
+
+  template<typename T>
+  static void Write(uint16_t addr, T data) {
+    Write(addr, static_cast<const void*>(&data), sizeof(T));
+  }
+
+  // Until now I did not need to actively read from the display. That's why there is no ReadVariable
+  // (I extensively use the auto upload of the display)
+
+  // Read GUI and OS version from screen
+  static void ReadVersions();
+
+  // Force display into another screen.
+  static void SwitchScreen(DGUS_Screen screen);
+>>>>>>> upstream/bugfix-2.0.x
   // Play sounds using the display speaker.
   //   start: position at which the sound was stored on the display.
   //   len: how many sounds to play. Sounds will play consecutively from start to start+len-1.
   //   volume: playback volume. 0 keeps the current volume.
+<<<<<<< HEAD
   static void playSound(uint8_t start, uint8_t len=1, uint8_t volume=0);
   // Enable/disable a specific touch control.
   //   type: control type.
@@ -110,6 +159,32 @@ public:
   // Checks two things: Can we confirm the presence of the display and has we initialized it.
   // (both boils down that the display answered to our chatting)
   static bool isInitialized() {
+=======
+  static void PlaySound(uint8_t start, uint8_t len = 1, uint8_t volume = 0);
+  // Enable/disable a specific touch control.
+  //   type: control type.
+  //   control: index of the control on the page (set during screen development).
+  static void EnableControl(DGUS_Screen screen, DGUS_ControlType type, DGUS_Control control);
+  static void DisableControl(DGUS_Screen screen, DGUS_ControlType type, DGUS_Control control);
+
+  static uint8_t GetBrightness();
+  static uint8_t GetVolume();
+
+  // Set the display brightness/volume, ranging 0 - 100
+  static void SetBrightness(uint8_t brightness);
+  static void SetVolume(uint8_t volume);
+
+  // Periodic tasks, eg. Rx-Queue handling.
+  static void Loop();
+
+  // Helper for users of this class to estimate if an interaction would be blocking.
+  static size_t GetFreeTxBuffer();
+  static void FlushTx();
+
+  // Checks two things: Can we confirm the presence of the display and has we initialized it.
+  // (both boils down that the display answered to our chatting)
+  static bool IsInitialized() {
+>>>>>>> upstream/bugfix-2.0.x
     return initialized;
   }
 
@@ -117,24 +192,40 @@ public:
   static uint8_t os_version;
 
   template<typename T>
+<<<<<<< HEAD
   static T swapBytes(const T value) {
+=======
+  static T SwapBytes(const T value) {
+>>>>>>> upstream/bugfix-2.0.x
     union {
       T val;
       char byte[sizeof(T)];
     } src, dst;
 
     src.val = value;
+<<<<<<< HEAD
     for (uint8_t i = 0; i < sizeof(T); ++i) dst.byte[i] = src.byte[sizeof(T) - i - 1];
+=======
+    LOOP_L_N(i, sizeof(T)) dst.byte[i] = src.byte[sizeof(T) - i - 1];
+>>>>>>> upstream/bugfix-2.0.x
     return dst.val;
   }
 
   template<typename T_in, typename T_out, uint8_t decimals>
+<<<<<<< HEAD
   T_out fromFixedPoint(const T_in value) {
+=======
+  T_out FromFixedPoint(const T_in value) {
+>>>>>>> upstream/bugfix-2.0.x
     return (T_out)((float)value / POW(10, decimals));
   }
 
   template<typename T_in, typename T_out, uint8_t decimals>
+<<<<<<< HEAD
   T_out toFixedPoint(const T_in value) {
+=======
+  T_out ToFixedPoint(const T_in value) {
+>>>>>>> upstream/bugfix-2.0.x
     return (T_out)LROUND((float)value * POW(10, decimals));
   }
 
@@ -157,11 +248,19 @@ private:
   };
 
   enum dgus_system_addr : uint16_t {
+<<<<<<< HEAD
     DGUS_VERSION = 0x000F // OS/GUI version
   };
 
   static void writeHeader(uint16_t addr, uint8_t command, uint8_t len);
   static void processRx();
+=======
+    DGUS_VERSION = 0x000f // OS/GUI version
+  };
+
+  static void WriteHeader(uint16_t addr, uint8_t command, uint8_t len);
+  static void ProcessRx();
+>>>>>>> upstream/bugfix-2.0.x
 
   static uint8_t volume;
   static uint8_t brightness;
@@ -172,6 +271,7 @@ private:
   static bool initialized;
 };
 
+<<<<<<< HEAD
 template<> inline uint16_t DGUSDisplay::swapBytes(const uint16_t value) {
   return ((value << 8) | (value >> 8));
 }
@@ -180,3 +280,13 @@ extern DGUSDisplay dgus;
 
 /// Helper to populate a DGUS_VP for a given VP. Return false if not found.
 extern bool populateVP(const DGUS_Addr addr, DGUS_VP * const buffer);
+=======
+template<> inline uint16_t DGUSDisplay::SwapBytes(const uint16_t value) {
+  return ((value << 8) | (value >> 8));
+}
+
+extern DGUSDisplay dgus_display;
+
+/// Helper to populate a DGUS_VP for a given VP. Return false if not found.
+extern bool DGUS_PopulateVP(const DGUS_Addr addr, DGUS_VP * const buffer);
+>>>>>>> upstream/bugfix-2.0.x

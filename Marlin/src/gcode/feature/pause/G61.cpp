@@ -35,6 +35,7 @@
 /**
  * G61: Return to saved position
  *
+<<<<<<< HEAD
  *   F<rate>   - Feedrate (optional) for the move back.
  *   S<slot>   - Slot # (0-based) to restore from (default 0).
  *   X<offset> - Restore X axis, applying the given offset (default 0)
@@ -55,9 +56,19 @@
  *   If no axes are specified then all axes are restored.
  */
 void GcodeSuite::G61(int8_t slot/*=-1*/) {
+=======
+ *   F<rate>  - Feedrate (optional) for the move back.
+ *   S<slot>  - Slot # (0-based) to restore from (default 0).
+ *   X Y Z E  - Axes to restore. At least one is required.
+ *
+ *   If XYZE are not given, default restore uses the smart blocking move.
+ */
+void GcodeSuite::G61() {
+>>>>>>> upstream/bugfix-2.0.x
 
   if (slot < 0) slot = parser.byteval('S');
 
+<<<<<<< HEAD
   #define SYNC_E(E) planner.set_e_position_mm(current_position.e = (E))
 
   if (SAVED_POSITIONS < 256 && slot >= SAVED_POSITIONS) {
@@ -67,13 +78,55 @@ void GcodeSuite::G61(int8_t slot/*=-1*/) {
 
   // No saved position? No axes being restored?
   if (!did_save_position[slot]) return;
+=======
+  #define SYNC_E(POINT) TERN_(HAS_EXTRUDERS, planner.set_e_position_mm((destination.e = current_position.e = (POINT))))
+
+  #if SAVED_POSITIONS < 256
+    if (slot >= SAVED_POSITIONS) {
+      SERIAL_ERROR_MSG(STR_INVALID_POS_SLOT STRINGIFY(SAVED_POSITIONS));
+      return;
+    }
+  #endif
+
+  // No saved position? No axes being restored?
+  if (!TEST(saved_slots[slot >> 3], slot & 0x07)) return;
+>>>>>>> upstream/bugfix-2.0.x
 
   // Apply any given feedrate over 0.0
   REMEMBER(saved, feedrate_mm_s);
   const float fr = parser.linearval('F');
   if (fr > 0.0) feedrate_mm_s = MMM_TO_MMS(fr);
 
+<<<<<<< HEAD
   // No XYZ...E parameters, move to stored position
+=======
+  if (!parser.seen_axis()) {
+    DEBUG_ECHOLNPGM("Default position restore");
+    do_blocking_move_to(stored_position[slot], feedrate_mm_s);
+    SYNC_E(stored_position[slot].e);
+  }
+  else {
+    if (parser.seen(STR_AXES_MAIN)) {
+      DEBUG_ECHOPGM(STR_RESTORING_POS " S", slot);
+      LOOP_NUM_AXES(i) {
+        destination[i] = parser.seenval(AXIS_CHAR(i))
+          ? stored_position[slot][i] + parser.value_axis_units((AxisEnum)i)
+          : current_position[i];
+        DEBUG_CHAR(' ', AXIS_CHAR(i));
+        DEBUG_ECHO_F(destination[i]);
+      }
+      DEBUG_EOL();
+      // Move to the saved position
+      prepare_line_to_destination();
+    }
+    #if HAS_EXTRUDERS
+      if (parser.seen_test('E')) {
+        DEBUG_ECHOLNPGM(STR_RESTORING_POS " S", slot, " E", current_position.e, "=>", stored_position[slot].e);
+        SYNC_E(stored_position[slot].e);
+      }
+    #endif
+  }
+>>>>>>> upstream/bugfix-2.0.x
 
   float epos = stored_position[slot].e;
   if (!parser.seen_axis()) {

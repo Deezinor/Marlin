@@ -47,11 +47,19 @@ void GcodeSuite::M851() {
       if (WITHIN(x, PROBE_OFFSET_XMIN, PROBE_OFFSET_XMAX))
         offs.x = x;
       else {
+<<<<<<< HEAD
         SERIAL_ECHOLNPGM(GCODE_ERR_MSG("X out of range (", PROBE_OFFSET_XMIN, " to ", PROBE_OFFSET_XMAX, ")"));
         ok = false;
       }
     #else
       if (x) SERIAL_ECHOLNPGM(GCODE_ERR_MSG("X must be 0 (NOZZLE_AS_PROBE).")); // ...but let 'ok' stay true
+=======
+        SERIAL_ECHOLNPGM("?X out of range (-", X_BED_SIZE, " to ", X_BED_SIZE, ")");
+        ok = false;
+      }
+    #else
+      if (x) SERIAL_ECHOLNPGM("?X must be 0 (NOZZLE_AS_PROBE)."); // ...but let 'ok' stay true
+>>>>>>> upstream/bugfix-2.0.x
     #endif
   }
 
@@ -61,11 +69,19 @@ void GcodeSuite::M851() {
       if (WITHIN(y, PROBE_OFFSET_YMIN, PROBE_OFFSET_YMAX))
         offs.y = y;
       else {
+<<<<<<< HEAD
         SERIAL_ECHOLNPGM(GCODE_ERR_MSG("Y out of range (", PROBE_OFFSET_YMIN, " to ", PROBE_OFFSET_YMAX, ")"));
         ok = false;
       }
     #else
       if (y) SERIAL_ECHOLNPGM(GCODE_ERR_MSG("Y must be 0 (NOZZLE_AS_PROBE).")); // ...but let 'ok' stay true
+=======
+        SERIAL_ECHOLNPGM("?Y out of range (-", Y_BED_SIZE, " to ", Y_BED_SIZE, ")");
+        ok = false;
+      }
+    #else
+      if (y) SERIAL_ECHOLNPGM("?Y must be 0 (NOZZLE_AS_PROBE)."); // ...but let 'ok' stay true
+>>>>>>> upstream/bugfix-2.0.x
     #endif
   }
 
@@ -74,7 +90,11 @@ void GcodeSuite::M851() {
     if (WITHIN(z, PROBE_OFFSET_ZMIN, PROBE_OFFSET_ZMAX))
       offs.z = z;
     else {
+<<<<<<< HEAD
       SERIAL_ECHOLNPGM(GCODE_ERR_MSG("Z out of range (", PROBE_OFFSET_ZMIN, " to ", PROBE_OFFSET_ZMAX, ")"));
+=======
+      SERIAL_ECHOLNPGM("?Z out of range (", Z_PROBE_OFFSET_RANGE_MIN, " to ", Z_PROBE_OFFSET_RANGE_MAX, ")");
+>>>>>>> upstream/bugfix-2.0.x
       ok = false;
     }
   }
@@ -84,8 +104,11 @@ void GcodeSuite::M851() {
 }
 
 void GcodeSuite::M851_report(const bool forReplay/*=true*/) {
+<<<<<<< HEAD
   TERN_(MARLIN_SMALL_BUILD, return);
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
   report_heading_etc(forReplay, F(STR_Z_PROBE_OFFSET));
   SERIAL_ECHOPGM_P(
     #if HAS_PROBE_XY_OFFSET

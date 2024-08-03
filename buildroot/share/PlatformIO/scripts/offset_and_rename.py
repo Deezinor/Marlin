@@ -1,7 +1,11 @@
 #
 # offset_and_rename.py
 #
+<<<<<<< HEAD
 # - If 'board_build.offset' is provided, either by JSON or by the environment...
+=======
+# - If 'build.offset' is provided, either by JSON or by the environment...
+>>>>>>> upstream/bugfix-2.0.x
 #   - Set linker flag LD_FLASH_OFFSET and relocate the VTAB based on 'build.offset'.
 #   - Set linker flag LD_MAX_DATA_SIZE based on 'build.maximum_ram_size'.
 #   - Define STM32_FLASH_SIZE from 'upload.maximum_size' for use by Flash-based EEPROM emulation.
@@ -60,10 +64,14 @@ if pioutil.is_pio_build():
 
         def rename_target(source, target, env):
             from pathlib import Path
+<<<<<<< HEAD
             from datetime import datetime
             from os import path
             _newpath = Path(target[0].dir.path, datetime.now().strftime(new_name.replace('{date}', '%Y%m%d').replace('{time}', '%H%M%S')))
             Path(target[0].path).replace(_newpath)
             env['PROGNAME'] = path.splitext(_newpath)[0]
+=======
+            Path(target[0].path).replace(Path(target[0].dir.path, new_name))
+>>>>>>> upstream/bugfix-2.0.x
 
         marlin.add_post_action(rename_target)

@@ -29,6 +29,10 @@
 #include "../../sd/cardreader.h"
 #include "../../libs/numtostr.h"
 
+#if ENABLED(DWIN_LCD_PROUI)
+  #include "../../lcd/e3v2/proui/dwin.h"
+#endif
+
 /**
  * M73: Set percentage complete (for display on LCD)
  *
@@ -45,12 +49,22 @@
  */
 void GcodeSuite::M73() {
 
+<<<<<<< HEAD
   #if ENABLED(SET_PROGRESS_PERCENT)
+=======
+  #if ENABLED(DWIN_LCD_PROUI)
+
+    DWIN_M73();
+
+  #else
+
+>>>>>>> upstream/bugfix-2.0.x
     if (parser.seenval('P'))
       ui.set_progress((PROGRESS_SCALE) > 1
         ? parser.value_float() * (PROGRESS_SCALE)
         : parser.value_byte()
       );
+<<<<<<< HEAD
   #endif
 
   #if ENABLED(SET_REMAINING_TIME)
@@ -76,6 +90,13 @@ void GcodeSuite::M73() {
       #endif
       SERIAL_EOL();
     }
+=======
+
+    #if ENABLED(USE_M73_REMAINING_TIME)
+      if (parser.seenval('R')) ui.set_remaining_time(60 * parser.value_ulong());
+    #endif
+
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 }
 

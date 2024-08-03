@@ -28,7 +28,11 @@
 #endif
 
 /**
+<<<<<<< HEAD
  * G92: Set the Current Position to the given X [Y [Z [A [B [C [U [V [W ]]]]]]]] [E] values.
+=======
+ * G92: Set the Current Position to the given X [Y [Z [A [B [C [E]]]]]] values.
+>>>>>>> upstream/bugfix-2.0.x
  *
  * Behind the scenes the G92 command may modify the Current Position
  * or the Position Shift depending on settings and sub-commands.
@@ -36,6 +40,7 @@
  * Since E has no Workspace Offset, it is always set directly.
  *
  * Without Workspace Offsets (e.g., with NO_WORKSPACE_OFFSETS):
+<<<<<<< HEAD
  *   G92   : Set NATIVE Current Position to the given X [Y [Z [A [B [C [U [V [W ]]]]]]]] [E].
  *
  * Using Workspace Offsets (default Marlin behavior):
@@ -44,6 +49,16 @@
  *
  * With POWER_LOSS_RECOVERY or with AXISn_ROTATES:
  *   G92.9 : Set NATIVE Current Position to the given X [Y [Z [A [B [C [U [V [W ]]]]]]]] [E].
+=======
+ *   G92   : Set NATIVE Current Position to the given X [Y [Z [A [B [C [E]]]]]].
+ *
+ * Using Workspace Offsets (default Marlin behavior):
+ *   G92   : Modify Workspace Offsets so the reported position shows the given X [Y [Z [A [B [C [E]]]]]].
+ *   G92.1 : Zero XYZ Workspace Offsets (so the reported position = the native position).
+ *
+ * With POWER_LOSS_RECOVERY:
+ *   G92.9 : Set NATIVE Current Position to the given X [Y [Z [A [B [C [E]]]]]].
+>>>>>>> upstream/bugfix-2.0.x
  */
 void GcodeSuite::G92() {
 
@@ -63,7 +78,14 @@ void GcodeSuite::G92() {
 
     #if ENABLED(CNC_COORDINATE_SYSTEMS) && !IS_SCARA
       case 1:                                                         // G92.1 - Zero the Workspace Offset
+<<<<<<< HEAD
         workspace_offset.reset();
+=======
+        LOOP_NUM_AXES(i) if (position_shift[i]) {
+          position_shift[i] = 0;
+          update_workspace_offset((AxisEnum)i);
+        }
+>>>>>>> upstream/bugfix-2.0.x
         break;
     #endif
 
@@ -85,6 +107,7 @@ void GcodeSuite::G92() {
     case 0:
       LOOP_LOGICAL_AXES(i) {
         if (parser.seenval(AXIS_CHAR(i))) {
+<<<<<<< HEAD
           const float l = parser.value_axis_units((AxisEnum)i),   // Given axis coordinate value, converted to millimeters
                       v = TERN0(HAS_EXTRUDERS, i == E_AXIS) ? l : LOGICAL_TO_NATIVE(l, i),  // Axis position in NATIVE space (applying the existing offset)
                       d = v - current_position[i];                // How much is the current axis position altered by?
@@ -100,12 +123,34 @@ void GcodeSuite::G92() {
                 #endif
               }
             #else                                                 // Without workspaces...
+=======
+          const float l = parser.value_axis_units((AxisEnum)i),       // Given axis coordinate value, converted to millimeters
+                      v = TERN0(HAS_EXTRUDERS, i == E_AXIS) ? l : LOGICAL_TO_NATIVE(l, i),  // Axis position in NATIVE space (applying the existing offset)
+                      d = v - current_position[i];                    // How much is the current axis position altered by?
+          if (!NEAR_ZERO(d)) {
+            #if HAS_POSITION_SHIFT && NONE(IS_SCARA, POLARGRAPH)      // When using workspaces...
+              if (TERN1(HAS_EXTRUDERS, i != E_AXIS)) {
+                position_shift[i] += d;                               // ...most axes offset the workspace...
+                update_workspace_offset((AxisEnum)i);
+              }
+              else {
+                #if HAS_EXTRUDERS
+                  sync_E = true;
+                  current_position.e = v;                             // ...but E is set directly
+                #endif
+              }
+            #else                                                     // Without workspaces...
+>>>>>>> upstream/bugfix-2.0.x
               if (TERN1(HAS_EXTRUDERS, i != E_AXIS))
                 sync_XYZE = true;
               else {
                 TERN_(HAS_EXTRUDERS, sync_E = true);
               }
+<<<<<<< HEAD
               current_position[i] = v;                            // ...set Current Position directly (like Marlin 1.0)
+=======
+              current_position[i] = v;                                // ...set Current Position directly (like Marlin 1.0)
+>>>>>>> upstream/bugfix-2.0.x
             #endif
           }
         }

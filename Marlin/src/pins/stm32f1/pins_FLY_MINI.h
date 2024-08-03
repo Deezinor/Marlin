@@ -30,7 +30,11 @@
 //
 // Flash EEPROM Emulation
 //
+<<<<<<< HEAD
 #if ANY(NO_EEPROM_SELECTED, FLASH_EEPROM_EMULATION)
+=======
+#if EITHER(NO_EEPROM_SELECTED, FLASH_EEPROM_EMULATION)
+>>>>>>> upstream/bugfix-2.0.x
   #define FLASH_EEPROM_EMULATION
   #define EEPROM_PAGE_SIZE     0x800 // 2K
   #define EEPROM_START_ADDRESS (0x8000000 + 256 * 1024 - 2 * EEPROM_PAGE_SIZE) // 256K firmware space
@@ -83,6 +87,7 @@
   #define E0_CS_PIN                         PC2
 #endif
 
+<<<<<<< HEAD
 #ifndef TMC_SPI_MOSI
   #define TMC_SPI_MOSI               EXP2_06_PIN
 #endif
@@ -91,6 +96,18 @@
 #endif
 #ifndef TMC_SPI_SCK
   #define TMC_SPI_SCK                EXP2_02_PIN
+=======
+#if ENABLED(TMC_USE_SW_SPI)
+  #ifndef TMC_SW_MOSI
+    #define TMC_SW_MOSI              EXP2_06_PIN
+  #endif
+  #ifndef TMC_SW_MISO
+    #define TMC_SW_MISO              EXP2_01_PIN
+  #endif
+  #ifndef TMC_SW_SCK
+    #define TMC_SW_SCK               EXP2_02_PIN
+  #endif
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #if HAS_TMC_UART
@@ -129,6 +146,7 @@
  *                ------                                        ------
  *                 EXP1                                          EXP2
  */
+<<<<<<< HEAD
 #define EXP1_01_PIN                         PC14
 #define EXP1_02_PIN                         PC13
 #define EXP1_03_PIN                         PB9
@@ -146,10 +164,30 @@
 #define EXP2_06_PIN                         PB15
 #define EXP2_07_PIN                         PB11
 #define EXP2_08_PIN                         -1    // RESET
+=======
+#define EXP1_01_PIN                        PC14
+#define EXP1_02_PIN                        PC13
+#define EXP1_03_PIN                        PB9
+#define EXP1_04_PIN                        PB8
+#define EXP1_05_PIN                        PB7
+#define EXP1_06_PIN                        PB6
+#define EXP1_07_PIN                        PB5
+#define EXP1_08_PIN                        PB4
+
+#define EXP2_01_PIN                        PB14
+#define EXP2_02_PIN                        PB13
+#define EXP2_03_PIN                        PB3
+#define EXP2_04_PIN                        PB12
+#define EXP2_05_PIN                        PD2
+#define EXP2_06_PIN                        PB15
+#define EXP2_07_PIN                        PB11
+#define EXP2_08_PIN                        -1     // RESET
+>>>>>>> upstream/bugfix-2.0.x
 
 //
 // LCD / Controller
 //
+<<<<<<< HEAD
 
 #if HAS_WIRED_LCD
 
@@ -179,6 +217,36 @@
     #define BTN_ENC_EN               LCD_PINS_D7  // Detect the presence of the encoder
   #endif
 
+=======
+#if HAS_WIRED_LCD
+
+  #define SPI_DEVICE                           2
+  #define SD_SS_PIN                  EXP2_04_PIN
+  #define SD_SCK_PIN                 EXP2_02_PIN
+  #define SD_MISO_PIN                EXP2_01_PIN
+  #define SD_MOSI_PIN                EXP2_06_PIN
+
+  #define SDSS                         SD_SS_PIN
+  #define SD_DETECT_PIN              EXP2_07_PIN
+
+  #define BEEPER_PIN                 EXP1_01_PIN
+
+  #define LCD_PINS_RS                EXP1_04_PIN
+  #define LCD_PINS_ENABLE            EXP1_03_PIN
+  #define LCD_PINS_D4                EXP1_05_PIN
+  #define LCD_PINS_D5                EXP1_06_PIN
+  #define LCD_PINS_D6                EXP1_07_PIN
+  #define LCD_PINS_D7                EXP1_08_PIN
+
+  #define BTN_EN1                    EXP2_05_PIN
+  #define BTN_EN2                    EXP2_03_PIN
+  #define BTN_ENC                    EXP1_02_PIN
+
+  #if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
+    #define BTN_ENC_EN               LCD_PINS_D7  // Detect the presence of the encoder
+  #endif
+
+>>>>>>> upstream/bugfix-2.0.x
   // Alter timing for graphical display
   #if IS_U8GLIB_ST7920
     #define BOARD_ST7920_DELAY_1              96

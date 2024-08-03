@@ -42,6 +42,10 @@ class StatusScreen : public BaseScreen, public CachedScreen<STATUS_SCREEN_CACHE,
     static void onEntry();
     static void onIdle();
     static bool onTouchEnd(uint8_t tag);
+<<<<<<< HEAD
     static void onMediaMounted();
+=======
+    static void onMediaInserted();
+>>>>>>> upstream/bugfix-2.0.x
     static void onMediaRemoved();
 };

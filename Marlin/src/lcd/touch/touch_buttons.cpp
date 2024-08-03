@@ -28,16 +28,27 @@
 #include "../scaled_tft.h"
 
 #if ENABLED(TFT_TOUCH_DEVICE_GT911)
+<<<<<<< HEAD
   #include HAL_PATH(../.., tft/gt911.h)
   GT911 touchIO;
 #elif ENABLED(TFT_TOUCH_DEVICE_XPT2046)
   #include HAL_PATH(../.., tft/xpt2046.h)
+=======
+  #include HAL_PATH(../../HAL, tft/gt911.h)
+  GT911 touchIO;
+#elif ENABLED(TFT_TOUCH_DEVICE_XPT2046)
+  #include HAL_PATH(../../HAL, tft/xpt2046.h)
+>>>>>>> upstream/bugfix-2.0.x
   XPT2046 touchIO;
 #else
   #error "Unknown Touch Screen Type."
 #endif
 
 #if HAS_DISPLAY_SLEEP
+  millis_t TouchButtons::next_sleep_ms;
+#endif
+
+#if HAS_TOUCH_SLEEP
   millis_t TouchButtons::next_sleep_ms;
 #endif
 
@@ -57,10 +68,15 @@
 TouchButtons touchBt;
 
 void TouchButtons::init() {
+<<<<<<< HEAD
   touchIO.init();
   #if HAS_DISPLAY_SLEEP
     next_sleep_ms = ui.sleep_timeout_minutes ? millis() + MIN_TO_MS(ui.sleep_timeout_minutes) : 0;
   #endif
+=======
+  touchIO.Init();
+  TERN_(HAS_TOUCH_SLEEP, next_sleep_ms = millis() + SEC_TO_MS(TOUCH_IDLE_SLEEP));
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 uint8_t TouchButtons::read_buttons() {
@@ -68,6 +84,7 @@ uint8_t TouchButtons::read_buttons() {
     int16_t x, y;
 
     #if ENABLED(TFT_TOUCH_DEVICE_XPT2046)
+<<<<<<< HEAD
 
       const bool is_touched = TOUCH_PORTRAIT == _TOUCH_ORIENTATION
                                 ? touchIO.getRawPoint(&y, &x)
@@ -107,6 +124,32 @@ uint8_t TouchButtons::read_buttons() {
       const bool is_touched = TOUCH_PORTRAIT == _TOUCH_ORIENTATION ? touchIO.getRawPoint(&y, &x) : touchIO.getRawPoint(&x, &y);
       if (!is_touched) return 0;
 
+=======
+      const bool is_touched = (TERN(TOUCH_SCREEN_CALIBRATION, touch_calibration.calibration.orientation, TOUCH_ORIENTATION) == TOUCH_PORTRAIT ? touchIO.getRawPoint(&y, &x) : touchIO.getRawPoint(&x, &y));
+      #if HAS_TOUCH_SLEEP
+        if (is_touched)
+          wakeUp();
+        else if (!isSleeping() && ELAPSED(millis(), next_sleep_ms) && ui.on_status_screen())
+          sleepTimeout();
+      #endif
+      if (!is_touched) return 0;
+
+      #if ENABLED(TOUCH_SCREEN_CALIBRATION)
+        const calibrationState state = touch_calibration.get_calibration_state();
+        if (WITHIN(state, CALIBRATION_TOP_LEFT, CALIBRATION_BOTTOM_RIGHT)) {
+          if (touch_calibration.handleTouch(x, y)) ui.refresh();
+          return 0;
+        }
+        x = int16_t((int32_t(x) * touch_calibration.calibration.x) >> 16) + touch_calibration.calibration.offset_x;
+        y = int16_t((int32_t(y) * touch_calibration.calibration.y) >> 16) + touch_calibration.calibration.offset_y;
+      #else
+        x = uint16_t((uint32_t(x) * TOUCH_CALIBRATION_X) >> 16) + TOUCH_OFFSET_X;
+        y = uint16_t((uint32_t(y) * TOUCH_CALIBRATION_Y) >> 16) + TOUCH_OFFSET_Y;
+      #endif
+    #elif ENABLED(TFT_TOUCH_DEVICE_GT911)
+      bool is_touched = (TOUCH_ORIENTATION == TOUCH_PORTRAIT ? touchIO.getPoint(&y, &x) : touchIO.getPoint(&x, &y));
+      if (!is_touched) return 0;
+>>>>>>> upstream/bugfix-2.0.x
     #endif
 
     // Touch within the button area simulates an encoder button
@@ -131,7 +174,11 @@ uint8_t TouchButtons::read_buttons() {
   return 0;
 }
 
+<<<<<<< HEAD
 #if HAS_DISPLAY_SLEEP
+=======
+#if HAS_TOUCH_SLEEP
+>>>>>>> upstream/bugfix-2.0.x
 
   void TouchButtons::sleepTimeout() {
     #if HAS_LCD_BRIGHTNESS
@@ -141,7 +188,10 @@ uint8_t TouchButtons::read_buttons() {
     #endif
     next_sleep_ms = TSLP_SLEEPING;
   }
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
   void TouchButtons::wakeUp() {
     if (isSleeping()) {
       #if HAS_LCD_BRIGHTNESS
@@ -150,6 +200,7 @@ uint8_t TouchButtons::read_buttons() {
         WRITE(TFT_BACKLIGHT_PIN, HIGH);
       #endif
     }
+<<<<<<< HEAD
     next_sleep_ms = ui.sleep_timeout_minutes ? millis() + MIN_TO_MS(ui.sleep_timeout_minutes) : 0;
   }
 
@@ -158,5 +209,11 @@ uint8_t TouchButtons::read_buttons() {
   }
 
 #endif // HAS_DISPLAY_SLEEP
+=======
+    next_sleep_ms = millis() + SEC_TO_MS(TOUCH_IDLE_SLEEP);
+  }
+
+#endif // HAS_TOUCH_SLEEP
+>>>>>>> upstream/bugfix-2.0.x
 
 #endif // HAS_TOUCH_BUTTONS

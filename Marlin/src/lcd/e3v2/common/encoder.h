@@ -44,27 +44,48 @@ typedef enum {
   ENCODER_DIFF_CCW   = 2,  // counterclockwise rotation
   ENCODER_DIFF_ENTER = 3   // click
 } EncoderState;
+<<<<<<< HEAD
+=======
+
+#define ENCODER_WAIT_MS 20
+>>>>>>> upstream/bugfix-2.0.x
 
 #define ENCODER_WAIT_MS TERN(DWIN_LCD_PROUI, 10, 20)
 
 // Analyze encoder value and return state
+<<<<<<< HEAD
 EncoderState encoderReceiveAnalyze();
+=======
+EncoderState Encoder_ReceiveAnalyze();
+>>>>>>> upstream/bugfix-2.0.x
 
 inline EncoderState get_encoder_state() {
   static millis_t Encoder_ms = 0;
   const millis_t ms = millis();
   if (PENDING(ms, Encoder_ms)) return ENCODER_DIFF_NO;
+<<<<<<< HEAD
   const EncoderState state = encoderReceiveAnalyze();
+=======
+  const EncoderState state = Encoder_ReceiveAnalyze();
+>>>>>>> upstream/bugfix-2.0.x
   if (state != ENCODER_DIFF_NO) Encoder_ms = ms + ENCODER_WAIT_MS;
   return state;
 }
 
 template<typename T>
+<<<<<<< HEAD
 inline bool applyEncoder(const EncoderState &encoder_diffState, T &valref) {
   if (encoder_diffState == ENCODER_DIFF_CW)
     valref += encoderRate.encoderMoveValue;
   else if (encoder_diffState == ENCODER_DIFF_CCW)
     valref -= encoderRate.encoderMoveValue;
+=======
+inline bool Apply_Encoder(const EncoderState &encoder_diffState, T &valref) {
+  if (encoder_diffState == ENCODER_DIFF_CW)
+    valref += EncoderRate.encoderMoveValue;
+  else if (encoder_diffState == ENCODER_DIFF_CCW)
+    valref -= EncoderRate.encoderMoveValue;
+>>>>>>> upstream/bugfix-2.0.x
   return encoder_diffState == ENCODER_DIFF_ENTER;
 }
 

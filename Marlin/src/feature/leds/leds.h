@@ -30,7 +30,11 @@
 #include <string.h>
 
 // A white component can be passed
+<<<<<<< HEAD
 #if ANY(RGBW_LED, PCA9632_RGBW)
+=======
+#if EITHER(RGBW_LED, PCA9632_RGBW)
+>>>>>>> upstream/bugfix-2.0.x
   #define HAS_WHITE_LED 1
 #endif
 
@@ -38,6 +42,7 @@
   #define _NEOPIXEL_INCLUDE_
   #include "neopixel.h"
   #undef _NEOPIXEL_INCLUDE_
+<<<<<<< HEAD
 #endif
 
 #if ENABLED(BLINKM)
@@ -50,6 +55,8 @@
 
 #if ENABLED(PCA9632)
   #include "pca9632.h"
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 /**
@@ -159,16 +166,32 @@ public:
 
   #if ENABLED(PRINTER_EVENT_LEDS)
     static LEDColor get_color() { return lights_on ? color : LEDColorOff(); }
+<<<<<<< HEAD
+=======
+  #endif
+
+  #if ANY(LED_CONTROL_MENU, PRINTER_EVENT_LEDS, CASE_LIGHT_IS_COLOR_LED)
+    static LEDColor color; // last non-off color
+    static bool lights_on; // the last set color was "on"
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 
   #if ENABLED(LED_CONTROL_MENU)
     static void toggle();  // swap "off" with color
   #endif
+<<<<<<< HEAD
   #if ANY(LED_CONTROL_MENU, CASE_LIGHT_USE_RGB_LED, HAS_LED_POWEROFF_TIMEOUT)
     static void update() { set_color(color); }
   #endif
 
   #if HAS_LED_POWEROFF_TIMEOUT
+=======
+  #if EITHER(LED_CONTROL_MENU, CASE_LIGHT_USE_RGB_LED)
+    static void update() { set_color(color); }
+  #endif
+
+  #if LED_POWEROFF_TIMEOUT > 0
+>>>>>>> upstream/bugfix-2.0.x
     private:
       static millis_t led_off_time;
     public:

@@ -229,6 +229,9 @@
 // LCD / Controller
 //
 
+//
+// LCD / Controller
+//
 #if IS_TFTGLCD_PANEL
 
   #if ENABLED(TFTGLCD_PANEL_SPI)
@@ -240,6 +243,7 @@
 
 #elif HAS_WIRED_LCD
 
+<<<<<<< HEAD
   #define BEEPER_PIN                 EXP1_01_PIN
   #define BTN_ENC                    EXP1_02_PIN
   #define BTN_EN1                    EXP2_05_PIN
@@ -249,6 +253,17 @@
   #define LCD_PINS_EN                EXP1_03_PIN
   #define LCD_PINS_D4                EXP1_05_PIN
   #if ANY(VIKI2, miniVIKI)
+=======
+  #define BEEPER_PIN                       P1_31  // EXP1.1
+  #define BTN_ENC                          P1_30  // EXP1.2
+  #define BTN_EN1                          P3_26  // EXP2.5
+  #define BTN_EN2                          P3_25  // EXP2.3
+  #define LCD_PINS_RS                      P0_16  // EXP1.4
+  #define LCD_SDSS                         P0_28  // EXP2.4
+  #define LCD_PINS_ENABLE                  P0_18  // EXP1.3
+  #define LCD_PINS_D4                      P0_15  // EXP1.5
+  #if EITHER(VIKI2, miniVIKI)
+>>>>>>> upstream/bugfix-2.0.x
     #define DOGLCD_SCK                SD_SCK_PIN
     #define DOGLCD_MOSI              SD_MOSI_PIN
   #endif
@@ -331,6 +346,7 @@
    * Worst case you may have to give up the LCD
    * RX pins need to be interrupt capable
    */
+<<<<<<< HEAD
   #define X_SERIAL_TX_PIN              PIN_P1_22  // J8-2
   #define X_SERIAL_RX_PIN              PIN_P2_12  // J8-4 Interrupt Capable
 
@@ -338,6 +354,15 @@
   #define Y_SERIAL_RX_PIN              PIN_P2_11  // J8-5 Interrupt Capable
 
   #define Z_SERIAL_TX_PIN              PIN_P2_12  // J8-4
+=======
+  #define X_SERIAL_TX_PIN                  P1_22  // J8-2
+  #define X_SERIAL_RX_PIN                  P2_12  // J8-4 Interrupt Capable
+
+  #define Y_SERIAL_TX_PIN                  P1_23  // J8-3
+  #define Y_SERIAL_RX_PIN                  P2_11  // J8-5 Interrupt Capable
+
+  #define Z_SERIAL_TX_PIN                  P2_12  // J8-4
+>>>>>>> upstream/bugfix-2.0.x
   #define Z_SERIAL_RX_PIN                  P0_25  // TH3
 
   #define E0_SERIAL_TX_PIN                 P4_28  // J8-6

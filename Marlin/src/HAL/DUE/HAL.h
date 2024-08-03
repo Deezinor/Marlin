@@ -123,7 +123,11 @@ typedef Servo hal_servo_t;
 //
 // ADC
 //
+<<<<<<< HEAD
 #define HAL_ADC_VREF_MV   3300
+=======
+#define HAL_ADC_VREF         3.3
+>>>>>>> upstream/bugfix-2.0.x
 #define HAL_ADC_RESOLUTION  10
 
 #ifndef analogInputToDigitalPin
@@ -210,7 +214,11 @@ public:
   static void adc_init() {}
 
   // Called by Temperature::init for each sensor at startup
+<<<<<<< HEAD
   static void adc_enable(const uint8_t /*ch*/) {}
+=======
+  static void adc_enable(const uint8_t ch) {}
+>>>>>>> upstream/bugfix-2.0.x
 
   // Begin ADC sampling on the given channel. Called from Temperature::isr!
   static void adc_start(const uint8_t ch) { adc_result = analogRead(ch); }

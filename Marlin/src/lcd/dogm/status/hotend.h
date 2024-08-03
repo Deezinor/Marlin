@@ -89,6 +89,7 @@
   #endif
 
 #elif STATUS_HOTEND_BITMAPS > 1
+<<<<<<< HEAD
 
   const unsigned char status_active_extruder_indicator_bmp[] PROGMEM = {
     B00110000,
@@ -97,6 +98,8 @@
     B00011000,
     B00110000
   };
+=======
+>>>>>>> upstream/bugfix-2.0.x
 
   #ifdef STATUS_HOTEND_ANIM
 

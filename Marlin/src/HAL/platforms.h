@@ -43,13 +43,23 @@
   #ifndef HAL_STM32
     #define HAL_STM32
   #endif
+<<<<<<< HEAD
   #define HAL_PATH(PATH, NAME) XSTR(PATH/HAL/STM32/NAME)
+=======
+  #define HAL_PATH(PATH, NAME) XSTR(PATH/STM32/NAME)
+>>>>>>> upstream/bugfix-2.0.x
 #elif defined(ARDUINO_ARCH_ESP32)
   #define HAL_PATH(PATH, NAME) XSTR(PATH/HAL/ESP32/NAME)
 #elif defined(__PLAT_LINUX__)
+<<<<<<< HEAD
   #define HAL_PATH(PATH, NAME) XSTR(PATH/HAL/LINUX/NAME)
 #elif defined(__PLAT_NATIVE_SIM__)
   #define HAL_PATH(PATH, NAME) XSTR(PATH/HAL/NATIVE_SIM/NAME)
+=======
+  #define HAL_PATH(PATH, NAME) XSTR(PATH/LINUX/NAME)
+#elif defined(__PLAT_NATIVE_SIM__)
+  #define HAL_PATH(PATH, NAME) XSTR(PATH/NATIVE_SIM/NAME)
+>>>>>>> upstream/bugfix-2.0.x
 #elif defined(__SAMD51__)
   #define HAL_PATH(PATH, NAME) XSTR(PATH/HAL/SAMD51/NAME)
 #elif defined(__SAMD21__)

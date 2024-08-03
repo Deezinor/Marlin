@@ -23,6 +23,7 @@
 
 /**
  * Mesh Viewer for PRO UI
+<<<<<<< HEAD
  * Based on the original work of: Miguel Risco-Castillo (MRISCOC)
  * https://github.com/mriscoc/Ender3V2S1
  * version: 4.2.1
@@ -41,3 +42,20 @@ public:
 extern MeshViewer meshViewer;
 
 void gotoMeshViewer(const bool redraw);
+=======
+ * Author: Miguel A. Risco-Castillo (MRISCOC)
+ * version: 3.14.1
+ * Date: 2022/04/11
+ */
+
+class MeshViewerClass {
+public:
+  float max, min;
+  void Draw(bool withsave = false);
+  void DrawMesh(bed_mesh_t zval, const uint8_t sizex, const uint8_t sizey);
+};
+
+extern MeshViewerClass MeshViewer;
+
+void Goto_MeshViewer();
+>>>>>>> upstream/bugfix-2.0.x

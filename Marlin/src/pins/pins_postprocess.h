@@ -221,6 +221,7 @@
 #if !AXIS_HAS_SPI(K)
   #undef K_CS_PIN
 #endif
+<<<<<<< HEAD
 #if !AXIS_HAS_SPI(U)
   #undef U_CS_PIN
 #endif
@@ -230,6 +231,8 @@
 #if !AXIS_HAS_SPI(W)
   #undef W_CS_PIN
 #endif
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #if E_STEPPERS && !AXIS_HAS_SPI(E0)
   #undef E0_CS_PIN
 #endif
@@ -273,6 +276,7 @@
 #ifndef K_CS_PIN
   #define K_CS_PIN -1
 #endif
+<<<<<<< HEAD
 #ifndef U_CS_PIN
   #define U_CS_PIN -1
 #endif
@@ -282,6 +286,8 @@
 #ifndef W_CS_PIN
   #define W_CS_PIN -1
 #endif
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #ifndef E0_CS_PIN
   #define E0_CS_PIN -1
 #endif
@@ -515,12 +521,20 @@
 //
 // Assign endstop pins, with handling for boards that have only 3 connectors
 //
+<<<<<<< HEAD
 #if HAS_X_AXIS
   #ifdef X_STOP_PIN
     #if X_HOME_TO_MIN
       #define X_MIN_PIN X_STOP_PIN
     #elif X_HOME_TO_MAX
       #define X_MAX_PIN X_STOP_PIN
+=======
+#ifdef X_STOP_PIN
+  #if X_HOME_TO_MIN
+    #define X_MIN_PIN X_STOP_PIN
+    #ifndef X_MAX_PIN
+      #define X_MAX_PIN -1
+>>>>>>> upstream/bugfix-2.0.x
     #endif
   #elif X_HOME_TO_MIN
     #define X_STOP_PIN X_MIN_PIN
@@ -557,6 +571,7 @@
       #define Z_MAX_PIN Z_STOP_PIN
     #endif
   #endif
+<<<<<<< HEAD
   #if ENABLED(Z_MULTI_ENDSTOPS)
     #if ((Z_HOME_TO_MIN && !defined(Z2_MIN_PIN)) || (Z_HOME_TO_MAX && !defined(Z2_MAX_PIN))) && !defined(Z2_STOP_PIN)
       #error "Z2_STOP_PIN is required for Z_MULTI_ENDSTOPS. Define Z2_STOP_PIN in Configuration_adv.h."
@@ -570,6 +585,67 @@
       #if ((Z_HOME_TO_MIN && !defined(Z4_MIN_PIN)) || (Z_HOME_TO_MAX && !defined(Z4_MAX_PIN))) && !defined(Z4_STOP_PIN)
         #error "Z4_STOP_PIN is required for Z_MULTI_ENDSTOPS with NUM_Z_STEPPERS == 4. Define Z4_STOP_PIN in Configuration_adv.h."
       #endif
+=======
+#elif X_HOME_TO_MIN
+  #define X_STOP_PIN X_MIN_PIN
+#else
+  #define X_STOP_PIN X_MAX_PIN
+#endif
+#if !defined(X2_USE_ENDSTOP) && ENABLED(X_DUAL_ENDSTOPS) && PIN_EXISTS(X_STOP)
+  #define X2_USE_ENDSTOP _XSTOP_
+#endif
+
+#if HAS_Y_AXIS
+  #ifdef Y_STOP_PIN
+    #if Y_HOME_TO_MIN
+      #define Y_MIN_PIN Y_STOP_PIN
+      #ifndef Y_MAX_PIN
+        #define Y_MAX_PIN -1
+      #endif
+    #else
+      #define Y_MAX_PIN Y_STOP_PIN
+      #ifndef Y_MIN_PIN
+        #define Y_MIN_PIN -1
+      #endif
+    #endif
+  #elif Y_HOME_TO_MIN
+    #define Y_STOP_PIN Y_MIN_PIN
+  #else
+    #define Y_STOP_PIN Y_MAX_PIN
+  #endif
+  #if !defined(Y2_USE_ENDSTOP) && ENABLED(Y_DUAL_ENDSTOPS) && PIN_EXISTS(Y_STOP)
+    #define Y2_USE_ENDSTOP _YSTOP_
+  #endif
+#endif
+
+#if HAS_Z_AXIS
+  #ifdef Z_STOP_PIN
+    #if Z_HOME_TO_MIN
+      #define Z_MIN_PIN Z_STOP_PIN
+      #ifndef Z_MAX_PIN
+        #define Z_MAX_PIN -1
+      #endif
+    #else
+      #define Z_MAX_PIN Z_STOP_PIN
+      #ifndef Z_MIN_PIN
+        #define Z_MIN_PIN -1
+      #endif
+    #endif
+  #elif Z_HOME_TO_MIN
+    #define Z_STOP_PIN Z_MIN_PIN
+  #else
+    #define Z_STOP_PIN Z_MAX_PIN
+  #endif
+  #if ENABLED(Z_MULTI_ENDSTOPS) && PIN_EXISTS(Z_STOP)
+    #ifndef Z2_USE_ENDSTOP
+      #define Z2_USE_ENDSTOP _ZSTOP_
+    #endif
+    #if NUM_Z_STEPPERS >= 3 && !defined(Z3_USE_ENDSTOP)
+      #define Z3_USE_ENDSTOP _ZSTOP_
+    #endif
+    #if NUM_Z_STEPPERS >= 4 && !defined(Z4_USE_ENDSTOP)
+      #define Z4_USE_ENDSTOP _ZSTOP_
+>>>>>>> upstream/bugfix-2.0.x
     #endif
   #endif
 #endif
@@ -578,6 +654,7 @@
   #ifdef I_STOP_PIN
     #if I_HOME_TO_MIN
       #define I_MIN_PIN I_STOP_PIN
+<<<<<<< HEAD
     #elif I_HOME_TO_MAX
       #define I_MAX_PIN I_STOP_PIN
     #endif
@@ -586,12 +663,32 @@
   #elif I_HOME_TO_MAX
     #define I_STOP_PIN I_MAX_PIN
   #endif
+=======
+      #ifndef I_MAX_PIN
+        #define I_MAX_PIN -1
+      #endif
+    #else
+      #define I_MAX_PIN I_STOP_PIN
+      #ifndef I_MIN_PIN
+        #define I_MIN_PIN -1
+      #endif
+    #endif
+  #elif I_HOME_TO_MIN
+    #define I_STOP_PIN I_MIN_PIN
+  #else
+    #define I_STOP_PIN I_MAX_PIN
+  #endif
+#else
+  #undef I_MIN_PIN
+  #undef I_MAX_PIN
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #if HAS_J_AXIS
   #ifdef J_STOP_PIN
     #if J_HOME_TO_MIN
       #define J_MIN_PIN J_STOP_PIN
+<<<<<<< HEAD
     #elif J_HOME_TO_MAX
       #define J_MAX_PIN J_STOP_PIN
     #endif
@@ -600,12 +697,32 @@
   #elif J_HOME_TO_MAX
     #define J_STOP_PIN J_MAX_PIN
   #endif
+=======
+      #ifndef J_MAX_PIN
+        #define J_MAX_PIN -1
+      #endif
+    #else
+      #define J_MAX_PIN J_STOP_PIN
+      #ifndef J_MIN_PIN
+        #define J_MIN_PIN -1
+      #endif
+    #endif
+  #elif J_HOME_TO_MIN
+    #define J_STOP_PIN J_MIN_PIN
+  #else
+    #define J_STOP_PIN J_MAX_PIN
+  #endif
+#else
+  #undef J_MIN_PIN
+  #undef J_MAX_PIN
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #if HAS_K_AXIS
   #ifdef K_STOP_PIN
     #if K_HOME_TO_MIN
       #define K_MIN_PIN K_STOP_PIN
+<<<<<<< HEAD
     #elif K_HOME_TO_MAX
       #define K_MAX_PIN K_STOP_PIN
     #endif
@@ -656,6 +773,25 @@
   #elif W_HOME_TO_MAX
     #define W_STOP_PIN W_MAX_PIN
   #endif
+=======
+      #ifndef K_MAX_PIN
+        #define K_MAX_PIN -1
+      #endif
+    #else
+      #define K_MAX_PIN K_STOP_PIN
+      #ifndef K_MIN_PIN
+        #define K_MIN_PIN -1
+      #endif
+    #endif
+  #elif K_HOME_TO_MIN
+    #define K_STOP_PIN K_MIN_PIN
+  #else
+    #define K_STOP_PIN K_MAX_PIN
+  #endif
+#else
+  #undef K_MIN_PIN
+  #undef K_MAX_PIN
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 // Filament Sensor first pin alias
@@ -670,8 +806,11 @@
   #undef FIL_RUNOUT2_PIN
 #endif
 
+<<<<<<< HEAD
 #undef LCD_PINS_DEFINED
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #ifndef LCD_PINS_D4
   #define LCD_PINS_D4 -1
 #endif
@@ -709,7 +848,11 @@
  * DIAG_REMAPPED(X2, X_MIN) ... PIN_EXISTS(X_MIN) && E(X2_E_INDEX)_DIAG_PIN == X_MIN_PIN
  */
 #define DIAG_REMAPPED(p,q) (PIN_EXISTS(q) && _EPIN(p##_E_INDEX, DIAG) == q##_PIN)
+<<<<<<< HEAD
 #define _En_DIAG_PIN(p) E##p##_DIAG_PIN
+=======
+#define _En_DIAG_(p) _E##p##_DIAG_
+>>>>>>> upstream/bugfix-2.0.x
 
 // The E0/E1 steppers are always used for Dual E
 #if ENABLED(E_DUAL_STEPPER_DRIVERS)
@@ -721,8 +864,12 @@
   #define X2_E_INDEX E_STEPPERS
 #endif
 
+<<<<<<< HEAD
 // X2 auto-assignment will use up an E stepper, but not if it's chained
 #if HAS_X2_STEPPER && !defined(X2_STEP_PIN) && !PIN_EXISTS(X2_CS)
+=======
+#if HAS_X2_STEPPER && !defined(X2_DIAG_PIN) && !defined(X2_STEP_PIN) && !PIN_EXISTS(X2_CS_PIN)
+>>>>>>> upstream/bugfix-2.0.x
   #define Y2_E_INDEX INCREMENT(X2_E_INDEX)
 #else
   #define Y2_E_INDEX X2_E_INDEX
@@ -776,7 +923,12 @@
   //
   // Auto-assign pins for stallGuard sensorless homing
   //
+<<<<<<< HEAD
   #if !defined(X2_STOP_PIN) && defined(X2_STALL_SENSITIVITY) && ENABLED(X_DUAL_ENDSTOPS) && E_DIAG_EXISTS(X2_E_INDEX)
+=======
+  #if !defined(X2_DIAG_PIN) && !defined(X2_USE_ENDSTOP) && defined(X2_STALL_SENSITIVITY) && ENABLED(X_DUAL_ENDSTOPS) && _PEXI(X2_E_INDEX, DIAG)
+    #define X2_DIAG_PIN _EPIN(X2_E_INDEX, DIAG)
+>>>>>>> upstream/bugfix-2.0.x
     #if   DIAG_REMAPPED(X2, X_MIN)      // If already remapped in the pins file...
       #define X2_STOP_PIN X_MIN_PIN
     #elif DIAG_REMAPPED(X2, Y_MIN)
@@ -788,11 +940,20 @@
     #elif DIAG_REMAPPED(X2, Y_MAX)
       #define X2_STOP_PIN Y_MAX_PIN
     #elif DIAG_REMAPPED(X2, Z_MAX)
+<<<<<<< HEAD
       #define X2_STOP_PIN Z_MAX_PIN
     #else                               // Otherwise pick the next free En_DIAG_PIN directly
       #define X2_STOP_PIN _En_DIAG_PIN(X2_E_INDEX)
     #endif
     #define AUTO_ASSIGNED_X2_DIAG 1
+=======
+      #define X2_USE_ENDSTOP _ZMAX_
+    #else                               // Otherwise pick the next free En_DIAG_PIN directly
+      #define X2_USE_ENDSTOP _En_DIAG_(X2_E_INDEX)
+    #endif
+    #define AUTO_ASSIGNED_X2_DIAG 1
+    #undef X2_DIAG_PIN // Defined in Conditionals_post.h based on X2_USE_ENDSTOP
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 #endif
 
@@ -809,15 +970,23 @@
   #define X2_MS3_PIN -1
 #endif
 
+<<<<<<< HEAD
 // Y2 auto-assignment will use up an E stepper, but not if it's chained
 #if HAS_Y2_STEPPER && !defined(Y2_STEP_PIN) && !PIN_EXISTS(Y2_CS)
+=======
+#if HAS_DUAL_Y_STEPPERS && !defined(Y2_DIAG_PIN) && !defined(Y2_STEP_PIN) && !PIN_EXISTS(Y2_CS_PIN)
+>>>>>>> upstream/bugfix-2.0.x
   #define Z2_E_INDEX INCREMENT(Y2_E_INDEX)
 #else
   #define Z2_E_INDEX Y2_E_INDEX
 #endif
 
 // The Y2 axis, if any, should be the next open extruder port
+<<<<<<< HEAD
 #if HAS_Y2_STEPPER
+=======
+#if HAS_DUAL_Y_STEPPERS
+>>>>>>> upstream/bugfix-2.0.x
   #ifndef Y2_STEP_PIN
     #define Y2_STEP_PIN   _EPIN(Y2_E_INDEX, STEP)
     #define Y2_DIR_PIN    _EPIN(Y2_E_INDEX, DIR)
@@ -861,7 +1030,12 @@
     #endif
   #endif
   // Auto-assign pins for stallGuard sensorless homing
+<<<<<<< HEAD
   #if !defined(Y2_STOP_PIN) && defined(Y2_STALL_SENSITIVITY) && ENABLED(Y_DUAL_ENDSTOPS) && E_DIAG_EXISTS(Y2_E_INDEX)
+=======
+  #if !defined(Y2_DIAG_PIN) && !defined(Y2_USE_ENDSTOP) && defined(Y2_STALL_SENSITIVITY) && ENABLED(Y_DUAL_ENDSTOPS) && _PEXI(Y2_E_INDEX, DIAG)
+    #define Y2_DIAG_PIN _EPIN(Y2_E_INDEX, DIAG)
+>>>>>>> upstream/bugfix-2.0.x
     #if   DIAG_REMAPPED(Y2, X_MIN)
       #define Y2_STOP_PIN X_MIN_PIN
     #elif DIAG_REMAPPED(Y2, Y_MIN)
@@ -875,9 +1049,16 @@
     #elif DIAG_REMAPPED(Y2, Z_MAX)
       #define Y2_STOP_PIN Z_MAX_PIN
     #else
+<<<<<<< HEAD
       #define Y2_STOP_PIN _En_DIAG_PIN(Y2_E_INDEX)
     #endif
     #define AUTO_ASSIGNED_Y2_DIAG 1
+=======
+      #define Y2_USE_ENDSTOP _En_DIAG_(Y2_E_INDEX)
+    #endif
+    #define AUTO_ASSIGNED_Y2_DIAG 1
+    #undef Y2_DIAG_PIN // Defined in Conditionals_post.h based on Y2_USE_ENDSTOP
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 #endif
 
@@ -894,8 +1075,12 @@
   #define Y2_MS3_PIN -1
 #endif
 
+<<<<<<< HEAD
 // Z2 auto-assignment will use up an E stepper, but not if it's chained
 #if NUM_Z_STEPPERS >= 2 && !defined(Z2_STEP_PIN) && !PIN_EXISTS(Z2_CS)
+=======
+#if NUM_Z_STEPPERS >= 2 && !defined(Z2_DIAG_PIN) && !defined(Z2_STEP_PIN) && !PIN_EXISTS(Z2_CS_PIN)
+>>>>>>> upstream/bugfix-2.0.x
   #define Z3_E_INDEX INCREMENT(Z2_E_INDEX)
 #else
   #define Z3_E_INDEX Z2_E_INDEX
@@ -946,7 +1131,12 @@
     #endif
   #endif
   // Auto-assign pins for stallGuard sensorless homing
+<<<<<<< HEAD
   #if !defined(Z2_STOP_PIN) && defined(Z2_STALL_SENSITIVITY) && ENABLED(Z_MULTI_ENDSTOPS) && E_DIAG_EXISTS(Z2_E_INDEX)
+=======
+  #if !defined(Z2_DIAG_PIN) && !defined(Z2_USE_ENDSTOP) && defined(Z2_STALL_SENSITIVITY) && ENABLED(Z_MULTI_ENDSTOPS) && _PEXI(Z2_E_INDEX, DIAG)
+    #define Z2_DIAG_PIN _EPIN(Z2_E_INDEX, DIAG)
+>>>>>>> upstream/bugfix-2.0.x
     #if   DIAG_REMAPPED(Z2, X_MIN)
       #define Z2_STOP_PIN X_MIN_PIN
     #elif DIAG_REMAPPED(Z2, Y_MIN)
@@ -960,9 +1150,16 @@
     #elif DIAG_REMAPPED(Z2, Z_MAX)
       #define Z2_STOP_PIN Z_MAX_PIN
     #else
+<<<<<<< HEAD
       #define Z2_STOP_PIN _En_DIAG_PIN(Z2_E_INDEX)
     #endif
     #define AUTO_ASSIGNED_Z2_DIAG 1
+=======
+      #define Z2_USE_ENDSTOP _En_DIAG_(Z2_E_INDEX)
+    #endif
+    #define AUTO_ASSIGNED_Z2_DIAG 1
+    #undef Z2_DIAG_PIN // Defined in Conditionals_post.h based on Z2_USE_ENDSTOP
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 #endif
 
@@ -979,8 +1176,12 @@
   #define Z2_MS3_PIN -1
 #endif
 
+<<<<<<< HEAD
 // Z3 auto-assignment will use up an E stepper, but not if it's chained
 #if NUM_Z_STEPPERS >= 3 && !defined(Z3_STEP_PIN) && !PIN_EXISTS(Z3_CS)
+=======
+#if NUM_Z_STEPPERS >= 3 && !defined(Z3_DIAG_PIN) && !defined(Z3_STEP_PIN) && !PIN_EXISTS(Z3_CS_PIN)
+>>>>>>> upstream/bugfix-2.0.x
   #define Z4_E_INDEX INCREMENT(Z3_E_INDEX)
 #else
   #define Z4_E_INDEX Z3_E_INDEX
@@ -1031,7 +1232,12 @@
     #endif
   #endif
   // Auto-assign pins for stallGuard sensorless homing
+<<<<<<< HEAD
   #if !defined(Z3_STOP_PIN) && defined(Z3_STALL_SENSITIVITY) && ENABLED(Z_MULTI_ENDSTOPS) && E_DIAG_EXISTS(Z3_E_INDEX)
+=======
+  #if !defined(Z3_DIAG_PIN) && !defined(Z3_USE_ENDSTOP) && defined(Z3_STALL_SENSITIVITY) && ENABLED(Z_MULTI_ENDSTOPS) && _PEXI(Z3_E_INDEX, DIAG)
+    #define Z3_DIAG_PIN _EPIN(Z3_E_INDEX, DIAG)
+>>>>>>> upstream/bugfix-2.0.x
     #if   DIAG_REMAPPED(Z3, X_MIN)
       #define Z3_STOP_PIN X_MIN_PIN
     #elif DIAG_REMAPPED(Z3, Y_MIN)
@@ -1045,9 +1251,16 @@
     #elif DIAG_REMAPPED(Z3, Z_MAX)
       #define Z3_STOP_PIN Z_MAX_PIN
     #else
+<<<<<<< HEAD
       #define Z3_STOP_PIN _En_DIAG_PIN(Z3_E_INDEX)
     #endif
     #define AUTO_ASSIGNED_Z3_DIAG 1
+=======
+      #define Z3_USE_ENDSTOP _En_DIAG_(Z3_E_INDEX)
+    #endif
+    #define AUTO_ASSIGNED_Z3_DIAG 1
+    #undef Z3_DIAG_PIN // Defined in Conditionals_post.h based on Z3_USE_ENDSTOP
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 #endif
 
@@ -1064,8 +1277,12 @@
   #define Z3_MS3_PIN -1
 #endif
 
+<<<<<<< HEAD
 // Z4 auto-assignment will use up an E stepper, but not if it's chained
 #if NUM_Z_STEPPERS >= 4 && !defined(Z4_STEP_PIN) && !PIN_EXISTS(Z4_CS)
+=======
+#if NUM_Z_STEPPERS >= 4 && !defined(Z4_DIAG_PIN) && !defined(Z4_STEP_PIN) && !PIN_EXISTS(Z4_CS_PIN)
+>>>>>>> upstream/bugfix-2.0.x
   #define I_E_INDEX INCREMENT(Z4_E_INDEX)
 #else
   #define I_E_INDEX Z4_E_INDEX
@@ -1116,7 +1333,12 @@
     #endif
   #endif
   // Auto-assign pins for stallGuard sensorless homing
+<<<<<<< HEAD
   #if !defined(Z4_STOP_PIN) && defined(Z4_STALL_SENSITIVITY) && ENABLED(Z_MULTI_ENDSTOPS) && E_DIAG_EXISTS(Z4_E_INDEX)
+=======
+  #if !defined(Z4_DIAG_PIN) && !defined(Z4_USE_ENDSTOP) && defined(Z4_STALL_SENSITIVITY) && ENABLED(Z_MULTI_ENDSTOPS) && _PEXI(Z4_E_INDEX, DIAG)
+    #define Z4_DIAG_PIN _EPIN(Z4_E_INDEX, DIAG)
+>>>>>>> upstream/bugfix-2.0.x
     #if   DIAG_REMAPPED(Z4, X_MIN)
       #define Z4_STOP_PIN X_MIN_PIN
     #elif DIAG_REMAPPED(Z4, Y_MIN)
@@ -1130,9 +1352,16 @@
     #elif DIAG_REMAPPED(Z4, Z_MAX)
       #define Z4_STOP_PIN Z_MAX_PIN
     #else
+<<<<<<< HEAD
       #define Z4_STOP_PIN _En_DIAG_PIN(Z4_E_INDEX)
     #endif
     #define AUTO_ASSIGNED_Z4_DIAG 1
+=======
+      #define Z4_USE_ENDSTOP _En_DIAG_(Z4_E_INDEX)
+    #endif
+    #define AUTO_ASSIGNED_Z4_DIAG 1
+    #undef Z4_DIAG_PIN // Defined in Conditionals_post.h based on Z4_USE_ENDSTOP
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 #endif
 
@@ -1149,8 +1378,12 @@
   #define Z4_MS3_PIN -1
 #endif
 
+<<<<<<< HEAD
 // I auto-assignment will use up an E stepper, but not if it's chained
 #if HAS_I_AXIS && !defined(I_STEP_PIN) && !PIN_EXISTS(I_CS)
+=======
+#if HAS_I_AXIS && !defined(I_DIAG_PIN) && !defined(I_STEP_PIN) && !PIN_EXISTS(I_CS_PIN)
+>>>>>>> upstream/bugfix-2.0.x
   #define J_E_INDEX INCREMENT(I_E_INDEX)
 #else
   #define J_E_INDEX I_E_INDEX
@@ -1201,6 +1434,7 @@
     #endif
   #endif
   // Auto-assign pins for stallGuard sensorless homing
+<<<<<<< HEAD
   #if !defined(I_STOP_PIN) && defined(I_STALL_SENSITIVITY) && E_DIAG_EXISTS(I_E_INDEX)
     #if   DIAG_REMAPPED(I, X_MIN)
       #define I_STOP_PIN X_MIN_PIN
@@ -1218,6 +1452,27 @@
       #define I_STOP_PIN _En_DIAG_PIN(I_E_INDEX)
     #endif
     #define AUTO_ASSIGNED_I_DIAG 1
+=======
+  #if !defined(I_DIAG_PIN) && !defined(I_USE_ENDSTOP) && defined(I_STALL_SENSITIVITY) && _PEXI(I_E_INDEX, DIAG)
+    #define I_DIAG_PIN _EPIN(I_E_INDEX, DIAG)
+    #if   DIAG_REMAPPED(I, X_MIN)
+      #define I_USE_ENDSTOP _XMIN_
+    #elif DIAG_REMAPPED(I, Y_MIN)
+      #define I_USE_ENDSTOP _YMIN_
+    #elif DIAG_REMAPPED(I, Z_MIN)
+      #define I_USE_ENDSTOP _ZMIN_
+    #elif DIAG_REMAPPED(I, X_MAX)
+      #define I_USE_ENDSTOP _XMAX_
+    #elif DIAG_REMAPPED(I, Y_MAX)
+      #define I_USE_ENDSTOP _YMAX_
+    #elif DIAG_REMAPPED(I, Z_MAX)
+      #define I_USE_ENDSTOP _ZMAX_
+    #else
+      #define I_USE_ENDSTOP _En_DIAG_(I_E_INDEX)
+    #endif
+    #define AUTO_ASSIGNED_I_DIAG 1
+    #undef I_DIAG_PIN // Defined in Conditionals_post.h based on I_USE_ENDSTOP
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 #endif
 
@@ -1234,8 +1489,12 @@
   #define I_MS3_PIN -1
 #endif
 
+<<<<<<< HEAD
 // J auto-assignment will use up an E stepper, but not if it's chained
 #if HAS_J_AXIS && !defined(J_STEP_PIN) && !PIN_EXISTS(J_CS)
+=======
+#if HAS_J_AXIS && !defined(J_DIAG_PIN) && !defined(J_STEP_PIN) && !PIN_EXISTS(J_CS_PIN)
+>>>>>>> upstream/bugfix-2.0.x
   #define K_E_INDEX INCREMENT(J_E_INDEX)
 #else
   #define K_E_INDEX J_E_INDEX
@@ -1247,7 +1506,11 @@
     #define J_STEP_PIN   _EPIN(J_E_INDEX, STEP)
     #define J_DIR_PIN    _EPIN(J_E_INDEX, DIR)
     #define J_ENABLE_PIN _EPIN(J_E_INDEX, ENABLE)
+<<<<<<< HEAD
     #if J_E_INDEX >= MAX_E_STEPPERS || !PIN_EXISTS(J_STEP)
+=======
+    #if I_E_INDEX >= MAX_E_STEPPERS || !PIN_EXISTS(J_STEP)
+>>>>>>> upstream/bugfix-2.0.x
       #error "No E stepper plug left for J!"
     #else
       #define AUTO_ASSIGNED_J_STEPPER 1
@@ -1286,6 +1549,7 @@
     #endif
   #endif
   // Auto-assign pins for stallGuard sensorless homing
+<<<<<<< HEAD
   #if !defined(J_STOP_PIN) && defined(J_STALL_SENSITIVITY) && E_DIAG_EXISTS(J_E_INDEX)
     #if   DIAG_REMAPPED(J, X_MIN)
       #define J_STOP_PIN X_MIN_PIN
@@ -1303,6 +1567,27 @@
       #define J_STOP_PIN _En_DIAG_PIN(J_E_INDEX)
     #endif
     #define AUTO_ASSIGNED_J_DIAG 1
+=======
+  #if !defined(J_DIAG_PIN) && !defined(J_USE_ENDSTOP) && defined(J_STALL_SENSITIVITY) && _PEXI(J_E_INDEX, DIAG)
+    #define J_DIAG_PIN _EPIN(J_E_INDEX, DIAG)
+    #if   DIAG_REMAPPED(J, X_MIN)
+      #define J_USE_ENDSTOP _XMIN_
+    #elif DIAG_REMAPPED(J, Y_MIN)
+      #define J_USE_ENDSTOP _YMIN_
+    #elif DIAG_REMAPPED(J, Z_MIN)
+      #define J_USE_ENDSTOP _ZMIN_
+    #elif DIAG_REMAPPED(J, X_MAX)
+      #define J_USE_ENDSTOP _XMAX_
+    #elif DIAG_REMAPPED(J, Y_MAX)
+      #define J_USE_ENDSTOP _YMAX_
+    #elif DIAG_REMAPPED(I, Z_MAX)
+      #define J_USE_ENDSTOP _ZMAX_
+    #else
+      #define J_USE_ENDSTOP _En_DIAG_(J_E_INDEX)
+    #endif
+    #define AUTO_ASSIGNED_J_DIAG 1
+    #undef J_DIAG_PIN // Defined in Conditionals_post.h based on J_USE_ENDSTOP
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 #endif
 
@@ -1319,6 +1604,7 @@
   #define J_MS3_PIN -1
 #endif
 
+<<<<<<< HEAD
 // K auto-assignment will use up an E stepper, but not if it's chained
 #if HAS_K_AXIS && !defined(K_STEP_PIN) && !PIN_EXISTS(K_CS)
   #define U_E_INDEX INCREMENT(K_E_INDEX)
@@ -1326,6 +1612,8 @@
   #define U_E_INDEX K_E_INDEX
 #endif
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 // The K axis, if any, should be the next open extruder port
 #if HAS_K_AXIS
   #ifndef K_STEP_PIN
@@ -1371,6 +1659,7 @@
     #endif
   #endif
   // Auto-assign pins for stallGuard sensorless homing
+<<<<<<< HEAD
   #if !defined(K_STOP_PIN) && defined(K_STALL_SENSITIVITY) && E_DIAG_EXISTS(K_E_INDEX)
     #if   DIAG_REMAPPED(K, X_MIN)
       #define K_STOP_PIN X_MIN_PIN
@@ -1388,6 +1677,27 @@
       #define K_STOP_PIN _En_DIAG_PIN(K_E_INDEX)
     #endif
     #define AUTO_ASSIGNED_K_DIAG 1
+=======
+  #if !defined(K_DIAG_PIN) && !defined(K_USE_ENDSTOP) && defined(K_STALL_SENSITIVITY) && _PEXI(K_E_INDEX, DIAG)
+    #define K_DIAG_PIN _EPIN(K_E_INDEX, DIAG)
+    #if   DIAG_REMAPPED(K, X_MIN)
+      #define K_USE_ENDSTOP _XMIN_
+    #elif DIAG_REMAPPED(K, Y_MIN)
+      #define K_USE_ENDSTOP _YMIN_
+    #elif DIAG_REMAPPED(K, Z_MIN)
+      #define K_USE_ENDSTOP _ZMIN_
+    #elif DIAG_REMAPPED(K, X_MAX)
+      #define K_USE_ENDSTOP _XMAX_
+    #elif DIAG_REMAPPED(K, Y_MAX)
+      #define K_USE_ENDSTOP _YMAX_
+    #elif DIAG_REMAPPED(K, Z_MAX)
+      #define K_USE_ENDSTOP _ZMAX_
+    #else
+      #define K_USE_ENDSTOP _En_DIAG_(K_E_INDEX)
+    #endif
+    #define AUTO_ASSIGNED_K_DIAG 1
+    #undef K_DIAG_PIN // Defined in Conditionals_post.h based on K_USE_ENDSTOP
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 #endif
 
@@ -1404,6 +1714,7 @@
   #define K_MS3_PIN -1
 #endif
 
+<<<<<<< HEAD
 // U auto-assignment will use up an E stepper, but not if it's chained
 #if HAS_U_AXIS && !defined(U_STEP_PIN) && !PIN_EXISTS(U_CS)
   #define V_E_INDEX INCREMENT(U_E_INDEX)
@@ -1699,6 +2010,131 @@
       #define Z4_MIN_PIN Z4_STOP_PIN
     #endif
   #endif
+=======
+//
+// Disable unused endstop / probe pins
+//
+#define _STOP_IN_USE(N) (X2_USE_ENDSTOP == N || Y2_USE_ENDSTOP == N || Z2_USE_ENDSTOP == N || Z3_USE_ENDSTOP == N || Z4_USE_ENDSTOP == N)
+#if !defined(USE_XMAX_PLUG) && _STOP_IN_USE(_XMAX_)
+  #define USE_XMAX_PLUG
+#endif
+#if !defined(USE_YMAX_PLUG) && _STOP_IN_USE(_YMAX_)
+  #define USE_YMAX_PLUG
+#endif
+#if !defined(USE_ZMAX_PLUG) && _STOP_IN_USE(_ZMAX_)
+  #define USE_ZMAX_PLUG
+#endif
+#if !defined(USE_XMIN_PLUG) && _STOP_IN_USE(_XMIN_)
+  #define USE_XMIN_PLUG
+#endif
+#if !defined(USE_YMIN_PLUG) && _STOP_IN_USE(_YMIN_)
+  #define USE_YMIN_PLUG
+#endif
+#if !defined(USE_ZMIN_PLUG) && _STOP_IN_USE(_ZMIN_)
+  #define USE_ZMIN_PLUG
+#endif
+#undef _STOP_IN_USE
+#if !USES_Z_MIN_PROBE_PIN
+  #undef Z_MIN_PROBE_PIN
+  #define Z_MIN_PROBE_PIN    -1
+#endif
+#if DISABLED(USE_XMIN_PLUG)
+  #undef X_MIN_PIN
+  #define X_MIN_PIN          -1
+#endif
+#if DISABLED(USE_XMAX_PLUG)
+  #undef X_MAX_PIN
+  #define X_MAX_PIN          -1
+#endif
+#if NONE(USE_XMIN_PLUG, USE_XMAX_PLUG)
+  #undef X_STOP_PIN
+#endif
+#if DISABLED(USE_YMIN_PLUG)
+  #undef Y_MIN_PIN
+  #define Y_MIN_PIN          -1
+#endif
+#if DISABLED(USE_YMAX_PLUG)
+  #undef Y_MAX_PIN
+  #define Y_MAX_PIN          -1
+#endif
+#if NONE(USE_YMIN_PLUG, USE_YMAX_PLUG)
+  #undef Y_STOP_PIN
+#endif
+#if DISABLED(USE_ZMIN_PLUG)
+  #undef Z_MIN_PIN
+  #define Z_MIN_PIN          -1
+#endif
+#if DISABLED(USE_ZMAX_PLUG)
+  #undef Z_MAX_PIN
+  #define Z_MAX_PIN          -1
+#endif
+#if NONE(USE_ZMIN_PLUG, USE_ZMAX_PLUG)
+  #undef Z_STOP_PIN
+#endif
+#if DISABLED(USE_IMIN_PLUG)
+  #undef I_MIN_PIN
+  #define I_MIN_PIN          -1
+#endif
+#if DISABLED(USE_IMAX_PLUG)
+  #undef I_MAX_PIN
+  #define I_MAX_PIN          -1
+#endif
+#if NONE(USE_IMIN_PLUG, USE_IMAX_PLUG)
+  #undef I_STOP_PIN
+#endif
+#if DISABLED(USE_JMIN_PLUG)
+  #undef J_MIN_PIN
+  #define J_MIN_PIN          -1
+#endif
+#if DISABLED(USE_JMAX_PLUG)
+  #undef J_MAX_PIN
+  #define J_MAX_PIN          -1
+#endif
+#if NONE(USE_JMIN_PLUG, USE_JMAX_PLUG)
+  #undef J_STOP_PIN
+#endif
+#if DISABLED(USE_KMIN_PLUG)
+  #undef K_MIN_PIN
+  #define K_MIN_PIN          -1
+#endif
+#if DISABLED(USE_KMAX_PLUG)
+  #undef K_MAX_PIN
+  #define K_MAX_PIN          -1
+#endif
+#if NONE(USE_KMIN_PLUG, USE_KMAX_PLUG)
+  #undef K_STOP_PIN
+#endif
+
+#if DISABLED(X_DUAL_ENDSTOPS) || X_HOME_TO_MAX
+  #undef X2_MIN_PIN
+#endif
+#if DISABLED(X_DUAL_ENDSTOPS) || X_HOME_TO_MIN
+  #undef X2_MAX_PIN
+#endif
+#if DISABLED(Y_DUAL_ENDSTOPS) || Y_HOME_TO_MAX
+  #undef Y2_MIN_PIN
+#endif
+#if DISABLED(Y_DUAL_ENDSTOPS) || Y_HOME_TO_MIN
+  #undef Y2_MAX_PIN
+#endif
+#if DISABLED(Z_MULTI_ENDSTOPS) || Z_HOME_TO_MAX
+  #undef Z2_MIN_PIN
+#endif
+#if DISABLED(Z_MULTI_ENDSTOPS) || Z_HOME_TO_MIN
+  #undef Z2_MAX_PIN
+#endif
+#if DISABLED(Z_MULTI_ENDSTOPS) || NUM_Z_STEPPERS < 3 || Z_HOME_TO_MAX
+  #undef Z3_MIN_PIN
+#endif
+#if DISABLED(Z_MULTI_ENDSTOPS) || NUM_Z_STEPPERS < 3 || Z_HOME_TO_MIN
+  #undef Z3_MAX_PIN
+#endif
+#if DISABLED(Z_MULTI_ENDSTOPS) || NUM_Z_STEPPERS < 4 || Z_HOME_TO_MAX
+  #undef Z4_MIN_PIN
+#endif
+#if DISABLED(Z_MULTI_ENDSTOPS) || NUM_Z_STEPPERS < 4 || Z_HOME_TO_MIN
+  #undef Z4_MAX_PIN
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 //

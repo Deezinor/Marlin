@@ -155,7 +155,11 @@ void BedMeshViewScreen::doProbe() {
 }
 
 void BedMeshViewScreen::show() {
+<<<<<<< HEAD
   TERN_(AUTO_BED_LEVELING_UBL, injectCommands(F("G29 L1")));
+=======
+  injectCommands(F("G29 L1"));
+>>>>>>> upstream/bugfix-2.0.x
   GOTO_SCREEN(BedMeshViewScreen);
 }
 

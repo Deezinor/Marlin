@@ -100,8 +100,13 @@ extern DefaultSerial1 USBSerial;
   #else
     #error "LCD_SERIAL_PORT must be from 0 to 3. You can also use -1 if the board supports Native USB."
   #endif
+<<<<<<< HEAD
   #if ANY(HAS_DGUS_LCD, EXTENSIBLE_UI)
     #define LCD_SERIAL_TX_BUFFER_FREE() LCD_SERIAL.available()
+=======
+  #if HAS_DGUS_LCD
+    #define SERIAL_GET_TX_BUFFER_FREE() LCD_SERIAL.available()
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 #endif
 
@@ -159,7 +164,7 @@ constexpr pin_t GET_PIN_MAP_PIN(const int16_t index) {
 // Parse a G-code word into a pin index
 int16_t PARSED_PIN_INDEX(const char code, const int16_t dval);
 // P0.6 thru P0.9 are for the onboard SD card
-#define HAL_SENSITIVE_PINS P0_06, P0_07, P0_08, P0_09
+#define HAL_SENSITIVE_PINS P0_06, P0_07, P0_08, P0_09,
 
 // ------------------------
 // Defines
@@ -243,6 +248,7 @@ public:
 
   // Begin ADC sampling on the given pin. Called from Temperature::isr!
   static uint32_t adc_result;
+<<<<<<< HEAD
   static pin_t adc_pin;
 
   static void adc_start(const pin_t pin) { adc_pin = pin; }
@@ -255,6 +261,17 @@ public:
     adc_result = FilteredADC::read(adc_pin) >> (16 - HAL_ADC_RESOLUTION); // returns 16bit value, reduce to required bits
     return uint16_t(adc_result);
   }
+=======
+  static void adc_start(const pin_t pin) {
+    adc_result = FilteredADC::read(pin) >> (16 - HAL_ADC_RESOLUTION); // returns 16bit value, reduce to required bits
+  }
+
+  // Is the ADC ready for reading?
+  static bool adc_ready() { return true; }
+
+  // The current value of the ADC register
+  static uint16_t adc_value() { return uint16_t(adc_result); }
+>>>>>>> upstream/bugfix-2.0.x
 
   /**
    * Set the PWM duty cycle for the pin to the given value.

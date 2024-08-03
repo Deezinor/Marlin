@@ -26,14 +26,22 @@
 
 #include "../../../inc/MarlinConfigPre.h"
 
+<<<<<<< HEAD
 #if DGUS_LCD_UI_RELOADED
+=======
+#if ENABLED(DGUS_LCD_UI_RELOADED)
+>>>>>>> upstream/bugfix-2.0.x
 
 #include "../ui_api.h"
 #include "DGUSScreenHandler.h"
 
 namespace ExtUI {
 
+<<<<<<< HEAD
   void onStartup() { screen.init(); }
+=======
+  void onStartup() { dgus_screen_handler.Init(); }
+>>>>>>> upstream/bugfix-2.0.x
 
   void onIdle() {
     static bool processing = false;
@@ -41,12 +49,17 @@ namespace ExtUI {
     // Prevent recursion
     if (!processing) {
       processing = true;
+<<<<<<< HEAD
       screen.loop();
+=======
+      dgus_screen_handler.Loop();
+>>>>>>> upstream/bugfix-2.0.x
       processing = false;
     }
   }
 
   void onPrinterKilled(FSTR_P const error, FSTR_P const component) {
+<<<<<<< HEAD
     screen.printerKilled(error, component);
   }
 
@@ -104,10 +117,46 @@ namespace ExtUI {
 
   void onStatusChanged(const char * const msg) {
     screen.setStatusMessage(msg);
+=======
+    dgus_screen_handler.PrinterKilled(error, component);
+  }
+
+  void onMediaInserted() { TERN_(SDSUPPORT, dgus_screen_handler.SDCardInserted()); }
+  void onMediaError()    { TERN_(SDSUPPORT, dgus_screen_handler.SDCardError()); }
+  void onMediaRemoved()  { TERN_(SDSUPPORT, dgus_screen_handler.SDCardRemoved()); }
+
+  void onPlayTone(const uint16_t frequency, const uint16_t duration) {
+    dgus_screen_handler.PlayTone(frequency, duration);
+  }
+
+  void onPrintTimerStarted() {
+    dgus_screen_handler.PrintTimerStarted();
+  }
+
+  void onPrintTimerPaused() {
+    dgus_screen_handler.PrintTimerPaused();
+  }
+
+  void onPrintTimerStopped() {
+    dgus_screen_handler.PrintTimerStopped();
+  }
+
+  void onFilamentRunout(const extruder_t extruder) {
+    dgus_screen_handler.FilamentRunout(extruder);
+  }
+
+  void onUserConfirmRequired(const char * const msg) {
+    dgus_screen_handler.UserConfirmRequired(msg);
+  }
+
+  void onStatusChanged(const char * const msg) {
+    dgus_screen_handler.SetStatusMessage(msg);
+>>>>>>> upstream/bugfix-2.0.x
   }
 
   void onHomingStart() {}
   void onHomingDone() {}
+<<<<<<< HEAD
 
   void onPrintDone() {}
 
@@ -121,10 +170,25 @@ namespace ExtUI {
 
   void onLoadSettings(const char *buff) {
     screen.loadSettings(buff);
+=======
+  void onPrintDone() {}
+
+  void onFactoryReset() {
+    dgus_screen_handler.SettingsReset();
+  }
+
+  void onStoreSettings(char *buff) {
+    dgus_screen_handler.StoreSettings(buff);
+  }
+
+  void onLoadSettings(const char *buff) {
+    dgus_screen_handler.LoadSettings(buff);
+>>>>>>> upstream/bugfix-2.0.x
   }
 
   void onPostprocessSettings() {}
 
+<<<<<<< HEAD
   void onSettingsStored(const bool success) {
     screen.configurationStoreWritten(success);
   }
@@ -144,10 +208,27 @@ namespace ExtUI {
   #if HAS_MESH
     void onMeshUpdate(const int8_t xpos, const int8_t ypos, const_float_t zval) {
       screen.meshUpdate(xpos, ypos);
+=======
+  void onSettingsStored(bool success) {
+    dgus_screen_handler.ConfigurationStoreWritten(success);
+  }
+
+  void onSettingsLoaded(bool success) {
+    dgus_screen_handler.ConfigurationStoreRead(success);
+  }
+
+  #if HAS_MESH
+    void onLevelingStart() {}
+    void onLevelingDone() {}
+
+    void onMeshUpdate(const int8_t xpos, const int8_t ypos, const_float_t zval) {
+      dgus_screen_handler.MeshUpdate(xpos, ypos);
+>>>>>>> upstream/bugfix-2.0.x
     }
 
     void onMeshUpdate(const int8_t xpos, const int8_t ypos, const probe_state_t state) {
       if (state == G29_POINT_FINISH)
+<<<<<<< HEAD
         screen.meshUpdate(xpos, ypos);
     }
   #endif
@@ -166,10 +247,21 @@ namespace ExtUI {
     void onPowerLossResume() {
       // Called on resume from power-loss
       screen.powerLossResume();
+=======
+        dgus_screen_handler.MeshUpdate(xpos, ypos);
+    }
+  #endif
+
+  #if ENABLED(POWER_LOSS_RECOVERY)
+    void onPowerLossResume() {
+      // Called on resume from power-loss
+      dgus_screen_handler.PowerLossResume();
+>>>>>>> upstream/bugfix-2.0.x
     }
   #endif
 
   #if HAS_PID_HEATING
+<<<<<<< HEAD
     void onPIDTuning(const pidresult_t rst) {
       // Called for temperature PID tuning result
       screen.pidTuning(rst);
@@ -193,6 +285,16 @@ namespace ExtUI {
   void onSteppersEnabled() {}
   void onAxisDisabled(const axis_t) {}
   void onAxisEnabled(const axis_t) {}
+=======
+    void onPidTuning(const result_t rst) {
+      // Called for temperature PID tuning result
+      dgus_screen_handler.PidTuning(rst);
+    }
+  #endif
+
+  void onSteppersDisabled() {}
+  void onSteppersEnabled()  {}
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 #endif // DGUS_LCD_UI_RELOADED

@@ -92,7 +92,11 @@ bool relative_mode; // = false;
   #define Z_INIT_POS Z_HOME_POS
 #endif
 
+<<<<<<< HEAD
 xyze_pos_t current_position = LOGICAL_AXIS_ARRAY(0, X_HOME_POS, Y_HOME_POS, Z_INIT_POS, I_HOME_POS, J_HOME_POS, K_HOME_POS, U_HOME_POS, V_HOME_POS, W_HOME_POS);
+=======
+xyze_pos_t current_position = LOGICAL_AXIS_ARRAY(0, X_HOME_POS, Y_HOME_POS, Z_INIT_POS, I_HOME_POS, J_HOME_POS, K_HOME_POS);
+>>>>>>> upstream/bugfix-2.0.x
 
 /**
  * Cartesian Destination
@@ -104,7 +108,11 @@ xyze_pos_t destination; // {0}
 
 // G60/G61 Position Save and Return
 #if SAVED_POSITIONS
+<<<<<<< HEAD
   Flags<SAVED_POSITIONS> did_save_position;
+=======
+  uint8_t saved_slots[(SAVED_POSITIONS + 7) >> 3];
+>>>>>>> upstream/bugfix-2.0.x
   xyze_pos_t stored_position[SAVED_POSITIONS];
 #endif
 
@@ -199,6 +207,7 @@ inline void report_more_positions() {
 // Report the logical position for a given machine position
 inline void report_logical_position(const xyze_pos_t &rpos) {
   const xyze_pos_t lpos = rpos.asLogical();
+<<<<<<< HEAD
   #if NUM_AXES
     SERIAL_ECHOPGM_P(
       LIST_N(DOUBLE(NUM_AXES),
@@ -217,6 +226,21 @@ inline void report_logical_position(const xyze_pos_t &rpos) {
   #if HAS_EXTRUDERS
     SERIAL_ECHOPGM_P(SP_E_LBL, lpos.e);
   #endif
+=======
+  SERIAL_ECHOPGM_P(
+    LIST_N(DOUBLE(NUM_AXES),
+         X_LBL, lpos.x,
+      SP_Y_LBL, lpos.y,
+      SP_Z_LBL, lpos.z,
+      SP_I_LBL, lpos.i,
+      SP_J_LBL, lpos.j,
+      SP_K_LBL, lpos.k
+    )
+    #if HAS_EXTRUDERS
+      , SP_E_LBL, lpos.e
+    #endif
+  );
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 // Report the real current position according to the steppers.
@@ -226,8 +250,12 @@ void report_real_position() {
   xyze_pos_t npos = LOGICAL_AXIS_ARRAY(
     planner.get_axis_position_mm(E_AXIS),
     cartes.x, cartes.y, cartes.z,
+<<<<<<< HEAD
     cartes.i, cartes.j, cartes.k,
     cartes.u, cartes.v, cartes.w
+=======
+    cartes.i, cartes.j, cartes.k
+>>>>>>> upstream/bugfix-2.0.x
   );
 
   TERN_(HAS_POSITION_MODIFIERS, planner.unapply_modifiers(npos, true));
@@ -257,7 +285,11 @@ void report_current_position_projected() {
   AutoReporter<PositionReport> position_auto_reporter;
 #endif
 
+<<<<<<< HEAD
 #if ENABLED(REALTIME_REPORTING_COMMANDS)
+=======
+#if EITHER(FULL_REPORT_TO_HOST_FEATURE, REALTIME_REPORTING_COMMANDS)
+>>>>>>> upstream/bugfix-2.0.x
 
   M_StateEnum M_State_grbl = M_INIT;
 
@@ -272,6 +304,7 @@ void report_current_position_projected() {
   void report_current_position_moving() {
     get_cartesian_from_steppers();
     const xyz_pos_t lpos = cartes.asLogical();
+<<<<<<< HEAD
 
     SERIAL_ECHOPGM_P(
       LIST_N(DOUBLE(NUM_AXES),
@@ -291,6 +324,25 @@ void report_current_position_projected() {
     );
 
     report_more_positions();
+=======
+
+    SERIAL_ECHOPGM_P(
+      LIST_N(DOUBLE(NUM_AXES),
+           X_LBL, lpos.x,
+        SP_Y_LBL, lpos.y,
+        SP_Z_LBL, lpos.z,
+        SP_I_LBL, lpos.i,
+        SP_J_LBL, lpos.j,
+        SP_K_LBL, lpos.k
+      )
+      #if HAS_EXTRUDERS
+        , SP_E_LBL, current_position.e
+      #endif
+    );
+
+    stepper.report_positions();
+    TERN_(IS_SCARA, scara_report_positions());
+>>>>>>> upstream/bugfix-2.0.x
     report_current_grblstate_moving();
   }
 
@@ -384,6 +436,77 @@ void home_if_needed(const bool keeplev/*=false*/) {
   if (!all_axes_trusted()) gcode.home_all_axes(keeplev);
 }
 
+#if IS_KINEMATIC
+
+  bool position_is_reachable(const_float_t rx, const_float_t ry, const float inset/*=0*/) {
+
+    bool can_reach;
+
+    #if ENABLED(DELTA)
+
+      can_reach = HYPOT2(rx, ry) <= sq(DELTA_PRINTABLE_RADIUS - inset + fslop);
+
+    #elif ENABLED(AXEL_TPARA)
+
+      const float R2 = HYPOT2(rx - TPARA_OFFSET_X, ry - TPARA_OFFSET_Y);
+      can_reach = (
+        R2 <= sq(L1 + L2) - inset
+        #if MIDDLE_DEAD_ZONE_R > 0
+          && R2 >= sq(float(MIDDLE_DEAD_ZONE_R))
+        #endif
+      );
+
+    #elif IS_SCARA
+
+      const float R2 = HYPOT2(rx - SCARA_OFFSET_X, ry - SCARA_OFFSET_Y);
+      can_reach = (
+        R2 <= sq(L1 + L2) - inset
+        #if MIDDLE_DEAD_ZONE_R > 0
+          && R2 >= sq(float(MIDDLE_DEAD_ZONE_R))
+        #endif
+      );
+
+    #elif ENABLED(POLARGRAPH)
+
+      const float d1 = rx - (draw_area_min.x),
+                  d2 = (draw_area_max.x) - rx,
+                   y = ry - (draw_area_max.y),
+                   a = HYPOT(d1, y),
+                   b = HYPOT(d2, y);
+
+      can_reach = (
+           a < polargraph_max_belt_len + 1
+        && b < polargraph_max_belt_len + 1
+        && (a + b) > _MIN(draw_area_size.x, draw_area_size.y)
+      );
+
+    #endif
+
+    return can_reach;
+  }
+
+#else // CARTESIAN
+
+  // Return true if the given position is within the machine bounds.
+  bool position_is_reachable(const_float_t rx, const_float_t ry) {
+    if (!COORDINATE_OKAY(ry, Y_MIN_POS - fslop, Y_MAX_POS + fslop)) return false;
+    #if ENABLED(DUAL_X_CARRIAGE)
+      if (active_extruder)
+        return COORDINATE_OKAY(rx, X2_MIN_POS - fslop, X2_MAX_POS + fslop);
+      else
+        return COORDINATE_OKAY(rx, X1_MIN_POS - fslop, X1_MAX_POS + fslop);
+    #else
+      return COORDINATE_OKAY(rx, X_MIN_POS - fslop, X_MAX_POS + fslop);
+    #endif
+  }
+
+#endif // CARTESIAN
+
+
+void home_if_needed(const bool keeplev/*=false*/) {
+  if (!all_axes_trusted()) gcode.home_all_axes(keeplev);
+}
+
 /**
  * Run out the planner buffer and re-sync the current
  * position from the last-updated stepper positions.
@@ -440,9 +563,12 @@ void get_cartesian_from_steppers() {
       OPTARG(AXEL_TPARA, planner.get_axis_position_degrees(C_AXIS))
     );
     cartes.z = planner.get_axis_position_mm(Z_AXIS);
+<<<<<<< HEAD
   #elif ENABLED(POLAR)
     forward_kinematics(planner.get_axis_position_mm(X_AXIS), planner.get_axis_position_degrees(B_AXIS));
     cartes.z = planner.get_axis_position_mm(Z_AXIS);
+=======
+>>>>>>> upstream/bugfix-2.0.x
   #else
     NUM_AXIS_CODE(
       cartes.x = planner.get_axis_position_mm(X_AXIS),
@@ -450,10 +576,14 @@ void get_cartesian_from_steppers() {
       cartes.z = planner.get_axis_position_mm(Z_AXIS),
       cartes.i = planner.get_axis_position_mm(I_AXIS),
       cartes.j = planner.get_axis_position_mm(J_AXIS),
+<<<<<<< HEAD
       cartes.k = planner.get_axis_position_mm(K_AXIS),
       cartes.u = planner.get_axis_position_mm(U_AXIS),
       cartes.v = planner.get_axis_position_mm(V_AXIS),
       cartes.w = planner.get_axis_position_mm(W_AXIS)
+=======
+      cartes.k = planner.get_axis_position_mm(K_AXIS)
+>>>>>>> upstream/bugfix-2.0.x
     );
   #endif
 }
@@ -535,10 +665,29 @@ void _internal_move_to_destination(const_feedRate_t fr_mm_s/*=0.0f*/
   TERN_(HAS_EXTRUDERS, REMEMBER(fac, planner.e_factor[active_extruder], 1.0f));
 
   if (fr_mm_s) feedrate_mm_s = fr_mm_s;
+<<<<<<< HEAD
+=======
+
+  const uint16_t old_pct = feedrate_percentage;
+  feedrate_percentage = 100;
+
+  #if HAS_EXTRUDERS
+    const float old_fac = planner.e_factor[active_extruder];
+    planner.e_factor[active_extruder] = 1.0f;
+  #endif
+
+>>>>>>> upstream/bugfix-2.0.x
   if (TERN0(IS_KINEMATIC, is_fast))
     TERN(IS_KINEMATIC, prepare_fast_move_to_destination(), NOOP);
   else
     prepare_line_to_destination();
+<<<<<<< HEAD
+=======
+
+  feedrate_mm_s = old_feedrate;
+  feedrate_percentage = old_pct;
+  TERN_(HAS_EXTRUDERS, planner.e_factor[active_extruder] = old_fac);
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 #if SECONDARY_AXES
@@ -565,20 +714,36 @@ void _internal_move_to_destination(const_feedRate_t fr_mm_s/*=0.0f*/
  * - Delta may lower Z first to get into the free motion zone.
  * - Before returning, wait for the planner buffer to empty.
  */
+<<<<<<< HEAD
 void do_blocking_move_to(NUM_AXIS_ARGS_(const_float_t) const_feedRate_t fr_mm_s/*=0.0f*/) {
   DEBUG_SECTION(log_move, "do_blocking_move_to", DEBUGGING(LEVELING));
   #if NUM_AXES
     if (DEBUGGING(LEVELING)) DEBUG_XYZ("> ", NUM_AXIS_ARGS());
   #endif
+=======
+void do_blocking_move_to(NUM_AXIS_ARGS(const float), const_feedRate_t fr_mm_s/*=0.0f*/) {
+  DEBUG_SECTION(log_move, "do_blocking_move_to", DEBUGGING(LEVELING));
+  if (DEBUGGING(LEVELING)) DEBUG_XYZ("> ", NUM_AXIS_ARGS());
+>>>>>>> upstream/bugfix-2.0.x
 
   const feedRate_t xy_feedrate = fr_mm_s ?: feedRate_t(XY_PROBE_FEEDRATE_MM_S);
 
   #if HAS_Z_AXIS
     const feedRate_t z_feedrate = fr_mm_s ?: homing_feedrate(Z_AXIS);
   #endif
+<<<<<<< HEAD
 
   #if IS_KINEMATIC && DISABLED(POLARGRAPH)
     // kinematic machines are expected to home to a point 1.5x their range? never reachable.
+=======
+  SECONDARY_AXIS_CODE(
+    const feedRate_t i_feedrate = fr_mm_s ?: homing_feedrate(I_AXIS),
+    const feedRate_t j_feedrate = fr_mm_s ?: homing_feedrate(J_AXIS),
+    const feedRate_t k_feedrate = fr_mm_s ?: homing_feedrate(K_AXIS)
+  );
+
+  #if IS_KINEMATIC
+>>>>>>> upstream/bugfix-2.0.x
     if (!position_is_reachable(x, y)) return;
     destination = current_position;          // sync destination at the start
   #endif
@@ -628,10 +793,13 @@ void do_blocking_move_to(NUM_AXIS_ARGS_(const_float_t) const_feedRate_t fr_mm_s/
     if (destination.z < z) { destination.z = z; prepare_internal_fast_move_to_destination(z_feedrate); }
 
     destination.set(x, y); prepare_internal_fast_move_to_destination(xy_feedrate);
+<<<<<<< HEAD
 
     #if SECONDARY_AXES
       secondary_axis_moves(SECONDARY_AXIS_LIST(i, j, k, u, v, w), fr_mm_s);
     #endif
+=======
+>>>>>>> upstream/bugfix-2.0.x
 
     // If Z needs to lower, do it after moving XY
     if (destination.z > z) { destination.z = z; prepare_internal_fast_move_to_destination(z_feedrate); }
@@ -642,6 +810,7 @@ void do_blocking_move_to(NUM_AXIS_ARGS_(const_float_t) const_feedRate_t fr_mm_s/
       if (current_position.z < z) { current_position.z = z; line_to_current_position(z_feedrate); }
     #endif
 
+<<<<<<< HEAD
     current_position.set(TERN_(HAS_X_AXIS, x) OPTARG(HAS_Y_AXIS, y)); line_to_current_position(xy_feedrate);
 
     #if SECONDARY_AXES
@@ -650,6 +819,20 @@ void do_blocking_move_to(NUM_AXIS_ARGS_(const_float_t) const_feedRate_t fr_mm_s/
 
     #if HAS_Z_AXIS
       // If Z needs to lower, do it after moving XY
+=======
+    current_position.set(x, y); line_to_current_position(xy_feedrate);
+
+    #if HAS_I_AXIS
+      current_position.i = i; line_to_current_position(i_feedrate);
+    #endif
+    #if HAS_J_AXIS
+      current_position.j = j; line_to_current_position(j_feedrate);
+    #endif
+    #if HAS_K_AXIS
+      current_position.k = k; line_to_current_position(k_feedrate);
+    #endif
+    #if HAS_Z_AXIS  // If Z needs to lower, do it after moving XY...
+>>>>>>> upstream/bugfix-2.0.x
       if (current_position.z > z) { current_position.z = z; line_to_current_position(z_feedrate); }
     #endif
 
@@ -659,6 +842,7 @@ void do_blocking_move_to(NUM_AXIS_ARGS_(const_float_t) const_feedRate_t fr_mm_s/
 }
 
 void do_blocking_move_to(const xy_pos_t &raw, const_feedRate_t fr_mm_s/*=0.0f*/) {
+<<<<<<< HEAD
   do_blocking_move_to(NUM_AXIS_LIST_(raw.x, raw.y, current_position.z, current_position.i, current_position.j, current_position.k,
                                     current_position.u, current_position.v, current_position.w) fr_mm_s);
 }
@@ -700,10 +884,35 @@ void do_blocking_move_to(const xyze_pos_t &raw, const_feedRate_t fr_mm_s/*=0.0f*
   void do_blocking_move_to_xy(const xy_pos_t &raw, const_feedRate_t fr_mm_s/*=0.0f*/) {
     do_blocking_move_to_xy(raw.x, raw.y, fr_mm_s);
   }
+=======
+  do_blocking_move_to(NUM_AXIS_LIST(raw.x, raw.y, current_position.z, current_position.i, current_position.j, current_position.k), fr_mm_s);
+}
+void do_blocking_move_to(const xyz_pos_t &raw, const_feedRate_t fr_mm_s/*=0.0f*/) {
+  do_blocking_move_to(NUM_AXIS_ELEM(raw), fr_mm_s);
+}
+void do_blocking_move_to(const xyze_pos_t &raw, const_feedRate_t fr_mm_s/*=0.0f*/) {
+  do_blocking_move_to(NUM_AXIS_ELEM(raw), fr_mm_s);
+}
+void do_blocking_move_to_x(const_float_t rx, const_feedRate_t fr_mm_s/*=0.0*/) {
+  do_blocking_move_to(
+    NUM_AXIS_LIST(rx, current_position.y, current_position.z, current_position.i, current_position.j, current_position.k),
+    fr_mm_s
+  );
+}
+
+#if HAS_Y_AXIS
+  void do_blocking_move_to_y(const_float_t ry, const_feedRate_t fr_mm_s/*=0.0*/) {
+    do_blocking_move_to(
+      NUM_AXIS_LIST(current_position.x, ry, current_position.z, current_position.i, current_position.j, current_position.k),
+      fr_mm_s
+    );
+  }
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #if HAS_Z_AXIS
   void do_blocking_move_to_z(const_float_t rz, const_feedRate_t fr_mm_s/*=0.0*/) {
+<<<<<<< HEAD
     if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("do_blocking_move_to_z(", rz, ", ", fr_mm_s, ")");
     do_blocking_move_to_xy_z(current_position, rz, fr_mm_s);
   }
@@ -818,6 +1027,71 @@ void do_blocking_move_to(const xyze_pos_t &raw, const_feedRate_t fr_mm_s/*=0.0f*
   }
   void do_blocking_move_to_w(const_float_t rw, const_feedRate_t fr_mm_s/*=0.0*/) {
     do_blocking_move_to_xyzijkuv_w(current_position, rw, fr_mm_s);
+=======
+    do_blocking_move_to_xy_z(current_position, rz, fr_mm_s);
+  }
+#endif
+
+#if HAS_I_AXIS
+  void do_blocking_move_to_i(const_float_t ri, const_feedRate_t fr_mm_s/*=0.0*/) {
+    do_blocking_move_to_xyz_i(current_position, ri, fr_mm_s);
+  }
+  void do_blocking_move_to_xyz_i(const xyze_pos_t &raw, const_float_t i, const_feedRate_t fr_mm_s/*=0.0f*/) {
+    do_blocking_move_to(
+      NUM_AXIS_LIST(raw.x, raw.y, raw.z, i, raw.j, raw.k),
+      fr_mm_s
+    );
+  }
+#endif
+
+#if HAS_J_AXIS
+  void do_blocking_move_to_j(const_float_t rj, const_feedRate_t fr_mm_s/*=0.0*/) {
+    do_blocking_move_to_xyzi_j(current_position, rj, fr_mm_s);
+  }
+  void do_blocking_move_to_xyzi_j(const xyze_pos_t &raw, const_float_t j, const_feedRate_t fr_mm_s/*=0.0f*/) {
+    do_blocking_move_to(
+      NUM_AXIS_LIST(raw.x, raw.y, raw.z, raw.i, j, raw.k),
+      fr_mm_s
+    );
+  }
+#endif
+
+#if HAS_K_AXIS
+  void do_blocking_move_to_k(const_float_t rk, const_feedRate_t fr_mm_s/*=0.0*/) {
+    do_blocking_move_to_xyzij_k(current_position, rk, fr_mm_s);
+  }
+  void do_blocking_move_to_xyzij_k(const xyze_pos_t &raw, const_float_t k, const_feedRate_t fr_mm_s/*=0.0f*/) {
+    do_blocking_move_to(
+      NUM_AXIS_LIST(raw.x, raw.y, raw.z, raw.i, raw.j, k),
+      fr_mm_s
+    );
+  }
+#endif
+
+#if HAS_Y_AXIS
+  void do_blocking_move_to_xy(const_float_t rx, const_float_t ry, const_feedRate_t fr_mm_s/*=0.0*/) {
+    do_blocking_move_to(
+      NUM_AXIS_LIST(rx, ry, current_position.z, current_position.i, current_position.j, current_position.k),
+      fr_mm_s
+    );
+  }
+  void do_blocking_move_to_xy(const xy_pos_t &raw, const_feedRate_t fr_mm_s/*=0.0f*/) {
+    do_blocking_move_to_xy(raw.x, raw.y, fr_mm_s);
+  }
+#endif
+
+#if HAS_Z_AXIS
+  void do_blocking_move_to_xy_z(const xy_pos_t &raw, const_float_t z, const_feedRate_t fr_mm_s/*=0.0f*/) {
+    do_blocking_move_to(
+      NUM_AXIS_LIST(raw.x, raw.y, z, current_position.i, current_position.j, current_position.k),
+      fr_mm_s
+    );
+  }
+  void do_z_clearance(const_float_t zclear, const bool lower_allowed/*=false*/) {
+    float zdest = zclear;
+    if (!lower_allowed) NOLESS(zdest, current_position.z);
+    do_blocking_move_to_z(_MIN(zdest, Z_MAX_POS), TERN(HAS_BED_PROBE, z_probe_fast_mm_s, homing_feedrate(Z_AXIS)));
+>>>>>>> upstream/bugfix-2.0.x
   }
 #endif
 
@@ -931,7 +1205,11 @@ void restore_feedrate_and_scaling() {
     #endif
 
     if (DEBUGGING(LEVELING))
+<<<<<<< HEAD
       SERIAL_ECHOLNPGM("Axis ", C(AXIS_CHAR(axis)), " min:", soft_endstop.min[axis], " max:", soft_endstop.max[axis]);
+=======
+      SERIAL_ECHOLNPGM("Axis ", AS_CHAR(AXIS_CHAR(axis)), " min:", soft_endstop.min[axis], " max:", soft_endstop.max[axis]);
+>>>>>>> upstream/bugfix-2.0.x
   }
 
   /**
@@ -1039,6 +1317,7 @@ void restore_feedrate_and_scaling() {
         #endif
       }
     #endif
+<<<<<<< HEAD
     #if HAS_U_AXIS
       if (axis_was_homed(U_AXIS)) {
         #if !HAS_SOFTWARE_ENDSTOPS || ENABLED(MIN_SOFTWARE_ENDSTOP_U)
@@ -1069,6 +1348,8 @@ void restore_feedrate_and_scaling() {
         #endif
       }
     #endif
+=======
+>>>>>>> upstream/bugfix-2.0.x
   }
 
 #else // !HAS_SOFTWARE_ENDSTOPS
@@ -1084,6 +1365,7 @@ FORCE_INLINE void segment_idle(millis_t &next_idle_ms) {
     return idle();
   }
   thermalManager.task();  // Returns immediately on most calls
+<<<<<<< HEAD
 }
 
 /**
@@ -1177,6 +1459,8 @@ float get_move_distance(const xyze_pos_t &diff OPTARG(HAS_ROTATIONAL_AXES, bool 
     return 0;
 
   #endif
+=======
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 #if IS_KINEMATIC
@@ -1269,8 +1553,12 @@ float get_move_distance(const xyze_pos_t &diff OPTARG(HAS_ROTATIONAL_AXES, bool 
 
     // Add hints to help optimize the move
     PlannerHints hints(cartesian_mm * inv_segments);
+<<<<<<< HEAD
     TERN_(HAS_ROTATIONAL_AXES, hints.cartesian_move = cartes_move);
     TERN_(FEEDRATE_SCALING, hints.inv_duration = scaled_fr_mm_s / hints.millimeters);
+=======
+    TERN_(SCARA_FEEDRATE_SCALING, hints.inv_duration = scaled_fr_mm_s / hints.millimeters);
+>>>>>>> upstream/bugfix-2.0.x
 
     /*
     SERIAL_ECHOPGM("mm=", cartesian_mm);
@@ -1329,6 +1617,11 @@ float get_move_distance(const xyze_pos_t &diff OPTARG(HAS_ROTATIONAL_AXES, bool 
       TERN_(HAS_EXTRUDERS, if (UNEAR_ZERO(cartesian_mm)) cartesian_mm = ABS(diff.e));
 
       // No E move either? Game over.
+<<<<<<< HEAD
+=======
+      float cartesian_mm = diff.magnitude();
+      TERN_(HAS_EXTRUDERS, if (UNEAR_ZERO(cartesian_mm)) cartesian_mm = ABS(diff.e));
+>>>>>>> upstream/bugfix-2.0.x
       if (UNEAR_ZERO(cartesian_mm)) return;
 
       // The length divided by the segment size
@@ -1342,8 +1635,12 @@ float get_move_distance(const xyze_pos_t &diff OPTARG(HAS_ROTATIONAL_AXES, bool 
 
       // Add hints to help optimize the move
       PlannerHints hints(cartesian_mm * inv_segments);
+<<<<<<< HEAD
       TERN_(HAS_ROTATIONAL_AXES, hints.cartesian_move = cartes_move);
       TERN_(FEEDRATE_SCALING, hints.inv_duration = scaled_fr_mm_s / hints.millimeters);
+=======
+      TERN_(SCARA_FEEDRATE_SCALING, hints.inv_duration = scaled_fr_mm_s / hints.millimeters);
+>>>>>>> upstream/bugfix-2.0.x
 
       //SERIAL_ECHOPGM("mm=", cartesian_mm);
       //SERIAL_ECHOLNPGM(" segments=", segments);
@@ -1618,13 +1915,18 @@ void prepare_line_to_destination() {
     // Clear test bits that are trusted
     NUM_AXIS_CODE(
       set_should(axis_bits, X_AXIS), set_should(axis_bits, Y_AXIS), set_should(axis_bits, Z_AXIS),
+<<<<<<< HEAD
       set_should(axis_bits, I_AXIS), set_should(axis_bits, J_AXIS), set_should(axis_bits, K_AXIS),
       set_should(axis_bits, U_AXIS), set_should(axis_bits, V_AXIS), set_should(axis_bits, W_AXIS)
+=======
+      set_should(axis_bits, I_AXIS), set_should(axis_bits, J_AXIS), set_should(axis_bits, K_AXIS)
+>>>>>>> upstream/bugfix-2.0.x
     );
     return axis_bits;
   }
 
   bool homing_needed_error(main_axes_bits_t axis_bits/*=main_axes_mask*/) {
+<<<<<<< HEAD
     if (!(axis_bits &= axes_should_home(axis_bits))) return false;
 
     char all_axes[] = STR_AXES_MAIN, need[NUM_AXES + 1];
@@ -1639,6 +1941,19 @@ void prepare_line_to_destination() {
 
     ui.status_printf(0, GET_TEXT_F(MSG_HOME_FIRST), need);
     return true;
+=======
+    if ((axis_bits = axes_should_home(axis_bits))) {
+      PGM_P home_first = GET_TEXT(MSG_HOME_FIRST);
+      char msg[30];
+      #define _AXIS_CHAR(N) TEST(axis_bits, _AXIS(N)) ? STR_##N : ""
+      sprintf_P(msg, home_first, MAPLIST(_AXIS_CHAR, MAIN_AXIS_NAMES));
+      SERIAL_ECHO_START();
+      SERIAL_ECHOLN(msg);
+      ui.set_status(msg);
+      return true;
+    }
+    return false;
+>>>>>>> upstream/bugfix-2.0.x
   }
 
   /**
@@ -1710,6 +2025,7 @@ void prepare_line_to_destination() {
         #if K_SENSORLESS
           case K_AXIS: stealth_states.k = tmc_enable_stallguard(stepperK); break;
         #endif
+<<<<<<< HEAD
         #if U_SENSORLESS
           case U_AXIS: stealth_states.u = tmc_enable_stallguard(stepperU); break;
         #endif
@@ -1751,6 +2067,31 @@ void prepare_line_to_destination() {
         #endif
         default: break;
       }
+=======
+      }
+
+      #if ENABLED(SPI_ENDSTOPS)
+        switch (axis) {
+          case X_AXIS: if (ENABLED(X_SPI_SENSORLESS)) endstops.tmc_spi_homing.x = true; break;
+          #if HAS_Y_AXIS
+            case Y_AXIS: if (ENABLED(Y_SPI_SENSORLESS)) endstops.tmc_spi_homing.y = true; break;
+          #endif
+          #if HAS_Z_AXIS
+            case Z_AXIS: if (ENABLED(Z_SPI_SENSORLESS)) endstops.tmc_spi_homing.z = true; break;
+          #endif
+          #if HAS_I_AXIS
+            case I_AXIS: if (ENABLED(I_SPI_SENSORLESS)) endstops.tmc_spi_homing.i = true; break;
+          #endif
+          #if HAS_J_AXIS
+            case J_AXIS: if (ENABLED(J_SPI_SENSORLESS)) endstops.tmc_spi_homing.j = true; break;
+          #endif
+          #if HAS_K_AXIS
+            case K_AXIS: if (ENABLED(K_SPI_SENSORLESS)) endstops.tmc_spi_homing.k = true; break;
+          #endif
+          default: break;
+        }
+      #endif
+>>>>>>> upstream/bugfix-2.0.x
 
       TERN_(IMPROVE_HOMING_RELIABILITY, sg_guard_period = millis() + default_sg_guard_duration);
 
@@ -1804,6 +2145,7 @@ void prepare_line_to_destination() {
         #if K_SENSORLESS
           case K_AXIS: tmc_disable_stallguard(stepperK, enable_stealth.k); break;
         #endif
+<<<<<<< HEAD
         #if U_SENSORLESS
           case U_AXIS: tmc_disable_stallguard(stepperU, enable_stealth.u); break;
         #endif
@@ -1845,6 +2187,31 @@ void prepare_line_to_destination() {
         #endif
         default: break;
       }
+=======
+      }
+
+      #if ENABLED(SPI_ENDSTOPS)
+        switch (axis) {
+          case X_AXIS: if (ENABLED(X_SPI_SENSORLESS)) endstops.tmc_spi_homing.x = false; break;
+          #if HAS_Y_AXIS
+            case Y_AXIS: if (ENABLED(Y_SPI_SENSORLESS)) endstops.tmc_spi_homing.y = false; break;
+          #endif
+          #if HAS_Z_AXIS
+            case Z_AXIS: if (ENABLED(Z_SPI_SENSORLESS)) endstops.tmc_spi_homing.z = false; break;
+          #endif
+          #if HAS_I_AXIS
+            case I_AXIS: if (ENABLED(I_SPI_SENSORLESS)) endstops.tmc_spi_homing.i = false; break;
+          #endif
+          #if HAS_J_AXIS
+            case J_AXIS: if (ENABLED(J_SPI_SENSORLESS)) endstops.tmc_spi_homing.j = false; break;
+          #endif
+          #if HAS_K_AXIS
+            case K_AXIS: if (ENABLED(K_SPI_SENSORLESS)) endstops.tmc_spi_homing.k = false; break;
+          #endif
+          default: break;
+        }
+      #endif
+>>>>>>> upstream/bugfix-2.0.x
     }
 
   #endif // SENSORLESS_HOMING
@@ -1858,7 +2225,11 @@ void prepare_line_to_destination() {
     const feedRate_t home_fr_mm_s = fr_mm_s ?: homing_feedrate(axis);
 
     if (DEBUGGING(LEVELING)) {
+<<<<<<< HEAD
       DEBUG_ECHOPGM("...(", C(AXIS_CHAR(axis)), ", ", distance, ", ");
+=======
+      DEBUG_ECHOPGM("...(", AS_CHAR(AXIS_CHAR(axis)), ", ", distance, ", ");
+>>>>>>> upstream/bugfix-2.0.x
       if (fr_mm_s)
         DEBUG_ECHO(fr_mm_s);
       else
@@ -1948,12 +2319,20 @@ void prepare_line_to_destination() {
    * "trusted" position).
    */
   void set_axis_never_homed(const AxisEnum axis) {
+<<<<<<< HEAD
     if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM(">>> set_axis_never_homed(", C(AXIS_CHAR(axis)), ")");
+=======
+    if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM(">>> set_axis_never_homed(", AS_CHAR(AXIS_CHAR(axis)), ")");
+>>>>>>> upstream/bugfix-2.0.x
 
     set_axis_untrusted(axis);
     set_axis_unhomed(axis);
 
+<<<<<<< HEAD
     if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("<<< set_axis_never_homed(", C(AXIS_CHAR(axis)), ")");
+=======
+    if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("<<< set_axis_never_homed(", AS_CHAR(AXIS_CHAR(axis)), ")");
+>>>>>>> upstream/bugfix-2.0.x
 
     TERN_(I2C_POSITION_ENCODERS, I2CPEM.unhomed(axis));
   }
@@ -1984,46 +2363,72 @@ void prepare_line_to_destination() {
           case X_AXIS:
             phasePerUStep = PHASE_PER_MICROSTEP(X);
             phaseCurrent = stepperX.get_microstep_counter();
+<<<<<<< HEAD
             effectorBackoutDir = -(X_HOME_DIR);
             stepperBackoutDir = TERN_(INVERT_X_DIR, -)(-effectorBackoutDir);
+=======
+            effectorBackoutDir = -X_HOME_DIR;
+            stepperBackoutDir = IF_DISABLED(INVERT_X_DIR, -)effectorBackoutDir;
+>>>>>>> upstream/bugfix-2.0.x
             break;
         #endif
         #ifdef Y_MICROSTEPS
           case Y_AXIS:
             phasePerUStep = PHASE_PER_MICROSTEP(Y);
             phaseCurrent = stepperY.get_microstep_counter();
+<<<<<<< HEAD
             effectorBackoutDir = -(Y_HOME_DIR);
             stepperBackoutDir = TERN_(INVERT_Y_DIR, -)(-effectorBackoutDir);
+=======
+            effectorBackoutDir = -Y_HOME_DIR;
+            stepperBackoutDir = IF_DISABLED(INVERT_Y_DIR, -)effectorBackoutDir;
+>>>>>>> upstream/bugfix-2.0.x
             break;
         #endif
         #ifdef Z_MICROSTEPS
           case Z_AXIS:
             phasePerUStep = PHASE_PER_MICROSTEP(Z);
             phaseCurrent = stepperZ.get_microstep_counter();
+<<<<<<< HEAD
             effectorBackoutDir = -(Z_HOME_DIR);
             stepperBackoutDir = TERN_(INVERT_Z_DIR, -)(-effectorBackoutDir);
+=======
+            effectorBackoutDir = -Z_HOME_DIR;
+            stepperBackoutDir = IF_DISABLED(INVERT_Z_DIR, -)effectorBackoutDir;
+>>>>>>> upstream/bugfix-2.0.x
             break;
         #endif
         #ifdef I_MICROSTEPS
           case I_AXIS:
             phasePerUStep = PHASE_PER_MICROSTEP(I);
             phaseCurrent = stepperI.get_microstep_counter();
+<<<<<<< HEAD
             effectorBackoutDir = -(I_HOME_DIR);
             stepperBackoutDir = TERN_(INVERT_I_DIR, -)(-effectorBackoutDir);
+=======
+            effectorBackoutDir = -I_HOME_DIR;
+            stepperBackoutDir = IF_DISABLED(INVERT_I_DIR, -)effectorBackoutDir;
+>>>>>>> upstream/bugfix-2.0.x
             break;
         #endif
         #ifdef J_MICROSTEPS
           case J_AXIS:
             phasePerUStep = PHASE_PER_MICROSTEP(J);
             phaseCurrent = stepperJ.get_microstep_counter();
+<<<<<<< HEAD
             effectorBackoutDir = -(J_HOME_DIR);
             stepperBackoutDir = TERN_(INVERT_J_DIR, -)(-effectorBackoutDir);
+=======
+            effectorBackoutDir = -J_HOME_DIR;
+            stepperBackoutDir = IF_DISABLED(INVERT_J_DIR, -)effectorBackoutDir;
+>>>>>>> upstream/bugfix-2.0.x
             break;
         #endif
         #ifdef K_MICROSTEPS
           case K_AXIS:
             phasePerUStep = PHASE_PER_MICROSTEP(K);
             phaseCurrent = stepperK.get_microstep_counter();
+<<<<<<< HEAD
             effectorBackoutDir = -(K_HOME_DIR);
             stepperBackoutDir = TERN_(INVERT_K_DIR, -)(-effectorBackoutDir);
             break;
@@ -2050,6 +2455,10 @@ void prepare_line_to_destination() {
             phaseCurrent = stepperW.get_microstep_counter();
             effectorBackoutDir = -(W_HOME_DIR);
             stepperBackoutDir = TERN_(INVERT_W_DIR, -)(-effectorBackoutDir);
+=======
+            effectorBackoutDir = -K_HOME_DIR;
+            stepperBackoutDir = IF_DISABLED(INVERT_K_DIR, -)effectorBackoutDir;
+>>>>>>> upstream/bugfix-2.0.x
             break;
         #endif
         default: return;
@@ -2062,7 +2471,11 @@ void prepare_line_to_destination() {
       if (ABS(phaseDelta) * planner.mm_per_step[axis] / phasePerUStep < 0.05f)
         SERIAL_ECHOLNPGM("Selected home phase ", home_phase[axis],
                          " too close to endstop trigger phase ", phaseCurrent,
+<<<<<<< HEAD
                          ". Pick a different phase for ", C(AXIS_CHAR(axis)));
+=======
+                         ". Pick a different phase for ", AS_CHAR(AXIS_CHAR(axis)));
+>>>>>>> upstream/bugfix-2.0.x
 
       // Skip to next if target position is behind current. So it only moves away from endstop.
       if (phaseDelta < 0) phaseDelta += 1024;
@@ -2073,7 +2486,11 @@ void prepare_line_to_destination() {
       // Optional debug messages
       if (DEBUGGING(LEVELING)) {
         DEBUG_ECHOLNPGM(
+<<<<<<< HEAD
           "Endstop ", C(AXIS_CHAR(axis)), " hit at Phase:", phaseCurrent,
+=======
+          "Endstop ", AS_CHAR(AXIS_CHAR(axis)), " hit at Phase:", phaseCurrent,
+>>>>>>> upstream/bugfix-2.0.x
           " Delta:", phaseDelta, " Distance:", mmDelta
         );
       }
@@ -2102,12 +2519,25 @@ void prepare_line_to_destination() {
       // Only Z homing (with probe) is permitted
       if (axis != Z_AXIS) { BUZZ(100, 880); return; }
     #else
+<<<<<<< HEAD
       #define _CAN_HOME(A) (axis == _AXIS(A) && (ANY(A##_SPI_SENSORLESS, HAS_##A##_STATE) || TERN0(HOMING_Z_WITH_PROBE, _AXIS(A) == Z_AXIS)))
+=======
+      #define _CAN_HOME(A) (axis == _AXIS(A) && ( \
+           ENABLED(A##_SPI_SENSORLESS) \
+        || TERN0(HAS_Z_AXIS, TERN0(HOMING_Z_WITH_PROBE, _AXIS(A) == Z_AXIS)) \
+        || TERN0(A##_HOME_TO_MIN, A##_MIN_PIN > -1) \
+        || TERN0(A##_HOME_TO_MAX, A##_MAX_PIN > -1) \
+      ))
+>>>>>>> upstream/bugfix-2.0.x
       #define _ANDCANT(N) && !_CAN_HOME(N)
       if (true MAIN_AXIS_MAP(_ANDCANT)) return;
     #endif
 
+<<<<<<< HEAD
     if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM(">>> homeaxis(", C(AXIS_CHAR(axis)), ")");
+=======
+    if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM(">>> homeaxis(", AS_CHAR(AXIS_CHAR(axis)), ")");
+>>>>>>> upstream/bugfix-2.0.x
 
     const int axis_home_dir = TERN0(DUAL_X_CARRIAGE, axis == X_AXIS)
                 ? TOOL_X_HOME_DIR(active_extruder) : home_dir(axis);
@@ -2177,6 +2607,13 @@ void prepare_line_to_destination() {
     if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("Home Fast: ", move_length, "mm");
     do_homing_move(axis, move_length, 0.0, !use_probe_bump);
 
+<<<<<<< HEAD
+=======
+    #if BOTH(HOMING_Z_WITH_PROBE, BLTOUCH)
+      if (axis == Z_AXIS && !bltouch.high_speed_mode) bltouch.stow(); // Intermediate STOW (in LOW SPEED MODE)
+    #endif
+
+>>>>>>> upstream/bugfix-2.0.x
     // If a second homing move is configured...
     if (bump) {
       #if ALL(HOMING_Z_WITH_PROBE, BLTOUCH)
@@ -2185,13 +2622,18 @@ void prepare_line_to_destination() {
 
       // Move away from the endstop by the axis HOMING_BUMP_MM
       if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("Move Away: ", -bump, "mm");
+<<<<<<< HEAD
       do_homing_move(axis, -bump, TERN0(HOMING_Z_WITH_PROBE, (axis == Z_AXIS ? z_probe_fast_mm_s : 0)), false);
+=======
+      do_homing_move(axis, -bump, TERN(HOMING_Z_WITH_PROBE, (axis == Z_AXIS ? z_probe_fast_mm_s : 0), 0), false);
+>>>>>>> upstream/bugfix-2.0.x
 
       #if ENABLED(DETECT_BROKEN_ENDSTOP)
 
         // Check for a broken endstop
         EndstopEnum es;
         switch (axis) {
+<<<<<<< HEAD
           #define _ESCASE(A) case A##_AXIS: es = A##_ENDSTOP; break;
           MAIN_AXIS_MAP(_ESCASE)
           default: break;
@@ -2212,6 +2654,33 @@ void prepare_line_to_destination() {
       #endif // DETECT_BROKEN_ENDSTOP
 
       #if ALL(HOMING_Z_WITH_PROBE, BLTOUCH)
+=======
+          default:
+          case X_AXIS: es = X_ENDSTOP; break;
+          #if HAS_Y_AXIS
+            case Y_AXIS: es = Y_ENDSTOP; break;
+          #endif
+          #if HAS_Z_AXIS
+            case Z_AXIS: es = Z_ENDSTOP; break;
+          #endif
+          #if HAS_I_AXIS
+            case I_AXIS: es = I_ENDSTOP; break;
+          #endif
+          #if HAS_J_AXIS
+            case J_AXIS: es = J_ENDSTOP; break;
+          #endif
+          #if HAS_K_AXIS
+            case K_AXIS: es = K_ENDSTOP; break;
+          #endif
+        }
+        if (TEST(endstops.state(), es)) {
+          SERIAL_ECHO_MSG("Bad ", AS_CHAR(AXIS_CHAR(axis)), " Endstop?");
+          kill(GET_TEXT_F(MSG_KILL_HOMING_FAILED));
+        }
+      #endif
+
+      #if BOTH(HOMING_Z_WITH_PROBE, BLTOUCH)
+>>>>>>> upstream/bugfix-2.0.x
         if (axis == Z_AXIS && !bltouch.high_speed_mode && bltouch.deploy())
           return; // Intermediate DEPLOY (in LOW SPEED MODE)
       #endif
@@ -2413,7 +2882,11 @@ void prepare_line_to_destination() {
         #if ENABLED(SENSORLESS_HOMING)
           planner.synchronize();
           if (false
+<<<<<<< HEAD
             #ifdef NORMAL_AXIS
+=======
+            #if ANY(IS_CORE, MARKFORGED_XY, MARKFORGED_YX)
+>>>>>>> upstream/bugfix-2.0.x
               || axis != NORMAL_AXIS
             #endif
           ) safe_delay(200);  // Short delay to allow belts to spring back
@@ -2426,7 +2899,11 @@ void prepare_line_to_destination() {
       if (axis == Z_AXIS) fwretract.current_hop = 0.0;
     #endif
 
+<<<<<<< HEAD
     if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("<<< homeaxis(", C(AXIS_CHAR(axis)), ")");
+=======
+    if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("<<< homeaxis(", AS_CHAR(AXIS_CHAR(axis)), ")");
+>>>>>>> upstream/bugfix-2.0.x
 
   } // homeaxis()
 
@@ -2451,7 +2928,11 @@ void prepare_line_to_destination() {
  * Callers must sync the planner position after calling this!
  */
 void set_axis_is_at_home(const AxisEnum axis) {
+<<<<<<< HEAD
   if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM(">>> set_axis_is_at_home(", C(AXIS_CHAR(axis)), ")");
+=======
+  if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM(">>> set_axis_is_at_home(", AS_CHAR(AXIS_CHAR(axis)), ")");
+>>>>>>> upstream/bugfix-2.0.x
 
   set_axis_trusted(axis);
   set_axis_homed(axis);
@@ -2477,6 +2958,7 @@ void set_axis_is_at_home(const AxisEnum axis) {
   #if HAS_BED_PROBE && Z_HOME_TO_MIN
     if (axis == Z_AXIS) {
       #if HOMING_Z_WITH_PROBE
+<<<<<<< HEAD
         #if ENABLED(BD_SENSOR)
           safe_delay(100);
           current_position.z = bdl.read();
@@ -2484,6 +2966,13 @@ void set_axis_is_at_home(const AxisEnum axis) {
           current_position.z -= probe.offset.z;
         #endif
         if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("*** Z homed with PROBE" TERN_(Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN, " (Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN)") " ***\n> (M851 Z", probe.offset.z, ")");
+=======
+
+        current_position.z -= probe.offset.z;
+
+        if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("*** Z HOMED WITH PROBE (Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN) ***\n> probe.offset.z = ", probe.offset.z);
+
+>>>>>>> upstream/bugfix-2.0.x
       #else
         if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("*** Z homed to ENDSTOP ***");
       #endif
@@ -2498,6 +2987,7 @@ void set_axis_is_at_home(const AxisEnum axis) {
 
   if (DEBUGGING(LEVELING)) {
     #if HAS_HOME_OFFSET
+<<<<<<< HEAD
       DEBUG_ECHOLNPGM("> home_offset[", C(AXIS_CHAR(axis)), "] = ", home_offset[axis]);
     #endif
     DEBUG_POS("", current_position);
@@ -2506,6 +2996,23 @@ void set_axis_is_at_home(const AxisEnum axis) {
 }
 
 #if HAS_HOME_OFFSET
+=======
+      DEBUG_ECHOLNPGM("> home_offset[", AS_CHAR(AXIS_CHAR(axis)), "] = ", home_offset[axis]);
+    #endif
+    DEBUG_POS("", current_position);
+    DEBUG_ECHOLNPGM("<<< set_axis_is_at_home(", AS_CHAR(AXIS_CHAR(axis)), ")");
+  }
+}
+
+#if HAS_WORKSPACE_OFFSET
+  void update_workspace_offset(const AxisEnum axis) {
+    workspace_offset[axis] = home_offset[axis] + position_shift[axis];
+    if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("Axis ", AS_CHAR(AXIS_CHAR(axis)), " home_offset = ", home_offset[axis], " position_shift = ", position_shift[axis]);
+  }
+#endif
+
+#if HAS_M206_COMMAND
+>>>>>>> upstream/bugfix-2.0.x
   /**
    * Set the home offset for an axis.
    */

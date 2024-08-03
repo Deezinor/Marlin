@@ -37,8 +37,11 @@
   #define OUTPUT_OPEN_DRAIN OUTPUT_OPEN_DRAIN
 #endif
 
+<<<<<<< HEAD
 bool pin_is_protected(const pin_t pin);
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 void protected_pin_err() {
   SERIAL_ERROR_MSG(STR_ERR_PROTECTED_PIN);
 }
@@ -54,7 +57,10 @@ void protected_pin_err() {
  *  I       Flag to ignore Marlin's pin protection
  *
  *  T<mode> Pin mode: 0=INPUT  1=OUTPUT  2=INPUT_PULLUP  3=INPUT_PULLDOWN
+<<<<<<< HEAD
  *                    4=INPUT_ANALOG  5=OUTPUT_OPEN_DRAIN
+=======
+>>>>>>> upstream/bugfix-2.0.x
  */
 void GcodeSuite::M42() {
   const int pin_index = PARSED_PIN_INDEX('P', GET_PIN_MAP_INDEX(LED_PIN));
@@ -72,6 +78,15 @@ void GcodeSuite::M42() {
       case 2: pinMode(pin, INPUT_PULLUP); avoidWrite = true; break;
       #ifdef INPUT_PULLDOWN
         case 3: pinMode(pin, INPUT_PULLDOWN); avoidWrite = true; break;
+<<<<<<< HEAD
+=======
+      #endif
+      #ifdef INPUT_ANALOG
+        case 4: pinMode(pin, INPUT_ANALOG); avoidWrite = true; break;
+      #endif
+      #ifdef OUTPUT_OPEN_DRAIN
+        case 5: pinMode(pin, OUTPUT_OPEN_DRAIN); break;
+>>>>>>> upstream/bugfix-2.0.x
       #endif
       #ifdef INPUT_ANALOG
         case 4: pinMode(pin, INPUT_ANALOG); avoidWrite = true; break;
@@ -94,12 +109,20 @@ void GcodeSuite::M42() {
   #endif
 
   if (avoidWrite) {
+<<<<<<< HEAD
     SERIAL_ECHOLNPGM(GCODE_ERR_MSG("Cannot write to INPUT"));
+=======
+    SERIAL_ECHOLNPGM("?Cannot write to INPUT");
+>>>>>>> upstream/bugfix-2.0.x
     return;
   }
 
   // An OUTPUT_OPEN_DRAIN should not be changed to normal OUTPUT (STM32)
+<<<<<<< HEAD
   // Use M42 Px T1/5 S0/1 to set the output type and then set value
+=======
+  // Use M42 Px M1/5 S0/1 to set the output type and then set value
+>>>>>>> upstream/bugfix-2.0.x
   #ifndef OUTPUT_OPEN_DRAIN
     pinMode(pin, OUTPUT);
   #endif

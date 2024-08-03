@@ -169,7 +169,11 @@
  * (CS)   D11 | 3  4 | D10      (DC/D4)
  * (EN2)  D12   5  6 | D4 or D3 (EN/RS)
  * (ENC)  D29 | 7  8 | D2       (EN1)
+<<<<<<< HEAD
  *        GND | 9 10 | 5V
+=======
+ *      (GND) | 9 10 | (5V)
+>>>>>>> upstream/bugfix-2.0.x
  *             ------
  */
 #define EXP1_01_PIN                            5
@@ -192,9 +196,15 @@
   #define LCDSCREEN_NAME "ZONESTAR_12864LCD"
   #define FORCE_SOFT_SPI
   //#define LCD_SDSS                 EXP1_03_PIN
+<<<<<<< HEAD
   #define LCD_PINS_RS                EXP1_03_PIN  // ST7920 CS  (LCD-4)
   #define LCD_PINS_EN                EXP1_06_PIN  // ST7920 DAT (LCD-5)
   #define LCD_PINS_D4                EXP1_04_PIN  // ST7920 CLK (LCD-6)
+=======
+  #define LCD_PINS_RS                EXP1_03_PIN  // ST7920_CS_PIN  (LCD module pin 4)
+  #define LCD_PINS_ENABLE            EXP1_06_PIN  // ST7920_DAT_PIN (LCD module pin 5)
+  #define LCD_PINS_D4                EXP1_04_PIN  // ST7920_CLK_PIN (LCD module pin 6)
+>>>>>>> upstream/bugfix-2.0.x
 
   #define BOARD_ST7920_DELAY_1       DELAY_2_NOP
   #define BOARD_ST7920_DELAY_2       DELAY_2_NOP

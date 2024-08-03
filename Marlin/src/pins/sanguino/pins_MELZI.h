@@ -32,10 +32,13 @@
 
 #define IS_MELZI 1
 
+<<<<<<< HEAD
 #ifndef FAN0_PIN
   #define FAN0_PIN                             4
 #endif
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 // Alter timing for graphical display
 #if IS_U8GLIB_ST7920
   #ifndef BOARD_ST7920_DELAY_1

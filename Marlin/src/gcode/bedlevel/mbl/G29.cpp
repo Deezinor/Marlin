@@ -40,6 +40,8 @@
 
 #if ENABLED(EXTENSIBLE_UI)
   #include "../../../lcd/extui/ui_api.h"
+#elif ENABLED(DWIN_LCD_PROUI)
+  #include "../../../lcd/e3v2/proui/dwin.h"
 #endif
 
 #define DEBUG_OUT ENABLED(DEBUG_LEVELING_FEATURE)
@@ -62,9 +64,13 @@ inline void echo_not_entered(const char c) { SERIAL_CHAR(c); SERIAL_ECHOLNPGM(" 
  *  S5              Reset and disable mesh
  */
 void GcodeSuite::G29() {
-
   DEBUG_SECTION(log_G29, "G29", true);
 
+<<<<<<< HEAD
+  DEBUG_SECTION(log_G29, "G29", true);
+
+=======
+>>>>>>> upstream/bugfix-2.0.x
   // G29 Q is also available if debugging
   #if ENABLED(DEBUG_LEVELING_FEATURE)
     const bool seenQ = parser.seen_test('Q');
@@ -102,6 +108,7 @@ void GcodeSuite::G29() {
       bedlevel.reset();
       mbl_probe_index = 0;
       if (!ui.wait_for_move) {
+<<<<<<< HEAD
         if (parser.seen_test('N'))
           queue.inject(F("G28" TERN_(CAN_SET_LEVELING_AFTER_G28, "L0")));
 
@@ -143,6 +150,11 @@ void GcodeSuite::G29() {
 
         TERN_(EXTENSIBLE_UI, ExtUI::onLevelingStart());
 
+=======
+        queue.inject(parser.seen_test('N') ? F("G28" TERN(CAN_SET_LEVELING_AFTER_G28, "L0", "") "\nG29S2") : F("G29S2"));
+        TERN_(EXTENSIBLE_UI, ExtUI::onLevelingStart());
+        TERN_(DWIN_LCD_PROUI, DWIN_LevelingStart());
+>>>>>>> upstream/bugfix-2.0.x
         return;
       }
       state = MeshNext;
@@ -167,6 +179,10 @@ void GcodeSuite::G29() {
         // Save Z for the previous mesh position
         bedlevel.set_zigzag_z(mbl_probe_index - 1, current_position.z);
         TERN_(EXTENSIBLE_UI, ExtUI::onMeshUpdate(ix, iy, current_position.z));
+<<<<<<< HEAD
+=======
+        TERN_(DWIN_LCD_PROUI, DWIN_MeshUpdate(_MIN(mbl_probe_index, GRID_MAX_POINTS), int(GRID_MAX_POINTS), current_position.z));
+>>>>>>> upstream/bugfix-2.0.x
         SET_SOFT_ENDSTOP_LOOSE(false);
       }
       // If there's another point to sample, move there with optional lift.
@@ -233,6 +249,10 @@ void GcodeSuite::G29() {
       if (parser.seenval('Z')) {
         bedlevel.z_values[ix][iy] = parser.value_linear_units();
         TERN_(EXTENSIBLE_UI, ExtUI::onMeshUpdate(ix, iy, bedlevel.z_values[ix][iy]));
+<<<<<<< HEAD
+=======
+        TERN_(DWIN_LCD_PROUI, DWIN_MeshUpdate(ix, iy, bedlevel.z_values[ix][iy]));
+>>>>>>> upstream/bugfix-2.0.x
       }
       else
         return echo_not_entered('Z');
@@ -253,7 +273,11 @@ void GcodeSuite::G29() {
 
   if (state == MeshNext) {
     SERIAL_ECHOLNPGM("MBL G29 point ", _MIN(mbl_probe_index, GRID_MAX_POINTS), " of ", GRID_MAX_POINTS);
+<<<<<<< HEAD
     if (mbl_probe_index > 0) TERN_(HAS_STATUS_MESSAGE, ui.status_printf(0, F(S_FMT " %i/%i"), GET_TEXT_F(MSG_PROBING_POINT), _MIN(mbl_probe_index, GRID_MAX_POINTS), int(GRID_MAX_POINTS)));
+=======
+    if (mbl_probe_index > 0) TERN_(HAS_STATUS_MESSAGE, ui.status_printf(0, F(S_FMT " %i/%i"), GET_TEXT(MSG_PROBING_POINT), _MIN(mbl_probe_index, GRID_MAX_POINTS), int(GRID_MAX_POINTS)));
+>>>>>>> upstream/bugfix-2.0.x
   }
 
   report_current_position();

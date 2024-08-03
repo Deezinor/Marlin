@@ -21,8 +21,11 @@
  */
 #pragma once
 
+<<<<<<< HEAD
 // ATmega2560
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #if HAS_MULTI_HOTEND || E_STEPPERS > 1
   #error "Ender-4 only supports 1 hotend / E stepper."
 #endif

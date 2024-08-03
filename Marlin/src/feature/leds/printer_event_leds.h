@@ -56,7 +56,11 @@ public:
 
   #if HAS_TEMP_HOTEND || HAS_HEATED_BED || HAS_HEATED_CHAMBER
     static void onHeatingDone()             { leds.set_white(); }
+<<<<<<< HEAD
     static void onPIDTuningDone(LEDColor c) { leds.set_color(c); }
+=======
+    static void onPidTuningDone(LEDColor c) { leds.set_color(c); }
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 
   #if HAS_MEDIA

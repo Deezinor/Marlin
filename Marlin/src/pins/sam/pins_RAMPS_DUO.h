@@ -52,12 +52,18 @@
 #define TEMP_1_PIN                            11  // Analog Input
 #define TEMP_BED_PIN                          10  // Analog Input
 
+<<<<<<< HEAD
 #define ALLOW_SAM3X8E
 #include "../ramps/pins_RAMPS.h"
 
 // SPI for MAX Thermocouple
 #undef TEMP_0_CS_PIN
 #if !HAS_MEDIA
+=======
+// SPI for MAX Thermocouple
+#undef TEMP_0_CS_PIN
+#if DISABLED(SDSUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
   #define TEMP_0_CS_PIN                       69  // Don't use 53 if using Display/SD card
 #else
   #define TEMP_0_CS_PIN                       69  // Don't use 49 (SD_DETECT_PIN)

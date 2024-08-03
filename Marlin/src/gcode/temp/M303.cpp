@@ -31,6 +31,8 @@
 
 #if ENABLED(EXTENSIBLE_UI)
   #include "../../lcd/extui/ui_api.h"
+#elif ENABLED(DWIN_LCD_PROUI)
+  #include "../../lcd/e3v2/proui/dwin.h"
 #endif
 
 /**
@@ -47,7 +49,11 @@
 
 void GcodeSuite::M303() {
 
+<<<<<<< HEAD
   #if HAS_PID_DEBUG
+=======
+  #if ANY(PID_DEBUG, PID_BED_DEBUG, PID_CHAMBER_DEBUG)
+>>>>>>> upstream/bugfix-2.0.x
     if (parser.seen_test('D')) {
       thermalManager.pid_debug_flag ^= true;
       SERIAL_ECHO_START();
@@ -66,7 +72,12 @@ void GcodeSuite::M303() {
     default:
       SERIAL_ECHOPGM(STR_PID_AUTOTUNE);
       SERIAL_ECHOLNPGM(STR_PID_BAD_HEATER_ID);
+<<<<<<< HEAD
       TERN_(EXTENSIBLE_UI, ExtUI::onPIDTuning(ExtUI::pidresult_t::PID_BAD_HEATER_ID));
+=======
+      TERN_(EXTENSIBLE_UI, ExtUI::onPidTuning(ExtUI::result_t::PID_BAD_EXTRUDER_NUM));
+      TERN_(DWIN_LCD_PROUI, DWIN_PidTuning(PID_BAD_EXTRUDER_NUM));
+>>>>>>> upstream/bugfix-2.0.x
       return;
   }
 
@@ -76,10 +87,22 @@ void GcodeSuite::M303() {
   const celsius_t temp = seenS ? parser.value_celsius() : default_temp;
   const bool u = parser.boolval('U');
 
+<<<<<<< HEAD
   TERN_(EXTENSIBLE_UI, ExtUI::onStartM303(c, hid, temp));
 
   IF_DISABLED(BUSY_WHILE_HEATING, KEEPALIVE_STATE(NOT_BUSY));
 
+=======
+  #if ENABLED(DWIN_LCD_PROUI)
+    if (seenC) HMI_data.PidCycles = c;
+    if (seenS) { if (hid == H_BED) HMI_data.BedPidT = temp; else HMI_data.HotendPidT = temp; }
+  #endif
+
+  #if DISABLED(BUSY_WHILE_HEATING)
+    KEEPALIVE_STATE(NOT_BUSY);
+  #endif
+
+>>>>>>> upstream/bugfix-2.0.x
   LCD_MESSAGE(MSG_PID_AUTOTUNE);
   thermalManager.PID_autotune(temp, hid, c, u);
   ui.reset_status();

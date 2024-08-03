@@ -154,10 +154,17 @@
   #ifndef EX_SERIAL_RX_PIN
     #define EX_SERIAL_RX_PIN    EX_SERIAL_TX_PIN
   #endif
+<<<<<<< HEAD
   //#define Z2_SERIAL_RX_PIN    EX_SERIAL_RX_PIN
   //#define Z2_SERIAL_TX_PIN    EX_SERIAL_TX_PIN
   //#define E2_SERIAL_RX_PIN    EX_SERIAL_RX_PIN
   //#define E2_SERIAL_TX_PIN    EX_SERIAL_TX_PIN
+=======
+  //#define Z2_SERIAL_RX_PIN EX_SERIAL_RX_PIN
+  //#define Z2_SERIAL_TX_PIN EX_SERIAL_TX_PIN
+  //#define E2_SERIAL_RX_PIN EX_SERIAL_RX_PIN
+  //#define E2_SERIAL_TX_PIN EX_SERIAL_TX_PIN
+>>>>>>> upstream/bugfix-2.0.x
   // Reduce baud rate to improve software serial reliability
   #ifndef TMC_BAUD_RATE
     #define TMC_BAUD_RATE                  19200
@@ -206,6 +213,10 @@
 //
 #define LED_PIN                             PA15  // Status LED
 //#define CASE_LIGHT_PIN                    PB6   // LED Ribbon Connector (PWM TIM4_CH1)
+<<<<<<< HEAD
+=======
+//#define NEOPIXEL_PIN                      -1
+>>>>>>> upstream/bugfix-2.0.x
 #ifndef RGB_LED_R_PIN
   #define RGB_LED_R_PIN                     PB8   // swap R and G pin for compatibility with real wires
 #endif
@@ -222,7 +233,11 @@
 #define ONBOARD_SDIO
 #define SDIO_CLOCK                       4800000
 #define SD_DETECT_PIN                       PA8
+<<<<<<< HEAD
 #if DISABLED(ONBOARD_SDIO)
+=======
+#if DISABLED(SDIO_SUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
   #define SOFTWARE_SPI
   #define SD_SCK_PIN                        PC12
   #define SD_MISO_PIN                       PC8

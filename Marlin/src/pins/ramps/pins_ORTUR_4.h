@@ -76,6 +76,11 @@
   #define E0_SERIAL_RX_PIN                    65
 #endif
 
+<<<<<<< HEAD
+=======
+#include "pins_RAMPS.h"
+
+>>>>>>> upstream/bugfix-2.0.x
 //
 // LCD / Controller
 //

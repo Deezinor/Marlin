@@ -25,13 +25,18 @@
 
 #include "../../inc/MarlinConfig.h"
 
+<<<<<<< HEAD
 #if U8G_HW_SPI_ESP32
+=======
+#if EITHER(MKS_MINI_12864, FYSETC_MINI_12864_2_1)
+>>>>>>> upstream/bugfix-2.0.x
 
 #include <U8glib-HAL.h>
 #include "../shared/HAL_SPI.h"
 #include "HAL.h"
 #include "SPI.h"
 
+<<<<<<< HEAD
 #if HAS_MEDIA
   #include "../../sd/cardreader.h"
   #if ENABLED(ESP3D_WIFISUPPORT)
@@ -41,6 +46,11 @@
 
 static SPISettings spiConfig;
 
+=======
+static SPISettings spiConfig;
+
+
+>>>>>>> upstream/bugfix-2.0.x
 #ifndef LCD_SPI_SPEED
   #ifdef SD_SPI_SPEED
     #define LCD_SPI_SPEED SD_SPI_SPEED    // Assume SPI speed shared with SD
@@ -49,6 +59,7 @@ static SPISettings spiConfig;
   #endif
 #endif
 
+<<<<<<< HEAD
 uint8_t u8g_esp32_hw_spi_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_val, void *arg_ptr) {
   static uint8_t msgInitCount = 2; // Ignore all messages until 2nd U8G_COM_MSG_INIT
 
@@ -56,6 +67,10 @@ uint8_t u8g_esp32_hw_spi_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_val, void *arg_
     if (card.flag.saving || card.flag.logging || TERN0(ESP3D_WIFISUPPORT, sd_busy_lock == true)) return 0;
   #endif
 
+=======
+uint8_t u8g_eps_hw_spi_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_val, void *arg_ptr) {
+  static uint8_t msgInitCount = 2; // Ignore all messages until 2nd U8G_COM_MSG_INIT
+>>>>>>> upstream/bugfix-2.0.x
   if (msgInitCount) {
     if (msg == U8G_COM_MSG_INIT) msgInitCount--;
     if (msgInitCount) return -1;
@@ -100,5 +115,10 @@ uint8_t u8g_esp32_hw_spi_fn(u8g_t *u8g, uint8_t msg, uint8_t arg_val, void *arg_
   return 1;
 }
 
+<<<<<<< HEAD
 #endif // U8G_HW_SPI_ESP32
+=======
+#endif // EITHER(MKS_MINI_12864, FYSETC_MINI_12864_2_1)
+
+>>>>>>> upstream/bugfix-2.0.x
 #endif // ARDUINO_ARCH_ESP32

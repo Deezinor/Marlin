@@ -90,7 +90,11 @@ static void btn_ok_event_cb(lv_obj_t *btn, lv_event_t event) {
         char *cur_name;
         cur_name = strrchr(list_file.file_name[sel_id], '/');
 
+<<<<<<< HEAD
         MediaFile file, *curDir;
+=======
+        SdFile file, *curDir;
+>>>>>>> upstream/bugfix-2.0.x
         card.abortFilePrintNow();
         const char * const fname = card.diveToFile(false, curDir, cur_name);
         if (!fname) return;
@@ -102,8 +106,17 @@ static void btn_ok_event_cb(lv_obj_t *btn, lv_event_t event) {
         card.openFileRead(cur_name);
         if (card.isFileOpen()) {
           feedrate_percentage = 100;
+<<<<<<< HEAD
           TERN_(HAS_EXTRUDERS, planner.set_flow(0, 100));
           TERN_(HAS_MULTI_EXTRUDER, planner.set_flow(1, 100));
+=======
+          planner.flow_percentage[0] = 100;
+          planner.e_factor[0] = planner.flow_percentage[0] * 0.01f;
+          #if HAS_MULTI_EXTRUDER
+            planner.flow_percentage[1] = 100;
+            planner.e_factor[1] = planner.flow_percentage[1] * 0.01f;
+          #endif
+>>>>>>> upstream/bugfix-2.0.x
           card.startOrResumeFilePrinting();
           TERN_(POWER_LOSS_RECOVERY, recovery.prepare());
           once_flag = false;
@@ -117,7 +130,11 @@ static void btn_ok_event_cb(lv_obj_t *btn, lv_event_t event) {
     lv_clear_dialog();
     lv_draw_ready_print();
 
+<<<<<<< HEAD
     #if HAS_MEDIA
+=======
+    #if ENABLED(SDSUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
       uiCfg.print_state = IDLE;
       card.abortFilePrintSoon();
     #endif
@@ -388,12 +405,37 @@ void lv_draw_dialog(uint8_t type) {
         lv_obj_align(labelDialog, nullptr, LV_ALIGN_CENTER, 0, -20);
       }
       else if (upload_result == 3) {
+<<<<<<< HEAD
         MString<200> buf(
           F(DIALOG_UPLOAD_FINISH_EN), '\n',
           F(DIALOG_UPLOAD_SIZE_EN), F(": "), int(upload_size / 1024), F(" KBytes\n"),
           F(DIALOG_UPLOAD_TIME_EN), F(": "), int(upload_time_sec), F(" s\n"),
           F(DIALOG_UPLOAD_SPEED_EN), F(": "), int(upload_size / upload_time_sec / 1024), F(" KBytes/s\n")
         );
+=======
+        char buf[200];
+        int _index = 0;
+
+        strcpy_P(buf, PSTR(DIALOG_UPLOAD_FINISH_EN));
+        _index = strlen(buf);
+        buf[_index++] = '\n';
+        strcat_P(buf, PSTR(DIALOG_UPLOAD_SIZE_EN));
+
+        _index = strlen(buf);
+        buf[_index++] = ':';
+        sprintf_P(&buf[_index], PSTR(" %d KBytes\n"), (int)(upload_size / 1024));
+
+        strcat_P(buf, PSTR(DIALOG_UPLOAD_TIME_EN));
+        _index = strlen(buf);
+        buf[_index++] = ':';
+        sprintf_P(&buf[_index], PSTR(" %d s\n"), (int)upload_time_sec);
+
+        strcat_P(buf, PSTR(DIALOG_UPLOAD_SPEED_EN));
+        _index = strlen(buf);
+        buf[_index++] = ':';
+        sprintf_P(&buf[_index], PSTR(" %d KBytes/s\n"), (int)(upload_size / upload_time_sec / 1024));
+
+>>>>>>> upstream/bugfix-2.0.x
         lv_label_set_text(labelDialog, buf);
         lv_obj_align(labelDialog, nullptr, LV_ALIGN_CENTER, 0, -20);
       }

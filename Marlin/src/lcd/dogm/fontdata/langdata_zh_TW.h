@@ -1300,7 +1300,11 @@ static const uxg_fontinfo_t g_fontinfo_zh_TW[] PROGMEM = {
   FONTDATA_ITEM(178, 154, 154, fontpage_178_154_154), // '多' -- '多'
   FONTDATA_ITEM(178, 160, 160, fontpage_178_160_160), // '夠' -- '夠'
   FONTDATA_ITEM(178, 167, 167, fontpage_178_167_167), // '大' -- '大'
+<<<<<<< HEAD
   FONTDATA_ITEM(178, 169, 169, fontpage_178_169_169), // '天' -- '天'
+=======
+  FONTDATA_ITEM(178, 169, 170, fontpage_178_169_170), // '天' -- '太'
+>>>>>>> upstream/bugfix-2.0.x
   FONTDATA_ITEM(178, 177, 177, fontpage_178_177_177), // '失' -- '失'
   FONTDATA_ITEM(179, 203, 203, fontpage_179_203_203), // '始' -- '始'
   FONTDATA_ITEM(181, 146, 146, fontpage_181_146_146), // '媒' -- '媒'

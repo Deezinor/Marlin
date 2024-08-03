@@ -23,7 +23,11 @@
 
 #include "../../../inc/MarlinConfigPre.h"
 
+<<<<<<< HEAD
 #if ALL(HAS_TFT_LVGL_UI, MKS_WIFI_MODULE)
+=======
+#if BOTH(HAS_TFT_LVGL_UI, MKS_WIFI_MODULE)
+>>>>>>> upstream/bugfix-2.0.x
 
 #include "tft_lvgl_configuration.h"
 

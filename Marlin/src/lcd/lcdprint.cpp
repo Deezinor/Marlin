@@ -32,6 +32,7 @@
 #include "lcdprint.h"
 
 /**
+<<<<<<< HEAD
  * expand_u8str_P
  *
  * Expand a string with optional substitutions:
@@ -63,6 +64,36 @@ lcd_uint_t expand_u8str_P(char * const outstr, PGM_P const ptpl, const int8_t in
             inum %= 10;
           }
           if (n) { *o++ = '0' + inum; n--; }
+=======
+ * lcd_put_u8str_P
+ *
+ * Print a string with optional substitutions:
+ *
+ *   $ displays the clipped string given by fstr or cstr
+ *   = displays  '0'....'10' for indexes 0 - 10
+ *   ~ displays  '1'....'11' for indexes 0 - 10
+ *   * displays 'E1'...'E11' for indexes 0 - 10 (By default. Uses LCD_FIRST_TOOL)
+ *   @ displays an axis name such as XYZUVW, or E for an extruder
+ */
+lcd_uint_t lcd_put_u8str_P(PGM_P const ptpl, const int8_t ind, const char *cstr/*=nullptr*/, FSTR_P const fstr/*=nullptr*/, const lcd_uint_t maxlen/*=LCD_WIDTH*/) {
+  const uint8_t prop = USE_WIDE_GLYPH ? 2 : 1;
+  const uint8_t *p = (uint8_t*)ptpl;
+  int8_t n = maxlen;
+  while (n > 0) {
+    lchar_t wc;
+    p = get_utf8_value_cb(p, read_byte_rom, wc);
+    if (!wc) break;
+    if (wc == '=' || wc == '~' || wc == '*') {
+      if (ind >= 0) {
+        if (wc == '*') { lcd_put_lchar('E'); n--; }
+        if (n) {
+          int8_t inum = ind + ((wc == '=') ? 0 : LCD_FIRST_TOOL);
+          if (inum >= 10) {
+            lcd_put_lchar('0' + (inum / 10)); n--;
+            inum %= 10;
+          }
+          if (n) { lcd_put_lchar('0' + inum); n--; }
+>>>>>>> upstream/bugfix-2.0.x
         }
       }
       else {
@@ -79,6 +110,7 @@ lcd_uint_t expand_u8str_P(char * const outstr, PGM_P const ptpl, const int8_t in
       }
     }
     else if (wc == '$' && fstr) {
+<<<<<<< HEAD
       strlcpy_P(o, FTOP(fstr), n + 1);
       n -= utf8_strlen(o);
       o += strlen(o);
@@ -95,11 +127,26 @@ lcd_uint_t expand_u8str_P(char * const outstr, PGM_P const ptpl, const int8_t in
         while (psc != p) *o++ = read_byte_rom(psc++);
       *o = '\0';
       n--;
+=======
+      n -= lcd_put_u8str_max_P(FTOP(fstr), n * (MENU_FONT_WIDTH)) / (MENU_FONT_WIDTH);
+    }
+    else if (wc == '$' && cstr) {
+      n -= lcd_put_u8str_max(cstr, n * (MENU_FONT_WIDTH)) / (MENU_FONT_WIDTH);
+    }
+    else if (wc == '@') {
+      lcd_put_lchar(AXIS_CHAR(ind));
+      n--;
+    }
+    else {
+      lcd_put_lchar(wc);
+      n -= wc > 255 ? prop : 1;
+>>>>>>> upstream/bugfix-2.0.x
     }
   }
   return maxlen - n;
 }
 
+<<<<<<< HEAD
 /**
  * lcd_put_u8str_P
  *
@@ -120,6 +167,8 @@ lcd_uint_t lcd_put_u8str_P(PGM_P const ptpl, const int8_t ind, const char *cstr/
   return outlen;
 }
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 // Calculate UTF8 width with a simple check
 int calculateWidth(PGM_P const pstr) {
   if (!USE_WIDE_GLYPH) return utf8_strlen_P(pstr) * MENU_FONT_WIDTH;

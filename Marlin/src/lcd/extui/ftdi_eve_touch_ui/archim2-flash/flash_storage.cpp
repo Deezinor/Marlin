@@ -416,7 +416,11 @@ bool UIFlashStorage::is_present = false;
    * files must be written sequentially following by a chip erase and it is not possible to
    * overwrite files. */
   UIFlashStorage::error_t UIFlashStorage::write_media_file(FSTR_P filename, uint8_t slot) {
+<<<<<<< HEAD
     #if HAS_MEDIA
+=======
+    #if ENABLED(SDSUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
       uint32_t addr;
       uint8_t buff[write_page_size];
 

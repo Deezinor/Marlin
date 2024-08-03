@@ -36,6 +36,7 @@
 namespace ExtUI {
 
   void onStartup() {
+<<<<<<< HEAD
     dgus.initDisplay();
     screen.updateScreenVPData();
   }
@@ -57,6 +58,25 @@ namespace ExtUI {
   void onMaxTempError(const heater_id_t header_id) {}
 
   void onPlayTone(const uint16_t frequency, const uint16_t duration/*=0*/) {}
+=======
+    dgusdisplay.InitDisplay();
+    ScreenHandler.UpdateScreenVPData();
+  }
+
+  void onIdle() { ScreenHandler.loop(); }
+
+  void onPrinterKilled(FSTR_P const error, FSTR_P const) {
+    ScreenHandler.sendinfoscreen(GET_TEXT_F(MSG_HALTED), error, FPSTR(NUL_STR), GET_TEXT_F(MSG_PLEASE_RESET), true, true, true, true);
+    ScreenHandler.GotoScreen(DGUSLCD_SCREEN_KILL);
+    while (!ScreenHandler.loop());  // Wait while anything is left to be sent
+  }
+
+  void onMediaInserted() { TERN_(SDSUPPORT, ScreenHandler.SDCardInserted()); }
+  void onMediaError()    { TERN_(SDSUPPORT, ScreenHandler.SDCardError()); }
+  void onMediaRemoved()  { TERN_(SDSUPPORT, ScreenHandler.SDCardRemoved()); }
+
+  void onPlayTone(const uint16_t frequency, const uint16_t duration) {}
+>>>>>>> upstream/bugfix-2.0.x
   void onPrintTimerStarted() {}
   void onPrintTimerPaused() {}
   void onPrintTimerStopped() {}
@@ -64,6 +84,7 @@ namespace ExtUI {
 
   void onUserConfirmRequired(const char * const msg) {
     if (msg) {
+<<<<<<< HEAD
       screen.sendInfoScreen(F("Please confirm."), nullptr, msg, nullptr, true, true, false, true);
       screen.setupConfirmAction(setUserConfirmed);
       screen.gotoScreen(DGUS_SCREEN_POPUP);
@@ -99,6 +120,22 @@ namespace ExtUI {
   void onHomingStart() {}
   void onHomingDone() {}
 
+=======
+      ScreenHandler.sendinfoscreen(F("Please confirm."), nullptr, msg, nullptr, true, true, false, true);
+      ScreenHandler.SetupConfirmAction(setUserConfirmed);
+      ScreenHandler.GotoScreen(DGUSLCD_SCREEN_POPUP);
+    }
+    else if (ScreenHandler.getCurrentScreen() == DGUSLCD_SCREEN_POPUP) {
+      ScreenHandler.SetupConfirmAction(nullptr);
+      ScreenHandler.PopToOldScreen();
+    }
+  }
+
+  void onStatusChanged(const char * const msg) { ScreenHandler.setstatusmessage(msg); }
+
+  void onHomingStart() {}
+  void onHomingDone() {}
+>>>>>>> upstream/bugfix-2.0.x
   void onPrintDone() {}
 
   void onFactoryReset() {}
@@ -127,16 +164,25 @@ namespace ExtUI {
     // Called after loading or resetting stored settings
   }
 
+<<<<<<< HEAD
   void onSettingsStored(const bool success) {
+=======
+  void onSettingsStored(bool success) {
+>>>>>>> upstream/bugfix-2.0.x
     // Called after the entire EEPROM has been written,
     // whether successful or not.
   }
 
+<<<<<<< HEAD
   void onSettingsLoaded(const bool success) {
+=======
+  void onSettingsLoaded(bool success) {
+>>>>>>> upstream/bugfix-2.0.x
     // Called after the entire EEPROM has been read,
     // whether successful or not.
   }
 
+<<<<<<< HEAD
   #if HAS_LEVELING
     void onLevelingStart() {}
     void onLevelingDone() {}
@@ -146,6 +192,12 @@ namespace ExtUI {
   #endif
 
   #if HAS_MESH
+=======
+  #if HAS_MESH
+    void onLevelingStart() {}
+    void onLevelingDone() {}
+
+>>>>>>> upstream/bugfix-2.0.x
     void onMeshUpdate(const int8_t xpos, const int8_t ypos, const_float_t zval) {
       // Called when any mesh points are updated
     }
@@ -155,6 +207,7 @@ namespace ExtUI {
     }
   #endif
 
+<<<<<<< HEAD
   #if ENABLED(PREVENT_COLD_EXTRUSION)
     void onSetMinExtrusionTemp(const celsius_t) {}
   #endif
@@ -169,10 +222,17 @@ namespace ExtUI {
     void onPowerLossResume() {
       // Called on resume from power-loss
       IF_DISABLED(DGUS_LCD_UI_MKS, screen.gotoScreen(DGUS_SCREEN_POWER_LOSS));
+=======
+  #if ENABLED(POWER_LOSS_RECOVERY)
+    void onPowerLossResume() {
+      // Called on resume from power-loss
+      IF_DISABLED(DGUS_LCD_UI_MKS, ScreenHandler.GotoScreen(DGUSLCD_SCREEN_POWER_LOSS));
+>>>>>>> upstream/bugfix-2.0.x
     }
   #endif
 
   #if HAS_PID_HEATING
+<<<<<<< HEAD
     void onPIDTuning(const pidresult_t rst) {
       // Called for temperature PID tuning result
       switch (rst) {
@@ -230,6 +290,33 @@ namespace ExtUI {
   void onSteppersEnabled() {}
   void onAxisDisabled(const axis_t) {}
   void onAxisEnabled(const axis_t) {}
+=======
+    void onPidTuning(const result_t rst) {
+      // Called for temperature PID tuning result
+      switch (rst) {
+        case PID_STARTED:
+          ScreenHandler.setstatusmessagePGM(GET_TEXT(MSG_PID_AUTOTUNE));
+          break;
+        case PID_BAD_EXTRUDER_NUM:
+          ScreenHandler.setstatusmessagePGM(GET_TEXT(MSG_PID_BAD_EXTRUDER_NUM));
+          break;
+        case PID_TEMP_TOO_HIGH:
+          ScreenHandler.setstatusmessagePGM(GET_TEXT(MSG_PID_TEMP_TOO_HIGH));
+          break;
+        case PID_TUNING_TIMEOUT:
+          ScreenHandler.setstatusmessagePGM(GET_TEXT(MSG_PID_TIMEOUT));
+          break;
+        case PID_DONE:
+          ScreenHandler.setstatusmessagePGM(GET_TEXT(MSG_PID_AUTOTUNE_DONE));
+          break;
+      }
+      ScreenHandler.GotoScreen(DGUSLCD_SCREEN_MAIN);
+    }
+  #endif
+
+  void onSteppersDisabled() {}
+  void onSteppersEnabled()  {}
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 #endif // HAS_DGUS_LCD_CLASSIC

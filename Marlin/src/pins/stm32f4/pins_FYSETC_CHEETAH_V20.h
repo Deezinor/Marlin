@@ -59,6 +59,16 @@
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                   PB1   // BL-TOUCH/PWM repurposed
 #endif
+<<<<<<< HEAD
+=======
+
+//
+// Limit Switches
+//
+#define X_STOP_PIN                          PB4
+#define Y_STOP_PIN                          PC8
+#define Z_STOP_PIN                          PB1
+>>>>>>> upstream/bugfix-2.0.x
 
 //
 // Filament runout
@@ -114,8 +124,13 @@
 //
 #define HEATER_0_PIN                        PC6
 #define HEATER_BED_PIN                      PC7
+<<<<<<< HEAD
 #ifndef FAN0_PIN
   #define FAN0_PIN                          PA14
+=======
+#ifndef FAN_PIN
+  #define FAN_PIN                           PA14
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 #define FAN1_PIN                            PA13
 #define FAN2_PIN                            PA1
@@ -151,6 +166,7 @@
  *              GND | 9 10 | 5V                         GND | 9 10 |   5V
  *                   ------                                  ------
  *                    EXP2                                    EXP1
+<<<<<<< HEAD
  *
  *                   ------
  *    (BEEPER) PC9  | 1  2 | PC12 (BTN_ENC)
@@ -188,9 +204,42 @@
 #define EXP3_06_PIN                         PB13
 #define EXP3_07_PIN                         PB12
 #define EXP3_08_PIN                         PB15
+=======
+ */
+
+/**
+ *                     ------
+ *                 5V | 1  2 | GND
+ * (LCD_EN/MOSI) PB15 | 3  4 | PB12  (LCD_RS)
+ * (LCD_D4/SCK)  PB13   5  6 | PC11 (BTN_EN2)
+ * (LCD_D5/MISO) PB14 | 7  8 | PC10 (BTN_EN1)
+ * (BTN_ENC)     PC12 | 9 10 | PC9   (BEEPER)
+ *                     ------
+ *                      EXP3
+ */
+
+#define EXP1_01_PIN                         PC9
+#define EXP1_02_PIN                         PC12
+#define EXP1_03_PIN                         PB15
+#define EXP1_04_PIN                         PB12
+#define EXP1_05_PIN                         PB13
+#define EXP1_06_PIN                         PB14
+#define EXP1_07_PIN                         PB6
+#define EXP1_08_PIN                         PB7
+
+#define EXP2_01_PIN                         PA6
+#define EXP2_02_PIN                         PA5
+#define EXP2_03_PIN                         PC10
+#define EXP2_04_PIN                         PA4
+#define EXP2_05_PIN                         PC11
+#define EXP2_06_PIN                         PA7
+#define EXP2_07_PIN                         PC3
+#define EXP2_08_PIN                         -1
+>>>>>>> upstream/bugfix-2.0.x
 
 #if ENABLED(CR10_STOCKDISPLAY)
 
+<<<<<<< HEAD
   #define BEEPER_PIN                 EXP3_01_PIN
   #define BTN_ENC                    EXP3_02_PIN
   #define BTN_EN1                    EXP3_03_PIN
@@ -198,14 +247,31 @@
   #define LCD_PINS_D4                EXP3_06_PIN
   #define LCD_PINS_RS                EXP3_07_PIN
   #define LCD_PINS_EN                EXP3_08_PIN
+=======
+  #define BEEPER_PIN                 EXP1_01_PIN
+  #define BTN_ENC                    EXP1_02_PIN
+>>>>>>> upstream/bugfix-2.0.x
 
 #elif HAS_WIRED_LCD
 
+<<<<<<< HEAD
   #define BEEPER_PIN                 EXP1_01_PIN
   #define BTN_ENC                    EXP1_02_PIN
 
   #if ENABLED(MKS_MINI_12864)
 
+=======
+    #define LCD_PINS_RS              EXP1_04_PIN
+
+    #define BTN_EN1                  EXP2_03_PIN
+    #define BTN_EN2                  EXP2_05_PIN
+
+    #define LCD_PINS_ENABLE          EXP1_03_PIN
+    #define LCD_PINS_D4              EXP1_05_PIN
+
+  #elif ENABLED(MKS_MINI_12864)
+
+>>>>>>> upstream/bugfix-2.0.x
     #define DOGLCD_A0                EXP1_07_PIN
     #define DOGLCD_CS                EXP1_06_PIN
     #define BTN_EN1                  EXP2_03_PIN
@@ -218,7 +284,11 @@
     #define BTN_EN1                  EXP2_05_PIN
     #define BTN_EN2                  EXP2_03_PIN
 
+<<<<<<< HEAD
     #define LCD_PINS_EN              EXP1_03_PIN
+=======
+    #define LCD_PINS_ENABLE          EXP1_03_PIN
+>>>>>>> upstream/bugfix-2.0.x
     #define LCD_PINS_D4              EXP1_05_PIN
 
     #if ENABLED(FYSETC_MINI_12864)
@@ -226,7 +296,11 @@
       #define DOGLCD_A0              EXP1_04_PIN
       //#define LCD_BACKLIGHT_PIN           -1
       #define LCD_RESET_PIN          EXP1_05_PIN  // Must be high or open for LCD to operate normally.
+<<<<<<< HEAD
       #if ANY(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
+=======
+      #if EITHER(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
+>>>>>>> upstream/bugfix-2.0.x
         #ifndef RGB_LED_R_PIN
           #define RGB_LED_R_PIN      EXP1_06_PIN
         #endif

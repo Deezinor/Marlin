@@ -21,8 +21,13 @@
  */
 
 /**
+<<<<<<< HEAD:Marlin/src/lcd/utf8.cpp
  * @file    utf8.cpp
  * @brief   Helper functions for UTF-8 strings
+=======
+ * @file    fontutils.cpp
+ * @brief   help functions for font and char
+>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/fontutils.cpp
  * @author  Yunhui Fu (yhfudev@gmail.com)
  * @version 1.0
  * @date    2016-08-19
@@ -31,10 +36,13 @@
 
 #include "../inc/MarlinConfigPre.h"
 
+<<<<<<< HEAD:Marlin/src/lcd/utf8.cpp
 #if HAS_UTF8_UTILS
 
 #include "../inc/MarlinConfig.h"
 
+=======
+>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/fontutils.cpp
 #if HAS_WIRED_LCD
   #include "marlinui.h"
   #include "../MarlinCore.h"
@@ -99,10 +107,15 @@ static inline bool utf8_is_start_byte_of_char(const uint8_t b) {
   return 0x80 != (b & 0xC0);
 }
 
+<<<<<<< HEAD:Marlin/src/lcd/utf8.cpp
 /**
  * Get the character at pstart, interpreting UTF8 multibyte sequences.
  * Return the pointer to the next character.
  */
+=======
+/* This function gets the character at the pstart position, interpreting UTF8 multibyte sequences
+   and returns the pointer to the next character */
+>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/fontutils.cpp
 const uint8_t* get_utf8_value_cb(const uint8_t *pstart, read_byte_cb_t cb_read_byte, lchar_t &pval) {
   uint32_t val = 0;
   const uint8_t *p = pstart;

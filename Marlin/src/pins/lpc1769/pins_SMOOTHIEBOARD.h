@@ -23,7 +23,10 @@
 
 /**
  * Smoothieware Smoothieboard pin assignments
+<<<<<<< HEAD
  * See https://smoothieware.github.io/Webif-pack/documentation/web/html/smoothieboard.html
+=======
+>>>>>>> upstream/bugfix-2.0.x
  */
 
 #include "env_validate.h"
@@ -92,8 +95,12 @@
 //
 // LCD / Controller
 //
+<<<<<<< HEAD
 
 #if ANY(VIKI2, miniVIKI)
+=======
+#if EITHER(VIKI2, miniVIKI)
+>>>>>>> upstream/bugfix-2.0.x
 
   #define BEEPER_PIN                       P1_31
   #define DOGLCD_A0                        P2_11

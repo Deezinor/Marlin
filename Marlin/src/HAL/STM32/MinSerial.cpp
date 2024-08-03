@@ -137,6 +137,7 @@ void install_min_serial() {
 }
 
 #if NONE(DYNAMIC_VECTORTABLE, STM32F0xx, STM32G0xx) // Cortex M0 can't jump to a symbol that's too far from the current function, so we work around this in exception_arm.cpp
+<<<<<<< HEAD
   extern "C" {
     __attribute__((naked)) void JumpHandler_ASM() {
       __asm__ __volatile__ (
@@ -148,6 +149,13 @@ void install_min_serial() {
     void __attribute__((naked, alias("JumpHandler_ASM"), nothrow)) UsageFault_Handler();
     void __attribute__((naked, alias("JumpHandler_ASM"), nothrow)) MemManage_Handler();
     void __attribute__((naked, alias("JumpHandler_ASM"), nothrow)) NMI_Handler();
+=======
+extern "C" {
+  __attribute__((naked)) void JumpHandler_ASM() {
+    __asm__ __volatile__ (
+      "b CommonHandler_ASM\n"
+    );
+>>>>>>> upstream/bugfix-2.0.x
   }
 #endif
 

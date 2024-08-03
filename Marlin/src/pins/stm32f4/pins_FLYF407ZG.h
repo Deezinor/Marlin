@@ -214,9 +214,15 @@
 
 #if SD_CONNECTION_IS(ONBOARD)
 
+<<<<<<< HEAD
   #define ONBOARD_SDIO                            // Use SDIO for onboard SD
 
   #if DISABLED(ONBOARD_SDIO)
+=======
+  #define SDIO_SUPPORT                            // Use SDIO for onboard SD
+
+  #if DISABLED(SDIO_SUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
     #define SOFTWARE_SPI                          // Use soft SPI for onboard SD
     #define SDSS                            PC11
     #define SD_SCK_PIN                      PC12
@@ -237,6 +243,7 @@
 //
 // Trinamic SPI
 //
+<<<<<<< HEAD
 #ifndef TMC_SPI_SCK
   #define TMC_SPI_SCK                EXP2_02_PIN
 #endif
@@ -245,6 +252,18 @@
 #endif
 #ifndef TMC_SPI_MOSI
   #define TMC_SPI_MOSI               EXP2_06_PIN
+=======
+#if ENABLED(TMC_USE_SW_SPI)
+  #ifndef TMC_SW_SCK
+    #define TMC_SW_SCK               EXP2_02_PIN
+  #endif
+  #ifndef TMC_SW_MISO
+    #define TMC_SW_MISO              EXP2_01_PIN
+  #endif
+  #ifndef TMC_SW_MOSI
+    #define TMC_SW_MOSI              EXP2_06_PIN
+  #endif
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 //
@@ -283,11 +302,18 @@
 //
 // LCD / Controller
 //
+<<<<<<< HEAD
 
 #if IS_RRD_SC
   #define BEEPER_PIN                 EXP1_01_PIN
   #define LCD_PINS_RS                EXP1_04_PIN
   #define LCD_PINS_EN                EXP1_03_PIN
+=======
+#if IS_RRD_SC
+  #define BEEPER_PIN                 EXP1_01_PIN
+  #define LCD_PINS_RS                EXP1_04_PIN
+  #define LCD_PINS_ENABLE            EXP1_03_PIN
+>>>>>>> upstream/bugfix-2.0.x
   #define LCD_PINS_D4                EXP1_05_PIN
   #define LCD_PINS_D5                EXP1_06_PIN
   #define LCD_PINS_D6                EXP1_07_PIN

@@ -26,7 +26,11 @@
 
 struct BedMeshViewScreenData {
   FSTR_P message;
+<<<<<<< HEAD
   grid_count_t count;
+=======
+  uint8_t count;
+>>>>>>> upstream/bugfix-2.0.x
   xy_uint8_t highlight;
 };
 

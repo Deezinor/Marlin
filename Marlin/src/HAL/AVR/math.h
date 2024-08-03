@@ -86,6 +86,7 @@ FORCE_INLINE static uint16_t MultiU24X32toH16(uint32_t longIn1, uint32_t longIn2
 
 // charRes = charIn1 * charIn2 >> 8
 // uses:
+<<<<<<< HEAD
 // r1, r0 for the result of mul. After the mul, r0 holds bits 0-7 of the 16 bit result,
 //        and the top bit of r0 is used for rounding.
 // [charRes] is bits 8-15 and is the returned value.
@@ -94,6 +95,13 @@ FORCE_INLINE static uint16_t MultiU24X32toH16(uint32_t longIn1, uint32_t longIn2
 //
 FORCE_INLINE static uint8_t MultiU8X8toH8(uint8_t charIn1, uint8_t charIn2) {
   uint8_t charRes;
+=======
+// r26 to store 0
+// r27 to store the byte 1 of the 24 bit result
+FORCE_INLINE static uint16_t MultiU16X8toH16(uint8_t charIn1, uint16_t intIn2) {
+  uint8_t tmp;
+  uint16_t intRes;
+>>>>>>> upstream/bugfix-2.0.x
   __asm__ __volatile__ (
     A("mul %[charIn1], %[charIn2]")
     A("mov %[charRes], r1")

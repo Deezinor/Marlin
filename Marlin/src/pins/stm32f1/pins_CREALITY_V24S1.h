@@ -22,6 +22,7 @@
 #pragma once
 
 /**
+<<<<<<< HEAD
  * Creality v2.4.S1 (STM32F103RE / STM32F103RC) v101 as found in the Ender-7
  */
 
@@ -30,6 +31,11 @@
   #define E_ERROR 1
 #endif
 
+=======
+ * Creality v2.4.S1 (STM32F103RE / STM32F103RC) v101 as found in the Ender 7
+ */
+
+>>>>>>> upstream/bugfix-2.0.x
 #define BOARD_INFO_NAME      "Creality v2.4.S1 V101"
 #define DEFAULT_MACHINE_NAME "Creality3D"
 

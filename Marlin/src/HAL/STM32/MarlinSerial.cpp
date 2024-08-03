@@ -127,6 +127,9 @@ void MarlinSerial::begin(unsigned long baud, uint8_t config) {
     }
   }
 
+<<<<<<< HEAD
 #endif // !SERIAL_DMA
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #endif // HAL_STM32

@@ -50,8 +50,11 @@
   #include "delta.h"
 #elif ENABLED(POLARGRAPH)
   #include "polargraph.h"
+<<<<<<< HEAD
 #elif ENABLED(POLAR)
   #include "polar.h"
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #if ABL_PLANAR
@@ -80,6 +83,7 @@
 
 // Feedrate for manual moves
 #ifdef MANUAL_FEEDRATE
+<<<<<<< HEAD
   constexpr xyze_feedrate_t manual_feedrate_mm_m = MANUAL_FEEDRATE,
                             manual_feedrate_mm_s = LOGICAL_AXIS_ARRAY(
                               MMM_TO_MMS(manual_feedrate_mm_m.e),
@@ -98,6 +102,12 @@
     #define BABYSTEP_SIZE_Y BABYSTEP_MULTIPLICATOR_XY
     #define BABYSTEP_SIZE_Z BABYSTEP_MULTIPLICATOR_Z
   #endif
+=======
+  constexpr xyze_feedrate_t _mf = MANUAL_FEEDRATE,
+           manual_feedrate_mm_s = LOGICAL_AXIS_ARRAY(_mf.e / 60.0f,
+                                                     _mf.x / 60.0f, _mf.y / 60.0f, _mf.z / 60.0f,
+                                                     _mf.i / 60.0f, _mf.j / 60.0f, _mf.k / 60.0f);
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #if IS_KINEMATIC && HAS_JUNCTION_DEVIATION
@@ -119,6 +129,10 @@ enum BlockFlagBit {
 
   // Direct stepping page
   OPTARG(DIRECT_STEPPING, BLOCK_BIT_PAGE)
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/bugfix-2.0.x
 
   // Sync the fan speeds from the block
   OPTARG(LASER_SYNCHRONOUS_M106_M107, BLOCK_BIT_SYNC_FANS)
@@ -137,6 +151,11 @@ typedef struct {
     struct {
       bool recalculate:1;
 
+<<<<<<< HEAD
+=======
+      bool nominal_length:1;
+
+>>>>>>> upstream/bugfix-2.0.x
       bool continued:1;
 
       bool sync_position:1;
@@ -159,6 +178,7 @@ typedef struct {
   void apply(const uint8_t f) volatile { bits |= f; }
   void apply(const BlockFlagBit b) volatile { SBI(bits, b); }
   void reset(const BlockFlagBit b) volatile { bits = _BV(b); }
+<<<<<<< HEAD
 
 } block_flags_t;
 
@@ -170,6 +190,12 @@ typedef struct {
   } autotemp_t;
 #endif
 
+=======
+  void set_nominal(const bool n) volatile { recalculate = true; if (n) nominal_length = true; }
+
+} block_flags_t;
+
+>>>>>>> upstream/bugfix-2.0.x
 #if ENABLED(LASER_FEATURE)
 
   typedef struct {
@@ -206,12 +232,20 @@ typedef struct PlannerBlock {
 
   volatile block_flags_t flag;              // Block flags
 
+<<<<<<< HEAD
   bool is_sync_pos() { return flag.sync_position; }
   bool is_sync_fan() { return TERN0(LASER_SYNCHRONOUS_M106_M107, flag.sync_fans); }
   bool is_sync_pwr() { return TERN0(LASER_POWER_SYNC, flag.sync_laser_pwr); }
   bool is_sync() { return is_sync_pos() || is_sync_fan() || is_sync_pwr(); }
   bool is_page() { return TERN0(DIRECT_STEPPING, flag.page); }
   bool is_move() { return !(is_sync() || is_page()); }
+=======
+  volatile bool is_fan_sync() { return TERN0(LASER_SYNCHRONOUS_M106_M107, flag.sync_fans); }
+  volatile bool is_pwr_sync() { return TERN0(LASER_POWER_SYNC, flag.sync_laser_pwr); }
+  volatile bool is_sync() { return flag.sync_position || is_fan_sync() || is_pwr_sync(); }
+  volatile bool is_page() { return TERN0(DIRECT_STEPPING, flag.page); }
+  volatile bool is_move() { return !(is_sync() || is_page()); }
+>>>>>>> upstream/bugfix-2.0.x
 
   // Fields used by the motion planner to manage acceleration
   float nominal_speed,                      // The nominal speed for this block in (mm/sec)
@@ -252,7 +286,11 @@ typedef struct PlannerBlock {
     uint32_t acceleration_rate;             // Acceleration rate in (2^24 steps)/timer_ticks*s
   #endif
 
+<<<<<<< HEAD
   AxisBits direction_bits;                  // Direction bits set for this block, where 1 is negative motion
+=======
+  axis_bits_t direction_bits;               // The direction bit set for this block (refers to *_DIRECTION_BIT in config.h)
+>>>>>>> upstream/bugfix-2.0.x
 
   // Advance extrusion
   #if ENABLED(LIN_ADVANCE)
@@ -300,7 +338,11 @@ typedef struct PlannerBlock {
 
 } block_t;
 
+<<<<<<< HEAD
 #if ANY(LIN_ADVANCE, FEEDRATE_SCALING, GRADIENT_MIX, LCD_SHOW_E_TOTAL, POWER_LOSS_RECOVERY)
+=======
+#if ANY(LIN_ADVANCE, SCARA_FEEDRATE_SCALING, GRADIENT_MIX, LCD_SHOW_E_TOTAL, POWER_LOSS_RECOVERY)
+>>>>>>> upstream/bugfix-2.0.x
   #define HAS_POSITION_FLOAT 1
 #endif
 
@@ -308,6 +350,7 @@ constexpr uint8_t block_dec_mod(const uint8_t v1, const uint8_t v2) {
   return v1 >= v2 ? v1 - v2 : v1 - v2 + BLOCK_BUFFER_SIZE;
 }
 
+<<<<<<< HEAD
 constexpr uint8_t block_inc_mod(const uint8_t v1, const uint8_t v2) {
   return v1 + v2 < BLOCK_BUFFER_SIZE ? v1 + v2 : v1 + v2 - BLOCK_BUFFER_SIZE;
 }
@@ -318,6 +361,8 @@ constexpr uint8_t block_inc_mod(const uint8_t v1, const uint8_t v2) {
   #define BLOCK_MOD(n) ((n)%(BLOCK_BUFFER_SIZE))
 #endif
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #if ENABLED(LASER_FEATURE)
   typedef struct {
     /**
@@ -334,6 +379,7 @@ constexpr uint8_t block_inc_mod(const uint8_t v1, const uint8_t v2) {
   } laser_state_t;
 #endif
 
+<<<<<<< HEAD
 #if DISABLED(EDITABLE_STEPS_PER_UNIT)
   static constexpr float _dasu[] = DEFAULT_AXIS_STEPS_PER_UNIT;
 #endif
@@ -358,6 +404,12 @@ typedef struct PlannerSettings {
     #undef _DLIM
   #endif
 
+=======
+typedef struct {
+   uint32_t max_acceleration_mm_per_s2[DISTINCT_AXES], // (mm/s^2) M201 XYZE
+            min_segment_time_us;                // (µs) M205 B
+      float axis_steps_per_mm[DISTINCT_AXES];   // (steps) M92 XYZE - Steps per millimeter
+>>>>>>> upstream/bugfix-2.0.x
  feedRate_t max_feedrate_mm_s[DISTINCT_AXES];   // (mm/s) M203 XYZE - Max speeds
       float acceleration,                       // (mm/s^2) M204 S - Normal acceleration. DEFAULT ACCELERATION for all printing moves.
             retract_acceleration,               // (mm/s^2) M204 R - Retract acceleration. Filament pull-back and push-forward while standing still in the other axes
@@ -369,12 +421,35 @@ typedef struct PlannerSettings {
 #if ENABLED(IMPROVE_HOMING_RELIABILITY)
   struct motion_state_t {
     TERN(DELTA, xyz_ulong_t, xy_ulong_t) acceleration;
+<<<<<<< HEAD
     #if ENABLED(CLASSIC_JERK)
+      TERN(DELTA, xyz_float_t, xy_float_t) jerk_state;
+=======
+    #if HAS_CLASSIC_JERK
       TERN(DELTA, xyz_float_t, xy_float_t) jerk_state;
     #endif
   };
 #endif
 
+#if DISABLED(SKEW_CORRECTION)
+  #define XY_SKEW_FACTOR 0
+  #define XZ_SKEW_FACTOR 0
+  #define YZ_SKEW_FACTOR 0
+#endif
+
+typedef struct {
+  #if ENABLED(SKEW_CORRECTION_GCODE)
+    float xy;
+    #if ENABLED(SKEW_CORRECTION_FOR_Z)
+      float xz, yz;
+    #else
+      const float xz = XZ_SKEW_FACTOR, yz = YZ_SKEW_FACTOR;
+>>>>>>> upstream/bugfix-2.0.x
+    #endif
+  };
+#endif
+
+<<<<<<< HEAD
 #if ENABLED(SKEW_CORRECTION)
   typedef struct {
     #if ENABLED(SKEW_CORRECTION_GCODE)
@@ -395,6 +470,8 @@ typedef struct PlannerSettings {
   typedef uvalue_t((BLOCK_BUFFER_SIZE) * 2) last_move_t;
 #endif
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #if ENABLED(ARC_SUPPORT)
   #define HINTS_CURVE_RADIUS
   #define HINTS_SAFE_EXIT_SPEED
@@ -402,7 +479,11 @@ typedef struct PlannerSettings {
 
 struct PlannerHints {
   float millimeters = 0.0;            // Move Length, if known, else 0.
+<<<<<<< HEAD
   #if ENABLED(FEEDRATE_SCALING)
+=======
+  #if ENABLED(SCARA_FEEDRATE_SCALING)
+>>>>>>> upstream/bugfix-2.0.x
     float inv_duration = 0.0;         // Reciprocal of the move duration, if known
   #endif
   #if ENABLED(HINTS_CURVE_RADIUS)
@@ -416,11 +497,14 @@ struct PlannerHints {
                                       // would calculate if it knew the as-yet-unbuffered path
   #endif
 
+<<<<<<< HEAD
   #if HAS_ROTATIONAL_AXES
     bool cartesian_move = true;       // True if linear motion of the tool centerpoint relative to the workpiece occurs.
                                       // False if no movement of the tool center point relative to the work piece occurs
                                       // (i.e. the tool rotates around the tool centerpoint)
   #endif
+=======
+>>>>>>> upstream/bugfix-2.0.x
   PlannerHints(const_float_t mm=0.0f) : millimeters(mm) {}
 };
 
@@ -480,6 +564,7 @@ class Planner {
     #endif
 
     static uint32_t max_acceleration_steps_per_s2[DISTINCT_AXES]; // (steps/s^2) Derived from mm_per_s2
+<<<<<<< HEAD
 
     #if ENABLED(EDITABLE_STEPS_PER_UNIT)
       static float mm_per_step[DISTINCT_AXES];        // Millimeters per step
@@ -487,6 +572,15 @@ class Planner {
       #define _RSTEP(N) RECIPROCAL(settings.axis_steps_per_mm[N]),
       static constexpr float mm_per_step[DISTINCT_AXES] = { REPEAT(DISTINCT_AXES, _RSTEP) };
       #undef _RSTEP
+=======
+    static float mm_per_step[DISTINCT_AXES];          // Millimeters per step
+
+    #if HAS_JUNCTION_DEVIATION
+      static float junction_deviation_mm;             // (mm) M205 J
+      #if HAS_LINEAR_E_JERK
+        static float max_e_jerk[DISTINCT_E];          // Calculated from junction_deviation_mm
+      #endif
+>>>>>>> upstream/bugfix-2.0.x
     #endif
 
     #if HAS_JUNCTION_DEVIATION
@@ -580,9 +674,15 @@ class Planner {
       static float last_fade_z;
     #endif
 
+<<<<<<< HEAD
     #if ENABLED(DISABLE_OTHER_EXTRUDERS)
       // Counters to manage disabling inactive extruder steppers
       static last_move_t extruder_last_move[E_STEPPERS];
+=======
+    #if ENABLED(DISABLE_INACTIVE_EXTRUDER)
+      // Counters to manage disabling inactive extruder steppers
+      static last_move_t g_uc_extruder_last_move[E_STEPPERS];
+>>>>>>> upstream/bugfix-2.0.x
     #endif
 
     #if HAS_WIRED_LCD
@@ -867,7 +967,10 @@ class Planner {
       OPTARG(HAS_POSITION_FLOAT, const xyze_pos_t &target_float)
       OPTARG(HAS_DIST_MM_ARG, const xyze_float_t &cart_dist_mm)
       , feedRate_t fr_mm_s, const uint8_t extruder, const PlannerHints &hints
+<<<<<<< HEAD
       , float &minimum_planner_speed_sqr
+=======
+>>>>>>> upstream/bugfix-2.0.x
     );
 
     /**
@@ -962,8 +1065,12 @@ class Planner {
       const abce_pos_t out = LOGICAL_AXIS_ARRAY(
         get_axis_position_mm(E_AXIS),
         get_axis_position_mm(A_AXIS), get_axis_position_mm(B_AXIS), get_axis_position_mm(C_AXIS),
+<<<<<<< HEAD
         get_axis_position_mm(I_AXIS), get_axis_position_mm(J_AXIS), get_axis_position_mm(K_AXIS),
         get_axis_position_mm(U_AXIS), get_axis_position_mm(V_AXIS), get_axis_position_mm(W_AXIS)
+=======
+        get_axis_position_mm(I_AXIS), get_axis_position_mm(J_AXIS), get_axis_position_mm(K_AXIS)
+>>>>>>> upstream/bugfix-2.0.x
       );
       return out;
     }
@@ -991,7 +1098,15 @@ class Planner {
     static float triggered_position_mm(const AxisEnum axis);
 
     // Blocks are queued, or we're running out moves, or the closed loop controller is waiting
+<<<<<<< HEAD
     static bool busy();
+=======
+    static bool busy() {
+      return (has_blocks_queued() || cleaning_buffer_counter
+          || TERN0(EXTERNAL_CLOSED_LOOP_CONTROLLER, CLOSED_LOOP_WAITING())
+      );
+    }
+>>>>>>> upstream/bugfix-2.0.x
 
     // Block until all buffered steps are executed / cleaned
     static void synchronize();
@@ -1060,8 +1175,13 @@ class Planner {
     /**
      * Get the index of the next / previous block in the ring buffer
      */
+<<<<<<< HEAD
     static constexpr uint8_t next_block_index(const uint8_t block_index) { return block_inc_mod(block_index, 1); }
     static constexpr uint8_t prev_block_index(const uint8_t block_index) { return block_dec_mod(block_index, 1); }
+=======
+    static constexpr uint8_t next_block_index(const uint8_t block_index) { return BLOCK_MOD(block_index + 1); }
+    static constexpr uint8_t prev_block_index(const uint8_t block_index) { return BLOCK_MOD(block_index - 1); }
+>>>>>>> upstream/bugfix-2.0.x
 
     /**
      * Calculate the maximum allowable speed squared at this point, in order
@@ -1083,6 +1203,7 @@ class Planner {
 
     static void calculate_trapezoid_for_block(block_t * const block, const_float_t entry_speed, const_float_t exit_speed);
 
+<<<<<<< HEAD
     static bool reverse_pass_kernel(block_t * const current, const block_t * const next, const_float_t safe_exit_speed_sqr);
     static void forward_pass_kernel(const block_t * const previous, block_t * const current);
 
@@ -1091,6 +1212,17 @@ class Planner {
     static void recalculate_trapezoids(const_float_t safe_exit_speed_sqr);
 
     static void recalculate(const_float_t safe_exit_speed_sqr);
+=======
+    static void reverse_pass_kernel(block_t * const current, const block_t * const next OPTARG(ARC_SUPPORT, const_float_t safe_exit_speed_sqr));
+    static void forward_pass_kernel(const block_t * const previous, block_t * const current, uint8_t block_index);
+
+    static void reverse_pass(TERN_(ARC_SUPPORT, const_float_t safe_exit_speed_sqr));
+    static void forward_pass();
+
+    static void recalculate_trapezoids(TERN_(ARC_SUPPORT, const_float_t safe_exit_speed_sqr));
+
+    static void recalculate(TERN_(ARC_SUPPORT, const_float_t safe_exit_speed_sqr));
+>>>>>>> upstream/bugfix-2.0.x
 
     #if HAS_JUNCTION_DEVIATION
 

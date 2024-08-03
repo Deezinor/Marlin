@@ -34,6 +34,11 @@
 
 #if ENABLED(DWIN_CREALITY_LCD)
   #include "../lcd/e3v2/creality/dwin.h"
+<<<<<<< HEAD
+=======
+#elif ENABLED(DWIN_LCD_PROUI)
+  #include "../lcd/e3v2/proui/dwin.h"
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #include "../module/planner.h"        // for synchronize
@@ -174,7 +179,11 @@ CardReader::CardReader() {
   workDirDepth = 0;
   ZERO(workDirParents);
 
+<<<<<<< HEAD
   #if ALL(HAS_MEDIA, HAS_SD_DETECT)
+=======
+  #if BOTH(SDSUPPORT, HAS_SD_DETECT)
+>>>>>>> upstream/bugfix-2.0.x
     SET_INPUT_PULLUP(SD_DETECT_PIN);
   #endif
 
@@ -200,7 +209,11 @@ char *createFilename(char * const buffer, const dir_t &p) {
 //
 // Return 'true' if the item is a folder, G-code file or Binary file
 //
+<<<<<<< HEAD
 bool CardReader::is_visible_entity(const dir_t &p OPTARG(CUSTOM_FIRMWARE_UPLOAD, const bool onlyBin/*=false*/)) {
+=======
+bool CardReader::is_visible_entity(const dir_t &p OPTARG(CUSTOM_FIRMWARE_UPLOAD, bool onlyBin/*=false*/)) {
+>>>>>>> upstream/bugfix-2.0.x
   //uint8_t pn0 = p.name[0];
 
   #if DISABLED(CUSTOM_FIRMWARE_UPLOAD)
@@ -232,9 +245,20 @@ bool CardReader::is_visible_entity(const dir_t &p OPTARG(CUSTOM_FIRMWARE_UPLOAD,
 //
 int16_t CardReader::countVisibleItems(MediaFile dir) {
   dir_t p;
+<<<<<<< HEAD
   int16_t c = 0;
   dir.rewind();
   while (dir.readDir(&p, longFilename) > 0) c += is_visible_entity(p);
+=======
+  int c = 0;
+  while (dir.readDir(&p, longFilename) > 0)
+    c += is_visible_entity(p);
+
+  #if ALL(SDCARD_SORT_ALPHA, SDSORT_USES_RAM, SDSORT_CACHE_NAMES)
+    nrFiles = c;
+  #endif
+
+>>>>>>> upstream/bugfix-2.0.x
   return c;
 }
 
@@ -243,7 +267,11 @@ int16_t CardReader::countVisibleItems(MediaFile dir) {
 //
 void CardReader::selectByIndex(MediaFile dir, const int16_t index) {
   dir_t p;
+<<<<<<< HEAD
   for (int16_t cnt = 0; dir.readDir(&p, longFilename) > 0;) {
+=======
+  for (uint8_t cnt = 0; dir.readDir(&p, longFilename) > 0;) {
+>>>>>>> upstream/bugfix-2.0.x
     if (is_visible_entity(p)) {
       if (cnt == index) {
         createFilename(filename, p);
@@ -277,6 +305,7 @@ void CardReader::selectByName(MediaFile dir, const char * const match) {
  * this can blow up the stack, so a 'depth' parameter would be a
  * good addition.
  */
+<<<<<<< HEAD
 void CardReader::printListing(MediaFile parent, const char * const prepend, const uint8_t lsflags
   OPTARG(LONG_FILENAME_HOST_SUPPORT, const char * const prependLong/*=nullptr*/)
 ) {
@@ -288,11 +317,23 @@ void CardReader::printListing(MediaFile parent, const char * const prepend, cons
     const bool onlyBin = TEST(lsflags, LS_ONLY_BIN);
   #endif
   UNUSED(lsflags);
+=======
+void CardReader::printListing(
+  SdFile parent, const char * const prepend
+  OPTARG(CUSTOM_FIRMWARE_UPLOAD, bool onlyBin/*=false*/)
+  OPTARG(LONG_FILENAME_HOST_SUPPORT, const bool includeLongNames/*=false*/)
+  OPTARG(LONG_FILENAME_HOST_SUPPORT, const char * const prependLong/*=nullptr*/)
+) {
+>>>>>>> upstream/bugfix-2.0.x
   dir_t p;
   while (parent.readDir(&p, longFilename) > 0) {
     if (DIR_IS_SUBDIR(&p)) {
 
+<<<<<<< HEAD
       const size_t lenPrepend = prepend ? strlen(prepend) + 1 : 0;
+=======
+      size_t lenPrepend = prepend ? strlen(prepend) + 1 : 0;
+>>>>>>> upstream/bugfix-2.0.x
       // Allocate enough stack space for the full path including / separator
       char path[lenPrepend + FILENAME_LENGTH];
       if (prepend) { strcpy(path, prepend); path[lenPrepend - 1] = '/'; }
@@ -301,20 +342,38 @@ void CardReader::printListing(MediaFile parent, const char * const prepend, cons
 
       // Get a new directory object using the full path
       // and dive recursively into it.
+<<<<<<< HEAD
       MediaFile child; // child.close() in destructor
       if (child.open(&parent, dosFilename, O_READ)) {
         #if ENABLED(LONG_FILENAME_HOST_SUPPORT)
           if (includeLong) {
             const size_t lenPrependLong = prependLong ? strlen(prependLong) + 1 : 0;
+=======
+      SdFile child; // child.close() in destructor
+      if (child.open(&parent, dosFilename, O_READ)) {
+        #if ENABLED(LONG_FILENAME_HOST_SUPPORT)
+          if (includeLongNames) {
+            size_t lenPrependLong = prependLong ? strlen(prependLong) + 1 : 0;
+>>>>>>> upstream/bugfix-2.0.x
             // Allocate enough stack space for the full long path including / separator
             char pathLong[lenPrependLong + strlen(longFilename) + 1];
             if (prependLong) { strcpy(pathLong, prependLong); pathLong[lenPrependLong - 1] = '/'; }
             strcpy(pathLong + lenPrependLong, longFilename);
+<<<<<<< HEAD
             printListing(child, path, lsflags, pathLong);
             continue;
           }
         #endif
         printListing(child, path, lsflags);
+=======
+            printListing(child, path OPTARG(CUSTOM_FIRMWARE_UPLOAD, onlyBin), true, pathLong);
+          }
+          else
+            printListing(child, path OPTARG(CUSTOM_FIRMWARE_UPLOAD, onlyBin));
+        #else
+          printListing(child, path OPTARG(CUSTOM_FIRMWARE_UPLOAD, onlyBin));
+        #endif
+>>>>>>> upstream/bugfix-2.0.x
       }
       else {
         SERIAL_ECHO_MSG(STR_SD_CANT_OPEN_SUBDIR, dosFilename);
@@ -326,6 +385,7 @@ void CardReader::printListing(MediaFile parent, const char * const prepend, cons
       SERIAL_ECHO(createFilename(filename, p));
       SERIAL_CHAR(' ');
       SERIAL_ECHO(p.fileSize);
+<<<<<<< HEAD
       if (includeTime) {
         SERIAL_CHAR(' ');
         uint16_t crmodDate = p.lastWriteDate, crmodTime = p.lastWriteTime;
@@ -338,6 +398,10 @@ void CardReader::printListing(MediaFile parent, const char * const prepend, cons
       }
       #if ENABLED(LONG_FILENAME_HOST_SUPPORT)
         if (includeLong) {
+=======
+      #if ENABLED(LONG_FILENAME_HOST_SUPPORT)
+        if (includeLongNames) {
+>>>>>>> upstream/bugfix-2.0.x
           SERIAL_CHAR(' ');
           if (prependLong) { SERIAL_ECHO(prependLong); SERIAL_CHAR('/'); }
           SERIAL_ECHO(longFilename[0] ? longFilename : filename);
@@ -351,10 +415,23 @@ void CardReader::printListing(MediaFile parent, const char * const prepend, cons
 //
 // List all files on the SD card
 //
+<<<<<<< HEAD
 void CardReader::ls(const uint8_t lsflags/*=0*/) {
   if (flag.mounted) {
     root.rewind();
     printListing(root, nullptr, lsflags);
+=======
+void CardReader::ls(
+  TERN_(CUSTOM_FIRMWARE_UPLOAD, const bool onlyBin/*=false*/)
+  #if BOTH(CUSTOM_FIRMWARE_UPLOAD, LONG_FILENAME_HOST_SUPPORT)
+    ,
+  #endif
+  TERN_(LONG_FILENAME_HOST_SUPPORT, const bool includeLongNames/*=false*/)
+) {
+  if (flag.mounted) {
+    root.rewind();
+    printListing(root, nullptr OPTARG(CUSTOM_FIRMWARE_UPLOAD, onlyBin) OPTARG(LONG_FILENAME_HOST_SUPPORT, includeLongNames));
+>>>>>>> upstream/bugfix-2.0.x
   }
 }
 
@@ -496,8 +573,13 @@ void CardReader::mount() {
   if (flag.mounted)
     cdroot();
   else {
+<<<<<<< HEAD
     #if ANY(HAS_SD_DETECT, USB_FLASH_DRIVE_SUPPORT)
       if (marlin_state != MarlinState::MF_INITIALIZING) LCD_ALERTMESSAGE(MSG_MEDIA_INIT_FAIL);
+=======
+    #if EITHER(HAS_SD_DETECT, USB_FLASH_DRIVE_SUPPORT)
+      if (marlin_state != MF_INITIALIZING) LCD_ALERTMESSAGE(MSG_MEDIA_INIT_FAIL);
+>>>>>>> upstream/bugfix-2.0.x
     #endif
   }
 
@@ -546,6 +628,7 @@ void CardReader::manage_media() {
 
   if (!stat) return;                // Exit if no media is present
 
+<<<<<<< HEAD
   bool do_auto = true; UNUSED(do_auto);
 
   // First mount on boot? Load emulated EEPROM and look for PLR file.
@@ -568,6 +651,22 @@ void CardReader::manage_media() {
     // Look for auto0.g on the next idle()
     IF_DISABLED(NO_SD_AUTOSTART, if (do_auto) autofile_begin());
   }
+=======
+  if (old_stat != 2) return;        // First mount?
+
+  DEBUG_ECHOLNPGM("First mount.");
+
+  // Load settings the first time media is inserted (not just during init)
+  TERN_(SDCARD_EEPROM_EMULATION, settings.first_load());
+
+  bool do_auto = true; UNUSED(do_auto);
+
+  // Check for PLR file.
+  TERN_(POWER_LOSS_RECOVERY, if (recovery.check()) do_auto = false);
+
+  // Look for auto0.g on the next idle()
+  IF_DISABLED(NO_SD_AUTOSTART, if (do_auto) autofile_begin());
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 /**
@@ -620,7 +719,11 @@ void CardReader::startOrResumeFilePrinting() {
 //
 void CardReader::endFilePrintNow(TERN_(SD_RESORT, const bool re_sort/*=false*/)) {
   TERN_(ADVANCED_PAUSE_FEATURE, did_pause_print = 0);
+<<<<<<< HEAD
   TERN_(DWIN_CREALITY_LCD, hmiFlag.print_finish = flag.sdprinting);
+=======
+  TERN_(HAS_DWIN_E3V2_BASIC, HMI_flag.print_finish = flag.sdprinting);
+>>>>>>> upstream/bugfix-2.0.x
   flag.abort_sd_printing = false;
   if (isFileOpen()) file.close();
   TERN_(SD_RESORT, if (re_sort) presort());
@@ -667,7 +770,13 @@ void announceOpen(const uint8_t doing, const char * const path) {
   if (doing) {
     PORT_REDIRECT(SerialMask::All);
     SERIAL_ECHO_START();
+<<<<<<< HEAD
     SERIAL_ECHOLN(F("Now "), doing == 1 ? F("doing") : F("fresh"), F(" file: "), path);
+=======
+    SERIAL_ECHOPGM("Now ");
+    SERIAL_ECHOF(doing == 1 ? F("doing") : F("fresh"));
+    SERIAL_ECHOLNPGM(" file: ", path);
+>>>>>>> upstream/bugfix-2.0.x
   }
 }
 
@@ -808,7 +917,11 @@ void CardReader::removeFile(const char * const name) {
 
   //abortFilePrintNow();
 
+<<<<<<< HEAD
   MediaFile *itsDirPtr;
+=======
+  SdFile *itsDirPtr;
+>>>>>>> upstream/bugfix-2.0.x
   const char * const fname = diveToFile(false, itsDirPtr, name);
   if (!fname) return;
 
@@ -826,7 +939,11 @@ void CardReader::removeFile(const char * const name) {
 }
 
 void CardReader::report_status() {
+<<<<<<< HEAD
   if (isPrinting() || isPaused()) {
+=======
+  if (isPrinting()) {
+>>>>>>> upstream/bugfix-2.0.x
     SERIAL_ECHOPGM(STR_SD_PRINTING_BYTE, sdpos);
     SERIAL_CHAR('/');
     SERIAL_ECHOLN(filesize);
@@ -992,7 +1109,11 @@ void CardReader::selectFileByIndex(const int16_t nr) {
     if (nr < sort_count) {
       strcpy(filename, sortshort[nr]);
       strcpy(longFilename, sortnames[nr]);
+<<<<<<< HEAD
       TERN_(HAS_FOLDER_SORTING, flag.filenameIsDir = IS_DIR(nr));
+=======
+      flag.filenameIsDir = IS_DIR(nr);
+>>>>>>> upstream/bugfix-2.0.x
       setBinFlag(strcmp_P(strrchr(filename, '.'), PSTR(".BIN")) == 0);
       return;
     }
@@ -1010,7 +1131,11 @@ void CardReader::selectFileByName(const char * const match) {
       if (strcasecmp(match, sortshort[nr]) == 0) {
         strcpy(filename, sortshort[nr]);
         strcpy(longFilename, sortnames[nr]);
+<<<<<<< HEAD
         TERN_(HAS_FOLDER_SORTING, flag.filenameIsDir = IS_DIR(nr));
+=======
+        flag.filenameIsDir = IS_DIR(nr);
+>>>>>>> upstream/bugfix-2.0.x
         setBinFlag(strcmp_P(strrchr(filename, '.'), PSTR(".BIN")) == 0);
         return;
       }
@@ -1030,19 +1155,32 @@ void CardReader::selectFileByName(const char * const match) {
  *  - If update_cwd was 'true' the workDir now points to the file's directory.
  *
  * Returns a pointer to the last segment (filename) of the given DOS 8.3 path.
+<<<<<<< HEAD
  * On exit, inDirPtr contains an MediaFile reference to the file's directory.
+=======
+ * On exit, inDirPtr contains an SdFile reference to the file's directory.
+>>>>>>> upstream/bugfix-2.0.x
  *
  * A nullptr result indicates an unrecoverable error.
  *
  * NOTE: End the path with a slash to dive to a folder. In this case the
  *       returned filename will be blank (points to the end of the path).
  */
+<<<<<<< HEAD
 const char* CardReader::diveToFile(const bool update_cwd, MediaFile* &inDirPtr, const char * const path, const bool echo/*=false*/) {
   DEBUG_SECTION(est, "diveToFile", true);
 
   // Track both parent and subfolder
   static MediaFile newDir1, newDir2;
   MediaFile *sub = &newDir1, *startDirPtr;
+=======
+const char* CardReader::diveToFile(const bool update_cwd, SdFile* &inDirPtr, const char * const path, const bool echo/*=false*/) {
+  DEBUG_SECTION(est, "diveToFile", true);
+
+  // Track both parent and subfolder
+  static SdFile newDir1, newDir2;
+  SdFile *sub = &newDir1, *startDirPtr;
+>>>>>>> upstream/bugfix-2.0.x
 
   // Parsing the path string
   const char *atom_ptr = path;
@@ -1072,7 +1210,12 @@ const char* CardReader::diveToFile(const bool update_cwd, MediaFile* &inDirPtr, 
     // Isolate the next subitem name
     const uint8_t len = name_end - atom_ptr;
     char dosSubdirname[len + 1];
+<<<<<<< HEAD
     strlcpy(dosSubdirname, atom_ptr, len + 1);
+=======
+    strncpy(dosSubdirname, atom_ptr, len);
+    dosSubdirname[len] = 0;
+>>>>>>> upstream/bugfix-2.0.x
 
     if (echo) SERIAL_ECHOLN(dosSubdirname);
 
@@ -1123,7 +1266,11 @@ const char* CardReader::diveToFile(const bool update_cwd, MediaFile* &inDirPtr, 
 }
 
 void CardReader::cd(const char * relpath) {
+<<<<<<< HEAD
   MediaFile newDir, *parent = &getWorkDir();
+=======
+  SdFile newDir, *parent = &getWorkDir();
+>>>>>>> upstream/bugfix-2.0.x
 
   if (newDir.open(parent, relpath, O_READ)) {
     workDir = newDir;
@@ -1151,7 +1298,10 @@ void CardReader::cdroot() {
   workDir = root;
   flag.workDirIsRoot = true;
   workDirDepth = 0;
+<<<<<<< HEAD
   nrItems = -1;
+=======
+>>>>>>> upstream/bugfix-2.0.x
   TERN_(SDCARD_SORT_ALPHA, presort());
 }
 
@@ -1344,7 +1494,11 @@ void CardReader::cdroot() {
         // Using RAM but not keeping names around
         #if ENABLED(SDSORT_USES_RAM) && DISABLED(SDSORT_CACHE_NAMES)
           #if ENABLED(SDSORT_DYNAMIC_RAM)
+<<<<<<< HEAD
             for (int16_t i = 0; i < fileCnt; ++i) free(sortnames[i]);
+=======
+            for (uint16_t i = 0; i < fileCnt; ++i) free(sortnames[i]);
+>>>>>>> upstream/bugfix-2.0.x
             TERN_(HAS_FOLDER_SORTING, delete [] isDir);
           #endif
         #endif
@@ -1412,8 +1566,13 @@ void CardReader::fileHasFinished() {
 
   endFilePrintNow(TERN_(SD_RESORT, true));
 
+<<<<<<< HEAD
   flag.sdprintdone = true;                    // Stop getting bytes from the SD card
   marlin_state = MarlinState::MF_SD_COMPLETE; // Tell Marlin to enqueue M1001 soon
+=======
+  flag.sdprintdone = true;        // Stop getting bytes from the SD card
+  marlin_state = MF_SD_COMPLETE;  // Tell Marlin to enqueue M1001 soon
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 #if ENABLED(AUTO_REPORT_SD_STATUS)
@@ -1445,7 +1604,12 @@ void CardReader::fileHasFinished() {
       recovery.init();
       removeFile(recovery.filename);
       #if ENABLED(DEBUG_POWER_LOSS_RECOVERY)
+<<<<<<< HEAD
         SERIAL_ECHOLN(F("Power-loss file delete"), jobRecoverFileExists() ? F(" failed.") : F("d."));
+=======
+        SERIAL_ECHOPGM("Power-loss file delete");
+        SERIAL_ECHOF(jobRecoverFileExists() ? F(" failed.\n") : F("d.\n"));
+>>>>>>> upstream/bugfix-2.0.x
       #endif
     }
   }

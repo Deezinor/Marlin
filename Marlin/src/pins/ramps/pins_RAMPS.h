@@ -146,14 +146,22 @@
 #define X_DIR_PIN                             55  // (A1)
 #define X_ENABLE_PIN                          38
 #ifndef X_CS_PIN
+<<<<<<< HEAD
   #define X_CS_PIN                       AUX3_06
+=======
+  #define X_CS_PIN                            53
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #define Y_STEP_PIN                            60
 #define Y_DIR_PIN                             61
 #define Y_ENABLE_PIN                          56  // (A2)
 #ifndef Y_CS_PIN
+<<<<<<< HEAD
   #define Y_CS_PIN                       AUX3_02
+=======
+  #define Y_CS_PIN                            49
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #ifndef Z_STEP_PIN
@@ -212,7 +220,11 @@
 // SPI for MAX Thermocouple
 //
 #ifndef TEMP_0_CS_PIN
+<<<<<<< HEAD
   #define TEMP_0_CS_PIN                  AUX2_09  // Don't use 53 if using Display/SD card (SDSS) or 49 (SD_DETECT_PIN)
+=======
+  #define TEMP_0_CS_PIN                       66  // Don't use 53 if using Display/SD card (SDSS) or 49 (SD_DETECT_PIN)
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 //
@@ -234,13 +246,18 @@
 #define HEATER_0_PIN                MOSFET_A_PIN
 
 #if FET_ORDER_EFB                                 // Hotend, Fan, Bed
+<<<<<<< HEAD
   #ifndef HEATER_BED_PIN
     #define HEATER_BED_PIN          MOSFET_C_PIN
   #endif
+=======
+  #define HEATER_BED_PIN            MOSFET_C_PIN
+>>>>>>> upstream/bugfix-2.0.x
 #elif FET_ORDER_EEF                               // Hotend, Hotend, Fan
   #define HEATER_1_PIN              MOSFET_B_PIN
 #elif FET_ORDER_EEB                               // Hotend, Hotend, Bed
   #define HEATER_1_PIN              MOSFET_B_PIN
+<<<<<<< HEAD
   #ifndef HEATER_BED_PIN
     #define HEATER_BED_PIN          MOSFET_C_PIN
   #endif
@@ -253,12 +270,21 @@
     #define HEATER_BED_PIN          MOSFET_C_PIN
   #endif
   #if ANY(HAS_MULTI_HOTEND, HEATERS_PARALLEL)
+=======
+  #define HEATER_BED_PIN            MOSFET_C_PIN
+#elif FET_ORDER_EFF                               // Hotend, Fan, Fan
+  #define FAN1_PIN                  MOSFET_C_PIN
+#elif DISABLED(FET_ORDER_SF)                      // Not Spindle, Fan (i.e., "EFBF" or "EFBE")
+  #define HEATER_BED_PIN            MOSFET_C_PIN
+  #if EITHER(HAS_MULTI_HOTEND, HEATERS_PARALLEL)
+>>>>>>> upstream/bugfix-2.0.x
     #define HEATER_1_PIN            MOSFET_D_PIN
   #else
     #define FAN1_PIN                MOSFET_D_PIN
   #endif
 #endif
 
+<<<<<<< HEAD
 #ifndef FAN0_PIN
   #if ANY(FET_ORDER_EFB, FET_ORDER_EFF)           // Hotend, Fan, Bed or Hotend, Fan, Fan
     #define FAN0_PIN                MOSFET_B_PIN
@@ -268,6 +294,17 @@
     #define FAN0_PIN                           4  // IO pin. Buffer needed
   #else                                           // Non-specific are "EFB" (i.e., "EFBF" or "EFBE")
     #define FAN0_PIN                MOSFET_B_PIN
+=======
+#ifndef FAN_PIN
+  #if EITHER(FET_ORDER_EFB, FET_ORDER_EFF)        // Hotend, Fan, Bed or Hotend, Fan, Fan
+    #define FAN_PIN                 MOSFET_B_PIN
+  #elif EITHER(FET_ORDER_EEF, FET_ORDER_SF)       // Hotend, Hotend, Fan or Spindle, Fan
+    #define FAN_PIN                 MOSFET_C_PIN
+  #elif FET_ORDER_EEB                             // Hotend, Hotend, Bed
+    #define FAN_PIN                            4  // IO pin. Buffer needed
+  #else                                           // Non-specific are "EFB" (i.e., "EFBF" or "EFBE")
+    #define FAN_PIN                 MOSFET_B_PIN
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 #endif
 
@@ -275,7 +312,11 @@
 // Misc. Functions
 //
 #ifndef SDSS
+<<<<<<< HEAD
   #define SDSS                           AUX3_06
+=======
+  #define SDSS                       AUX3_06_PIN
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 #define LED_PIN                               13
 
@@ -305,10 +346,17 @@
 //
 #if HAS_CUTTER && !defined(SPINDLE_LASER_ENA_PIN)
   #if NUM_SERVOS < 2                              // Use servo connector if possible
+<<<<<<< HEAD
     #ifndef SPINDLE_LASER_PWM_PIN
       #define SPINDLE_LASER_PWM_PIN            6  // Hardware PWM
     #endif
     #define SPINDLE_LASER_ENA_PIN              4  // Pullup or pulldown!
+=======
+    #define SPINDLE_LASER_ENA_PIN              4  // Pullup or pulldown!
+    #ifndef SPINDLE_LASER_PWM_PIN
+      #define SPINDLE_LASER_PWM_PIN            6  // Hardware PWM
+    #endif
+>>>>>>> upstream/bugfix-2.0.x
     #define SPINDLE_DIR_PIN                    5
   #elif HAS_FREE_AUX2_PINS
     #define SPINDLE_LASER_PWM_PIN        AUX2_07  // Hardware PWM
@@ -463,6 +511,7 @@
 //
 #if HAS_PRUSA_MMU1
   #ifndef E_MUX0_PIN
+<<<<<<< HEAD
     #define E_MUX0_PIN                   AUX2_06  // Z_CS_PIN
   #endif
   #ifndef E_MUX1_PIN
@@ -470,6 +519,15 @@
   #endif
   #ifndef E_MUX2_PIN
     #define E_MUX2_PIN                   AUX2_07  // E1_CS_PIN
+=======
+    #define E_MUX0_PIN                        40  // Z_CS_PIN
+  #endif
+  #ifndef E_MUX1_PIN
+    #define E_MUX1_PIN                        42  // E0_CS_PIN
+  #endif
+  #ifndef E_MUX2_PIN
+    #define E_MUX2_PIN                        44  // E1_CS_PIN
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 #endif
 
@@ -479,10 +537,17 @@
 //          1   3   5   7
 //         5V  GND A3  A4
 //
+<<<<<<< HEAD
 #define AUX1_05                               57  // (A3)
 #define AUX1_06                                2
 #define AUX1_07                               58  // (A4)
 #define AUX1_08                                1
+=======
+#define AUX1_05_PIN                           57  // (A3)
+#define AUX1_06_PIN                            2
+#define AUX1_07_PIN                           58  // (A4)
+#define AUX1_08_PIN                            1
+>>>>>>> upstream/bugfix-2.0.x
 
 //
 // AUX2    GND A9 D40 D42 A11
@@ -490,6 +555,7 @@
 //          1   3   5   7   9
 //         VCC A5 A10 D44 A12
 //
+<<<<<<< HEAD
 #define AUX2_03                               59  // (A5)
 #define AUX2_04                               63  // (A9)
 #define AUX2_05                               64  // (A10)
@@ -498,6 +564,16 @@
 #define AUX2_08                               42
 #define AUX2_09                               66  // (A12)
 #define AUX2_10                               65  // (A11)
+=======
+#define AUX2_03_PIN                           59  // (A5)
+#define AUX2_04_PIN                           63  // (A9)
+#define AUX2_05_PIN                           64  // (A10)
+#define AUX2_06_PIN                           40
+#define AUX2_07_PIN                           44
+#define AUX2_08_PIN                           42
+#define AUX2_09_PIN                           66  // (A12)
+#define AUX2_10_PIN                           65  // (A11)
+>>>>>>> upstream/bugfix-2.0.x
 
 //
 // AUX3    GND D52 D50 5V
@@ -505,15 +581,24 @@
 //          8   6   4   2
 //         NC  D53 D51 D49
 //
+<<<<<<< HEAD
 #define AUX3_02                               49
 #define AUX3_03                               50
 #define AUX3_04                               51
 #define AUX3_05                               52
 #define AUX3_06                               53
+=======
+#define AUX3_02_PIN                           49
+#define AUX3_03_PIN                           50
+#define AUX3_04_PIN                           51
+#define AUX3_05_PIN                           52
+#define AUX3_06_PIN                           53
+>>>>>>> upstream/bugfix-2.0.x
 
 //
 // AUX4    5V GND D32 D47 D45 D43 D41 D39 D37 D35 D33 D31 D29 D27 D25 D23 D17 D16
 //
+<<<<<<< HEAD
 #define AUX4_03                               32
 #define AUX4_04                               47
 #define AUX4_05                               45
@@ -530,6 +615,24 @@
 #define AUX4_16                               23
 #define AUX4_17                               17
 #define AUX4_18                               16
+=======
+#define AUX4_03_PIN                           32
+#define AUX4_04_PIN                           47
+#define AUX4_05_PIN                           45
+#define AUX4_06_PIN                           43
+#define AUX4_07_PIN                           41
+#define AUX4_08_PIN                           39
+#define AUX4_09_PIN                           37
+#define AUX4_10_PIN                           35
+#define AUX4_11_PIN                           33
+#define AUX4_12_PIN                           31
+#define AUX4_13_PIN                           29
+#define AUX4_14_PIN                           27
+#define AUX4_15_PIN                           25
+#define AUX4_16_PIN                           23
+#define AUX4_17_PIN                           17
+#define AUX4_18_PIN                           16
+>>>>>>> upstream/bugfix-2.0.x
 
 /**
  * LCD adapters come in different variants. The socket keys can be
@@ -537,6 +640,7 @@
  */
 #ifndef EXP1_08_PIN
 
+<<<<<<< HEAD
   #define EXP1_03_PIN                    AUX4_17  // 17
   #define EXP1_04_PIN                    AUX4_18  // 16
   #define EXP1_05_PIN                    AUX4_16  // 23
@@ -567,19 +671,59 @@
     #define EXP2_03_PIN                  AUX4_10  // 35
     #define EXP2_05_PIN                  AUX4_09  // 37
     #define EXP2_08_PIN                  AUX4_07  // 41
+=======
+  #define EXP1_03_PIN                AUX4_17_PIN
+  #define EXP1_04_PIN                AUX4_18_PIN
+  #define EXP1_05_PIN                AUX4_16_PIN
+  #define EXP1_06_PIN                AUX4_15_PIN
+  #define EXP1_07_PIN                AUX4_14_PIN
+  #define EXP1_08_PIN                AUX4_13_PIN
+
+  #define EXP2_01_PIN                AUX3_03_PIN
+  #define EXP2_02_PIN                AUX3_05_PIN
+  #define EXP2_04_PIN                AUX3_06_PIN
+  #define EXP2_06_PIN                AUX3_04_PIN
+  #define EXP2_07_PIN                AUX3_02_PIN
+
+  #if ENABLED(G3D_PANEL)
+    /**                  Gadgets3D Smart Adapter
+     *              ------                        ------
+     *        4-11 | 1  2 | 4-12     (MISO) 3-03 | 1  2 | 3-05 (SCK)
+     *        4-17 | 3  4 | 4-18            4-10 | 3  4 | 3-06
+     *        4-16   5  6 | 4-15            4-09   5  6 | 3-04 (MOSI)
+     *        4-14 | 7  8 | 4-13            3-02 | 7  8 | 4-07
+     *  (GND) 4-02 | 9 10 | 4-01 (5V)         -- | 9 10 | --
+     *              ------                        ------
+     *               EXP1                          EXP2
+     */
+    #define EXP1_01_PIN              AUX4_11_PIN
+    #define EXP1_02_PIN              AUX4_12_PIN
+
+    #define EXP2_03_PIN              AUX4_10_PIN
+    #define EXP2_05_PIN              AUX4_09_PIN
+    #define EXP2_08_PIN              AUX4_07_PIN
+>>>>>>> upstream/bugfix-2.0.x
 
   #else
 
     /**                     Smart Adapter (c) RRD
      *             ------                           ------
+<<<<<<< HEAD
      *    37 4-09 | 1  2 | 4-10        (MISO) 3-03 | 1  2 | 3-05 52 (SCK)
      *    17 4-17 | 3  4 | 4-18            31 4-12 | 3  4 | 3-06 53
      *    23 4-16   5  6 | 4-15            33 4-11   5  6 | 3-04 51 (MOSI)
      *    27 4-14 | 7  8 | 4-13            49 3-02 | 7  8 | 4-07 41
+=======
+     *       4-09 | 1  2 | 4-10        (MISO) 3-03 | 1  2 | 3-05 (SCK)
+     *       4-17 | 3  4 | 4-18               4-12 | 3  4 | 3-06
+     *       4-16   5  6 | 4-15               4-11   5  6 | 3-04 (MOSI)
+     *       4-14 | 7  8 | 4-13               3-02 | 7  8 | 4-07
+>>>>>>> upstream/bugfix-2.0.x
      * (GND) 3-07 | 9 10 | 3-01 (5V)    (GND) 3-07 | 9 10 | --
      *             ------                           ------
      *              EXP1                             EXP2
      */
+<<<<<<< HEAD
     #define EXP1_01_PIN                  AUX4_09  // 37
     #define EXP1_02_PIN                  AUX4_10  // 35
 
@@ -591,6 +735,19 @@
       #define EXP2_03_PIN                AUX4_12  // 31
       #define EXP2_05_PIN                AUX4_11  // 33
       #define EXP2_08_PIN                AUX4_07  // 41
+=======
+    #define EXP1_01_PIN              AUX4_09_PIN
+    #define EXP1_02_PIN              AUX4_10_PIN
+
+    #if BOTH(TOUCH_UI_FTDI_EVE, LCD_FYSETC_TFT81050)
+      #define EXP2_03_PIN            AUX4_11_PIN
+      #define EXP2_05_PIN            AUX4_12_PIN
+      #define EXP2_08_PIN                     -1  // RESET
+    #else
+      #define EXP2_03_PIN            AUX4_12_PIN
+      #define EXP2_05_PIN            AUX4_11_PIN
+      #define EXP2_08_PIN            AUX4_07_PIN
+>>>>>>> upstream/bugfix-2.0.x
     #endif
 
   #endif
@@ -601,11 +758,17 @@
 // LCD / Controller
 //
 
+<<<<<<< HEAD
 #ifdef LCD_PINS_DEFINED
 
   // LCD pins already defined by including header
 
 #elif HAS_WIRED_LCD
+
+  //#define LCD_SCREEN_ROTATE                180  // 0, 90, 180, 270
+=======
+#if HAS_WIRED_LCD
+>>>>>>> upstream/bugfix-2.0.x
 
   //#define LCD_SCREEN_ROTATE                180  // 0, 90, 180, 270
 
@@ -615,17 +778,30 @@
   #if ENABLED(REPRAPWORLD_GRAPHICAL_LCD)
 
     #define LCD_PINS_RS              EXP2_07_PIN  // CS chip select /SS chip slave select
+<<<<<<< HEAD
     #define LCD_PINS_EN              EXP2_06_PIN  // SID (MOSI)
+=======
+    #define LCD_PINS_ENABLE          EXP2_06_PIN  // SID (MOSI)
+>>>>>>> upstream/bugfix-2.0.x
     #define LCD_PINS_D4              EXP2_02_PIN  // SCK (CLK) clock
 
   #elif ALL(IS_NEWPANEL, PANEL_ONE)
 
+<<<<<<< HEAD
     #define LCD_PINS_RS                  AUX2_06
     #define LCD_PINS_EN                  AUX2_08
     #define LCD_PINS_D4                  AUX2_10
     #define LCD_PINS_D5                  AUX2_09
     #define LCD_PINS_D6                  AUX2_07
     #define LCD_PINS_D7                  AUX2_05
+=======
+    #define LCD_PINS_RS              AUX2_06_PIN
+    #define LCD_PINS_ENABLE          AUX2_08_PIN
+    #define LCD_PINS_D4              AUX2_10_PIN
+    #define LCD_PINS_D5              AUX2_09_PIN
+    #define LCD_PINS_D6              AUX2_07_PIN
+    #define LCD_PINS_D7              AUX2_05_PIN
+>>>>>>> upstream/bugfix-2.0.x
 
   #elif ENABLED(TFTGLCD_PANEL_SPI)
 
@@ -636,7 +812,11 @@
     #if ENABLED(CR10_STOCKDISPLAY)
 
       #define LCD_PINS_RS            EXP1_07_PIN
+<<<<<<< HEAD
       #define LCD_PINS_EN            EXP1_08_PIN
+=======
+      #define LCD_PINS_ENABLE        EXP1_08_PIN
+>>>>>>> upstream/bugfix-2.0.x
       #define LCD_PINS_D4            EXP1_06_PIN
 
       #if !IS_NEWPANEL
@@ -645,6 +825,7 @@
 
     #elif ENABLED(ZONESTAR_LCD)
 
+<<<<<<< HEAD
       CONTROLLER_WARNING("RAMPS", "ZONESTAR_LCD", " Plugs into AUX2 but GND and 5V must be swapped.")
 
       #define LCD_PINS_RS                AUX2_05
@@ -653,6 +834,18 @@
       #define LCD_PINS_D5                AUX2_06
       #define LCD_PINS_D6                AUX2_08
       #define LCD_PINS_D7                AUX2_10
+=======
+      #ifndef NO_CONTROLLER_CUSTOM_WIRING_WARNING
+        #error "CAUTION! ZONESTAR_LCD on RAMPS requires wiring modifications. It plugs into AUX2 but GND and 5V need to be swapped. See 'pins_RAMPS.h' for details. (Define NO_CONTROLLER_CUSTOM_WIRING_WARNING to suppress this warning.)"
+      #endif
+
+      #define LCD_PINS_RS            AUX2_05_PIN
+      #define LCD_PINS_ENABLE        AUX2_07_PIN
+      #define LCD_PINS_D4            AUX2_04_PIN
+      #define LCD_PINS_D5            AUX2_06_PIN
+      #define LCD_PINS_D6            AUX2_08_PIN
+      #define LCD_PINS_D7            AUX2_10_PIN
+>>>>>>> upstream/bugfix-2.0.x
 
     #elif ENABLED(AZSMZ_12864)
 
@@ -660,7 +853,11 @@
 
     #else
 
+<<<<<<< HEAD
       #if ANY(MKS_12864OLED, MKS_12864OLED_SSD1306)
+=======
+      #if EITHER(MKS_12864OLED, MKS_12864OLED_SSD1306)
+>>>>>>> upstream/bugfix-2.0.x
         #define LCD_PINS_DC          EXP1_06_PIN  // Set as output on init
         #define LCD_PINS_RS          EXP1_07_PIN  // Pull low for 1s to init
         // DOGM SPI LCD Support
@@ -670,7 +867,11 @@
         #define DOGLCD_SCK           EXP1_05_PIN
       #else
         #define LCD_PINS_RS          EXP1_04_PIN
+<<<<<<< HEAD
         #define LCD_PINS_EN          EXP1_03_PIN
+=======
+        #define LCD_PINS_ENABLE      EXP1_03_PIN
+>>>>>>> upstream/bugfix-2.0.x
         #define LCD_PINS_D4          EXP1_05_PIN
         #define LCD_PINS_D5          EXP1_06_PIN
         #define LCD_PINS_D6          EXP1_07_PIN
@@ -688,8 +889,13 @@
       // Buttons attached to a shift register
       // Not wired yet
       //#define SHIFT_CLK_PIN                 38
+<<<<<<< HEAD
       //#define SHIFT_LD_PIN             AUX2_08
       //#define SHIFT_OUT_PIN            AUX2_06
+=======
+      //#define SHIFT_LD_PIN         AUX2_08_PIN
+      //#define SHIFT_OUT_PIN        AUX2_06_PIN
+>>>>>>> upstream/bugfix-2.0.x
       //#define SHIFT_EN_PIN         EXP1_03_PIN
     #endif
 
@@ -706,6 +912,11 @@
 
     #if IS_RRD_SC
 
+<<<<<<< HEAD
+=======
+      #define BEEPER_PIN             EXP1_01_PIN
+
+>>>>>>> upstream/bugfix-2.0.x
       #if ENABLED(CR10_STOCKDISPLAY)
         #define BTN_EN1              EXP1_03_PIN
         #define BTN_EN2              EXP1_05_PIN
@@ -723,11 +934,16 @@
       #endif
 
       #if ENABLED(BQ_LCD_SMART_CONTROLLER)
+<<<<<<< HEAD
         #define LCD_BACKLIGHT_PIN        AUX4_08
+=======
+        #define LCD_BACKLIGHT_PIN    AUX4_08_PIN
+>>>>>>> upstream/bugfix-2.0.x
       #endif
 
     #elif ENABLED(REPRAPWORLD_GRAPHICAL_LCD)
 
+<<<<<<< HEAD
       #define BTN_EN1                    AUX2_05
       #define BTN_EN2                    AUX2_03
       #define BTN_ENC                    AUX2_04
@@ -754,9 +970,33 @@
       #ifndef SD_DETECT_PIN
         #define SD_DETECT_PIN        EXP2_07_PIN
       #endif
+=======
+      #define BTN_EN1                AUX2_05_PIN
+      #define BTN_EN2                AUX2_03_PIN
+      #define BTN_ENC                AUX2_04_PIN
+      #define SD_DETECT_PIN          AUX2_08_PIN
 
-    #elif ANY(VIKI2, miniVIKI)
+    #elif ENABLED(LCD_I2C_PANELOLU2)
 
+      #define BTN_EN1                AUX4_04_PIN
+      #define BTN_EN2                AUX4_06_PIN
+      #define BTN_ENC                AUX4_03_PIN
+      #define LCD_SDSS                      SDSS
+      #define KILL_PIN               EXP2_08_PIN
+
+    #elif ENABLED(LCD_I2C_VIKI)
+
+      #define BTN_EN1                AUX2_06_PIN  // https://files.panucatt.com/datasheets/viki_wiring_diagram.pdf explains AUX2-06 and AUX2-08.
+      #define BTN_EN2                AUX2_08_PIN
+      #define BTN_ENC                         -1
+
+      #define LCD_SDSS                      SDSS
+      #define SD_DETECT_PIN          EXP2_07_PIN
+>>>>>>> upstream/bugfix-2.0.x
+
+    #elif EITHER(VIKI2, miniVIKI)
+
+<<<<<<< HEAD
       #define DOGLCD_CS                  AUX4_05
       #define DOGLCD_A0                  AUX2_07
       #define LCD_SCREEN_ROTATE              180  // 0, 90, 180, 270
@@ -765,15 +1005,29 @@
         #define BEEPER_PIN           EXP2_05_PIN
       #endif
       #define STAT_LED_RED_PIN           AUX4_03
+=======
+      #define DOGLCD_CS              AUX4_05_PIN
+      #define DOGLCD_A0              AUX2_07_PIN
+      #define LCD_SCREEN_ROTATE              180  // 0, 90, 180, 270
+
+      #define BEEPER_PIN             EXP2_05_PIN
+      #define STAT_LED_RED_PIN       AUX4_03_PIN
+>>>>>>> upstream/bugfix-2.0.x
       #define STAT_LED_BLUE_PIN      EXP1_02_PIN
 
       #define BTN_EN1                         22
       #define BTN_EN2                          7
+<<<<<<< HEAD
       #define BTN_ENC                    AUX4_08
 
       #ifndef SD_DETECT_PIN
         #define SD_DETECT_PIN                 -1  // Pin 49 for display SD interface, 72 for easy adapter board
       #endif
+=======
+      #define BTN_ENC                AUX4_08_PIN
+
+      #define SD_DETECT_PIN                   -1  // Pin 49 for display SD interface, 72 for easy adapter board
+>>>>>>> upstream/bugfix-2.0.x
       #define KILL_PIN               EXP2_03_PIN
 
     #elif ENABLED(ELB_FULL_GRAPHIC_CONTROLLER)
@@ -781,9 +1035,13 @@
       #define DOGLCD_CS              EXP1_08_PIN
       #define DOGLCD_A0              EXP1_07_PIN
 
+<<<<<<< HEAD
       #ifndef BEEPER_PIN
         #define BEEPER_PIN           EXP1_05_PIN
       #endif
+=======
+      #define BEEPER_PIN             EXP1_05_PIN
+>>>>>>> upstream/bugfix-2.0.x
       #define LCD_BACKLIGHT_PIN      EXP2_05_PIN
 
       #define BTN_EN1                EXP1_02_PIN
@@ -791,13 +1049,21 @@
       #define BTN_ENC                EXP2_03_PIN
 
       #define LCD_SDSS                      SDSS
+<<<<<<< HEAD
       #ifndef SD_DETECT_PIN
         #define SD_DETECT_PIN        EXP2_07_PIN
       #endif
+=======
+      #define SD_DETECT_PIN          EXP2_07_PIN
+>>>>>>> upstream/bugfix-2.0.x
       #define KILL_PIN               EXP2_08_PIN
 
     #elif ANY(MKS_MINI_12864, FYSETC_MINI_12864)
 
+<<<<<<< HEAD
+=======
+      #define BEEPER_PIN             EXP1_01_PIN
+>>>>>>> upstream/bugfix-2.0.x
       #define BTN_ENC                EXP1_02_PIN
       #ifndef SD_DETECT_PIN
         #define SD_DETECT_PIN        EXP2_07_PIN
@@ -851,6 +1117,7 @@
 
     #elif ENABLED(MINIPANEL)
 
+<<<<<<< HEAD
       #ifndef BEEPER_PIN
         #define BEEPER_PIN           AUX2_08_PIN
       #endif
@@ -867,6 +1134,20 @@
         #define SD_DETECT_PIN            AUX3_02
       #endif
       #define KILL_PIN                   AUX2_05
+=======
+      #define BEEPER_PIN             AUX2_08_PIN
+      #define LCD_BACKLIGHT_PIN      AUX2_10_PIN
+
+      #define DOGLCD_A0              AUX2_07_PIN
+      #define DOGLCD_CS              AUX2_09_PIN
+
+      #define BTN_EN1                AUX2_06_PIN
+      #define BTN_EN2                AUX2_04_PIN
+      #define BTN_ENC                AUX2_03_PIN
+
+      #define SD_DETECT_PIN          AUX3_02_PIN
+      #define KILL_PIN               AUX2_05_PIN
+>>>>>>> upstream/bugfix-2.0.x
 
     #elif ENABLED(ZONESTAR_LCD)
 
@@ -878,9 +1159,15 @@
 
     #elif ENABLED(G3D_PANEL)
 
+<<<<<<< HEAD
       #ifndef SD_DETECT_PIN
         #define SD_DETECT_PIN        EXP2_07_PIN
       #endif
+=======
+      #define BEEPER_PIN             EXP1_01_PIN
+
+      #define SD_DETECT_PIN          EXP2_07_PIN
+>>>>>>> upstream/bugfix-2.0.x
       #define KILL_PIN               EXP2_08_PIN
 
       #define BTN_EN1                EXP2_05_PIN
@@ -889,6 +1176,7 @@
 
     #elif IS_TFTGLCD_PANEL
 
+<<<<<<< HEAD
       #ifndef SD_DETECT_PIN
         #define SD_DETECT_PIN        EXP2_07_PIN
       #endif
@@ -903,6 +1191,18 @@
         #define BTN_EN1                  AUX2_03
         #define BTN_EN2                  AUX2_04
         #define BTN_ENC                  AUX3_02
+=======
+      #define SD_DETECT_PIN          EXP2_07_PIN
+
+    #else
+
+      #define BEEPER_PIN             EXP2_05_PIN
+
+      #if ENABLED(PANEL_ONE)                       // Buttons connect directly to AUX-2
+        #define BTN_EN1              AUX2_03_PIN
+        #define BTN_EN2              AUX2_04_PIN
+        #define BTN_ENC              AUX3_02_PIN
+>>>>>>> upstream/bugfix-2.0.x
       #else
         #define BTN_EN1              EXP1_01_PIN
         #define BTN_EN2              EXP1_02_PIN
@@ -919,6 +1219,7 @@
 #endif // HAS_WIRED_LCD && !LCD_PINS_DEFINED
 
 #if IS_RRW_KEYPAD && !HAS_ADC_BUTTONS
+<<<<<<< HEAD
   #define SHIFT_OUT_PIN                  AUX2_06
   #define SHIFT_CLK_PIN                  AUX2_07
   #define SHIFT_LD_PIN                   AUX2_08
@@ -930,12 +1231,31 @@
   #endif
   #ifndef BTN_ENC
     #define BTN_ENC                      AUX2_04
+=======
+  #define SHIFT_OUT_PIN              AUX2_06_PIN
+  #define SHIFT_CLK_PIN              AUX2_07_PIN
+  #define SHIFT_LD_PIN               AUX2_08_PIN
+  #ifndef BTN_EN1
+    #define BTN_EN1                  AUX2_05_PIN
+  #endif
+  #ifndef BTN_EN2
+    #define BTN_EN2                  AUX2_03_PIN
+  #endif
+  #ifndef BTN_ENC
+    #define BTN_ENC                  AUX2_04_PIN
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 #endif
 
 #if ALL(TOUCH_UI_FTDI_EVE, LCD_FYSETC_TFT81050)
 
+<<<<<<< HEAD
   CONTROLLER_WARNING("RAMPS", "LCD_FYSETC_TFT81050")
+=======
+  #ifndef NO_CONTROLLER_CUSTOM_WIRING_WARNING
+    #error "CAUTION! LCD_FYSETC_TFT81050 requires wiring modifications. See 'pins_RAMPS.h' for details. (Define NO_CONTROLLER_CUSTOM_WIRING_WARNING to suppress this warning.)"
+  #endif
+>>>>>>> upstream/bugfix-2.0.x
 
   /**
    * FYSETC TFT-81050 display pinout
@@ -971,9 +1291,13 @@
 
   #define BEEPER_PIN                 EXP1_01_PIN
 
+<<<<<<< HEAD
   #ifndef SD_DETECT_PIN
     #define SD_DETECT_PIN            EXP2_07_PIN
   #endif
+=======
+  #define SD_DETECT_PIN              EXP2_07_PIN
+>>>>>>> upstream/bugfix-2.0.x
 
   #define CLCD_MOD_RESET             EXP2_05_PIN
   #define CLCD_SPI_CS                EXP2_03_PIN

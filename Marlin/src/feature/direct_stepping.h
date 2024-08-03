@@ -95,8 +95,13 @@ namespace DirectStepping {
     static constexpr int TOTAL_STEPS    = SEGMENT_STEPS * SEGMENTS;
     static constexpr int PAGE_SIZE      = (AXIS_COUNT * BITS_SEGMENT * SEGMENTS) / 8;
 
+<<<<<<< HEAD
     typedef uvalue_t(PAGE_SIZE - 1) write_byte_idx_t;
     typedef uvalue_t(PAGE_COUNT - 1) page_idx_t;
+=======
+    typedef typename TypeSelector<(PAGE_SIZE>256), uint16_t, uint8_t>::type write_byte_idx_t;
+    typedef typename TypeSelector<(PAGE_COUNT>256), uint16_t, uint8_t>::type page_idx_t;
+>>>>>>> upstream/bugfix-2.0.x
   };
 
   template <uint8_t num_pages>

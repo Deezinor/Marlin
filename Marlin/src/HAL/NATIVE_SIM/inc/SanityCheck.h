@@ -31,7 +31,11 @@
 #endif
 
 #if ENABLED(FAST_PWM_FAN) || SPINDLE_LASER_FREQUENCY
+<<<<<<< HEAD
   #error "Features requiring Hardware PWM (FAST_PWM_FAN, SPINDLE_LASER_FREQUENCY) are not yet supported for HAL/LINUX."
+=======
+  #error "Features requiring Hardware PWM (FAST_PWM_FAN, SPINDLE_LASER_FREQUENCY) are not yet supported on LINUX."
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #if HAS_TMC_SW_SERIAL

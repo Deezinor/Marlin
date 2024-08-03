@@ -80,8 +80,11 @@ void safe_delay(millis_t ms) {
       TERN_(Z_PROBE_ALLEN_KEY, "Z_PROBE_ALLEN_KEY")
       TERN_(SOLENOID_PROBE, "SOLENOID_PROBE")
       TERN_(MAGLEV4, "MAGLEV4")
+<<<<<<< HEAD
       TERN_(BIQU_MICROPROBE_V1, "BIQU_MICROPROBE_V1")
       TERN_(BIQU_MICROPROBE_V2, "BIQU_MICROPROBE_V2")
+=======
+>>>>>>> upstream/bugfix-2.0.x
       IF_DISABLED(PROBE_SELECTED, "NONE")
     );
 
@@ -101,9 +104,15 @@ void safe_delay(millis_t ms) {
           SERIAL_ECHOPGM(" (Aligned With");
 
         if (probe.offset_xy.y > 0)
+<<<<<<< HEAD
           SERIAL_ECHO(F(TERN(IS_SCARA, "-Distal", "-Back")));
         else if (probe.offset_xy.y < 0)
           SERIAL_ECHO(F(TERN(IS_SCARA, "-Proximal", "-Front")));
+=======
+          SERIAL_ECHOF(F(TERN(IS_SCARA, "-Distal", "-Back")));
+        else if (probe.offset_xy.y < 0)
+          SERIAL_ECHOF(F(TERN(IS_SCARA, "-Proximal", "-Front")));
+>>>>>>> upstream/bugfix-2.0.x
         else if (probe.offset_xy.x != 0)
           SERIAL_ECHOPGM("-Center");
 
@@ -111,7 +120,11 @@ void safe_delay(millis_t ms) {
 
       #endif
 
+<<<<<<< HEAD
       SERIAL_ECHO(probe.offset.z < 0 ? F("Below") : probe.offset.z > 0 ? F("Above") : F("Same Z as"));
+=======
+      SERIAL_ECHOF(probe.offset.z < 0 ? F("Below") : probe.offset.z > 0 ? F("Above") : F("Same Z as"));
+>>>>>>> upstream/bugfix-2.0.x
       SERIAL_ECHOLNPGM(" Nozzle)");
 
     #endif

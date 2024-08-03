@@ -101,7 +101,11 @@ uint32_t __get_PRIMASK(void); // CMSIS
   #define analogInputToDigitalPin(p) pin_t((p < 12U) ? (p) + 54U : -1)
 #endif
 
+<<<<<<< HEAD
 #define HAL_ADC_VREF_MV   3300
+=======
+#define HAL_ADC_VREF         3.3
+>>>>>>> upstream/bugfix-2.0.x
 #define HAL_ADC_RESOLUTION  10
 
 //

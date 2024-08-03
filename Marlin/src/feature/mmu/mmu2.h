@@ -90,7 +90,11 @@ private:
     static void mmu_continue_loading();
   #endif
 
+<<<<<<< HEAD
   static bool _enabled, ready;
+=======
+  static bool _enabled, ready, mmu_print_saved;
+>>>>>>> upstream/bugfix-2.0.x
 
   static uint8_t cmd, cmd_arg, last_cmd, extruder;
   static int8_t state;

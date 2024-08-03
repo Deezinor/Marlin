@@ -29,8 +29,13 @@
 // https://github.com/bigtreetech/BTT-Expansion-module/tree/master/BTT%20EXP-MOT
 //#define BTT_MOTOR_EXPANSION
 
+<<<<<<< HEAD
 #if ALL(HAS_WIRED_LCD, BTT_MOTOR_EXPANSION)
   #if ANY(CR10_STOCKDISPLAY, ENDER2_STOCKDISPLAY)
+=======
+#if BOTH(HAS_WIRED_LCD, BTT_MOTOR_EXPANSION)
+  #if EITHER(CR10_STOCKDISPLAY, ENDER2_STOCKDISPLAY)
+>>>>>>> upstream/bugfix-2.0.x
     #define EXP_MOT_USE_EXP2_ONLY 1
   #else
     #error "You can't use both an LCD and a Motor Expansion Module on EXP1/EXP2 at the same time."
@@ -137,8 +142,15 @@
 //
 // Probe enable
 //
+<<<<<<< HEAD
 #if ENABLED(PROBE_ENABLE_DISABLE) && !defined(PROBE_ENABLE_PIN)
   #define PROBE_ENABLE_PIN            SERVO0_PIN
+=======
+#if ENABLED(PROBE_ENABLE_DISABLE)
+  #ifndef PROBE_ENABLE_PIN
+    #define PROBE_ENABLE_PIN          SERVO0_PIN
+  #endif
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 //
@@ -249,8 +261,13 @@
 #ifndef HEATER_BED_PIN
   #define HEATER_BED_PIN                    PD7   // Hotbed
 #endif
+<<<<<<< HEAD
 #ifndef FAN0_PIN
   #define FAN0_PIN                          PB7   // Fan0
+=======
+#ifndef FAN_PIN
+  #define FAN_PIN                           PB7   // Fan0
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #if HAS_CUTTER
@@ -270,6 +287,7 @@
 #endif // SPINDLE_FEATURE || LASER_FEATURE
 
 //
+<<<<<<< HEAD
 // SPI pins for TMC2130 stepper drivers
 //
 #ifndef TMC_SPI_MOSI
@@ -280,6 +298,20 @@
 #endif
 #ifndef TMC_SPI_SCK
   #define TMC_SPI_SCK                       PE15
+=======
+// Software SPI pins for TMC2130 stepper drivers
+//
+#if ENABLED(TMC_USE_SW_SPI)
+  #ifndef TMC_SW_MOSI
+    #define TMC_SW_MOSI                     PE14
+  #endif
+  #ifndef TMC_SW_MISO
+    #define TMC_SW_MISO                     PA14
+  #endif
+  #ifndef TMC_SW_SCK
+    #define TMC_SW_SCK                      PE15
+  #endif
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #if HAS_TMC_UART
@@ -320,11 +352,16 @@
   #define E1_SERIAL_RX_PIN      E1_SERIAL_TX_PIN
 
   // Reduce baud rate to improve software serial reliability
+<<<<<<< HEAD
   #ifndef TMC_BAUD_RATE
     #define TMC_BAUD_RATE                  19200
   #endif
 
 #endif // HAS_TMC_UART
+=======
+  #define TMC_BAUD_RATE                    19200
+#endif
+>>>>>>> upstream/bugfix-2.0.x
 
 //
 // SD Connection
@@ -373,7 +410,11 @@
   #define SD_MOSI_PIN                EXP2_06_PIN
   #define SD_DETECT_PIN              EXP2_07_PIN
 #elif SD_CONNECTION_IS(ONBOARD)
+<<<<<<< HEAD
   #define ONBOARD_SDIO                            // Use SDIO for onboard SD
+=======
+  #define SDIO_SUPPORT                            // Use SDIO for onboard SD
+>>>>>>> upstream/bugfix-2.0.x
 #elif SD_CONNECTION_IS(CUSTOM_CABLE)
   #error "No custom SD drive cable defined for this board."
 #endif
@@ -437,9 +478,14 @@
 #endif // BTT_MOTOR_EXPANSION
 
 //
+<<<<<<< HEAD
 // LCD / Controller
 //
 
+=======
+// LCDs and Controllers
+//
+>>>>>>> upstream/bugfix-2.0.x
 #if IS_TFTGLCD_PANEL
 
   #if ENABLED(TFTGLCD_PANEL_SPI)
@@ -458,7 +504,11 @@
     #define BTN_EN1                  EXP1_03_PIN
     #define BTN_EN2                  EXP1_05_PIN
 
+<<<<<<< HEAD
     #define LCD_PINS_EN              EXP1_08_PIN
+=======
+    #define LCD_PINS_ENABLE          EXP1_08_PIN
+>>>>>>> upstream/bugfix-2.0.x
     #define LCD_PINS_D4              EXP1_06_PIN
 
   #elif ENABLED(MKS_MINI_12864)
@@ -475,7 +525,11 @@
     #define BTN_EN1                  EXP2_03_PIN
     #define BTN_EN2                  EXP2_05_PIN
 
+<<<<<<< HEAD
     #define LCD_PINS_EN              EXP1_03_PIN
+=======
+    #define LCD_PINS_ENABLE          EXP1_03_PIN
+>>>>>>> upstream/bugfix-2.0.x
     #define LCD_PINS_D4              EXP1_05_PIN
 
     #if ENABLED(FYSETC_MINI_12864)
@@ -483,7 +537,11 @@
       #define DOGLCD_A0              EXP1_04_PIN
       //#define LCD_BACKLIGHT_PIN           -1
       #define LCD_RESET_PIN          EXP1_05_PIN  // Must be high or open for LCD to operate normally.
+<<<<<<< HEAD
       #if ANY(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
+=======
+      #if EITHER(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
+>>>>>>> upstream/bugfix-2.0.x
         #ifndef RGB_LED_R_PIN
           #define RGB_LED_R_PIN      EXP1_06_PIN
         #endif
@@ -513,6 +571,7 @@
 
 #endif // HAS_WIRED_LCD
 
+<<<<<<< HEAD
 #if HAS_SPI_TFT
 
   #define TFT_SCK_PIN                EXP2_02_PIN
@@ -625,6 +684,8 @@
 
 #endif // HAS_SPI_TFT
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 // Alter timing for graphical display
 #if IS_U8GLIB_ST7920
   #ifndef BOARD_ST7920_DELAY_1
@@ -638,6 +699,7 @@
   #endif
 #endif
 
+<<<<<<< HEAD
 //
 // NeoPixel LED
 //
@@ -669,3 +731,57 @@
   #define ESP_WIFI_MODULE_GPIO0_PIN         PB10
   #define ESP_WIFI_MODULE_GPIO4_PIN         PB11
 #endif
+=======
+#if HAS_SPI_TFT
+
+  #define BTN_EN1                    EXP2_03_PIN
+  #define BTN_EN2                    EXP2_05_PIN
+  #define BTN_ENC                    EXP1_02_PIN
+
+  //
+  // e.g., BTT_TFT35_SPI_V1_0 (480x320, 3.5", SPI Stock Display with Rotary Encoder in BIQU B1 SE)
+  //
+  #define TFT_CS_PIN                 EXP2_04_PIN
+  #define TFT_A0_PIN                 EXP2_07_PIN
+  #define TFT_SCK_PIN                EXP2_02_PIN
+  #define TFT_MISO_PIN               EXP2_01_PIN
+  #define TFT_MOSI_PIN               EXP2_06_PIN
+
+  #define TOUCH_INT_PIN              EXP1_07_PIN
+  #define TOUCH_MISO_PIN             EXP1_06_PIN
+  #define TOUCH_MOSI_PIN             EXP1_03_PIN
+  #define TOUCH_SCK_PIN              EXP1_05_PIN
+  #define TOUCH_CS_PIN               EXP1_04_PIN
+
+#endif
+
+//
+// NeoPixel LED
+//
+#ifndef NEOPIXEL_PIN
+  #define NEOPIXEL_PIN                      PE6
+#endif
+
+//
+// WIFI
+//
+
+/**
+ *                      -------
+ *            GND | 9  |       | 8 | 3.3V
+ *  (ESP-CS) PB12 | 10 |       | 7 | PB15 (ESP-MOSI)
+ *           3.3V | 11 |       | 6 | PB14 (ESP-MISO)
+ * (ESP-IO0) PB10 | 12 |       | 5 | PB13 (ESP-CLK)
+ * (ESP-IO4) PB11 | 13 |       | 4 | --
+ *             -- | 14 |       | 3 | 3.3V (ESP-EN)
+ *  (ESP-RX)  PD8 | 15 |       | 2 | --
+ *  (ESP-TX)  PD9 | 16 |       | 1 | PC14 (ESP-RST)
+ *                      -------
+ *                       WIFI
+ */
+#define ESP_WIFI_MODULE_COM                    3  // Must also set either SERIAL_PORT or SERIAL_PORT_2 to this
+#define ESP_WIFI_MODULE_BAUDRATE        BAUDRATE  // Must use same BAUDRATE as SERIAL_PORT & SERIAL_PORT_2
+#define ESP_WIFI_MODULE_RESET_PIN           PC14
+#define ESP_WIFI_MODULE_GPIO0_PIN           PB10
+#define ESP_WIFI_MODULE_GPIO4_PIN           PB11
+>>>>>>> upstream/bugfix-2.0.x

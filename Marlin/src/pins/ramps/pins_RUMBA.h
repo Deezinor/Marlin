@@ -52,6 +52,12 @@
 #ifndef X_MIN_PIN
   #define X_MIN_PIN                           37
 #endif
+<<<<<<< HEAD
+=======
+#ifndef X_MIN_PIN
+  #define X_MIN_PIN                           37
+#endif
+>>>>>>> upstream/bugfix-2.0.x
 #ifndef X_MAX_PIN
   #define X_MAX_PIN                           36
 #endif

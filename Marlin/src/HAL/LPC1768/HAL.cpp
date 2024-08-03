@@ -25,6 +25,7 @@
 #include "../shared/Delay.h"
 #include "../../core/millis_t.h"
 
+<<<<<<< HEAD
 #include <usb/usb.h>
 #include <usb/usbcfg.h>
 #include <usb/usbhw.h>
@@ -39,6 +40,11 @@ DefaultSerial1 USBSerial(false, UsbSerial);
 
 uint32_t MarlinHAL::adc_result = 0;
 pin_t MarlinHAL::adc_pin = 0;
+=======
+DefaultSerial1 USBSerial(false, UsbSerial);
+
+uint32_t MarlinHAL::adc_result = 0;
+>>>>>>> upstream/bugfix-2.0.x
 
 // U8glib required functions
 extern "C" {
@@ -59,6 +65,7 @@ int freeMemory() {
   return result;
 }
 
+<<<<<<< HEAD
 extern "C" {
   #include <debug_frmwrk.h>
   int isLPC1769();
@@ -191,6 +198,8 @@ void MarlinHAL::idletask() {
   MSC_RunDeferredCommands();
 }
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 void MarlinHAL::reboot() { NVIC_SystemReset(); }
 
 uint8_t MarlinHAL::get_reset_source() {
@@ -255,8 +264,11 @@ void flashFirmware(const int16_t) {
 
 #endif // USE_WATCHDOG
 
+<<<<<<< HEAD
 #include "../../../gcode/parser.h"
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 // For M42/M43, scan command line for pin code
 //   return index into pin map array if found and the pin is valid.
 //   return dval if not found or not a valid pin.

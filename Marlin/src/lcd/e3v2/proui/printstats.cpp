@@ -22,15 +22,25 @@
 
 /**
  * Print Stats page for PRO UI
+<<<<<<< HEAD
  * Based on the original work of: Miguel Risco-Castillo (MRISCOC)
  * https://github.com/mriscoc/Ender3V2S1
  * Version: 1.4.0
  * Date: 2022/12/03
+=======
+ * Author: Miguel A. Risco-Castillo (MRISCOC)
+ * Version: 1.3.0
+ * Date: 2022/02/24
+>>>>>>> upstream/bugfix-2.0.x
  */
 
 #include "../../../inc/MarlinConfigPre.h"
 
+<<<<<<< HEAD
 #if ALL(DWIN_LCD_PROUI, PRINTCOUNTER)
+=======
+#if BOTH(DWIN_LCD_PROUI, PRINTCOUNTER)
+>>>>>>> upstream/bugfix-2.0.x
 
 #include "printstats.h"
 
@@ -38,6 +48,7 @@
 #include "../../../MarlinCore.h"
 #include "../../marlinui.h"
 #include "../../../module/printcounter.h"
+<<<<<<< HEAD
 #include "dwin.h"
 #include "dwin_popup.h"
 
@@ -63,10 +74,46 @@ void PrintStats::draw() {
 }
 
 void PrintStats::reset() {
+=======
+#include "dwin_lcd.h"
+#include "dwinui.h"
+#include "dwin_popup.h"
+#include "dwin.h"
+
+PrintStatsClass PrintStats;
+
+void PrintStatsClass::Draw() {
+  char buf[50] = "";
+  char str[30] = "";
+  constexpr int8_t MRG = 30;
+
+  Title.ShowCaption(GET_TEXT_F(MSG_INFO_STATS_MENU));
+  DWINUI::ClearMainArea();
+  Draw_Popup_Bkgd();
+  DWINUI::Draw_Button(BTN_Continue, 86, 250);
+  printStatistics ps = print_job_timer.getStats();
+
+  sprintf_P(buf, PSTR(S_FMT ": %i"), GET_TEXT(MSG_INFO_PRINT_COUNT), ps.totalPrints);
+  DWINUI::Draw_String(MRG, 80, buf);
+  sprintf_P(buf, PSTR(S_FMT ": %i"), GET_TEXT(MSG_INFO_COMPLETED_PRINTS), ps.finishedPrints);
+  DWINUI::Draw_String(MRG, 100, buf);
+  duration_t(print_job_timer.getStats().printTime).toDigital(str, true);
+  sprintf_P(buf, PSTR(S_FMT ": %s"), GET_TEXT(MSG_INFO_PRINT_TIME), str);
+  DWINUI::Draw_String(MRG, 120, buf);
+  duration_t(print_job_timer.getStats().longestPrint).toDigital(str, true);
+  sprintf_P(buf, PSTR(S_FMT ": %s"), GET_TEXT(MSG_INFO_PRINT_LONGEST), str);
+  DWINUI::Draw_String(MRG, 140, buf);
+  sprintf_P(buf, PSTR(S_FMT ": %s m"), GET_TEXT(MSG_INFO_PRINT_FILAMENT), dtostrf(ps.filamentUsed / 1000, 1, 2, str));
+  DWINUI::Draw_String(MRG, 160, buf);
+}
+
+void PrintStatsClass::Reset() {
+>>>>>>> upstream/bugfix-2.0.x
   print_job_timer.initStats();
   DONE_BUZZ(true);
 }
 
+<<<<<<< HEAD
 void gotoPrintStats() {
   printStats.draw();
   hmiSaveProcessID(ID_WaitResponse);
@@ -80,4 +127,11 @@ void onClickResetStats() {
 }
 void printStatsReset() { gotoPopup(popupResetStats, onClickResetStats); }
 
+=======
+void Goto_PrintStats() {
+  PrintStats.Draw();
+  HMI_SaveProcessID(WaitResponse);
+}
+
+>>>>>>> upstream/bugfix-2.0.x
 #endif // DWIN_LCD_PROUI && PRINTCOUNTER

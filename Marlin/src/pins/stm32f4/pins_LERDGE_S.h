@@ -163,7 +163,11 @@
 #define ONBOARD_SDIO
 #define SDIO_CLOCK                       4800000
 #define SD_DETECT_PIN                       PG15
+<<<<<<< HEAD
 #if DISABLED(ONBOARD_SDIO)
+=======
+#if DISABLED(SDIO_SUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
   #define SOFTWARE_SPI
   #define SD_SCK_PIN                        PC12
   #define SD_MISO_PIN                       PC8

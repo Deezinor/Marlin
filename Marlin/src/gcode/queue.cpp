@@ -91,11 +91,15 @@ PGM_P GCodeQueue::injected_commands_P; // = nullptr
  */
 char GCodeQueue::injected_commands[64]; // = { 0 }
 
+<<<<<<< HEAD
 /**
  * Commit the accumulated G-code command to the ring buffer,
  * also setting its origin info.
  */
 void GCodeQueue::RingBuffer::commit_command(const bool skip_ok
+=======
+void GCodeQueue::RingBuffer::commit_command(bool skip_ok
+>>>>>>> upstream/bugfix-2.0.x
   OPTARG(HAS_MULTI_SERIAL, serial_index_t serial_ind/*=-1*/)
 ) {
   commands[index_w].skip_ok = skip_ok;
@@ -109,7 +113,11 @@ void GCodeQueue::RingBuffer::commit_command(const bool skip_ok
  * Return true if the command was successfully added.
  * Return false for a full buffer, or if the 'command' is a comment.
  */
+<<<<<<< HEAD
 bool GCodeQueue::RingBuffer::enqueue(const char *cmd, const bool skip_ok/*=true*/
+=======
+bool GCodeQueue::RingBuffer::enqueue(const char *cmd, bool skip_ok/*=true*/
+>>>>>>> upstream/bugfix-2.0.x
   OPTARG(HAS_MULTI_SERIAL, serial_index_t serial_ind/*=-1*/)
 ) {
   if (*cmd == ';' || length >= BUFSIZE) return false;
@@ -299,6 +307,7 @@ static bool serial_data_available(serial_index_t index) {
 
 inline int read_serial(const serial_index_t index) { return SERIAL_IMPL.read(index); }
 
+<<<<<<< HEAD
 #if (defined(ARDUINO_ARCH_STM32F4) || defined(ARDUINO_ARCH_STM32)) && defined(USBCON)
 
   /**
@@ -321,6 +330,12 @@ void GCodeQueue::gcode_line_error(FSTR_P const ferr, const serial_index_t serial
   PORT_REDIRECT(SERIAL_PORTMASK(serial_ind)); // Reply to the serial port that sent the command
   SERIAL_ERROR_START();
   SERIAL_ECHOLN(ferr, serial_state[serial_ind.index].last_N);
+=======
+void GCodeQueue::gcode_line_error(FSTR_P const ferr, const serial_index_t serial_ind) {
+  PORT_REDIRECT(SERIAL_PORTMASK(serial_ind)); // Reply to the serial port that sent the command
+  SERIAL_ERROR_START();
+  SERIAL_ECHOLNF(ferr, serial_state[serial_ind.index].last_N);
+>>>>>>> upstream/bugfix-2.0.x
   while (read_serial(serial_ind) != -1) { /* nada */ } // Clear out the RX buffer. Why don't use flush here ?
   flush_and_request_resend(serial_ind);
   serial_state[serial_ind.index].count = 0;
@@ -485,9 +500,13 @@ void GCodeQueue::get_serial_commands() {
 
           // The line number must be in the correct sequence.
           if (gcode_N != serial.last_N + 1 && !M110) {
+<<<<<<< HEAD
             // A request-for-resend line was already in transit so we got two - oops!
             if (WITHIN(gcode_N, serial.last_N - 1, serial.last_N)) continue;
             // A corrupted line or too high, indicating a lost line
+=======
+            // In case of error on a serial port, don't prevent other serial port from making progress
+>>>>>>> upstream/bugfix-2.0.x
             gcode_line_error(F(STR_ERR_LINE_NO), p);
             break;
           }
@@ -497,11 +516,19 @@ void GCodeQueue::get_serial_commands() {
             uint8_t checksum = 0, count = uint8_t(apos - command);
             while (count) checksum ^= command[--count];
             if (strtol(apos + 1, nullptr, 10) != checksum) {
+<<<<<<< HEAD
+=======
+              // In case of error on a serial port, don't prevent other serial port from making progress
+>>>>>>> upstream/bugfix-2.0.x
               gcode_line_error(F(STR_ERR_CHECKSUM_MISMATCH), p);
               break;
             }
           }
           else {
+<<<<<<< HEAD
+=======
+            // In case of error on a serial port, don't prevent other serial port from making progress
+>>>>>>> upstream/bugfix-2.0.x
             gcode_line_error(F(STR_ERR_NO_CHECKSUM), p);
             break;
           }
@@ -654,6 +681,17 @@ void GCodeQueue::advance() {
     #endif
     return;
   }
+<<<<<<< HEAD
+=======
+
+  #if ENABLED(BUFFER_MONITORING)
+    if (command_buffer_empty) {
+      command_buffer_empty = false;
+      const millis_t command_buffer_empty_duration = millis() - command_buffer_empty_at;
+      NOLESS(max_command_buffer_empty_duration, command_buffer_empty_duration);
+    }
+  #endif
+>>>>>>> upstream/bugfix-2.0.x
 
   #if ENABLED(BUFFER_MONITORING)
     if (command_buffer_empty) {
@@ -709,8 +747,13 @@ void GCodeQueue::advance() {
 
   void GCodeQueue::report_buffer_statistics() {
     SERIAL_ECHOLNPGM("D576"
+<<<<<<< HEAD
       " P:", planner.moves_free(),         " ", planner_buffer_underruns, " (", max_planner_buffer_empty_duration, ")"
       " B:", BUFSIZE - ring_buffer.length, " ", command_buffer_underruns, " (", max_command_buffer_empty_duration, ")"
+=======
+      " P:", planner.moves_free(),         " ", -planner_buffer_underruns, " (", max_planner_buffer_empty_duration, ")"
+      " B:", BUFSIZE - ring_buffer.length, " ", -command_buffer_underruns, " (", max_command_buffer_empty_duration, ")"
+>>>>>>> upstream/bugfix-2.0.x
     );
     command_buffer_underruns = planner_buffer_underruns = 0;
     max_command_buffer_empty_duration = max_planner_buffer_empty_duration = 0;

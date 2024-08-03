@@ -228,9 +228,16 @@
 #define STR_PID_DEBUG_INPUT                 ": Input "
 #define STR_PID_DEBUG_OUTPUT                " Output "
 #define STR_INVALID_EXTRUDER_NUM            " - Invalid extruder number !"
+<<<<<<< HEAD
 #define STR_MPC_AUTOTUNE_START              "MPC Autotune start for " STR_E
 #define STR_MPC_AUTOTUNE_INTERRUPTED        "MPC Autotune interrupted!"
 #define STR_MPC_AUTOTUNE_FINISHED           "MPC Autotune finished! Put the constants below into Configuration.h"
+=======
+#define STR_MPC_AUTOTUNE                    "MPC Autotune"
+#define STR_MPC_AUTOTUNE_START              " start for " STR_E
+#define STR_MPC_AUTOTUNE_INTERRUPTED        " interrupted!"
+#define STR_MPC_AUTOTUNE_FINISHED           " finished! Put the constants below into Configuration.h"
+>>>>>>> upstream/bugfix-2.0.x
 #define STR_MPC_COOLING_TO_AMBIENT          "Cooling to ambient"
 #define STR_MPC_HEATING_PAST_200            "Heating to over 200C"
 #define STR_MPC_MEASURING_AMBIENT           "Measuring ambient heatloss at "
@@ -240,7 +247,10 @@
 #define STR_HEATER_CHAMBER                  "chamber"
 #define STR_COOLER                          "cooler"
 #define STR_MOTHERBOARD                     "motherboard"
+<<<<<<< HEAD
 #define STR_SOC                             "soc"
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #define STR_PROBE                           "probe"
 #define STR_REDUNDANT                       "redundant "
 #define STR_LASER_TEMP                      "laser temperature"
@@ -251,7 +261,11 @@
 #define STR_REDUNDANCY                      "Heater switched off. Temperature difference between temp sensors is too high !"
 #define STR_T_HEATING_FAILED                "Heating failed"
 #define STR_T_THERMAL_RUNAWAY               "Thermal Runaway"
+<<<<<<< HEAD
 #define STR_T_THERMAL_MALFUNCTION           "Thermal Malfunction"
+=======
+#define STR_T_MALFUNCTION                   "Thermal Malfunction"
+>>>>>>> upstream/bugfix-2.0.x
 #define STR_T_MAXTEMP                       "MAXTEMP triggered"
 #define STR_T_MINTEMP                       "MINTEMP triggered"
 #define STR_ERR_PROBING_FAILED              "Probing Failed"
@@ -277,11 +291,17 @@
 // Settings Report Strings
 #define STR_Z_AUTO_ALIGN                    "Z Auto-Align"
 #define STR_BACKLASH_COMPENSATION           "Backlash compensation"
+<<<<<<< HEAD
 #define STR_FT_MOTION                       "Fixed-Time Motion"
 #define STR_S_SEG_PER_SEC                   "S<seg-per-sec>"
 #define STR_DELTA_SETTINGS                  "Delta (L<diagonal-rod> R<radius> H<height> S<seg-per-sec> XYZ<tower-angle-trim> ABC<rod-trim>)"
 #define STR_SCARA_SETTINGS                  "SCARA"
 #define STR_POLAR_SETTINGS                  "Polar"
+=======
+#define STR_S_SEG_PER_SEC                   "S<seg-per-sec>"
+#define STR_DELTA_SETTINGS                  "Delta (L<diagonal-rod> R<radius> H<height> S<seg-per-sec> XYZ<tower-angle-trim> ABC<rod-trim>)"
+#define STR_SCARA_SETTINGS                  "SCARA"
+>>>>>>> upstream/bugfix-2.0.x
 #define STR_POLARGRAPH_SETTINGS             "Polargraph"
 #define STR_SCARA_P_T_Z                     "P<theta-psi-offset> T<theta-offset> Z<home-offset>"
 #define STR_ENDSTOP_ADJUSTMENT              "Endstop adjustment"
@@ -298,7 +318,10 @@
 #define STR_CHAMBER_PID                     "Chamber PID"
 #define STR_STEPS_PER_UNIT                  "Steps per unit"
 #define STR_LINEAR_ADVANCE                  "Linear Advance"
+<<<<<<< HEAD
 #define STR_NONLINEAR_EXTRUSION             "Nonlinear Extrusion"
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #define STR_CONTROLLER_FAN                  "Controller Fan"
 #define STR_STEPPER_MOTOR_CURRENTS          "Stepper motor currents"
 #define STR_RETRACT_S_F_Z                   "Retract (S<length> F<feedrate> Z<lift>)"
@@ -326,12 +349,19 @@
 //
 // Endstop Names used by Endstops::report_states
 //
+<<<<<<< HEAD
 #if HAS_X_AXIS
   #define STR_X_MIN                         "x_min"
   #define STR_X_MAX                         "x_max"
   #define STR_X2_MIN                        "x2_min"
   #define STR_X2_MAX                        "x2_max"
 #endif
+=======
+#define STR_X_MIN                           "x_min"
+#define STR_X_MAX                           "x_max"
+#define STR_X2_MIN                          "x2_min"
+#define STR_X2_MAX                          "x2_max"
+>>>>>>> upstream/bugfix-2.0.x
 
 #if HAS_Y_AXIS
   #define STR_Y_MIN                         "y_min"
@@ -355,8 +385,11 @@
 #define STR_PROBE_EN                        "probe_en"
 #define STR_FILAMENT                        "filament"
 
+<<<<<<< HEAD
 #define STR_CALIBRATION                     "calibration"
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 // General axis names
 #define STR_X "X"
 #define STR_Y "Y"
@@ -409,6 +442,61 @@
 #else
   #define STR_I   ""
 #endif
+<<<<<<< HEAD
+=======
+
+#if HAS_J_AXIS
+  #if AXIS5_NAME == 'B'
+    #define STR_J "B"
+    #define STR_J_MIN "b_min"
+    #define STR_J_MAX "b_max"
+  #elif AXIS5_NAME == 'C'
+    #define STR_J "C"
+    #define STR_J_MIN "c_min"
+    #define STR_J_MAX "c_max"
+  #elif AXIS5_NAME == 'U'
+    #define STR_J "U"
+    #define STR_J_MIN "u_min"
+    #define STR_J_MAX "u_max"
+  #elif AXIS5_NAME == 'V'
+    #define STR_J "V"
+    #define STR_J_MIN "v_min"
+    #define STR_J_MAX "v_max"
+  #elif AXIS5_NAME == 'W'
+    #define STR_J "W"
+    #define STR_J_MIN "w_min"
+    #define STR_J_MAX "w_max"
+  #else
+    #error "AXIS5_NAME can only be one of 'B', 'C', 'U', 'V', or 'W'."
+  #endif
+#else
+  #define STR_J   ""
+#endif
+
+#if HAS_K_AXIS
+  #if AXIS6_NAME == 'C'
+    #define STR_K "C"
+    #define STR_K_MIN "c_min"
+    #define STR_K_MAX "c_max"
+  #elif AXIS6_NAME == 'U'
+    #define STR_K "U"
+    #define STR_K_MIN "u_min"
+    #define STR_K_MAX "u_max"
+  #elif AXIS6_NAME == 'V'
+    #define STR_K "V"
+    #define STR_K_MIN "v_min"
+    #define STR_K_MAX "v_max"
+  #elif AXIS6_NAME == 'W'
+    #define STR_K "W"
+    #define STR_K_MIN "w_min"
+    #define STR_K_MAX "w_max"
+  #else
+    #error "AXIS6_NAME can only be one of 'C', 'U', 'V', or 'W'."
+  #endif
+#else
+  #define STR_K   ""
+#endif
+>>>>>>> upstream/bugfix-2.0.x
 
 #if HAS_J_AXIS
   #if AXIS5_NAME == 'B'

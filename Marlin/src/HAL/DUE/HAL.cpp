@@ -47,7 +47,11 @@ uint16_t MarlinHAL::adc_result;
 #endif
 
 void MarlinHAL::init() {
+<<<<<<< HEAD
   #if HAS_MEDIA
+=======
+  #if ENABLED(SDSUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
     OUT_WRITE(SDSS, HIGH);  // Try to set SDSS inactive before any other SPI users start up
   #endif
   usb_task_init();          // Initialize the USB stack

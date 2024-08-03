@@ -26,7 +26,11 @@
 
 #include "../inc/MarlinConfigPre.h"
 
+<<<<<<< HEAD
 #if ANY(PSU_CONTROL, AUTO_POWER_CONTROL)
+=======
+#if EITHER(PSU_CONTROL, AUTO_POWER_CONTROL)
+>>>>>>> upstream/bugfix-2.0.x
 
 #include "power.h"
 #include "../module/planner.h"
@@ -34,10 +38,13 @@
 #include "../module/temperature.h"
 #include "../MarlinCore.h"
 
+<<<<<<< HEAD
 #if ENABLED(MAX7219_REINIT_ON_POWERUP)
   #include "max7219.h"
 #endif
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #if ENABLED(PS_OFF_SOUND)
   #include "../libs/buzzer.h"
 #endif
@@ -48,6 +55,7 @@
 
 Power powerManager;
 bool Power::psu_on;
+<<<<<<< HEAD
 
 #if ENABLED(AUTO_POWER_CONTROL)
   #include "../module/stepper.h"
@@ -68,6 +76,20 @@ bool Power::psu_on;
   millis_t Power::last_state_change_ms = 0;
 #endif
 
+=======
+
+#if ENABLED(AUTO_POWER_CONTROL)
+  #include "../module/stepper.h"
+  #include "../module/temperature.h"
+
+  #if BOTH(USE_CONTROLLER_FAN, AUTO_POWER_CONTROLLERFAN)
+    #include "controllerfan.h"
+  #endif
+
+  millis_t Power::lastPowerOn;
+#endif
+
+>>>>>>> upstream/bugfix-2.0.x
 /**
  * Initialize pins & state for the power manager.
  *
@@ -90,11 +112,16 @@ void Power::power_on() {
 
   if (psu_on) return;
 
+<<<<<<< HEAD
   #if ANY(POWER_OFF_TIMER, POWER_OFF_WAIT_FOR_COOLDOWN)
+=======
+  #if EITHER(POWER_OFF_TIMER, POWER_OFF_WAIT_FOR_COOLDOWN)
+>>>>>>> upstream/bugfix-2.0.x
     cancelAutoPowerOff();
   #endif
 
   OUT_WRITE(PS_ON_PIN, PSU_ACTIVE_STATE);
+<<<<<<< HEAD
   #if ENABLED(PSU_OFF_REDUNDANT)
     OUT_WRITE(PS_ON1_PIN, TERN_(PSU_OFF_REDUNDANT_INVERTED, !)PSU_ACTIVE_STATE);
   #endif
@@ -107,6 +134,11 @@ void Power::power_on() {
 
   TERN_(MAX7219_REINIT_ON_POWERUP, max7219.init());
 
+=======
+  psu_on = true;
+  safe_delay(PSU_POWERUP_DELAY);
+  restore_stepper_drivers();
+>>>>>>> upstream/bugfix-2.0.x
   TERN_(HAS_TRINAMIC_CONFIG, safe_delay(PSU_POWERUP_DELAY));
 
   #ifdef PSU_POWERUP_GCODE
@@ -119,12 +151,20 @@ void Power::power_on() {
  * Processes any PSU_POWEROFF_GCODE and makes a PS_OFF_SOUND if enabled.
  */
 void Power::power_off() {
+<<<<<<< HEAD
+=======
+  SERIAL_ECHOLNPGM(STR_POWEROFF);
+
+>>>>>>> upstream/bugfix-2.0.x
   TERN_(HAS_SUICIDE, suicide());
 
   if (!psu_on) return;
 
+<<<<<<< HEAD
   SERIAL_ECHOLNPGM(STR_POWEROFF);
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
   #ifdef PSU_POWEROFF_GCODE
     gcode.process_subcommands_now(F(PSU_POWEROFF_GCODE));
   #endif
@@ -134,6 +174,7 @@ void Power::power_off() {
   #endif
 
   OUT_WRITE(PS_ON_PIN, !PSU_ACTIVE_STATE);
+<<<<<<< HEAD
   #if ENABLED(PSU_OFF_REDUNDANT)
     OUT_WRITE(PS_ON1_PIN, IF_DISABLED(PSU_OFF_REDUNDANT_INVERTED, !)PSU_ACTIVE_STATE);
   #endif
@@ -142,11 +183,20 @@ void Power::power_off() {
   psu_on = false;
 
   #if ANY(POWER_OFF_TIMER, POWER_OFF_WAIT_FOR_COOLDOWN)
+=======
+  psu_on = false;
+
+  #if EITHER(POWER_OFF_TIMER, POWER_OFF_WAIT_FOR_COOLDOWN)
+>>>>>>> upstream/bugfix-2.0.x
     cancelAutoPowerOff();
   #endif
 }
 
+<<<<<<< HEAD
 #if ANY(AUTO_POWER_CONTROL, POWER_OFF_WAIT_FOR_COOLDOWN)
+=======
+#if EITHER(AUTO_POWER_CONTROL, POWER_OFF_WAIT_FOR_COOLDOWN)
+>>>>>>> upstream/bugfix-2.0.x
 
   bool Power::is_cooling_needed() {
     #if HAS_HOTEND && AUTO_POWER_E_TEMP
@@ -166,7 +216,11 @@ void Power::power_off() {
 
 #endif
 
+<<<<<<< HEAD
 #if ANY(POWER_OFF_TIMER, POWER_OFF_WAIT_FOR_COOLDOWN)
+=======
+#if EITHER(POWER_OFF_TIMER, POWER_OFF_WAIT_FOR_COOLDOWN)
+>>>>>>> upstream/bugfix-2.0.x
 
   #if ENABLED(POWER_OFF_TIMER)
     millis_t Power::power_off_time = 0;
@@ -201,7 +255,11 @@ void Power::power_off() {
   /**
    * Check all conditions that would signal power needing to be on.
    *
+<<<<<<< HEAD
    * @return bool  if power is needed
+=======
+   * @returns bool  if power is needed
+>>>>>>> upstream/bugfix-2.0.x
    */
   bool Power::is_power_needed() {
 
@@ -218,6 +276,7 @@ void Power::power_off() {
       HOTEND_LOOP() if (thermalManager.autofan_speed[e]) return true;
     #endif
 
+<<<<<<< HEAD
     #if ALL(USE_CONTROLLER_FAN, AUTO_POWER_CONTROLLERFAN)
       if (controllerFan.state()) return true;
     #endif
@@ -226,6 +285,12 @@ void Power::power_off() {
       if (TERN0(AUTO_POWER_SPINDLE_LASER, cutter.enabled())) return true;
     #endif
 
+=======
+    #if BOTH(USE_CONTROLLER_FAN, AUTO_POWER_CONTROLLERFAN)
+      if (controllerFan.state()) return true;
+    #endif
+
+>>>>>>> upstream/bugfix-2.0.x
     if (TERN0(AUTO_POWER_CHAMBER_FAN, thermalManager.chamberfan_speed))
       return true;
 

@@ -35,6 +35,7 @@
 
 namespace ExtUI {
 
+<<<<<<< HEAD
   void onStartup() { nextion.startup();  }
   void onIdle() { nextion.idleLoop(); }
   void onPrinterKilled(FSTR_P const error, FSTR_P const component) { nextion.printerKilled(error, component); }
@@ -48,10 +49,20 @@ namespace ExtUI {
   void onMaxTempError(const heater_id_t header_id) {}
 
   void onPlayTone(const uint16_t frequency, const uint16_t duration/*=0*/) {}
+=======
+  void onStartup() { nextion.Startup();  }
+  void onIdle() { nextion.IdleLoop(); }
+  void onPrinterKilled(FSTR_P const error, FSTR_P const component) { nextion.PrinterKilled(error, component); }
+  void onMediaInserted() {}
+  void onMediaError() {}
+  void onMediaRemoved() {}
+  void onPlayTone(const uint16_t frequency, const uint16_t duration) {}
+>>>>>>> upstream/bugfix-2.0.x
   void onPrintTimerStarted() {}
   void onPrintTimerPaused() {}
   void onPrintTimerStopped() {}
   void onFilamentRunout(const extruder_t) {}
+<<<<<<< HEAD
 
   void onUserConfirmRequired(const char * const msg) { nextion.confirmationRequest(msg); }
 
@@ -80,6 +91,13 @@ namespace ExtUI {
   void onHomingStart() {}
   void onHomingDone() {}
 
+=======
+  void onUserConfirmRequired(const char * const msg) { nextion.ConfirmationRequest(msg); }
+  void onStatusChanged(const char * const msg) { nextion.StatusChange(msg); }
+
+  void onHomingStart() {}
+  void onHomingDone() {}
+>>>>>>> upstream/bugfix-2.0.x
   void onPrintDone() { nextion.PrintFinished(); }
 
   void onFactoryReset() {}
@@ -108,16 +126,25 @@ namespace ExtUI {
     // Called after loading or resetting stored settings
   }
 
+<<<<<<< HEAD
   void onSettingsStored(const bool success) {
+=======
+  void onSettingsStored(bool success) {
+>>>>>>> upstream/bugfix-2.0.x
     // Called after the entire EEPROM has been written,
     // whether successful or not.
   }
 
+<<<<<<< HEAD
   void onSettingsLoaded(const bool success) {
+=======
+  void onSettingsLoaded(bool success) {
+>>>>>>> upstream/bugfix-2.0.x
     // Called after the entire EEPROM has been read,
     // whether successful or not.
   }
 
+<<<<<<< HEAD
   #if HAS_LEVELING
     void onLevelingStart() {}
     void onLevelingDone() {}
@@ -127,6 +154,12 @@ namespace ExtUI {
   #endif
 
   #if HAS_MESH
+=======
+  #if HAS_MESH
+    void onLevelingStart() {}
+    void onLevelingDone() {}
+
+>>>>>>> upstream/bugfix-2.0.x
     void onMeshUpdate(const int8_t xpos, const int8_t ypos, const float zval) {
       // Called when any mesh points are updated
     }
@@ -136,6 +169,7 @@ namespace ExtUI {
     }
   #endif
 
+<<<<<<< HEAD
   #if ENABLED(PREVENT_COLD_EXTRUSION)
     void onSetMinExtrusionTemp(const celsius_t) {}
   #endif
@@ -147,12 +181,16 @@ namespace ExtUI {
     void onPowerLoss() {
       // Called when power-loss state is detected
     }
+=======
+  #if ENABLED(POWER_LOSS_RECOVERY)
+>>>>>>> upstream/bugfix-2.0.x
     void onPowerLossResume() {
       // Called on resume from power-loss
     }
   #endif
 
   #if HAS_PID_HEATING
+<<<<<<< HEAD
     void onPIDTuning(const pidresult_t rst) {
       // Called for temperature PID tuning result
       nextion.panelInfo(37);
@@ -176,6 +214,17 @@ namespace ExtUI {
   void onSteppersEnabled() {}
   void onAxisDisabled(const axis_t) {}
   void onAxisEnabled(const axis_t) {}
+=======
+    void onPidTuning(const result_t rst) {
+      // Called for temperature PID tuning result
+      nextion.PanelInfo(37);
+    }
+  #endif
+
+  void onSteppersDisabled() {}
+  void onSteppersEnabled()  {}
+
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 #endif // NEXTION_TFT

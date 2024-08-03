@@ -42,9 +42,19 @@
 void GcodeSuite::M20() {
   if (card.flag.mounted) {
     SERIAL_ECHOLNPGM(STR_BEGIN_FILE_LIST);
+<<<<<<< HEAD
     card.ls(TERN0(CUSTOM_FIRMWARE_UPLOAD,     parser.boolval('F') << LS_ONLY_BIN)
           | TERN0(LONG_FILENAME_HOST_SUPPORT, parser.boolval('L') << LS_LONG_FILENAME)
           | TERN0(M20_TIMESTAMP_SUPPORT,      parser.boolval('T') << LS_TIMESTAMP));
+=======
+    card.ls(
+      TERN_(CUSTOM_FIRMWARE_UPLOAD, parser.boolval('F'))
+      #if BOTH(CUSTOM_FIRMWARE_UPLOAD, LONG_FILENAME_HOST_SUPPORT)
+        ,
+      #endif
+      TERN_(LONG_FILENAME_HOST_SUPPORT, parser.boolval('L'))
+    );
+>>>>>>> upstream/bugfix-2.0.x
     SERIAL_ECHOLNPGM(STR_END_FILE_LIST);
   }
   else

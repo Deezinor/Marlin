@@ -256,6 +256,7 @@ public:
 
   // Float removes 'E' to prevent scientific notation interpretation
   static float value_float() {
+<<<<<<< HEAD
     if (!value_ptr) return 0;
     char *e = value_ptr;
     for (;;) {
@@ -266,6 +267,20 @@ public:
         const float ret = strtof(value_ptr, nullptr);
         *e = c;
         return ret;
+=======
+    if (value_ptr) {
+      char *e = value_ptr;
+      for (;;) {
+        const char c = *e;
+        if (c == '\0' || c == ' ') break;
+        if (c == 'E' || c == 'e') {
+          *e = '\0';
+          const float ret = strtof(value_ptr, nullptr);
+          *e = c;
+          return ret;
+        }
+        ++e;
+>>>>>>> upstream/bugfix-2.0.x
       }
       ++e;
     }
@@ -287,6 +302,7 @@ public:
 
   // Bool is true with no value or non-zero
   static bool value_bool() { return !has_value() || !!value_byte(); }
+<<<<<<< HEAD
 
   static constexpr bool axis_is_rotational(const AxisEnum axis) {
     return (false
@@ -298,6 +314,8 @@ public:
       || TERN0(AXIS9_ROTATES, axis == W_AXIS)
     );
   }
+=======
+>>>>>>> upstream/bugfix-2.0.x
 
   // Units modes: Inches, Fahrenheit, Kelvin
 
@@ -318,11 +336,21 @@ public:
     }
 
     static float axis_unit_factor(const AxisEnum axis) {
+<<<<<<< HEAD
       if (axis_is_rotational(axis)) return 1.0f;
       #if HAS_EXTRUDERS
         if (axis >= E_AXIS && volumetric_enabled) return volumetric_unit_factor;
       #endif
       return linear_unit_factor;
+=======
+      return (
+        #if HAS_EXTRUDERS
+          axis >= E_AXIS && volumetric_enabled ? volumetric_unit_factor : linear_unit_factor
+        #else
+          linear_unit_factor
+        #endif
+      );
+>>>>>>> upstream/bugfix-2.0.x
     }
 
     static float linear_value_to_mm(const_float_t v)                  { return v * linear_unit_factor; }
@@ -331,12 +359,21 @@ public:
 
   #else
 
+<<<<<<< HEAD
     static constexpr float mm_to_linear_unit(const_float_t mm)     { return mm; }
     static constexpr float mm_to_volumetric_unit(const_float_t mm) { return mm; }
 
     static constexpr float linear_value_to_mm(const_float_t v)             { return v; }
     static constexpr float axis_value_to_mm(const AxisEnum, const float v) { return v; }
     static constexpr float per_axis_value(const AxisEnum, const float v)   { return v; }
+=======
+    static float mm_to_linear_unit(const_float_t mm)     { return mm; }
+    static float mm_to_volumetric_unit(const_float_t mm) { return mm; }
+
+    static float linear_value_to_mm(const_float_t v)             { return v; }
+    static float axis_value_to_mm(const AxisEnum, const float v) { return v; }
+    static float per_axis_value(const AxisEnum, const float v)   { return v; }
+>>>>>>> upstream/bugfix-2.0.x
 
   #endif
 
@@ -347,6 +384,7 @@ public:
   #define LINEAR_UNIT(V)     parser.mm_to_linear_unit(V)
   #define VOLUMETRIC_UNIT(V) parser.mm_to_volumetric_unit(V)
 
+<<<<<<< HEAD
   #define I_AXIS_UNIT(V) TERN(AXIS4_ROTATES, (V), LINEAR_UNIT(V))
   #define J_AXIS_UNIT(V) TERN(AXIS5_ROTATES, (V), LINEAR_UNIT(V))
   #define K_AXIS_UNIT(V) TERN(AXIS6_ROTATES, (V), LINEAR_UNIT(V))
@@ -354,6 +392,8 @@ public:
   #define V_AXIS_UNIT(V) TERN(AXIS8_ROTATES, (V), LINEAR_UNIT(V))
   #define W_AXIS_UNIT(V) TERN(AXIS9_ROTATES, (V), LINEAR_UNIT(V))
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
   static float value_linear_units()                      { return linear_value_to_mm(value_float()); }
   static float value_axis_units(const AxisEnum axis)     { return axis_value_to_mm(axis, value_float()); }
   static float value_per_axis_units(const AxisEnum axis) { return per_axis_value(axis, value_float()); }
@@ -406,7 +446,11 @@ public:
 
   #else // !TEMPERATURE_UNITS_SUPPORT
 
+<<<<<<< HEAD
     static constexpr float to_temp_units(int16_t c) { return (float)c; }
+=======
+    static float to_temp_units(int16_t c) { return (float)c; }
+>>>>>>> upstream/bugfix-2.0.x
 
     static celsius_t value_celsius()      { return value_int(); }
     static celsius_t value_celsius_diff() { return value_int(); }

@@ -170,7 +170,7 @@ Nozzle nozzle;
       xyz_pos_t middle[HOTENDS] = NOZZLE_CLEAN_CIRCLE_MIDDLE;
     #endif
 
-    const uint8_t arrPos = ANY(SINGLENOZZLE, MIXING_EXTRUDER) ? 0 : active_extruder;
+    const uint8_t arrPos = EITHER(SINGLENOZZLE, MIXING_EXTRUDER) ? 0 : active_extruder;
 
     switch (pattern) {
       #if DISABLED(NOZZLE_CLEAN_PATTERN_LINE)
@@ -247,6 +247,7 @@ Nozzle nozzle;
 
 #if ENABLED(NOZZLE_PARK_FEATURE)
 
+<<<<<<< HEAD
   #if HAS_Z_AXIS
     float Nozzle::park_mode_0_height(const_float_t park_z) {
       // Apply a minimum raise, if specified. Use park.z as a minimum height instead.
@@ -305,6 +306,50 @@ Nozzle nozzle;
     }
 
     SKIP_XY_MOVE:
+=======
+  float Nozzle::park_mode_0_height(const_float_t park_z) {
+    // Apply a minimum raise, if specified. Use park.z as a minimum height instead.
+    return _MAX(park_z,                       // Minimum height over 0 based on input
+      _MIN(Z_MAX_POS,                         // Maximum height is fixed
+        #ifdef NOZZLE_PARK_Z_RAISE_MIN
+          NOZZLE_PARK_Z_RAISE_MIN +           // Minimum raise...
+        #endif
+        current_position.z                    // ...over current position
+      )
+    );
+  }
+
+  void Nozzle::park(const uint8_t z_action, const xyz_pos_t &park/*=NOZZLE_PARK_POINT*/) {
+    constexpr feedRate_t fr_xy = NOZZLE_PARK_XY_FEEDRATE, fr_z = NOZZLE_PARK_Z_FEEDRATE;
+
+    switch (z_action) {
+      case 1: // Go to Z-park height
+        do_blocking_move_to_z(park.z, fr_z);
+        break;
+
+      case 2: // Raise by Z-park height
+        do_blocking_move_to_z(_MIN(current_position.z + park.z, Z_MAX_POS), fr_z);
+        break;
+
+      default: // Raise by NOZZLE_PARK_Z_RAISE_MIN, use park.z as a minimum height
+        do_blocking_move_to_z(park_mode_0_height(park.z), fr_z);
+        break;
+    }
+
+    #ifndef NOZZLE_PARK_MOVE
+      #define NOZZLE_PARK_MOVE 0
+    #endif
+    switch (NOZZLE_PARK_MOVE) {
+      case 0: do_blocking_move_to_xy(park, fr_xy); break;
+      case 1: do_blocking_move_to_x(park.x, fr_xy); break;
+      case 2: do_blocking_move_to_y(park.y, fr_xy); break;
+      case 3: do_blocking_move_to_x(park.x, fr_xy);
+              do_blocking_move_to_y(park.y, fr_xy); break;
+      case 4: do_blocking_move_to_y(park.y, fr_xy);
+              do_blocking_move_to_x(park.x, fr_xy); break;
+    }
+
+>>>>>>> upstream/bugfix-2.0.x
     report_current_position();
   }
 

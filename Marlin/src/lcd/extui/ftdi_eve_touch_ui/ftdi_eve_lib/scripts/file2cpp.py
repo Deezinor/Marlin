@@ -30,7 +30,11 @@ if __name__ == "__main__":
   parser.add_argument("-d", "--deflate", action="store_true", help="Packs the data using the deflate algorithm")
   args = parser.parse_args()
 
+<<<<<<< HEAD
   varname = os.path.splitext(os.path.basename(args.input))[0]
+=======
+  varname = os.path.splitext(os.path.basename(args.input))[0];
+>>>>>>> upstream/bugfix-2.0.x
 
   with open(args.input, "rb") as in_file:
     data = in_file.read()

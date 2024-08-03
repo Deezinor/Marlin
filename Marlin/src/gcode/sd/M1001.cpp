@@ -49,6 +49,8 @@
 
 #if ENABLED(EXTENSIBLE_UI)
   #include "../../lcd/extui/ui_api.h"
+#elif ENABLED(DWIN_LCD_PROUI)
+  #include "../../lcd/e3v2/proui/dwin.h"
 #endif
 
 #if ENABLED(HOST_ACTION_COMMANDS)
@@ -95,7 +97,11 @@ void GcodeSuite::M1001() {
     if (long_print) {
       printerEventLEDs.onPrintCompleted();
       TERN_(EXTENSIBLE_UI, ExtUI::onUserConfirmRequired(GET_TEXT_F(MSG_PRINT_DONE)));
+<<<<<<< HEAD
       TERN_(HOST_PROMPT_SUPPORT, hostui.continue_prompt(GET_TEXT_F(MSG_PRINT_DONE)));
+=======
+      TERN_(HOST_PROMPT_SUPPORT, hostui.prompt_do(PROMPT_USER_CONTINUE, GET_TEXT_F(MSG_PRINT_DONE), FPSTR(CONTINUE_STR)));
+>>>>>>> upstream/bugfix-2.0.x
       TERN_(HAS_RESUME_CONTINUE, wait_for_user_response(SEC_TO_MS(TERN(HAS_MARLINUI_MENU, PE_LEDS_COMPLETED_TIME, 30))));
       printerEventLEDs.onResumeAfterWait();
     }
@@ -107,6 +113,10 @@ void GcodeSuite::M1001() {
   #endif
 
   TERN_(EXTENSIBLE_UI, ExtUI::onPrintDone());
+<<<<<<< HEAD
+=======
+  TERN_(DWIN_LCD_PROUI, DWIN_Print_Finished());
+>>>>>>> upstream/bugfix-2.0.x
 
   // Re-select the last printed file in the UI
   TERN_(SD_REPRINT_LAST_SELECTED_FILE, ui.reselect_last_file());

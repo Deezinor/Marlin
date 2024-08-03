@@ -27,7 +27,11 @@ opt_set MOTHERBOARD BOARD_BTT_SKR_PRO_V1_1 SERIAL_PORT -1 \
         SPINDLE_LASER_PWM_PIN HEATER_1_PIN SPINDLE_LASER_ENA_PIN HEATER_2_PIN \
         TEMP_SENSOR_COOLER 1000 TEMP_COOLER_PIN PD13
 opt_enable LASER_FEATURE LASER_SAFETY_TIMEOUT_MS REPRAP_DISCOUNT_SMART_CONTROLLER
+<<<<<<< HEAD:buildroot/tests/BTT_SKR_PRO
 exec_test $1 $2 "BigTreeTech SKR Pro | HD44780 | Laser (Percent) | Cooling | LCD" "$3"
+=======
+exec_test $1 $2 "BigTreeTech SKR Pro | Laser (Percent) | Cooling | LCD" "$3"
+>>>>>>> upstream/bugfix-2.0.x:buildroot/tests/BIGTREE_SKR_PRO
 
 # clean up
 restore_configs

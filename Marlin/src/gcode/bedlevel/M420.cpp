@@ -110,7 +110,12 @@ void GcodeSuite::M420() {
         }
 
         if (!WITHIN(storage_slot, 0, a - 1)) {
+<<<<<<< HEAD
           SERIAL_ECHOLNPGM(GCODE_ERR_MSG("Invalid storage slot. Use 0 to ", a - 1));
+=======
+          SERIAL_ECHOLNPGM("?Invalid storage slot.");
+          SERIAL_ECHOLNPGM("?Use 0 to ", a - 1);
+>>>>>>> upstream/bugfix-2.0.x
           return;
         }
 
@@ -244,12 +249,19 @@ void GcodeSuite::M420() {
 }
 
 void GcodeSuite::M420_report(const bool forReplay/*=true*/) {
+<<<<<<< HEAD
   TERN_(MARLIN_SMALL_BUILD, return);
 
   report_heading_etc(forReplay, F(
     TERN(MESH_BED_LEVELING, "Mesh Bed Leveling", TERN(AUTO_BED_LEVELING_UBL, "Unified Bed Leveling", "Auto Bed Leveling"))
   ));
   SERIAL_ECHO(
+=======
+  report_heading_etc(forReplay, F(
+    TERN(MESH_BED_LEVELING, "Mesh Bed Leveling", TERN(AUTO_BED_LEVELING_UBL, "Unified Bed Leveling", "Auto Bed Leveling"))
+  ));
+  SERIAL_ECHOF(
+>>>>>>> upstream/bugfix-2.0.x
     F("  M420 S"), planner.leveling_active
     #if ENABLED(ENABLE_LEVELING_FADE_HEIGHT)
       , FPSTR(SP_Z_STR), LINEAR_UNIT(planner.z_fade_height)

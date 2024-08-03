@@ -35,7 +35,12 @@
 template<typename TMC>
 void tmc_say_stealth_status(TMC &st) {
   st.printLabel();
+<<<<<<< HEAD
   SERIAL_ECHOLN(F(" driver mode:\t"), st.get_stealthChop() ? F("stealthChop") : F("spreadCycle"));
+=======
+  SERIAL_ECHOPGM(" driver mode:\t");
+  SERIAL_ECHOLNF(st.get_stealthChop() ? F("stealthChop") : F("spreadCycle"));
+>>>>>>> upstream/bugfix-2.0.x
 }
 template<typename TMC>
 void tmc_set_stealthChop(TMC &st, const bool enable) {
@@ -52,6 +57,7 @@ static void set_stealth_status(const bool enable, const int8_t eindex) {
     constexpr int8_t index = -1;
   #endif
 
+<<<<<<< HEAD
   UNUSED(index);
 
   LOOP_LOGICAL_AXES(i) if (parser.seen(AXIS_CHAR(i))) {
@@ -62,6 +68,14 @@ static void set_stealth_status(const bool enable, const int8_t eindex) {
           TERN_(X2_HAS_STEALTHCHOP, if (index < 0 || index == 1) TMC_SET_STEALTH(X2));
           break;
       #endif
+=======
+  LOOP_LOGICAL_AXES(i) if (parser.seen(AXIS_CHAR(i))) {
+    switch (i) {
+      case X_AXIS:
+        TERN_(X_HAS_STEALTHCHOP,  if (index < 0 || index == 0) TMC_SET_STEALTH(X));
+        TERN_(X2_HAS_STEALTHCHOP, if (index < 0 || index == 1) TMC_SET_STEALTH(X2));
+        break;
+>>>>>>> upstream/bugfix-2.0.x
 
       #if HAS_Y_AXIS
         case Y_AXIS:
@@ -88,6 +102,7 @@ static void set_stealth_status(const bool enable, const int8_t eindex) {
       #if K_HAS_STEALTHCHOP
         case K_AXIS: TMC_SET_STEALTH(K); break;
       #endif
+<<<<<<< HEAD
       #if U_HAS_STEALTHCHOP
         case U_AXIS: TMC_SET_STEALTH(U); break;
       #endif
@@ -97,6 +112,8 @@ static void set_stealth_status(const bool enable, const int8_t eindex) {
       #if W_HAS_STEALTHCHOP
         case W_AXIS: TMC_SET_STEALTH(W); break;
       #endif
+=======
+>>>>>>> upstream/bugfix-2.0.x
 
       #if E_STEPPERS
         case E_AXIS: {
@@ -127,9 +144,12 @@ static void say_stealth_status() {
   OPTCODE( I_HAS_STEALTHCHOP, TMC_SAY_STEALTH_STATUS(I))
   OPTCODE( J_HAS_STEALTHCHOP, TMC_SAY_STEALTH_STATUS(J))
   OPTCODE( K_HAS_STEALTHCHOP, TMC_SAY_STEALTH_STATUS(K))
+<<<<<<< HEAD
   OPTCODE( U_HAS_STEALTHCHOP, TMC_SAY_STEALTH_STATUS(U))
   OPTCODE( V_HAS_STEALTHCHOP, TMC_SAY_STEALTH_STATUS(V))
   OPTCODE( W_HAS_STEALTHCHOP, TMC_SAY_STEALTH_STATUS(W))
+=======
+>>>>>>> upstream/bugfix-2.0.x
   OPTCODE(E0_HAS_STEALTHCHOP, TMC_SAY_STEALTH_STATUS(E0))
   OPTCODE(E1_HAS_STEALTHCHOP, TMC_SAY_STEALTH_STATUS(E1))
   OPTCODE(E2_HAS_STEALTHCHOP, TMC_SAY_STEALTH_STATUS(E2))
@@ -155,14 +175,24 @@ void GcodeSuite::M569() {
 }
 
 void GcodeSuite::M569_report(const bool forReplay/*=true*/) {
+<<<<<<< HEAD
   TERN_(MARLIN_SMALL_BUILD, return);
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
   report_heading(forReplay, F(STR_DRIVER_STEPPING_MODE));
 
   auto say_M569 = [](const bool forReplay, FSTR_P const etc=nullptr, const bool eol=false) {
     if (!forReplay) SERIAL_ECHO_START();
     SERIAL_ECHOPGM("  M569 S1");
+<<<<<<< HEAD
     if (etc) SERIAL_ECHO(C(' '), etc);
+=======
+    if (etc) {
+      SERIAL_CHAR(' ');
+      SERIAL_ECHOF(etc);
+    }
+>>>>>>> upstream/bugfix-2.0.x
     if (eol) SERIAL_EOL();
   };
 
@@ -171,12 +201,18 @@ void GcodeSuite::M569_report(const bool forReplay/*=true*/) {
              chop_z = TERN0(Z_HAS_STEALTHCHOP, stepperZ.get_stored_stealthChop()),
              chop_i = TERN0(I_HAS_STEALTHCHOP, stepperI.get_stored_stealthChop()),
              chop_j = TERN0(J_HAS_STEALTHCHOP, stepperJ.get_stored_stealthChop()),
+<<<<<<< HEAD
              chop_k = TERN0(K_HAS_STEALTHCHOP, stepperK.get_stored_stealthChop()),
              chop_u = TERN0(U_HAS_STEALTHCHOP, stepperU.get_stored_stealthChop()),
              chop_v = TERN0(V_HAS_STEALTHCHOP, stepperV.get_stored_stealthChop()),
              chop_w = TERN0(W_HAS_STEALTHCHOP, stepperW.get_stored_stealthChop());
 
   if (chop_x || chop_y || chop_z || chop_i || chop_j || chop_k || chop_u || chop_v || chop_w) {
+=======
+             chop_k = TERN0(K_HAS_STEALTHCHOP, stepperK.get_stored_stealthChop());
+
+  if (chop_x || chop_y || chop_z || chop_i || chop_j || chop_k) {
+>>>>>>> upstream/bugfix-2.0.x
     say_M569(forReplay);
     NUM_AXIS_CODE(
       if (chop_x) SERIAL_ECHOPGM_P(SP_X_STR),
@@ -184,10 +220,14 @@ void GcodeSuite::M569_report(const bool forReplay/*=true*/) {
       if (chop_z) SERIAL_ECHOPGM_P(SP_Z_STR),
       if (chop_i) SERIAL_ECHOPGM_P(SP_I_STR),
       if (chop_j) SERIAL_ECHOPGM_P(SP_J_STR),
+<<<<<<< HEAD
       if (chop_k) SERIAL_ECHOPGM_P(SP_K_STR),
       if (chop_u) SERIAL_ECHOPGM_P(SP_U_STR),
       if (chop_v) SERIAL_ECHOPGM_P(SP_V_STR),
       if (chop_w) SERIAL_ECHOPGM_P(SP_W_STR)
+=======
+      if (chop_k) SERIAL_ECHOPGM_P(SP_K_STR)
+>>>>>>> upstream/bugfix-2.0.x
     );
     SERIAL_EOL();
   }
@@ -198,6 +238,7 @@ void GcodeSuite::M569_report(const bool forReplay/*=true*/) {
 
   if (chop_x2 || chop_y2 || chop_z2) {
     say_M569(forReplay, F("I1"));
+<<<<<<< HEAD
     NUM_AXIS_CODE(
       if (chop_x2) SERIAL_ECHOPGM_P(SP_X_STR),
       if (chop_y2) SERIAL_ECHOPGM_P(SP_Y_STR),
@@ -205,6 +246,11 @@ void GcodeSuite::M569_report(const bool forReplay/*=true*/) {
       NOOP, NOOP, NOOP,
       NOOP, NOOP, NOOP
     );
+=======
+    if (chop_x2) SERIAL_ECHOPGM_P(SP_X_STR);
+    if (chop_y2) SERIAL_ECHOPGM_P(SP_Y_STR);
+    if (chop_z2) SERIAL_ECHOPGM_P(SP_Z_STR);
+>>>>>>> upstream/bugfix-2.0.x
     SERIAL_EOL();
   }
 
@@ -219,6 +265,7 @@ void GcodeSuite::M569_report(const bool forReplay/*=true*/) {
   #if HAS_K_AXIS
     if (TERN0(K_HAS_STEALTHCHOP, stepperK.get_stored_stealthChop()))  { say_M569(forReplay, FPSTR(SP_K_STR), true); }
   #endif
+<<<<<<< HEAD
   #if HAS_U_AXIS
     if (TERN0(U_HAS_STEALTHCHOP, stepperU.get_stored_stealthChop()))  { say_M569(forReplay, FPSTR(SP_U_STR), true); }
   #endif
@@ -228,6 +275,8 @@ void GcodeSuite::M569_report(const bool forReplay/*=true*/) {
   #if HAS_W_AXIS
     if (TERN0(W_HAS_STEALTHCHOP, stepperW.get_stored_stealthChop()))  { say_M569(forReplay, FPSTR(SP_W_STR), true); }
   #endif
+=======
+>>>>>>> upstream/bugfix-2.0.x
   if (TERN0(E0_HAS_STEALTHCHOP, stepperE0.get_stored_stealthChop())) { say_M569(forReplay, F("T0 E"), true); }
   if (TERN0(E1_HAS_STEALTHCHOP, stepperE1.get_stored_stealthChop())) { say_M569(forReplay, F("T1 E"), true); }
   if (TERN0(E2_HAS_STEALTHCHOP, stepperE2.get_stored_stealthChop())) { say_M569(forReplay, F("T2 E"), true); }

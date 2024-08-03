@@ -19,6 +19,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
+<<<<<<< HEAD
+=======
+
+#include "../../../inc/MarlinConfigPre.h"
+>>>>>>> upstream/bugfix-2.0.x
 
 #include "../../../inc/MarlinConfigPre.h"
 
@@ -39,7 +44,11 @@
 extern SZ_USART_FIFO WifiRxFifo;
 
 void esp_port_begin(uint8_t interrupt);
+<<<<<<< HEAD
 void wifi_delay(const uint16_t n);
+=======
+void wifi_delay(int n);
+>>>>>>> upstream/bugfix-2.0.x
 
 #define ARRAY_SIZE(a) sizeof(a) / sizeof((a)[0])
 
@@ -628,7 +637,11 @@ void upload_spin() {
 }
 
 // Try to upload the given file at the given address
+<<<<<<< HEAD
 void sendUpdateFile(const char *file, uint32_t address) {
+=======
+void SendUpdateFile(const char *file, uint32_t address) {
+>>>>>>> upstream/bugfix-2.0.x
   const char * const fname = card.diveToFile(false, update_curDir, ESP_FIRMWARE_FILE);
   if (!update_file.open(update_curDir, fname, O_READ)) return;
 
@@ -650,6 +663,7 @@ void resetWiFiForUpload(int begin_or_end) {
   //#if 0
   uint32_t start = getWifiTick();
 
+<<<<<<< HEAD
   #if PIN_EXISTS(WIFI_IO0)
     if (begin_or_end == 0) {
       SET_OUTPUT(WIFI_IO0_PIN);
@@ -658,6 +672,14 @@ void resetWiFiForUpload(int begin_or_end) {
     else
       SET_INPUT_PULLUP(WIFI_IO0_PIN);
   #endif
+=======
+  if (begin_or_end == 0) {
+    SET_OUTPUT(WIFI_IO0_PIN);
+    WRITE(WIFI_IO0_PIN, LOW);
+  }
+  else
+    SET_INPUT_PULLUP(WIFI_IO0_PIN);
+>>>>>>> upstream/bugfix-2.0.x
 
   WIFI_RESET();
   while (getWifiTickDiff(start, getWifiTick()) < 500) { /* nada */ }

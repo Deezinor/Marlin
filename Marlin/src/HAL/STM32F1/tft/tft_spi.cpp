@@ -28,9 +28,15 @@
 
 #include "tft_spi.h"
 
+<<<<<<< HEAD
 SPIClass TFT_SPI::SPIx(TFT_SPI_DEVICE);
 
 void TFT_SPI::init() {
+=======
+SPIClass TFT_SPI::SPIx(1);
+
+void TFT_SPI::Init() {
+>>>>>>> upstream/bugfix-2.0.x
   #if PIN_EXISTS(TFT_RESET)
     OUT_WRITE(TFT_RESET_PIN, HIGH);
     delay(100);
@@ -73,18 +79,30 @@ void TFT_SPI::init() {
 void TFT_SPI::dataTransferBegin(uint16_t dataSize) {
   SPIx.setDataSize(dataSize);
   SPIx.begin();
+<<<<<<< HEAD
   WRITE(TFT_CS_PIN, LOW);
+=======
+  OUT_WRITE(TFT_CS_PIN, LOW);
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 #ifdef TFT_DEFAULT_DRIVER
   #include "../../../lcd/tft_io/tft_ids.h"
 #endif
 
+<<<<<<< HEAD
 uint32_t TFT_SPI::getID() {
   uint32_t id;
   id = readID(LCD_READ_ID);
   if ((id & 0xFFFF) == 0 || (id & 0xFFFF) == 0xFFFF) {
     id = readID(LCD_READ_ID4);
+=======
+uint32_t TFT_SPI::GetID() {
+  uint32_t id;
+  id = ReadID(LCD_READ_ID);
+  if ((id & 0xFFFF) == 0 || (id & 0xFFFF) == 0xFFFF) {
+    id = ReadID(LCD_READ_ID4);
+>>>>>>> upstream/bugfix-2.0.x
     #ifdef TFT_DEFAULT_DRIVER
       if ((id & 0xFFFF) == 0 || (id & 0xFFFF) == 0xFFFF)
         id = TFT_DEFAULT_DRIVER;
@@ -114,6 +132,7 @@ uint32_t TFT_SPI::readID(const uint16_t inReg) {
   return data >> 7;
 }
 
+<<<<<<< HEAD
 bool TFT_SPI::isBusy() {
   #define __IS_DMA_CONFIGURED(__DMAx__, __CHx__)   (dma_channel_regs(__DMAx__, __CHx__)->CPAR != 0)
 
@@ -163,6 +182,19 @@ void TFT_SPI::transmit(uint32_t memoryIncrease, uint16_t *data, uint16_t count) 
   dataTransferBegin();
   SPIx.dmaSend(data, count, memoryIncrease == DMA_MINC_ENABLE);
   dataTransferEnd();
+=======
+bool TFT_SPI::isBusy() { return false; }
+
+void TFT_SPI::Abort() { DataTransferEnd(); }
+
+void TFT_SPI::Transmit(uint16_t Data) { SPIx.send(Data); }
+
+void TFT_SPI::TransmitDMA(uint32_t MemoryIncrease, uint16_t *Data, uint16_t Count) {
+  DataTransferBegin();
+  OUT_WRITE(TFT_DC_PIN, HIGH);
+  SPIx.dmaSend(Data, Count, MemoryIncrease == DMA_MINC_ENABLE);
+  DataTransferEnd();
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 #endif // HAS_SPI_TFT

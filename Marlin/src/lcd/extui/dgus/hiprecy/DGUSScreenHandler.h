@@ -1,6 +1,10 @@
 /**
  * Marlin 3D Printer Firmware
+<<<<<<< HEAD
+ * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+=======
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+>>>>>>> upstream/bugfix-2.0.x
  *
  * Based on Sprinter and grbl.
  * Copyright (c) 2011 Camiel Gubbels / Erik van der Zalm
@@ -21,11 +25,29 @@
  */
 #pragma once
 
+<<<<<<< HEAD
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.h
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #include "../DGUSScreenHandlerBase.h"
 
 typedef DGUSScreenHandler DGUSScreenHandlerClass;
 
 #if ENABLED(POWER_LOSS_RECOVERY)
+<<<<<<< HEAD
   #define PLR_SCREEN_RECOVER DGUS_SCREEN_SDPRINTMANIPULATION
   #define PLR_SCREEN_CANCEL DGUS_SCREEN_STATUS
 #endif
+========
+#define SDIO_D0_PIN   PC8
+#define SDIO_D1_PIN   PC9
+#define SDIO_D2_PIN   PC10
+#define SDIO_D3_PIN   PC11
+#define SDIO_CK_PIN   PC12
+#define SDIO_CMD_PIN  PD2
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/HAL/STM32/sdio.h
+=======
+  #define PLR_SCREEN_RECOVER DGUSLCD_SCREEN_SDPRINTMANIPULATION
+  #define PLR_SCREEN_CANCEL DGUSLCD_SCREEN_STATUS
+#endif
+>>>>>>> upstream/bugfix-2.0.x

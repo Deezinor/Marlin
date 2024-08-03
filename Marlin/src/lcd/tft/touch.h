@@ -34,6 +34,19 @@
   #error "Unknown Touch Screen Type."
 #endif
 
+<<<<<<< HEAD
+=======
+#if ENABLED(TFT_TOUCH_DEVICE_GT911)
+  #include HAL_PATH(../../HAL, tft/gt911.h)
+  #define TOUCH_DRIVER_CLASS GT911
+#elif ENABLED(TFT_TOUCH_DEVICE_XPT2046)
+  #include HAL_PATH(../../HAL, tft/xpt2046.h)
+  #define TOUCH_DRIVER_CLASS XPT2046
+#else
+  #error "Unknown Touch Screen Type."
+#endif
+
+>>>>>>> upstream/bugfix-2.0.x
 // Menu Navigation
 extern int8_t encoderTopLine, encoderLine, screen_items;
 
@@ -71,6 +84,10 @@ typedef struct __attribute__((__packed__)) {
 #define UBL_REPEAT_DELAY    125
 #define FREE_MOVE_RANGE     32
 
+<<<<<<< HEAD
+=======
+#define TSLP_PREINIT  0
+>>>>>>> upstream/bugfix-2.0.x
 #define TSLP_SLEEPING 1
 
 class Touch {
@@ -86,7 +103,11 @@ class Touch {
     static millis_t next_touch_ms, time_to_hold, repeat_delay, touch_time;
     static TouchControlType touch_control_type;
 
+<<<<<<< HEAD
     static bool get_point(int16_t * const x, int16_t * const y);
+=======
+    static bool get_point(int16_t *x, int16_t *y);
+>>>>>>> upstream/bugfix-2.0.x
     static void touch(touch_control_t *control);
     static void hold(touch_control_t *control, millis_t delay=0);
 
@@ -104,16 +125,24 @@ class Touch {
     }
     static void disable() { enabled = false; }
     static void enable() { enabled = true; }
+<<<<<<< HEAD
     #if HAS_DISPLAY_SLEEP
+=======
+    #if HAS_TOUCH_SLEEP
+>>>>>>> upstream/bugfix-2.0.x
       static millis_t next_sleep_ms;
       static bool isSleeping() { return next_sleep_ms == TSLP_SLEEPING; }
       static void sleepTimeout();
       static void wakeUp();
     #endif
+<<<<<<< HEAD
     static void add_control(TouchControlType type, uint16_t x, uint16_t y, uint16_t width, uint16_t height, intptr_t data=0);
     static void add_control(TouchControlType type, uint16_t x, uint16_t y, uint16_t width, uint16_t height, void (*handler)()) {
       add_control(type, x, y, width, height, intptr_t(handler));
     }
+=======
+    static void add_control(TouchControlType type, uint16_t x, uint16_t y, uint16_t width, uint16_t height, intptr_t data = 0);
+>>>>>>> upstream/bugfix-2.0.x
 };
 
 extern Touch touch;

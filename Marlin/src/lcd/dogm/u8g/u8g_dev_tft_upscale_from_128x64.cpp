@@ -78,8 +78,17 @@ TFT_IO tftio;
   #include "../../marlinui.h"
 #endif
 
+<<<<<<< HEAD:Marlin/src/lcd/dogm/u8g/u8g_dev_tft_upscale_from_128x64.cpp
 #include "../../touch/touch_buttons.h"
 #include "../../scaled_tft.h"
+=======
+#if HAS_TOUCH_BUTTONS && HAS_TOUCH_SLEEP
+  #define HAS_TOUCH_BUTTONS_SLEEP 1
+#endif
+
+#include "../touch/touch_buttons.h"
+#include "../scaled_tft.h"
+>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/dogm/u8g_dev_tft_upscale_from_128x64.cpp
 
 #define X_HI (UPSCALE(TFT_PIXEL_OFFSET_X, WIDTH) - 1)
 #define Y_HI (UPSCALE(TFT_PIXEL_OFFSET_Y, HEIGHT) - 1)
@@ -345,7 +354,11 @@ static void u8g_upscale_clear_lcd(u8g_t *u8g, u8g_dev_t *dev, uint16_t *buffer) 
   setWindow(u8g, dev, 0, 0, (TFT_WIDTH) - 1, (TFT_HEIGHT) - 1);
   #if HAS_LCD_IO
     UNUSED(buffer);
+<<<<<<< HEAD:Marlin/src/lcd/dogm/u8g/u8g_dev_tft_upscale_from_128x64.cpp
     tftio.writeMultiple(TFT_MARLINBG_COLOR, (TFT_WIDTH) * (TFT_HEIGHT));
+=======
+    tftio.WriteMultiple(TFT_MARLINBG_COLOR, (TFT_WIDTH) * (TFT_HEIGHT));
+>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/dogm/u8g_dev_tft_upscale_from_128x64.cpp
   #else
     memset2(buffer, TFT_MARLINBG_COLOR, (TFT_WIDTH) / 2);
     for (uint16_t i = 0; i < (TFT_HEIGHT) * sq(GRAPHICAL_TFT_UPSCALE); i++)
@@ -385,6 +398,7 @@ uint8_t u8g_dev_tft_320x240_upscale_from_128x64_fn(u8g_t *u8g, u8g_dev_t *dev, u
 
     case U8G_DEV_MSG_PAGE_FIRST: {
       page = 0;
+<<<<<<< HEAD:Marlin/src/lcd/dogm/u8g/u8g_dev_tft_upscale_from_128x64.cpp
       #if HAS_TOUCH_BUTTONS
         #if HAS_DISPLAY_SLEEP
           static bool sleepCleared;
@@ -401,13 +415,33 @@ uint8_t u8g_dev_tft_320x240_upscale_from_128x64_fn(u8g_t *u8g, u8g_dev_t *dev, u
         #endif
         drawTouchButtons(u8g, dev);
       #endif
+=======
+      #if HAS_TOUCH_BUTTONS_SLEEP
+        static bool sleepCleared;
+        if (touchBt.isSleeping()) {
+          if (!sleepCleared) {
+            sleepCleared = true;
+            u8g_upscale_clear_lcd(u8g, dev, buffer);
+            TERN_(HAS_TOUCH_BUTTONS, redrawTouchButtons = true);
+          }
+          break;
+        }
+        else
+          sleepCleared = false;
+      #endif
+      TERN_(HAS_TOUCH_BUTTONS, drawTouchButtons(u8g, dev));
+>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/dogm/u8g_dev_tft_upscale_from_128x64.cpp
       setWindow(u8g, dev, TFT_PIXEL_OFFSET_X, TFT_PIXEL_OFFSET_Y, X_HI, Y_HI);
     } break;
 
     case U8G_DEV_MSG_PAGE_NEXT:
+<<<<<<< HEAD:Marlin/src/lcd/dogm/u8g/u8g_dev_tft_upscale_from_128x64.cpp
       #if HAS_TOUCH_BUTTONS && HAS_DISPLAY_SLEEP
         if (touchBt.isSleeping()) break;
       #endif
+=======
+      if (TERN0(HAS_TOUCH_BUTTONS_SLEEP, touchBt.isSleeping())) break;
+>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/dogm/u8g_dev_tft_upscale_from_128x64.cpp
       if (++page > (HEIGHT / PAGE_HEIGHT)) return 1;
 
       for (uint8_t y = 0; y < PAGE_HEIGHT; ++y) {
@@ -516,6 +550,7 @@ U8G_PB_DEV(u8g_dev_tft_320x240_upscale_from_128x64, WIDTH, HEIGHT, PAGE_HEIGHT, 
     }
 
     FSTR_P str = nullptr;
+<<<<<<< HEAD:Marlin/src/lcd/dogm/u8g/u8g_dev_tft_upscale_from_128x64.cpp
     if (stage < CALIBRATION_SUCCESS) {
       // handle current state
       switch (stage) {
@@ -523,6 +558,15 @@ U8G_PB_DEV(u8g_dev_tft_320x240_upscale_from_128x64, WIDTH, HEIGHT, PAGE_HEIGHT, 
         case CALIBRATION_TOP_RIGHT:    str = GET_TEXT_F(MSG_TOP_RIGHT);    break;
         case CALIBRATION_BOTTOM_RIGHT: str = GET_TEXT_F(MSG_BOTTOM_RIGHT); break;
         case CALIBRATION_BOTTOM_LEFT:  str = GET_TEXT_F(MSG_BOTTOM_LEFT);  break;
+=======
+    if (calibration_stage < CALIBRATION_SUCCESS) {
+      // handle current state
+      switch (calibration_stage) {
+        case CALIBRATION_TOP_LEFT: str = GET_TEXT_F(MSG_TOP_LEFT); break;
+        case CALIBRATION_BOTTOM_LEFT: str = GET_TEXT_F(MSG_BOTTOM_LEFT); break;
+        case CALIBRATION_TOP_RIGHT:  str = GET_TEXT_F(MSG_TOP_RIGHT); break;
+        case CALIBRATION_BOTTOM_RIGHT: str = GET_TEXT_F(MSG_BOTTOM_RIGHT); break;
+>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/dogm/u8g_dev_tft_upscale_from_128x64.cpp
         default: break;
       }
 
@@ -532,7 +576,11 @@ U8G_PB_DEV(u8g_dev_tft_320x240_upscale_from_128x64, WIDTH, HEIGHT, PAGE_HEIGHT, 
     }
     else {
       // end calibration
+<<<<<<< HEAD:Marlin/src/lcd/dogm/u8g/u8g_dev_tft_upscale_from_128x64.cpp
       str = stage == CALIBRATION_SUCCESS ? GET_TEXT_F(MSG_CALIBRATION_COMPLETED) : GET_TEXT_F(MSG_CALIBRATION_FAILED);
+=======
+      str = calibration_stage == CALIBRATION_SUCCESS ? GET_TEXT_F(MSG_CALIBRATION_COMPLETED) : GET_TEXT_F(MSG_CALIBRATION_FAILED);
+>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/dogm/u8g_dev_tft_upscale_from_128x64.cpp
       defer_status_screen(false);
       touch_calibration.calibration_end();
       TERN_(HAS_TOUCH_BUTTONS, redrawTouchButtons = true);

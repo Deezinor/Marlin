@@ -209,6 +209,7 @@
     // display using an adapter board. See https://aisler.net/benlye/anet-lcd-adapter/pcb
     // See below for alternative pin definitions for use with https://www.thingiverse.com/thing:2103748
 
+<<<<<<< HEAD
     #if ENABLED(CTC_A10S_A13)
 
       /**
@@ -269,6 +270,32 @@
       #define BOARD_ST7920_DELAY_2            63
       #define BOARD_ST7920_DELAY_3           125
 
+=======
+    #if ENABLED(ANET_FULL_GRAPHICS_LCD_ALT_WIRING)
+      #define SERVO0_PIN                      30
+      #define BEEPER_PIN                      27
+      #define LCD_PINS_RS                     29
+      #define LCD_PINS_ENABLE                 16
+      #define LCD_PINS_D4                     11
+      #define BTN_EN1                         28
+      #define BTN_EN2                         10
+      #define BTN_ENC                         17
+      #define BOARD_ST7920_DELAY_1           250
+      #define BOARD_ST7920_DELAY_2           250
+      #define BOARD_ST7920_DELAY_3           250
+    #else
+      #define SERVO0_PIN                      29  // free for BLTouch/3D-Touch
+      #define BEEPER_PIN                      17
+      #define LCD_PINS_RS                     27
+      #define LCD_PINS_ENABLE                 28
+      #define LCD_PINS_D4                     30
+      #define BTN_EN1                         11
+      #define BTN_EN2                         10
+      #define BTN_ENC                         16
+      #define BOARD_ST7920_DELAY_1           125
+      #define BOARD_ST7920_DELAY_2            63
+      #define BOARD_ST7920_DELAY_3           125
+>>>>>>> upstream/bugfix-2.0.x
     #endif
 
   #endif

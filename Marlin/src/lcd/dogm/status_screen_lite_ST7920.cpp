@@ -471,6 +471,75 @@ void ST7920_Lite_Status_Screen::draw_static_elements() {
   draw_fan_icon(false);
 }
 
+<<<<<<< HEAD
+=======
+/**
+ * Although this is undocumented, the ST7920 allows the character
+ * data buffer (DDRAM) to be used in conjunction with the graphics
+ * bitmap buffer (CGRAM). The contents of the graphics buffer is
+ * XORed with the data from the character generator. This allows
+ * us to make the progress bar out of graphical data (the bar) and
+ * text data (the percentage).
+ */
+void ST7920_Lite_Status_Screen::draw_progress_bar(const uint8_t value) {
+  #if HOTENDS == 1
+    // If we have only one extruder, draw a long progress bar on the third line
+    constexpr uint8_t top     = 1,         // Top in pixels
+                      bottom  = 13,        // Bottom in pixels
+                      left    = 12,        // Left edge, in 16-bit words
+                      width   = 4;         // Width of progress bar, in 16-bit words
+  #else
+    constexpr uint8_t top     = 16 + 1,
+                      bottom  = 16 + 13,
+                      left    = 5,
+                      width   = 3;
+  #endif
+  const uint8_t char_pcnt  = 100 / width; // How many percent does each 16-bit word represent?
+
+  // Draw the progress bar as a bitmap in CGRAM
+  LOOP_S_LE_N(y, top, bottom) {
+    set_gdram_address(left, y);
+    begin_data();
+    LOOP_L_N(x, width) {
+      uint16_t gfx_word = 0x0000;
+      if ((x + 1) * char_pcnt <= value)
+        gfx_word = 0xFFFF;                                              // Draw completely filled bytes
+      else if ((x * char_pcnt) < value)
+        gfx_word = int(0x8000) >> (value % char_pcnt) * 16 / char_pcnt; // Draw partially filled bytes
+
+      // Draw the frame around the progress bar
+      if (y == top || y == bottom)
+        gfx_word = 0xFFFF;        // Draw top/bottom border
+      else if (x == width - 1)
+        gfx_word |= 0x0001;       // Draw right border
+      else if (x == 0)
+        gfx_word |= 0x8000;       // Draw left border
+      write_word(gfx_word);
+    }
+  }
+
+  // Draw the percentage as text in DDRAM
+  #if HOTENDS == 1
+    set_ddram_address(DDRAM_LINE_3 + 4);
+    begin_data();
+    write_byte(' ');
+  #else
+    set_ddram_address(DDRAM_LINE_2 + left);
+    begin_data();
+  #endif
+
+  // Draw centered
+  if (value > 9) {
+    write_number(value, 4);
+    write_str(F("% "));
+  }
+  else {
+    write_number(value, 3);
+    write_str(F("%  "));
+  }
+}
+
+>>>>>>> upstream/bugfix-2.0.x
 void ST7920_Lite_Status_Screen::draw_fan_icon(const bool whichIcon) {
   set_ddram_address(DDRAM_LINE_1 + 5);
   begin_data();
@@ -626,8 +695,17 @@ void ST7920_Lite_Status_Screen::draw_position(const xyze_pos_t &pos, const bool 
     #endif
   }
   else {
+<<<<<<< HEAD
     write_byte(alt_label ?: 'X');
     write_str(dtostrf(pos.x, -4, 0, str), 4);
+=======
+    write_byte(alt_label ? alt_label : 'X');
+    write_str(dtostrf(pos.x, -4, 0, str), 4);
+
+    write_byte(alt_label ? alt_label : 'Y');
+    write_str(dtostrf(pos.y, -4, 0, str), 4);
+  }
+>>>>>>> upstream/bugfix-2.0.x
 
     write_byte(alt_label ?: 'Y');
     write_str(dtostrf(pos.y, -4, 0, str), 4);

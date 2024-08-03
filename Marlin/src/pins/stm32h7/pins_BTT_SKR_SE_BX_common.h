@@ -21,12 +21,20 @@
  */
 #pragma once
 
+<<<<<<< HEAD
 #include "env_validate.h"
 
 #define BOARD_WEBSITE_URL    "github.com/bigtreetech/BIQU-BX"
 #define DEFAULT_MACHINE_NAME "BIQU BX"
 
 #define USES_DIAG_JUMPERS
+=======
+#if NOT_TARGET(STM32H7)
+  #error "Oops! Select an STM32H7 board in 'Tools > Board.'"
+#endif
+
+#define DEFAULT_MACHINE_NAME "Biqu BX"
+>>>>>>> upstream/bugfix-2.0.x
 
 // Onboard I2C EEPROM
 #define I2C_EEPROM
@@ -36,6 +44,7 @@
 //#define SWD_DEBUG                               // Use pins PA13 and PA14 on STM32H7 for the SWD debugger
 
 //
+<<<<<<< HEAD
 // Trinamic Stallguard pins
 //
 #define X_DIAG_PIN                          PB11  // X-
@@ -56,6 +65,19 @@
 
 #define FIL_RUNOUT_PIN               E0_DIAG_PIN  // X+
 #define FIL_RUNOUT2_PIN              E1_DIAG_PIN  // Y+
+=======
+// Limit Switches
+//
+#define X_MIN_PIN                           PB11
+#define X_MAX_PIN                           PD13
+#define Y_MIN_PIN                           PB12
+#define Y_MAX_PIN                           PB13
+#define Z_MIN_PIN                           PD12
+#define Z_MAX_PIN                           PD11
+
+#define FIL_RUNOUT_PIN                      PD13
+#define FIL_RUNOUT2_PIN                     PB13
+>>>>>>> upstream/bugfix-2.0.x
 
 #ifndef SWD_DEBUG
   #define LED_PIN                           PA13
@@ -65,12 +87,17 @@
 #define POWER_MONITOR_PIN                   PB0
 #define RPI_POWER_PIN                       PE5
 
+<<<<<<< HEAD
 #define SERVO0_PIN                          PA2   // PROBE
+=======
+#define SERVO0_PIN                          PA2
+>>>>>>> upstream/bugfix-2.0.x
 
 //
 // Z Probe (when not Z_MIN_PIN)
 //
 #ifndef Z_MIN_PROBE_PIN
+<<<<<<< HEAD
   #define Z_MIN_PROBE_PIN                   PH2   // PROBE
 #endif
 
@@ -79,21 +106,33 @@
 //
 #if ENABLED(PROBE_ENABLE_DISABLE) && !defined(PROBE_ENABLE_PIN)
   #define PROBE_ENABLE_PIN            SERVO0_PIN
+=======
+  #define Z_MIN_PROBE_PIN                   PH2   // Probe
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 //
 // Steppers
 //
+<<<<<<< HEAD
 #define X_STEP_PIN                          PG13  // X
+=======
+#define X_STEP_PIN                          PG13
+>>>>>>> upstream/bugfix-2.0.x
 #define X_DIR_PIN                           PG12
 #define X_ENABLE_PIN                        PG14
 #define X_CS_PIN                            PG10
 
+<<<<<<< HEAD
 #define Y_STEP_PIN                          PB3   // Y
+=======
+#define Y_STEP_PIN                          PB3
+>>>>>>> upstream/bugfix-2.0.x
 #define Y_DIR_PIN                           PD3
 #define Y_ENABLE_PIN                        PB4
 #define Y_CS_PIN                            PD4
 
+<<<<<<< HEAD
 #ifdef BX_SWAP_ZM_E1M
   #define Z_STEP_PIN                        PA8   // E1
   #define Z_DIR_PIN                         PC9
@@ -107,10 +146,19 @@
 #endif
 
 #define E0_STEP_PIN                         PC14  // E0
+=======
+#define Z_STEP_PIN                          PD7
+#define Z_DIR_PIN                           PD6
+#define Z_ENABLE_PIN                        PG9
+#define Z_CS_PIN                            PD5
+
+#define E0_STEP_PIN                         PC14
+>>>>>>> upstream/bugfix-2.0.x
 #define E0_DIR_PIN                          PC13
 #define E0_ENABLE_PIN                       PC15
 #define E0_CS_PIN                           PI8
 
+<<<<<<< HEAD
 #ifdef BX_SWAP_ZM_E1M
   #define E1_STEP_PIN                       PD7   // Z1
   #define E1_DIR_PIN                        PD6
@@ -134,6 +182,26 @@
 #endif
 #ifndef TMC_SPI_SCK
   #define TMC_SPI_SCK                       PC7
+=======
+#define E1_STEP_PIN                         PA8
+#define E1_DIR_PIN                          PC9
+#define E1_ENABLE_PIN                       PD2
+#define E1_CS_PIN                           PC8
+
+//
+// Software SPI pins for TMC2130 stepper drivers
+//
+#if ENABLED(TMC_USE_SW_SPI)
+  #ifndef TMC_SW_MOSI
+    #define TMC_SW_MOSI                     PC6
+  #endif
+  #ifndef TMC_SW_MISO
+    #define TMC_SW_MISO                     PG3
+  #endif
+  #ifndef TMC_SW_SCK
+    #define TMC_SW_SCK                      PC7
+  #endif
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #if HAS_TMC_UART
@@ -164,6 +232,7 @@
   #define Y_SERIAL_TX_PIN                   PD4
   #define Y_SERIAL_RX_PIN        Y_SERIAL_TX_PIN
 
+<<<<<<< HEAD
   #ifdef BX_SWAP_ZM_E1M
     #define Z_SERIAL_TX_PIN                 PC8
     #define Z_SERIAL_RX_PIN      Z_SERIAL_TX_PIN
@@ -171,10 +240,15 @@
     #define Z_SERIAL_TX_PIN                 PD5
     #define Z_SERIAL_RX_PIN      Z_SERIAL_TX_PIN
   #endif
+=======
+  #define Z_SERIAL_TX_PIN                   PD5
+  #define Z_SERIAL_RX_PIN        Z_SERIAL_TX_PIN
+>>>>>>> upstream/bugfix-2.0.x
 
   #define E0_SERIAL_TX_PIN                  PI8
   #define E0_SERIAL_RX_PIN      E0_SERIAL_TX_PIN
 
+<<<<<<< HEAD
   #ifdef BX_SWAP_ZM_E1M
     #define E1_SERIAL_TX_PIN                PD5
     #define E1_SERIAL_RX_PIN    E1_SERIAL_TX_PIN
@@ -189,6 +263,14 @@
   #endif
 
 #endif // HAS_TMC_UART
+=======
+  #define E1_SERIAL_TX_PIN                  PC8
+  #define E1_SERIAL_RX_PIN      E1_SERIAL_TX_PIN
+
+  // Reduce baud rate to improve software serial reliability
+  #define TMC_BAUD_RATE                    19200
+#endif
+>>>>>>> upstream/bugfix-2.0.x
 
 //
 // Temperature Sensors
@@ -200,6 +282,7 @@
 //
 // Heaters / Fans
 //
+<<<<<<< HEAD
 #define HEATER_0_PIN                        PC4   // HE0
 #define HEATER_1_PIN                        PC5   // HE1
 #define HEATER_BED_PIN                      PA4   // BED
@@ -209,6 +292,17 @@
 #define FAN2_PIN                            PA7   // FAN2 / DCOT
 
 #define BOARD_NEOPIXEL_PIN                  PH3   // RGB
+=======
+#define HEATER_0_PIN                        PC4
+#define HEATER_1_PIN                        PC5
+#define HEATER_BED_PIN                      PA4
+
+#define FAN_PIN                             PA5   // "FAN0"
+#define FAN1_PIN                            PA6   // "FAN1"
+#define FAN2_PIN                            PA7   // "FAN2"
+
+#define NEOPIXEL_PIN                        PH3
+>>>>>>> upstream/bugfix-2.0.x
 #define NEOPIXEL2_PIN                       PB1
 
 #if HAS_LTDC_TFT
@@ -274,6 +368,7 @@
 #define SD_MISO_PIN                         PC11
 #define SD_MOSI_PIN                         PC12
 #define SD_DETECT_PIN                       PI3
+<<<<<<< HEAD
 
 #if ENABLED(WIFISUPPORT)
   //
@@ -296,3 +391,5 @@
   #define ESP_WIFI_MODULE_GPIO0_PIN         -1
   #define ESP_WIFI_MODULE_GPIO2_PIN         -1
 #endif
+=======
+>>>>>>> upstream/bugfix-2.0.x

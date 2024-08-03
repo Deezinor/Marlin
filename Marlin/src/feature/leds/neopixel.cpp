@@ -47,6 +47,14 @@ Adafruit_NeoPixel Marlin_NeoPixel::adaneo1(NEOPIXEL_PIXELS, NEOPIXEL_PIN, NEOPIX
   void Marlin_NeoPixel::set_background_color(const uint8_t r, const uint8_t g, const uint8_t b, const uint8_t w) {
     for (int background_led = NEOPIXEL_BKGD_INDEX_FIRST; background_led <= NEOPIXEL_BKGD_INDEX_LAST; background_led++)
       set_pixel_color(background_led, adaneo1.Color(r, g, b, w));
+<<<<<<< HEAD
+=======
+  }
+
+  void Marlin_NeoPixel::reset_background_color() {
+    constexpr uint8_t background_color[4] = NEOPIXEL_BKGD_COLOR;
+    set_background_color(background_color);
+>>>>>>> upstream/bugfix-2.0.x
   }
 
   void Marlin_NeoPixel::reset_background_color() {
@@ -116,7 +124,11 @@ void Marlin_NeoPixel::init() {
   set_color(adaneo1.Color
     TERN(LED_USER_PRESET_STARTUP,
       (LED_USER_PRESET_RED, LED_USER_PRESET_GREEN, LED_USER_PRESET_BLUE, LED_USER_PRESET_WHITE),
+<<<<<<< HEAD
       (0, 0, 0, 0))
+=======
+      (255, 255, 255, 255))
+>>>>>>> upstream/bugfix-2.0.x
   );
 }
 

@@ -185,9 +185,15 @@
 #define HEATER_BED_PIN                      PA0   // +HOT-BED-
 #define FAN0_PIN                            PB1   // +FAN-
 
+<<<<<<< HEAD
 //
 // Note: Using SPI2 interface. Make sure stm32duino is configured accordingly
 //
+=======
+/**
+ * Note: MKS Robin Pro board is using SPI2 interface. Make sure your stm32duino library is configured accordingly
+ */
+>>>>>>> upstream/bugfix-2.0.x
 //#define TEMP_0_CS_PIN                     PE5   // TC1 - CS1
 //#define TEMP_0_CS_PIN                     PF11  // TC2 - CS2
 
@@ -235,6 +241,7 @@
   #error "No custom SD drive cable defined for this board."
 #endif
 
+<<<<<<< HEAD
 /**               ------                                      ------
  * (BEEPER) PC5  | 1  2 | PG2  (BTN_ENC)         (MISO) PB14 | 1  2 | PB13 (SCK)
  * (LCD_EN) PG0  | 3  4 | PG1  (LCD_RS)       (BTN_EN1) PG5  | 3  4 | PG6  (SD_SS)
@@ -339,14 +346,47 @@
   #define LCD_BACKLIGHT_PIN          FSMC_24_PIN
 
   #define TFT_BUFFER_WORDS                 14400
+=======
+//
+// TFT with FSMC interface
+//
+#if HAS_FSMC_TFT
+  /**
+   * Note: MKS Robin TFT screens use various TFT controllers.
+   * If the screen stays white, disable 'LCD_RESET_PIN'
+   * to let the bootloader init the screen.
+   */
+  #define TFT_RESET_PIN            LCD_RESET_PIN
+  #define TFT_BACKLIGHT_PIN    LCD_BACKLIGHT_PIN
+
+  #define FSMC_CS_PIN                       PD7   // NE4
+  #define FSMC_RS_PIN                       PD11  // A0
+  #define FSMC_DMA_DEV                      DMA2
+  #define FSMC_DMA_CHANNEL               DMA_CH5
+  #define LCD_USE_DMA_FSMC                        // Use DMA transfers to send data to the TFT
+  #define TFT_CS_PIN                 FSMC_CS_PIN
+  #define TFT_RS_PIN                 FSMC_RS_PIN
+
+  #define LCD_RESET_PIN                     PC6
+  #define LCD_BACKLIGHT_PIN                 PD13
+>>>>>>> upstream/bugfix-2.0.x
+
+  #define TFT_BUFFER_SIZE                  14400
 
   #if NEED_TOUCH_PINS
     #define TOUCH_BUTTONS_HW_SPI
     #define TOUCH_BUTTONS_HW_SPI_DEVICE        2
+<<<<<<< HEAD
     #define TOUCH_CS_PIN             FSMC_31_PIN  // SPI2_NSS
     #define TOUCH_SCK_PIN            FSMC_29_PIN  // SPI2_SCK
     #define TOUCH_MISO_PIN           FSMC_25_PIN  // SPI2_MISO
     #define TOUCH_MOSI_PIN           FSMC_27_PIN  // SPI2_MOSI
+=======
+    #define TOUCH_CS_PIN                    PA7   // SPI2_NSS
+    #define TOUCH_SCK_PIN                   PB13  // SPI2_SCK
+    #define TOUCH_MISO_PIN                  PB14  // SPI2_MISO
+    #define TOUCH_MOSI_PIN                  PB15  // SPI2_MOSI
+>>>>>>> upstream/bugfix-2.0.x
   #else
     #define BEEPER_PIN               FSMC_28_PIN
     #define BTN_ENC                  EXP1_02_PIN
@@ -404,6 +444,7 @@
   #define BOARD_ST7920_DELAY_3               125
 #endif
 
+<<<<<<< HEAD
 #define SPI_FLASH
 #if ENABLED(SPI_FLASH)
   #define SPI_FLASH_SIZE               0x1000000  // 16MB
@@ -421,4 +462,20 @@
   #define WIFI_SERIAL_PORT                     1  // USART1
   #define WIFI_IO1_PIN                      PC7
   #define WIFI_IO0_PIN                      -1    // N.C.
+=======
+// Alter timing for graphical display
+#if IS_U8GLIB_ST7920
+  #define BOARD_ST7920_DELAY_1               125
+  #define BOARD_ST7920_DELAY_2               125
+  #define BOARD_ST7920_DELAY_3               125
+#endif
+
+#define HAS_SPI_FLASH                          1
+#if HAS_SPI_FLASH
+  #define SPI_FLASH_SIZE               0x1000000  // 16MB
+  #define SPI_FLASH_CS_PIN                  PB12  // Flash chip-select
+  #define SPI_FLASH_MOSI_PIN                PB15
+  #define SPI_FLASH_MISO_PIN                PB14
+  #define SPI_FLASH_SCK_PIN                 PB13
+>>>>>>> upstream/bugfix-2.0.x
 #endif

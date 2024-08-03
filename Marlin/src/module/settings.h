@@ -67,8 +67,11 @@ class MarlinSettings {
       static bool load();      // Return 'true' if data was loaded ok
       static bool validate();  // Return 'true' if EEPROM data is ok
 
+<<<<<<< HEAD
       static EEPROM_Error check_version();
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
       static void first_load() {
         static bool loaded = false;
         if (!loaded && load()) loaded = true;

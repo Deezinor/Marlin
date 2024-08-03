@@ -16,14 +16,22 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
+<<<<<<< HEAD
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+=======
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+>>>>>>> upstream/bugfix-2.0.x
  *
  */
 #pragma once
 
 #include "env_validate.h"
 
+<<<<<<< HEAD
 #if HAS_MULTI_HOTEND || E_STEPPERS > 1
+=======
+#if HOTENDS > 1 || E_STEPPERS > 1
+>>>>>>> upstream/bugfix-2.0.x
   #error "Artillery Ruby only supports 1 hotend / E stepper."
 #endif
 
@@ -100,8 +108,13 @@
 #ifndef HEATER_BED_PIN
   #define HEATER_BED_PIN                    PA8   // Hotbed
 #endif
+<<<<<<< HEAD
 #ifndef FAN0_PIN
   #define FAN0_PIN                          PC8   // Fan0
+=======
+#ifndef FAN_PIN
+  #define FAN_PIN                           PC8   // Fan0
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 #ifndef FAN1_PIN
   #define FAN1_PIN                          PC7   // Fan1
@@ -125,9 +138,14 @@
 //
 // LCD / Controller
 //
+<<<<<<< HEAD
 
 #if HAS_WIRED_LCD
   #if ANY(MKS_12864OLED, MKS_12864OLED_SSD1306)
+=======
+#if HAS_WIRED_LCD
+  #if EITHER(MKS_12864OLED, MKS_12864OLED_SSD1306)
+>>>>>>> upstream/bugfix-2.0.x
     #define LCD_PINS_DC                     PB8   // Set as output on init
     #define LCD_PINS_RS                     PB9   // Pull low for 1s to init
     // DOGM SPI LCD Support
@@ -144,7 +162,11 @@
 
     #define LCD_RESET_PIN                   PB5   // Must be high or open for LCD to operate normally.
 
+<<<<<<< HEAD
     #if ANY(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
+=======
+    #if EITHER(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
+>>>>>>> upstream/bugfix-2.0.x
       #ifndef RGB_LED_R_PIN
         #define RGB_LED_R_PIN               PB9
       #endif
@@ -161,7 +183,11 @@
     #define LCD_CONTRAST_INIT                255
   #else
     #define LCD_PINS_RS                     PC15
+<<<<<<< HEAD
     #define LCD_PINS_EN                     PB6
+=======
+    #define LCD_PINS_ENABLE                 PB6
+>>>>>>> upstream/bugfix-2.0.x
     #define LCD_PINS_D4                     PB5
     #define LCD_PINS_D5                     PB9
     #define LCD_PINS_D6                     PB8
@@ -174,7 +200,11 @@
   //
   #define BEEPER_PIN                        PC13
 
+<<<<<<< HEAD
   #if HAS_MEDIA
+=======
+  #if ENABLED(SDSUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
     #define SDSS                            PA15
     #define SD_DETECT_PIN                   PD2
   #endif

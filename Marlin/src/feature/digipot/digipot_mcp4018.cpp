@@ -37,7 +37,11 @@
 #ifndef DIGIPOT_A4988_Vrefmax
   #define DIGIPOT_A4988_Vrefmax         1.666
 #endif
+<<<<<<< HEAD
 #define DIGIPOT_MCP4018_MAX_VALUE     127
+=======
+#define DIGIPOT_MCP4018_MAX_VALUE       127
+>>>>>>> upstream/bugfix-2.0.x
 
 #define DIGIPOT_A4988_Itripmax(Vref)    ((Vref) / (8.0 * DIGIPOT_A4988_Rsx))
 

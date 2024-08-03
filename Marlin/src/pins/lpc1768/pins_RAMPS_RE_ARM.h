@@ -118,6 +118,10 @@
    * If undefined software serial is used according to the pins below
    */
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/bugfix-2.0.x
   // P2_08 E1-Step
   // P2_13 E1-Dir
 
@@ -205,6 +209,7 @@
   #endif
 #endif
 
+<<<<<<< HEAD
 #ifndef FAN0_PIN
   #if ANY(FET_ORDER_EFB, FET_ORDER_EFF)           // Hotend, Fan, Bed or Hotend, Fan, Fan
     #define FAN0_PIN                MOSFET_B_PIN
@@ -214,6 +219,17 @@
     #define FAN0_PIN                       P1_18  // (4) IO pin. Buffer needed
   #else                                           // Non-specific are "EFB" (i.e., "EFBF" or "EFBE")
     #define FAN0_PIN                MOSFET_B_PIN
+=======
+#ifndef FAN_PIN
+  #if EITHER(FET_ORDER_EFB, FET_ORDER_EFF)        // Hotend, Fan, Bed or Hotend, Fan, Fan
+    #define FAN_PIN                 MOSFET_B_PIN
+  #elif EITHER(FET_ORDER_EEF, FET_ORDER_SF)       // Hotend, Hotend, Fan or Spindle, Fan
+    #define FAN_PIN                 MOSFET_C_PIN
+  #elif FET_ORDER_EEB                             // Hotend, Hotend, Bed
+    #define FAN_PIN                        P1_18  // (4) IO pin. Buffer needed
+  #else                                           // Non-specific are "EFB" (i.e., "EFBF" or "EFBE")
+    #define FAN_PIN                 MOSFET_B_PIN
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 #endif
 
@@ -307,7 +323,13 @@
 
 #elif ENABLED(ZONESTAR_LCD)
 
+<<<<<<< HEAD
   CONTROLLER_WARNING("RAMPS_RE_ARM", "ZONESTAR_LCD", " ADCs are not 5V tolerant.")
+=======
+  #ifndef NO_CONTROLLER_CUSTOM_WIRING_WARNING
+    #error "CAUTION! ZONESTAR_LCD on REARM requires wiring modifications. NB. ADCs are not 5V tolerant. See 'pins_RAMPS_RE_ARM.h' for details. (Define NO_CONTROLLER_CUSTOM_WIRING_WARNING to suppress this warning.)"
+  #endif
+>>>>>>> upstream/bugfix-2.0.x
 
 #elif IS_TFTGLCD_PANEL
 
@@ -349,7 +371,11 @@
     //#define SHIFT_EN_PIN                 P1_22  // (41)  J5-4 & AUX-4
   #endif
 
+<<<<<<< HEAD
   #if ANY(VIKI2, miniVIKI)
+=======
+  #if EITHER(VIKI2, miniVIKI)
+>>>>>>> upstream/bugfix-2.0.x
     #define DOGLCD_CS                      P0_16  // (16)
     #define DOGLCD_A0                      P2_06  // (59) J3-8 & AUX-2
     #define DOGLCD_SCK                     P0_15  // (52) (SCK)  J3-9 & AUX-3
@@ -407,7 +433,11 @@
 
   #if ENABLED(MINIPANEL)
     //#define LCD_SCREEN_ROTATE              180  // 0, 90, 180, 270
+<<<<<<< HEAD
   #endif
+=======
+ #endif
+>>>>>>> upstream/bugfix-2.0.x
 
 #endif // HAS_WIRED_LCD
 

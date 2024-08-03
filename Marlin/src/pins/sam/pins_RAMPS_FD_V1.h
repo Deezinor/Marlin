@@ -110,7 +110,11 @@
 #define TEMP_BED_PIN                           0  // Analog Input
 
 // SPI for MAX Thermocouple
+<<<<<<< HEAD
 #if !HAS_MEDIA
+=======
+#if DISABLED(SDSUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
   #define TEMP_0_CS_PIN                       53
 #else
   #define TEMP_0_CS_PIN                       49
@@ -134,9 +138,13 @@
 #define SDSS                                   4
 #define LED_PIN                               13
 
+<<<<<<< HEAD
 /**
  *                RAMPS-FD LCD adapter
  *         ------                     ------
+=======
+/**        ------                     ------
+>>>>>>> upstream/bugfix-2.0.x
  *     37 | 1  2 | 35      (MISO) 50 | 1  2 | 76 (SCK)
  *     29 | 3  4 | 27       (EN2) 31 | 3  4 |  4 (SD_SS)
  *     25   5  6 | 23       (EN1) 33   5  6 | 75 (MOSI)
@@ -167,6 +175,7 @@
 // LCD / Controller
 //
 
+<<<<<<< HEAD
 #if HAS_WIRED_LCD
 
   #define BEEPER_PIN                 EXP1_01_PIN
@@ -175,16 +184,31 @@
   #define BTN_EN2                    EXP2_03_PIN
   #define BTN_EN1                    EXP2_05_PIN
 
+=======
+  #define BEEPER_PIN                 EXP1_01_PIN
+  #define BTN_EN1                    EXP2_05_PIN
+  #define BTN_EN2                    EXP2_03_PIN
+  #define BTN_ENC                    EXP1_02_PIN
+>>>>>>> upstream/bugfix-2.0.x
   #define SD_DETECT_PIN              EXP2_07_PIN
 
   #if IS_NEWPANEL
     #define LCD_PINS_RS              EXP1_07_PIN
+<<<<<<< HEAD
     #define LCD_PINS_EN              EXP1_08_PIN
   #endif
 
   #if ENABLED(FYSETC_MINI_12864)
     #define DOGLCD_CS                EXP1_08_PIN
     #define DOGLCD_A0                EXP1_07_PIN
+=======
+    #define LCD_PINS_ENABLE          EXP1_08_PIN
+  #endif
+
+  #if ENABLED(FYSETC_MINI_12864)
+    #define DOGLCD_CS            LCD_PINS_ENABLE
+    #define DOGLCD_A0                LCD_PINS_RS
+>>>>>>> upstream/bugfix-2.0.x
     #define DOGLCD_SCK               EXP2_02_PIN
     #define DOGLCD_MOSI              EXP2_06_PIN
 
@@ -221,7 +245,11 @@
 
   #endif
 
+<<<<<<< HEAD
   #if ANY(VIKI2, miniVIKI)
+=======
+  #if EITHER(VIKI2, miniVIKI)
+>>>>>>> upstream/bugfix-2.0.x
     #define DOGLCD_A0                EXP1_07_PIN
     #define KILL_PIN                          51
     #define STAT_LED_BLUE_PIN        EXP1_03_PIN

@@ -36,6 +36,7 @@
  */
 void GcodeSuite::M304() {
   if (!parser.seen("PID")) return M304_report();
+<<<<<<< HEAD
   if (parser.seenval('P')) thermalManager.temp_bed.pid.set_Kp(parser.value_float());
   if (parser.seenval('I')) thermalManager.temp_bed.pid.set_Ki(parser.value_float());
   if (parser.seenval('D')) thermalManager.temp_bed.pid.set_Kd(parser.value_float());
@@ -49,6 +50,19 @@ void GcodeSuite::M304_report(const bool forReplay/*=true*/) {
       " P", thermalManager.temp_bed.pid.p()
     , " I", thermalManager.temp_bed.pid.i()
     , " D", thermalManager.temp_bed.pid.d()
+=======
+  if (parser.seenval('P')) thermalManager.temp_bed.pid.Kp = parser.value_float();
+  if (parser.seenval('I')) thermalManager.temp_bed.pid.Ki = scalePID_i(parser.value_float());
+  if (parser.seenval('D')) thermalManager.temp_bed.pid.Kd = scalePID_d(parser.value_float());
+}
+
+void GcodeSuite::M304_report(const bool forReplay/*=true*/) {
+  report_heading_etc(forReplay, F(STR_BED_PID));
+  SERIAL_ECHOLNPGM(
+      "  M304 P", thermalManager.temp_bed.pid.Kp
+    , " I", unscalePID_i(thermalManager.temp_bed.pid.Ki)
+    , " D", unscalePID_d(thermalManager.temp_bed.pid.Kd)
+>>>>>>> upstream/bugfix-2.0.x
   );
 }
 

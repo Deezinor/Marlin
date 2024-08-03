@@ -5,9 +5,15 @@
 import pioutil
 if pioutil.is_pio_build():
 
+<<<<<<< HEAD
     import re, sys
     from pathlib import Path
     env = pioutil.env
+=======
+    import re,sys
+    from pathlib import Path
+    Import("env")
+>>>>>>> upstream/bugfix-2.0.x
 
     def get_envs_for_board(board):
         ppath = Path("Marlin/src/pins/pins.h")
@@ -62,6 +68,7 @@ if pioutil.is_pio_build():
         if 'MARLIN_FEATURES' not in env:
             raise SystemExit("Error: this script should be used after common Marlin scripts.")
 
+<<<<<<< HEAD
         # Useful values
         project_dir = Path(env['PROJECT_DIR'])
         config_files = ("Configuration.h", "Configuration_adv.h")
@@ -87,11 +94,17 @@ if pioutil.is_pio_build():
         if len(env['MARLIN_FEATURES']) == 0:
             raise SystemExit("Error: Failed to parse Marlin features. See previous error messages.")
 
+=======
+        if len(env['MARLIN_FEATURES']) == 0:
+            raise SystemExit("Error: Failed to parse Marlin features. See previous error messages.")
+
+>>>>>>> upstream/bugfix-2.0.x
         build_env = env['PIOENV']
         motherboard = env['MARLIN_FEATURES']['MOTHERBOARD']
         board_envs = get_envs_for_board(motherboard)
         config = env.GetProjectConfig()
         result = check_envs("env:"+build_env, board_envs, config)
+<<<<<<< HEAD
 
         # Make sure board is compatible with the build environment. Skip for _test,
         # since the board is manipulated as each unit test is executed.
@@ -158,5 +171,69 @@ if pioutil.is_pio_build():
                         err = "ERROR: FILAMENT_RUNOUT_SCRIPT needs a %c parameter (e.g., \"M600 T%c\") when NUM_RUNOUT_SENSORS is > 1"
                         raise SystemExit(err)
 
+=======
+
+        if not result:
+            err = "Error: Build environment '%s' is incompatible with %s. Use one of these: %s" % \
+                  ( build_env, motherboard, ", ".join([ e[4:] for e in board_envs if e.startswith("env:") ]) )
+            raise SystemExit(err)
+
+        #
+        # Check for Config files in two common incorrect places
+        #
+        epath = Path(env['PROJECT_DIR'])
+        for p in [ epath, epath / "config" ]:
+            for f in ("Configuration.h", "Configuration_adv.h"):
+                if (p / f).is_file():
+                    err = "ERROR: Config files found in directory %s. Please move them into the Marlin subfolder." % p
+                    raise SystemExit(err)
+
+        #
+        # Find the name.cpp.o or name.o and remove it
+        #
+        def rm_ofile(subdir, name):
+            build_dir = Path(env['PROJECT_BUILD_DIR'], build_env);
+            for outdir in (build_dir, build_dir / "debug"):
+                for ext in (".cpp.o", ".o"):
+                    fpath = outdir / "src/src" / subdir / (name + ext)
+                    if fpath.exists():
+                        fpath.unlink()
+
+        #
+        # Give warnings on every build
+        #
+        rm_ofile("inc", "Warnings")
+
+        #
+        # Rebuild 'settings.cpp' for EEPROM_INIT_NOW
+        #
+        if 'EEPROM_INIT_NOW' in env['MARLIN_FEATURES']:
+            rm_ofile("module", "settings")
+
+        #
+        # Check for old files indicating an entangled Marlin (mixing old and new code)
+        #
+        mixedin = []
+        p = Path(env['PROJECT_DIR'], "Marlin/src/lcd/dogm")
+        for f in [ "ultralcd_DOGM.cpp", "ultralcd_DOGM.h" ]:
+            if (p / f).is_file():
+                mixedin += [ f ]
+        p = Path(env['PROJECT_DIR'], "Marlin/src/feature/bedlevel/abl")
+        for f in [ "abl.cpp", "abl.h" ]:
+            if (p / f).is_file():
+                mixedin += [ f ]
+        if mixedin:
+            err = "ERROR: Old files fell into your Marlin folder. Remove %s and try again" % ", ".join(mixedin)
+            raise SystemExit(err)
+
+        #
+        # Check FILAMENT_RUNOUT_SCRIPT has a %c parammeter when required
+        #
+        if 'FILAMENT_RUNOUT_SENSOR' in env['MARLIN_FEATURES'] and 'NUM_RUNOUT_SENSORS' in env['MARLIN_FEATURES']:
+            if env['MARLIN_FEATURES']['NUM_RUNOUT_SENSORS'].isdigit() and int(env['MARLIN_FEATURES']['NUM_RUNOUT_SENSORS']) > 1:
+                if 'FILAMENT_RUNOUT_SCRIPT' in env['MARLIN_FEATURES'] and "%c" not in env['MARLIN_FEATURES']['FILAMENT_RUNOUT_SCRIPT']:
+                    err = "ERROR: FILAMENT_RUNOUT_SCRIPT needs a %c parameter (e.g., 'M600 T%c') when NUM_RUNOUT_SENSORS is > 1."
+                    raise SystemExit(err)
+>>>>>>> upstream/bugfix-2.0.x
 
     sanity_check_target()

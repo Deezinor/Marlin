@@ -38,8 +38,14 @@ void GcodeSuite::G4() {
     SERIAL_ECHOLNPGM(STR_Z_MOVE_COMP);
   #endif
 
+<<<<<<< HEAD
   if (dwell_ms) {
     if (!ui.has_status()) LCD_MESSAGE(MSG_DWELL);
     dwell(dwell_ms);
   }
+=======
+  if (!ui.has_status()) LCD_MESSAGE(MSG_DWELL);
+
+  dwell(dwell_ms);
+>>>>>>> upstream/bugfix-2.0.x
 }

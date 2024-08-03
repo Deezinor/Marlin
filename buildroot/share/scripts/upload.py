@@ -1,6 +1,28 @@
+<<<<<<< HEAD
 import argparse, sys, os, time, random, serial
 from SCons.Script import DefaultEnvironment
 env = DefaultEnvironment()
+=======
+import argparse
+import sys
+import os
+import time
+import random
+import serial
+
+Import("env")
+
+# Needed (only) for compression, but there are problems with pip install heatshrink
+#try:
+#    import heatshrink
+#except ImportError:
+#    # Install heatshrink
+#    print("Installing 'heatshrink' python module...")
+#    env.Execute(env.subst("$PYTHONEXE -m pip install heatshrink"))
+#
+# Not tested: If it's safe to install python libraries in PIO python try:
+#    env.Execute(env.subst("$PYTHONEXE -m pip install https://github.com/p3p/pyheatshrink/releases/download/0.3.3/pyheatshrink-pip.zip"))
+>>>>>>> upstream/bugfix-2.0.x
 
 import MarlinBinaryProtocol
 
@@ -152,14 +174,22 @@ def Upload(source, target, env):
     marlin_string_config_h_author = _GetMarlinEnv(MarlinEnv, 'STRING_CONFIG_H_AUTHOR')
 
     # Get firmware upload params
+<<<<<<< HEAD
     upload_firmware_source_path = os.path.join(env["PROJECT_BUILD_DIR"], env["PIOENV"], f"{env['PROGNAME']}.bin") if 'PROGNAME' in env else str(source[0])
                                                     # Source firmware filename
+=======
+    upload_firmware_source_name = str(source[0])    # Source firmware filename
+>>>>>>> upstream/bugfix-2.0.x
     upload_speed = env['UPLOAD_SPEED'] if 'UPLOAD_SPEED' in env else 115200
                                                     # baud rate of serial connection
     upload_port = _GetUploadPort(env)               # Serial port to use
 
     # Set local upload params
+<<<<<<< HEAD
     upload_firmware_target_name = os.path.basename(upload_firmware_source_path)
+=======
+    upload_firmware_target_name = os.path.basename(upload_firmware_source_name)
+>>>>>>> upstream/bugfix-2.0.x
                                                     # Target firmware filename
     upload_timeout = 1000                           # Communication timout, lossy/slow connections need higher values
     upload_blocksize = 512                          # Transfer block size. 512 = Autodetect
@@ -176,6 +206,7 @@ def Upload(source, target, env):
     # "upload_random_name": generate a random 8.3 firmware filename to upload
     upload_random_filename = upload_delete_old_bins and not marlin_long_filename_host_support
 
+<<<<<<< HEAD
     # Heatshrink module is needed (only) for compression
     if upload_compression:
         if sys.version_info[0] > 2:
@@ -191,6 +222,8 @@ def Upload(source, target, env):
                print("Installing 'heatshrink' python module...")
                env.Execute(env.subst("$PYTHONEXE -m pip install heatshrink"))
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
     try:
 
         # Start upload job
@@ -211,7 +244,11 @@ def Upload(source, target, env):
             print(f' LONG_FILENAME_WRITE_SUPPORT : {marlin_longname_write}')
             print(f' CUSTOM_FIRMWARE_UPLOAD      : {marlin_custom_firmware_upload}')
             print('---- Upload parameters ------------------------')
+<<<<<<< HEAD
             print(f' Source                      : {upload_firmware_source_path}')
+=======
+            print(f' Source                      : {upload_firmware_source_name}')
+>>>>>>> upstream/bugfix-2.0.x
             print(f' Target                      : {upload_firmware_target_name}')
             print(f' Port                        : {upload_port} @ {upload_speed} baudrate')
             print(f' Timeout                     : {upload_timeout}')
@@ -266,14 +303,22 @@ def Upload(source, target, env):
         # WARNING! The serial port must be closed here because the serial transfer that follow needs it!
 
         # Upload firmware file
+<<<<<<< HEAD
         debugPrint(f"Copy '{upload_firmware_source_path}' --> '{upload_firmware_target_name}'")
+=======
+        debugPrint(f"Copy '{upload_firmware_source_name}' --> '{upload_firmware_target_name}'")
+>>>>>>> upstream/bugfix-2.0.x
         protocol = MarlinBinaryProtocol.Protocol(upload_port, upload_speed, upload_blocksize, float(upload_error_ratio), int(upload_timeout))
         #echologger = MarlinBinaryProtocol.EchoProtocol(protocol)
         protocol.connect()
         # Mark the rollback (delete broken transfer) from this point on
         rollback = True
         filetransfer = MarlinBinaryProtocol.FileTransferProtocol(protocol)
+<<<<<<< HEAD
         transferOK = filetransfer.copy(upload_firmware_source_path, upload_firmware_target_name, upload_compression, upload_test)
+=======
+        transferOK = filetransfer.copy(upload_firmware_source_name, upload_firmware_target_name, upload_compression, upload_test)
+>>>>>>> upstream/bugfix-2.0.x
         protocol.disconnect()
 
         # Notify upload completed

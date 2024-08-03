@@ -11,7 +11,11 @@
  *******************************************************************************
  */
 
+<<<<<<< HEAD
 #ifdef STM32G0B1xx
+=======
+#if defined(STM32G0B1xx)
+>>>>>>> upstream/bugfix-2.0.x
 #include "pins_arduino.h"
 
 // Digital PinName array
@@ -130,7 +134,18 @@ WEAK void SystemClock_Config(void)
   RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
   // Reset clock registers (in case bootloader has changed them)
+<<<<<<< HEAD
   SystemInit();
+=======
+  RCC->CR |= RCC_CR_HSION;
+  while (!(RCC->CR & RCC_CR_HSIRDY))
+      ;
+  RCC->CFGR = 0x00000000;
+  RCC->CR = RCC_CR_HSION;
+  while (RCC->CR & RCC_CR_PLLRDY)
+      ;
+  RCC->PLLCFGR = 0x00001000;
+>>>>>>> upstream/bugfix-2.0.x
 
   /** Configure the main internal regulator output voltage
   */

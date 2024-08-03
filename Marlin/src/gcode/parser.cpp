@@ -235,11 +235,19 @@ void GCodeParser::parse(char *p) {
         }
       #endif
 
+<<<<<<< HEAD
     } break;
 
     #if ENABLED(GCODE_MOTION_MODES)
 
       #if ANY(BEZIER_CURVE_SUPPORT, ARC_SUPPORT)
+=======
+      } break;
+
+    #if ENABLED(GCODE_MOTION_MODES)
+
+      #if EITHER(BEZIER_CURVE_SUPPORT, ARC_SUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
         case 'I' ... 'J': case 'P':
           if (TERN1(BEZIER_CURVE_SUPPORT, motion_mode_codenum != 5)
             && TERN1(ARC_P_CIRCLES, !WITHIN(motion_mode_codenum, 2, 3))
@@ -254,7 +262,11 @@ void GCodeParser::parse(char *p) {
         case 'R': if (!WITHIN(motion_mode_codenum, 2, 3)) return;
       #endif
 
+<<<<<<< HEAD
       LOGICAL_AXIS_GANG(case 'E':, case 'X':, case 'Y':, case 'Z':, case AXIS4_NAME:, case AXIS5_NAME:, case AXIS6_NAME:, case AXIS7_NAME:, case AXIS8_NAME:, case AXIS9_NAME:)
+=======
+      LOGICAL_AXIS_GANG(case 'E':, case 'X':, case 'Y':, case 'Z':, case AXIS4_NAME:, case AXIS5_NAME:, case AXIS6_NAME:)
+>>>>>>> upstream/bugfix-2.0.x
       case 'F':
         if (motion_mode_codenum < 0) return;
         command_letter = 'G';
@@ -274,12 +286,18 @@ void GCodeParser::parse(char *p) {
 
   // Only use string_arg for these M codes
   if (letter == 'M') switch (codenum) {
+<<<<<<< HEAD
     TERN_(EXPECTED_PRINTER_CHECK, case 16:)
     TERN_(SDSUPPORT, case 23: case 28: case 30: case 928:)
     TERN_(HAS_STATUS_MESSAGE, case 117:)
     TERN_(HAS_RS485_SERIAL, case 485:)
     TERN_(GCODE_MACROS, case 810 ... 819:)
     case 118:
+=======
+    TERN_(GCODE_MACROS, case 810 ... 819:)
+    TERN_(EXPECTED_PRINTER_CHECK, case 16:)
+    case 23: case 28: case 30: case 117 ... 118: case 928:
+>>>>>>> upstream/bugfix-2.0.x
       string_arg = unescape_string(p);
       return;
     default: break;
@@ -342,7 +360,11 @@ void GCodeParser::parse(char *p) {
 
       #if ENABLED(DEBUG_GCODE_PARSER)
         if (debug) {
+<<<<<<< HEAD
           SERIAL_ECHOPGM("Got param ", C(param), " at index ", p - command_ptr - 1);
+=======
+          SERIAL_ECHOPGM("Got param ", AS_CHAR(param), " at index ", p - command_ptr - 1);
+>>>>>>> upstream/bugfix-2.0.x
           if (has_val) SERIAL_ECHOPGM(" (has_val)");
         }
       #endif

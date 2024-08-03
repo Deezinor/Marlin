@@ -29,7 +29,11 @@
 #define ALLOW_STM32DUINO
 #include "env_validate.h"
 
+<<<<<<< HEAD
 #define BOARD_INFO_NAME "MKS Robin Nano V1"
+=======
+#define BOARD_INFO_NAME "MKS Robin Nano"
+>>>>>>> upstream/bugfix-2.0.x
 
 //
 // Release PB4 (Y_ENABLE_PIN) from JTAG NRST role

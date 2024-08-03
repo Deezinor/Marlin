@@ -31,11 +31,14 @@
 #include "menu_item.h"
 
 #include "../../MarlinCore.h"
+<<<<<<< HEAD
 #include "../../module/temperature.h"
 
 #if ENABLED(LCD_ENDSTOP_TEST)
   #include "../../module/endstops.h"
 #endif
+=======
+>>>>>>> upstream/bugfix-2.0.x
 
 #if HAS_FILAMENT_SENSOR
   #include "../../feature/runout.h"
@@ -60,6 +63,7 @@
   #include "../../libs/buzzer.h"
 #endif
 
+<<<<<<< HEAD
 #if ENABLED(HOTEND_IDLE_TIMEOUT)
   #include "../../feature/hotend_idle.h"
 #endif
@@ -71,6 +75,11 @@
 
 //#define DEBUG_OUT 1
 #include "../../core/debug_out.h"
+=======
+#include "../../core/debug_out.h"
+
+#define HAS_DEBUG_MENU ENABLED(LCD_PROGRESS_BAR_TEST)
+>>>>>>> upstream/bugfix-2.0.x
 
 void menu_advanced_settings();
 #if ANY(DELTA_CALIBRATION_MENU, DELTA_AUTO_CALIBRATION)
@@ -90,12 +99,21 @@ void menu_advanced_settings();
     LIMIT(bar_percent, 0, 100);
     ui.encoderPosition = 0;
     MenuItem_static::draw(0, GET_TEXT_F(MSG_PROGRESS_BAR_TEST), SS_DEFAULT|SS_INVERT);
+<<<<<<< HEAD
     lcd_put_int((LCD_WIDTH) / 2 - 2, LCD_HEIGHT - 2, bar_percent); lcd_put_u8str(F("%"));
     lcd_moveto(0, LCD_HEIGHT - 1); ui.draw_progress_bar(bar_percent);
   }
 
   void _goto_progress_bar_test() {
     ui.goto_screen(screen_progress_bar_test);
+=======
+    lcd_put_int((LCD_WIDTH) / 2 - 2, LCD_HEIGHT - 2, bar_percent); lcd_put_lchar('%');
+    lcd_moveto(0, LCD_HEIGHT - 1); ui.draw_progress_bar(bar_percent);
+  }
+
+  void _progress_bar_test() {
+    ui.goto_screen(progress_bar_test);
+>>>>>>> upstream/bugfix-2.0.x
     TERN_(HAS_MARLINUI_HD44780, ui.set_custom_characters(CHARSET_INFO));
   }
 
@@ -186,7 +204,10 @@ void menu_advanced_settings();
       EDIT_ITEM_FAST(int4, MSG_SINGLENOZZLE_UNRETRACT_SPEED, &toolchange_settings.unretract_speed, 10, 5400);
       EDIT_ITEM(float3, MSG_FILAMENT_PURGE_LENGTH, &toolchange_settings.extra_prime, 0, max_extrude);
       EDIT_ITEM_FAST(int4, MSG_SINGLENOZZLE_PRIME_SPEED, &toolchange_settings.prime_speed, 10, 5400);
+<<<<<<< HEAD
       EDIT_ITEM_FAST(int4, MSG_SINGLENOZZLE_WIPE_RETRACT, &toolchange_settings.wipe_retract, 0, 100);
+=======
+>>>>>>> upstream/bugfix-2.0.x
       EDIT_ITEM_FAST(uint8, MSG_SINGLENOZZLE_FAN_SPEED, &toolchange_settings.fan_speed, 0, 255);
       EDIT_ITEM_FAST(uint8, MSG_SINGLENOZZLE_FAN_TIME, &toolchange_settings.fan_time, 1, 30);
     #endif
@@ -243,10 +264,17 @@ void menu_advanced_settings();
     #if ENABLED(DUAL_X_CARRIAGE)
       EDIT_ITEM_FAST_N(float42_52, X_AXIS, MSG_HOTEND_OFFSET_A, &hotend_offset[1].x, float(X2_HOME_POS - 25), float(X2_HOME_POS + 25), _recalc_offsets);
     #else
+<<<<<<< HEAD
       EDIT_ITEM_FAST_N(float42_52, X_AXIS, MSG_HOTEND_OFFSET_A, &hotend_offset[1].x, -99.0f, 99.0f, _recalc_offsets);
     #endif
     EDIT_ITEM_FAST_N(float42_52, Y_AXIS, MSG_HOTEND_OFFSET_A, &hotend_offset[1].y, -99.0f, 99.0f, _recalc_offsets);
     EDIT_ITEM_FAST_N(float42_52, Z_AXIS, MSG_HOTEND_OFFSET_A, &hotend_offset[1].z, -10.0f, 10.0f, _recalc_offsets);
+=======
+      EDIT_ITEM_FAST_N(float42_52, X_AXIS, MSG_HOTEND_OFFSET_A, &hotend_offset[1].x, -99.0, 99.0, _recalc_offsets);
+    #endif
+    EDIT_ITEM_FAST_N(float42_52, Y_AXIS, MSG_HOTEND_OFFSET_A, &hotend_offset[1].y, -99.0, 99.0, _recalc_offsets);
+    EDIT_ITEM_FAST_N(float42_52, Z_AXIS, MSG_HOTEND_OFFSET_A, &hotend_offset[1].z, Z_PROBE_LOW_POINT, 10.0, _recalc_offsets);
+>>>>>>> upstream/bugfix-2.0.x
     #if ENABLED(EEPROM_SETTINGS)
       ACTION_ITEM(MSG_STORE_EEPROM, ui.store_settings);
     #endif
@@ -304,9 +332,21 @@ void menu_advanced_settings();
 
   #if ENABLED(BLTOUCH_LCD_VOLTAGE_MENU)
     void bltouch_report() {
+<<<<<<< HEAD
       FSTR_P const mode0 = F("OD"), mode1 = F("5V");
       DEBUG_ECHOLNPGM("BLTouch Mode: ", bltouch.od_5v_mode ? mode1 : mode0, " (Default ", TERN(BLTOUCH_SET_5V_MODE, mode1, mode0), ")");
       ui.set_status(MString<18>(F("BLTouch Mode: "), bltouch.od_5v_mode ? mode1 : mode0));
+=======
+      PGMSTR(mode0, "OD");
+      PGMSTR(mode1, "5V");
+      DEBUG_ECHOPGM("BLTouch Mode: ");
+      DEBUG_ECHOPGM_P(bltouch.od_5v_mode ? mode1 : mode0);
+      DEBUG_ECHOLNPGM(" (Default " TERN(BLTOUCH_SET_5V_MODE, "5V", "OD") ")");
+      char mess[21];
+      strcpy_P(mess, PSTR("BLTouch Mode: "));
+      strcpy_P(&mess[15], bltouch.od_5v_mode ? mode1 : mode0);
+      ui.set_status(mess);
+>>>>>>> upstream/bugfix-2.0.x
       ui.return_to_status();
     }
   #endif
@@ -319,7 +359,11 @@ void menu_advanced_settings();
     ACTION_ITEM(MSG_BLTOUCH_DEPLOY, bltouch._deploy);
     ACTION_ITEM(MSG_BLTOUCH_STOW, bltouch._stow);
     ACTION_ITEM(MSG_BLTOUCH_SW_MODE, bltouch._set_SW_mode);
+<<<<<<< HEAD
     #if HAS_BLTOUCH_HS_MODE
+=======
+    #ifdef BLTOUCH_HS_MODE
+>>>>>>> upstream/bugfix-2.0.x
       EDIT_ITEM(bool, MSG_BLTOUCH_SPEED_MODE, &bltouch.high_speed_mode);
     #endif
     #if ENABLED(BLTOUCH_LCD_VOLTAGE_MENU)
@@ -621,12 +665,19 @@ void menu_configuration() {
   //
   // Set display backlight / sleep timeout
   //
+<<<<<<< HEAD
   #if ENABLED(EDITABLE_DISPLAY_TIMEOUT)
     #if HAS_BACKLIGHT_TIMEOUT
       EDIT_ITEM(uint8, MSG_SCREEN_TIMEOUT, &ui.backlight_timeout_minutes, ui.backlight_timeout_min, ui.backlight_timeout_max, ui.refresh_backlight_timeout);
     #elif HAS_DISPLAY_SLEEP
       EDIT_ITEM(uint8, MSG_SCREEN_TIMEOUT, &ui.sleep_timeout_minutes, ui.sleep_timeout_min, ui.sleep_timeout_max, ui.refresh_screen_timeout);
     #endif
+=======
+  #if LCD_BACKLIGHT_TIMEOUT && LCD_BKL_TIMEOUT_MIN < LCD_BKL_TIMEOUT_MAX
+    EDIT_ITEM(uint16_4, MSG_LCD_TIMEOUT_SEC, &ui.lcd_backlight_timeout, LCD_BKL_TIMEOUT_MIN, LCD_BKL_TIMEOUT_MAX, ui.refresh_backlight_timeout);
+  #elif HAS_DISPLAY_SLEEP
+    EDIT_ITEM(uint8, MSG_SCREEN_TIMEOUT, &ui.sleep_timeout_minutes, SLEEP_TIMEOUT_MIN, SLEEP_TIMEOUT_MAX, ui.refresh_screen_timeout);
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 
   #if ENABLED(FWRETRACT)
@@ -650,18 +701,25 @@ void menu_configuration() {
 
   // Preheat configurations
   #if HAS_PREHEAT && DISABLED(SLIM_LCD_MENUS)
+<<<<<<< HEAD
     for (uint8_t m = 0; m < PREHEAT_COUNT; ++m)
+=======
+    LOOP_L_N(m, PREHEAT_COUNT)
+>>>>>>> upstream/bugfix-2.0.x
       SUBMENU_N_f(m, ui.get_preheat_label(m), MSG_PREHEAT_M_SETTINGS, _menu_configuration_preheat_settings);
   #endif
 
   #if ENABLED(SOUND_MENU_ITEM)
     EDIT_ITEM(bool, MSG_SOUND, &ui.sound_on, []{ ui.chirp(); });
+<<<<<<< HEAD
   #endif
 
   // Debug Menu when certain options are enabled
   // Note: it is at the end of the list, so a more commonly used items should be placed above
   #if HAS_DEBUG_MENU
     SUBMENU(MSG_DEBUG_MENU, menu_debug);
+=======
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 
   #if ENABLED(EEPROM_SETTINGS)

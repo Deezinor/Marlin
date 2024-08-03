@@ -26,11 +26,14 @@
 #include <iostream>
 #include <stdint.h>
 #include <stdarg.h>
+<<<<<<< HEAD
 
 #ifdef HAS_LIBBSD
   #include <bsd/string.h>
 #endif
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #undef min
 #undef max
 #include <algorithm>
@@ -85,8 +88,13 @@ extern MSerialT usb_serial;
 #define CRITICAL_SECTION_END()
 
 // ADC
+<<<<<<< HEAD
 #define HAL_ADC_VREF_MV   5000
 #define HAL_ADC_RESOLUTION  10
+=======
+#define HAL_ADC_VREF           5.0
+#define HAL_ADC_RESOLUTION    10
+>>>>>>> upstream/bugfix-2.0.x
 
 // ------------------------
 // Class Utilities
@@ -167,6 +175,7 @@ public:
   }
 
   static void set_pwm_frequency(const pin_t, int) {}
+<<<<<<< HEAD
 
   #ifndef HAS_LIBBSD
     /**
@@ -176,4 +185,6 @@ public:
     #define strlcpy hal._strlcpy
   #endif
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 };

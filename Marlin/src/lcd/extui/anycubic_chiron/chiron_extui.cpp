@@ -37,6 +37,7 @@ using namespace Anycubic;
 
 namespace ExtUI {
 
+<<<<<<< HEAD
   void onStartup() { chiron.startup(); }
 
   void onIdle() { chiron.idleLoop(); }
@@ -54,11 +55,27 @@ namespace ExtUI {
   void onMaxTempError(const heater_id_t header_id) {}
 
   void onPlayTone(const uint16_t frequency, const uint16_t duration/*=0*/) {
+=======
+  void onStartup() { Chiron.Startup(); }
+
+  void onIdle() { Chiron.IdleLoop(); }
+
+  void onPrinterKilled(FSTR_P const error, FSTR_P const component) {
+    Chiron.PrinterKilled(error, component);
+  }
+
+  void onMediaInserted() { Chiron.MediaEvent(AC_media_inserted); }
+  void onMediaError()    { Chiron.MediaEvent(AC_media_error);    }
+  void onMediaRemoved()  { Chiron.MediaEvent(AC_media_removed);  }
+
+  void onPlayTone(const uint16_t frequency, const uint16_t duration) {
+>>>>>>> upstream/bugfix-2.0.x
     #if ENABLED(SPEAKER)
       ::tone(BEEPER_PIN, frequency, duration);
     #endif
   }
 
+<<<<<<< HEAD
   void onPrintTimerStarted() { chiron.timerEvent(AC_timer_started); }
   void onPrintTimerPaused()  { chiron.timerEvent(AC_timer_paused);  }
   void onPrintTimerStopped() { chiron.timerEvent(AC_timer_stopped); }
@@ -90,6 +107,17 @@ namespace ExtUI {
   #endif
 
   void onStatusChanged(const char * const msg)       { chiron.statusChange(msg); }
+=======
+  void onPrintTimerStarted() { Chiron.TimerEvent(AC_timer_started); }
+  void onPrintTimerPaused()  { Chiron.TimerEvent(AC_timer_paused);  }
+  void onPrintTimerStopped() { Chiron.TimerEvent(AC_timer_stopped); }
+  void onPrintDone() {}
+
+  void onFilamentRunout(const extruder_t)            { Chiron.FilamentRunout();             }
+
+  void onUserConfirmRequired(const char * const msg) { Chiron.ConfirmationRequest(msg);     }
+  void onStatusChanged(const char * const msg)       { Chiron.StatusChange(msg);            }
+>>>>>>> upstream/bugfix-2.0.x
 
   void onHomingStart() {}
   void onHomingDone() {}
@@ -120,16 +148,25 @@ namespace ExtUI {
     // Called after loading or resetting stored settings
   }
 
+<<<<<<< HEAD
   void onSettingsStored(const bool success) {
+=======
+  void onSettingsStored(bool success) {
+>>>>>>> upstream/bugfix-2.0.x
     // Called after the entire EEPROM has been written,
     // whether successful or not.
   }
 
+<<<<<<< HEAD
   void onSettingsLoaded(const bool success) {
+=======
+  void onSettingsLoaded(bool success) {
+>>>>>>> upstream/bugfix-2.0.x
     // Called after the entire EEPROM has been read,
     // whether successful or not.
   }
 
+<<<<<<< HEAD
   #if HAS_LEVELING
     void onLevelingStart() {}
     void onLevelingDone() {}
@@ -139,6 +176,12 @@ namespace ExtUI {
   #endif
 
   #if HAS_MESH
+=======
+  #if HAS_MESH
+    void onLevelingStart() {}
+    void onLevelingDone() {}
+
+>>>>>>> upstream/bugfix-2.0.x
     void onMeshUpdate(const int8_t xpos, const int8_t ypos, const_float_t zval) {
       // Called when any mesh points are updated
       //SERIAL_ECHOLNPGM("onMeshUpdate() x:", xpos, " y:", ypos, " z:", zval);
@@ -150,6 +193,7 @@ namespace ExtUI {
     }
   #endif
 
+<<<<<<< HEAD
   #if ENABLED(PREVENT_COLD_EXTRUSION)
     void onSetMinExtrusionTemp(const celsius_t) {}
   #endif
@@ -188,6 +232,21 @@ namespace ExtUI {
   void onSteppersEnabled() {}
   void onAxisDisabled(const axis_t) {}
   void onAxisEnabled(const axis_t) {}
+=======
+  #if ENABLED(POWER_LOSS_RECOVERY)
+    // Called on resume from power-loss
+    void onPowerLossResume() { Chiron.PowerLossRecovery(); }
+  #endif
+
+  #if HAS_PID_HEATING
+    void onPidTuning(const result_t rst) {
+      // Called for temperature PID tuning result
+    }
+  #endif
+
+  void onSteppersDisabled() {}
+  void onSteppersEnabled()  {}
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 #endif // ANYCUBIC_LCD_CHIRON

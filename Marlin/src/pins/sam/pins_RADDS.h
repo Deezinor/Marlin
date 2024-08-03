@@ -180,7 +180,11 @@
 #define TEMP_BED_PIN                           4  // Analog Input
 
 // SPI for MAX Thermocouple
+<<<<<<< HEAD
 #if !HAS_MEDIA
+=======
+#if DISABLED(SDSUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
   #define TEMP_0_CS_PIN                       53
 #else
   #define TEMP_0_CS_PIN                       49

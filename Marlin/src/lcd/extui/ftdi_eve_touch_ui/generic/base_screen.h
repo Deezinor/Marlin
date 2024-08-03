@@ -27,7 +27,11 @@
 
 class BaseScreen : public UIScreen {
   protected:
+<<<<<<< HEAD
     #if HAS_SCREEN_TIMEOUT
+=======
+    #if SCREENS_CAN_TIME_OUT
+>>>>>>> upstream/bugfix-2.0.x
       static uint32_t last_interaction;
     #endif
 

@@ -125,11 +125,16 @@ const char* ftostr52sign(const_float_t x);
 // Convert unsigned float to string with _2.3 / 12.3 format
 const char* ftostr31rj(const_float_t x);
 
+<<<<<<< HEAD
 // Convert unsigned float to string with __3.4 / _23.4 / 123.4 format
 const char* ftostr41rj(const_float_t x);
 
 // Convert unsigned float to string with ___4.5 / __34.5 / _234.5 / 1234.5 format
 const char* ftostr51rj(const_float_t x);
+=======
+// Convert unsigned float to string with 12345.6 format omitting trailing zeros
+const char* ftostr61rj(const_float_t x);
+>>>>>>> upstream/bugfix-2.0.x
 
 // Convert unsigned float to string with ____5.6 / ___45.6 / __345.6 / _2345.6 / 12345.6 format
 const char* ftostr61rj(const_float_t x);

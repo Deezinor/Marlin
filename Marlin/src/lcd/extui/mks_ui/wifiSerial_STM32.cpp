@@ -25,7 +25,11 @@
 
 #include "../../../inc/MarlinConfigPre.h"
 
+<<<<<<< HEAD
 #if ALL(HAS_TFT_LVGL_UI, MKS_WIFI_MODULE)
+=======
+#if BOTH(HAS_TFT_LVGL_UI, MKS_WIFI_MODULE)
+>>>>>>> upstream/bugfix-2.0.x
 
 #include "tft_lvgl_configuration.h"
 
@@ -230,7 +234,11 @@ void WifiSerial::_rx_complete_irq(serial_t *obj) {
 
     WRITE(WIFI_IO1_PIN, HIGH);
 
+<<<<<<< HEAD
     rx_buffer_index_t i = uint16_t(obj->rx_head + 1) % WIFI_RX_BUF_SIZE;
+=======
+    rx_buffer_index_t i = (unsigned int)(obj->rx_head + 1) % WIFI_RX_BUF_SIZE;
+>>>>>>> upstream/bugfix-2.0.x
 
     // if we should be storing the received character into the location
     // just before the tail (meaning that the head would advance to the
@@ -292,7 +300,11 @@ void WifiSerial::begin(unsigned long baud, byte config) {
     case 0: Error_Handler(); break;
   }
 
+<<<<<<< HEAD
   uart_init(&_serial, uint32_t(baud), databits, parity, stopbits);
+=======
+  uart_init(&_serial, (uint32_t)baud, databits, parity, stopbits);
+>>>>>>> upstream/bugfix-2.0.x
   enableHalfDuplexRx();
   if (baud == WIFI_BAUDRATE)
     uart_attach_rx_callback(&_serial, _rx_complete_irq);
@@ -311,7 +323,11 @@ void WifiSerial::end() {
 }
 
 int WifiSerial::available() {
+<<<<<<< HEAD
   return uint16_t(WIFI_RX_BUF_SIZE + _serial.rx_head - _serial.rx_tail) % WIFI_RX_BUF_SIZE;
+=======
+  return ((unsigned int)(WIFI_RX_BUF_SIZE + _serial.rx_head - _serial.rx_tail)) % WIFI_RX_BUF_SIZE;
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 //
@@ -322,7 +338,11 @@ int WifiSerial::read() {
   // if the head isn't ahead of the tail, we don't have any characters
   if (_serial.rx_head == _serial.rx_tail) return -1;
 
+<<<<<<< HEAD
   uint8_t c = _serial.rx_buff[_serial.rx_tail];
+=======
+  unsigned char c = _serial.rx_buff[_serial.rx_tail];
+>>>>>>> upstream/bugfix-2.0.x
   _serial.rx_tail = (rx_buffer_index_t)(_serial.rx_tail + 1) % WIFI_RX_BUF_SIZE;
   return c;
 }

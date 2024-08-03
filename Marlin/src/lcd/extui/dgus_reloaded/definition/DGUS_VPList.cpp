@@ -22,7 +22,11 @@
 
 #include "../../../../inc/MarlinConfigPre.h"
 
+<<<<<<< HEAD
 #if DGUS_LCD_UI_RELOADED
+=======
+#if ENABLED(DGUS_LCD_UI_RELOADED)
+>>>>>>> upstream/bugfix-2.0.x
 
 #include "DGUS_VPList.h"
 
@@ -75,6 +79,7 @@ const struct DGUS_VP vp_list[] PROGMEM = {
 
   // READ-ONLY VARIABLES
 
+<<<<<<< HEAD
   VP_HELPER_RX(DGUS_Addr::SCREENCHANGE,          &DGUSRxHandler::screenChange),
   VP_HELPER_RX(DGUS_Addr::SCREENCHANGE_SD,       &DGUSRxHandler::screenChange),
   VP_HELPER_RX(DGUS_Addr::SCREENCHANGE_Idle,     &DGUSRxHandler::screenChange),
@@ -171,10 +176,110 @@ const struct DGUS_VP vp_list[] PROGMEM = {
     VP_HELPER_TX_SIZE(DGUS_Addr::SD_SelectedFileName,
                       DGUS_FILENAME_LEN,
                       &DGUSTxHandler::selectedFileName),
+=======
+  VP_HELPER_RX(DGUS_Addr::SCREENCHANGE,          &DGUSRxHandler::ScreenChange),
+  VP_HELPER_RX(DGUS_Addr::SCREENCHANGE_SD,       &DGUSRxHandler::ScreenChange),
+  VP_HELPER_RX(DGUS_Addr::SCREENCHANGE_Idle,     &DGUSRxHandler::ScreenChange),
+  VP_HELPER_RX(DGUS_Addr::SCREENCHANGE_Printing, &DGUSRxHandler::ScreenChange),
+
+  #if ENABLED(SDSUPPORT)
+    VP_HELPER_RX(DGUS_Addr::SD_SelectFile,   &DGUSRxHandler::SelectFile),
+    VP_HELPER_RX(DGUS_Addr::SD_Scroll,       &DGUSRxHandler::Scroll),
+    VP_HELPER_RX_NODATA(DGUS_Addr::SD_Print, &DGUSRxHandler::PrintFile),
+  #endif
+
+  VP_HELPER_RX(DGUS_Addr::STATUS_Abort,  &DGUSRxHandler::PrintAbort),
+  VP_HELPER_RX(DGUS_Addr::STATUS_Pause,  &DGUSRxHandler::PrintPause),
+  VP_HELPER_RX(DGUS_Addr::STATUS_Resume, &DGUSRxHandler::PrintResume),
+
+  VP_HELPER_RX(DGUS_Addr::ADJUST_SetFeedrate,     &DGUSRxHandler::Feedrate),
+  VP_HELPER_RX(DGUS_Addr::ADJUST_SetFlowrate_CUR, &DGUSRxHandler::Flowrate),
+  #if HAS_MULTI_EXTRUDER
+    VP_HELPER_RX(DGUS_Addr::ADJUST_SetFlowrate_E0,  &DGUSRxHandler::Flowrate),
+    VP_HELPER_RX(DGUS_Addr::ADJUST_SetFlowrate_E1,  &DGUSRxHandler::Flowrate),
+  #endif
+  VP_HELPER_RX(DGUS_Addr::ADJUST_SetBabystep,     &DGUSRxHandler::BabystepSet),
+  VP_HELPER_RX(DGUS_Addr::ADJUST_Babystep,        &DGUSRxHandler::Babystep),
+
+  VP_HELPER_RX(DGUS_Addr::TEMP_Preset,        &DGUSRxHandler::TempPreset),
+  VP_HELPER_RX(DGUS_Addr::TEMP_SetTarget_Bed, &DGUSRxHandler::TempTarget),
+  VP_HELPER_RX(DGUS_Addr::TEMP_SetTarget_H0,  &DGUSRxHandler::TempTarget),
+  #if HAS_MULTI_HOTEND
+    VP_HELPER_RX(DGUS_Addr::TEMP_SetTarget_H1,  &DGUSRxHandler::TempTarget),
+  #endif
+  VP_HELPER_RX(DGUS_Addr::TEMP_Cool,          &DGUSRxHandler::TempCool),
+
+  VP_HELPER_RX(DGUS_Addr::STEPPER_Control, &DGUSRxHandler::Steppers),
+
+  VP_HELPER_RX(DGUS_Addr::LEVEL_OFFSET_Set,     &DGUSRxHandler::ZOffset),
+  VP_HELPER_RX(DGUS_Addr::LEVEL_OFFSET_Step,    &DGUSRxHandler::ZOffsetStep),
+  VP_HELPER_RX(DGUS_Addr::LEVEL_OFFSET_SetStep, &DGUSRxHandler::ZOffsetSetStep),
+
+  VP_HELPER_RX(DGUS_Addr::LEVEL_MANUAL_Point, &DGUSRxHandler::MoveToPoint),
+
+  VP_HELPER_RX_NODATA(DGUS_Addr::LEVEL_AUTO_Probe,   &DGUSRxHandler::Probe),
+  VP_HELPER_RX_NODATA(DGUS_Addr::LEVEL_AUTO_Disable,
+                      &DGUSRxHandler::DisableABL),
+
+  VP_HELPER_RX(DGUS_Addr::FILAMENT_Select,    &DGUSRxHandler::FilamentSelect),
+  VP_HELPER_RX(DGUS_Addr::FILAMENT_SetLength, &DGUSRxHandler::FilamentLength),
+  VP_HELPER_RX(DGUS_Addr::FILAMENT_Move,      &DGUSRxHandler::FilamentMove),
+
+  VP_HELPER_RX(DGUS_Addr::MOVE_Home,    &DGUSRxHandler::Home),
+  VP_HELPER_RX(DGUS_Addr::MOVE_SetX,    &DGUSRxHandler::Move),
+  VP_HELPER_RX(DGUS_Addr::MOVE_SetY,    &DGUSRxHandler::Move),
+  VP_HELPER_RX(DGUS_Addr::MOVE_SetZ,    &DGUSRxHandler::Move),
+  VP_HELPER_RX(DGUS_Addr::MOVE_Step,    &DGUSRxHandler::MoveStep),
+  VP_HELPER_RX(DGUS_Addr::MOVE_SetStep, &DGUSRxHandler::MoveSetStep),
+
+  VP_HELPER_RX_NODATA(DGUS_Addr::GCODE_Clear,   &DGUSRxHandler::GcodeClear),
+  VP_HELPER_RX_NODATA(DGUS_Addr::GCODE_Execute, &DGUSRxHandler::GcodeExecute),
+
+  VP_HELPER_RX(DGUS_Addr::EEPROM_Reset, &DGUSRxHandler::ResetEEPROM),
+
+  VP_HELPER_RX(DGUS_Addr::SETTINGS2_Extra, &DGUSRxHandler::SettingsExtra),
+
+  VP_HELPER_RX(DGUS_Addr::PID_Select,     &DGUSRxHandler::PIDSelect),
+  VP_HELPER_RX(DGUS_Addr::PID_SetTemp,    &DGUSRxHandler::PIDSetTemp),
+  VP_HELPER_RX_NODATA(DGUS_Addr::PID_Run, &DGUSRxHandler::PIDRun),
+
+  #if ENABLED(POWER_LOSS_RECOVERY)
+    VP_HELPER_RX(DGUS_Addr::POWERLOSS_Abort,  &DGUSRxHandler::PowerLossAbort),
+    VP_HELPER_RX(DGUS_Addr::POWERLOSS_Resume, &DGUSRxHandler::PowerLossResume),
+  #endif
+
+  VP_HELPER_RX(DGUS_Addr::WAIT_Abort, &DGUSRxHandler::WaitAbort),
+  VP_HELPER_RX_NODATA(DGUS_Addr::WAIT_Continue, &DGUSRxHandler::WaitContinue),
+
+  // WRITE-ONLY VARIABLES
+
+  #if ENABLED(SDSUPPORT)
+    VP_HELPER_TX(DGUS_Addr::SD_Type, &DGUSTxHandler::FileType),
+    VP_HELPER_TX_SIZE(DGUS_Addr::SD_FileName0,
+                      DGUS_FILENAME_LEN,
+                      &DGUSTxHandler::FileName),
+    VP_HELPER_TX_SIZE(DGUS_Addr::SD_FileName1,
+                      DGUS_FILENAME_LEN,
+                      &DGUSTxHandler::FileName),
+    VP_HELPER_TX_SIZE(DGUS_Addr::SD_FileName2,
+                      DGUS_FILENAME_LEN,
+                      &DGUSTxHandler::FileName),
+    VP_HELPER_TX_SIZE(DGUS_Addr::SD_FileName3,
+                      DGUS_FILENAME_LEN,
+                      &DGUSTxHandler::FileName),
+    VP_HELPER_TX_SIZE(DGUS_Addr::SD_FileName4,
+                      DGUS_FILENAME_LEN,
+                      &DGUSTxHandler::FileName),
+    VP_HELPER_TX(DGUS_Addr::SD_ScrollIcons, &DGUSTxHandler::ScrollIcons),
+    VP_HELPER_TX_SIZE(DGUS_Addr::SD_SelectedFileName,
+                      DGUS_FILENAME_LEN,
+                      &DGUSTxHandler::SelectedFileName),
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 
   VP_HELPER_TX_AUTO(DGUS_Addr::STATUS_PositionZ,
                     nullptr,
+<<<<<<< HEAD
                     &DGUSTxHandler::zPosition),
   VP_HELPER(DGUS_Addr::STATUS_Elapsed,
             DGUS_ELAPSED_LEN,
@@ -200,10 +305,38 @@ const struct DGUS_VP vp_list[] PROGMEM = {
     VP_HELPER_TX_AUTO(DGUS_Addr::ADJUST_Flowrate_E1,
                       nullptr,
                       &DGUSTxHandler::flowrate),
+=======
+                    &DGUSTxHandler::PositionZ),
+  VP_HELPER(DGUS_Addr::STATUS_Ellapsed,
+            DGUS_ELLAPSED_LEN,
+            VPFLAG_AUTOUPLOAD,
+            nullptr,
+            nullptr,
+            &DGUSTxHandler::Ellapsed),
+  VP_HELPER_TX_AUTO(DGUS_Addr::STATUS_Percent,
+                    nullptr,
+                    &DGUSTxHandler::Percent),
+  VP_HELPER_TX(DGUS_Addr::STATUS_Icons, &DGUSTxHandler::StatusIcons),
+
+  VP_HELPER_TX_AUTO(DGUS_Addr::ADJUST_Feedrate,
+                    &feedrate_percentage,
+                    &DGUSTxHandler::ExtraToInteger<int16_t>),
+  VP_HELPER_TX_AUTO(DGUS_Addr::ADJUST_Flowrate_CUR,
+                    nullptr,
+                    &DGUSTxHandler::Flowrate),
+  #if HAS_MULTI_EXTRUDER
+    VP_HELPER_TX_AUTO(DGUS_Addr::ADJUST_Flowrate_E0,
+                      nullptr,
+                      &DGUSTxHandler::Flowrate),
+    VP_HELPER_TX_AUTO(DGUS_Addr::ADJUST_Flowrate_E1,
+                      nullptr,
+                      &DGUSTxHandler::Flowrate),
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 
   VP_HELPER_TX_AUTO(DGUS_Addr::TEMP_Current_Bed,
                     &thermalManager.temp_bed.celsius,
+<<<<<<< HEAD
                     (&DGUSTxHandler::extraToFixedPoint<float, 1>)),
   VP_HELPER_TX_AUTO(DGUS_Addr::TEMP_Target_Bed,
                     &thermalManager.temp_bed.target,
@@ -224,10 +357,33 @@ const struct DGUS_VP vp_list[] PROGMEM = {
                       &thermalManager.temp_hotend[ExtUI::heater_t::H1].target,
                       &DGUSTxHandler::extraToInteger<int16_t>),
     VP_HELPER_TX(DGUS_Addr::TEMP_Max_H1, &DGUSTxHandler::tempMax),
+=======
+                    &DGUSTxHandler::ExtraToInteger<float>),
+  VP_HELPER_TX_AUTO(DGUS_Addr::TEMP_Target_Bed,
+                    &thermalManager.temp_bed.target,
+                    &DGUSTxHandler::ExtraToInteger<int16_t>),
+  VP_HELPER_TX(DGUS_Addr::TEMP_Max_Bed, &DGUSTxHandler::TempMax),
+  VP_HELPER_TX_AUTO(DGUS_Addr::TEMP_Current_H0,
+                    &thermalManager.temp_hotend[ExtUI::heater_t::H0].celsius,
+                    &DGUSTxHandler::ExtraToInteger<float>),
+  VP_HELPER_TX_AUTO(DGUS_Addr::TEMP_Target_H0,
+                    &thermalManager.temp_hotend[ExtUI::heater_t::H0].target,
+                    &DGUSTxHandler::ExtraToInteger<int16_t>),
+  VP_HELPER_TX(DGUS_Addr::TEMP_Max_H0, &DGUSTxHandler::TempMax),
+  #if HAS_MULTI_HOTEND
+    VP_HELPER_TX_AUTO(DGUS_Addr::TEMP_Current_H1,
+                      &thermalManager.temp_hotend[ExtUI::heater_t::H1].celsius,
+                      &DGUSTxHandler::ExtraToInteger<float>),
+    VP_HELPER_TX_AUTO(DGUS_Addr::TEMP_Target_H1,
+                      &thermalManager.temp_hotend[ExtUI::heater_t::H1].target,
+                      &DGUSTxHandler::ExtraToInteger<int16_t>),
+    VP_HELPER_TX(DGUS_Addr::TEMP_Max_H1, &DGUSTxHandler::TempMax),
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 
   VP_HELPER_TX_AUTO(DGUS_Addr::STEPPER_Status,
                     nullptr,
+<<<<<<< HEAD
                     &DGUSTxHandler::stepperStatus),
 
   VP_HELPER_TX_AUTO(DGUS_Addr::LEVEL_OFFSET_Current,
@@ -273,36 +429,103 @@ const struct DGUS_VP vp_list[] PROGMEM = {
   VP_HELPER_TX_EXTRA(DGUS_Addr::PID_Temp,
                      &DGUSScreenHandler::pid_temp,
                      &DGUSTxHandler::extraToInteger<uint16_t>),
+=======
+                    &DGUSTxHandler::StepperStatus),
+
+  VP_HELPER_TX_AUTO(DGUS_Addr::LEVEL_OFFSET_Current,
+                    &probe.offset.z,
+                    (&DGUSTxHandler::ExtraToFixedPoint<float, 2>)),
+  VP_HELPER_TX_EXTRA(DGUS_Addr::LEVEL_OFFSET_StepIcons,
+                     &DGUSScreenHandler::offset_steps,
+                     &DGUSTxHandler::StepIcons),
+
+  VP_HELPER_TX_AUTO(DGUS_Addr::LEVEL_AUTO_DisableIcon,
+                    nullptr,
+                    &DGUSTxHandler::ABLDisableIcon),
+  VP_HELPER_TX(DGUS_Addr::LEVEL_AUTO_Grid, &DGUSTxHandler::ABLGrid),
+
+  VP_HELPER_TX_EXTRA(DGUS_Addr::LEVEL_PROBING_Icons1,
+                     &DGUSScreenHandler::probing_icons[0],
+                     &DGUSTxHandler::ExtraToInteger<uint16_t>),
+  VP_HELPER_TX_EXTRA(DGUS_Addr::LEVEL_PROBING_Icons2,
+                     &DGUSScreenHandler::probing_icons[1],
+                     &DGUSTxHandler::ExtraToInteger<uint16_t>),
+
+  VP_HELPER_TX(DGUS_Addr::FILAMENT_ExtruderIcons, &DGUSTxHandler::FilamentIcons),
+  VP_HELPER_TX_EXTRA(DGUS_Addr::FILAMENT_Length,
+                     &DGUSScreenHandler::filament_length,
+                     &DGUSTxHandler::ExtraToInteger<uint16_t>),
+
+  VP_HELPER_TX_AUTO(DGUS_Addr::MOVE_CurrentX,
+                    &current_position.x,
+                    (&DGUSTxHandler::ExtraToFixedPoint<float, 1>)),
+  VP_HELPER_TX_AUTO(DGUS_Addr::MOVE_CurrentY,
+                    &current_position.y,
+                    (&DGUSTxHandler::ExtraToFixedPoint<float, 1>)),
+  VP_HELPER_TX_AUTO(DGUS_Addr::MOVE_CurrentZ,
+                    &current_position.z,
+                    (&DGUSTxHandler::ExtraToFixedPoint<float, 1>)),
+  VP_HELPER_TX_EXTRA(DGUS_Addr::MOVE_StepIcons,
+                     &DGUSScreenHandler::move_steps,
+                     &DGUSTxHandler::StepIcons),
+
+  VP_HELPER_TX(DGUS_Addr::SETTINGS2_BLTouch, &DGUSTxHandler::BLTouch),
+
+  VP_HELPER_TX(DGUS_Addr::PID_HeaterIcons, &DGUSTxHandler::PIDIcons),
+  VP_HELPER_TX_EXTRA(DGUS_Addr::PID_Temp,
+                     &DGUSScreenHandler::pid_temp,
+                     &DGUSTxHandler::ExtraToInteger<uint16_t>),
+>>>>>>> upstream/bugfix-2.0.x
   VP_HELPER_DWORD(DGUS_Addr::PID_Kp,
                   VPFLAG_AUTOUPLOAD,
                   nullptr,
                   nullptr,
+<<<<<<< HEAD
                   &DGUSTxHandler::pidKp),
+=======
+                  &DGUSTxHandler::PIDKp),
+>>>>>>> upstream/bugfix-2.0.x
   VP_HELPER_DWORD(DGUS_Addr::PID_Ki,
                   VPFLAG_AUTOUPLOAD,
                   nullptr,
                   nullptr,
+<<<<<<< HEAD
                   &DGUSTxHandler::pidKi),
+=======
+                  &DGUSTxHandler::PIDKi),
+>>>>>>> upstream/bugfix-2.0.x
   VP_HELPER_DWORD(DGUS_Addr::PID_Kd,
                   VPFLAG_AUTOUPLOAD,
                   nullptr,
                   nullptr,
+<<<<<<< HEAD
                   &DGUSTxHandler::pidKd),
+=======
+                  &DGUSTxHandler::PIDKd),
+>>>>>>> upstream/bugfix-2.0.x
 
   VP_HELPER(DGUS_Addr::INFOS_Machine,
             DGUS_MACHINE_LEN,
             VPFLAG_NONE,
             (void*)DGUS_MACHINENAME,
             nullptr,
+<<<<<<< HEAD
             &DGUSTxHandler::extraPGMToString),
   VP_HELPER_TX_SIZE(DGUS_Addr::INFOS_BuildVolume,
                     DGUS_BUILDVOLUME_LEN,
                     &DGUSTxHandler::buildVolume),
+=======
+            &DGUSTxHandler::ExtraPGMToString),
+  VP_HELPER_TX_SIZE(DGUS_Addr::INFOS_BuildVolume,
+                    DGUS_BUILDVOLUME_LEN,
+                    &DGUSTxHandler::BuildVolume),
+>>>>>>> upstream/bugfix-2.0.x
   VP_HELPER(DGUS_Addr::INFOS_Version,
             DGUS_VERSION_LEN,
             VPFLAG_NONE,
             (void*)DGUS_MARLINVERSION,
             nullptr,
+<<<<<<< HEAD
             &DGUSTxHandler::extraPGMToString),
   VP_HELPER_TX(DGUS_Addr::INFOS_TotalPrints, &DGUSTxHandler::totalPrints),
   VP_HELPER_TX(DGUS_Addr::INFOS_FinishedPrints, &DGUSTxHandler::finishedPrints),
@@ -317,6 +540,22 @@ const struct DGUS_VP vp_list[] PROGMEM = {
                     &DGUSTxHandler::filamentUsed),
 
   VP_HELPER_TX(DGUS_Addr::WAIT_Icons, &DGUSTxHandler::waitIcons),
+=======
+            &DGUSTxHandler::ExtraPGMToString),
+  VP_HELPER_TX(DGUS_Addr::INFOS_TotalPrints, &DGUSTxHandler::TotalPrints),
+  VP_HELPER_TX(DGUS_Addr::INFOS_FinishedPrints, &DGUSTxHandler::FinishedPrints),
+  VP_HELPER_TX_SIZE(DGUS_Addr::INFOS_PrintTime,
+                    DGUS_PRINTTIME_LEN,
+                    &DGUSTxHandler::PrintTime),
+  VP_HELPER_TX_SIZE(DGUS_Addr::INFOS_LongestPrint,
+                    DGUS_LONGESTPRINT_LEN,
+                    &DGUSTxHandler::LongestPrint),
+  VP_HELPER_TX_SIZE(DGUS_Addr::INFOS_FilamentUsed,
+                    DGUS_FILAMENTUSED_LEN,
+                    &DGUSTxHandler::FilamentUsed),
+
+  VP_HELPER_TX(DGUS_Addr::WAIT_Icons, &DGUSTxHandler::WaitIcons),
+>>>>>>> upstream/bugfix-2.0.x
 
   // READ-WRITE VARIABLES
 
@@ -324,34 +563,55 @@ const struct DGUS_VP vp_list[] PROGMEM = {
             2,
             VPFLAG_AUTOUPLOAD,
             nullptr,
+<<<<<<< HEAD
             &DGUSRxHandler::fanSpeed,
             &DGUSTxHandler::fanSpeed),
+=======
+            &DGUSRxHandler::FanSpeed,
+            &DGUSTxHandler::FanSpeed),
+>>>>>>> upstream/bugfix-2.0.x
 
   VP_HELPER(DGUS_Addr::GCODE_Data,
             DGUS_GCODE_LEN,
             VPFLAG_RXSTRING,
             (void*)DGUSScreenHandler::gcode,
+<<<<<<< HEAD
             &DGUSRxHandler::stringToExtra,
             &DGUSTxHandler::extraToString),
+=======
+            &DGUSRxHandler::StringToExtra,
+            &DGUSTxHandler::ExtraToString),
+>>>>>>> upstream/bugfix-2.0.x
 
   VP_HELPER(DGUS_Addr::PID_Cycles,
             2,
             VPFLAG_NONE,
             &DGUSScreenHandler::pid_cycles,
+<<<<<<< HEAD
             &DGUSRxHandler::integerToExtra<uint8_t>,
             &DGUSTxHandler::extraToInteger<uint8_t>),
+=======
+            &DGUSRxHandler::IntegerToExtra<uint8_t>,
+            &DGUSTxHandler::ExtraToInteger<uint8_t>),
+>>>>>>> upstream/bugfix-2.0.x
 
   VP_HELPER(DGUS_Addr::VOLUME_Level,
             2,
             VPFLAG_NONE,
             nullptr,
+<<<<<<< HEAD
             &DGUSRxHandler::volume,
             &DGUSTxHandler::volume),
+=======
+            &DGUSRxHandler::Volume,
+            &DGUSTxHandler::Volume),
+>>>>>>> upstream/bugfix-2.0.x
 
   VP_HELPER(DGUS_Addr::BRIGHTNESS_Level,
             2,
             VPFLAG_NONE,
             nullptr,
+<<<<<<< HEAD
             &DGUSRxHandler::brightness,
             &DGUSTxHandler::brightness),
 
@@ -359,6 +619,15 @@ const struct DGUS_VP vp_list[] PROGMEM = {
 
   VP_HELPER_TX(DGUS_Addr::STATUS_Percent_Complete, &DGUSTxHandler::percent),
   VP_HELPER_RX_NODATA(DGUS_Addr::INFOS_Debug, &DGUSRxHandler::debug),
+=======
+            &DGUSRxHandler::Brightness,
+            &DGUSTxHandler::Brightness),
+
+  // SPECIAL CASES
+
+  VP_HELPER_TX(DGUS_Addr::STATUS_Percent_Complete, &DGUSTxHandler::Percent),
+  VP_HELPER_RX_NODATA(DGUS_Addr::INFOS_Debug, &DGUSRxHandler::Debug),
+>>>>>>> upstream/bugfix-2.0.x
 
   VP_HELPER((DGUS_Addr)0, 0, VPFLAG_NONE, nullptr, nullptr, nullptr)
 

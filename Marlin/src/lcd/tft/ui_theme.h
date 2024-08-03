@@ -21,6 +21,7 @@
  */
 #pragma once
 
+<<<<<<<< HEAD:Marlin/src/lcd/tft/ui_theme.h
 #include "../../inc/MarlinConfigPre.h"
 
 #ifndef TFT_THEME
@@ -33,3 +34,18 @@
 #include "tft_color.h"
 #include TFT_THEME_INCL(TFT_THEME)
 #include "themes/theme_default.h"
+========
+/**
+ * polargraph.h - Polargraph-specific functions
+ */
+
+#include "../core/types.h"
+#include "../core/macros.h"
+
+extern float segments_per_second;
+extern xy_pos_t draw_area_min, draw_area_max;
+extern xy_float_t draw_area_size;
+extern float polargraph_max_belt_len;
+
+void inverse_kinematics(const xyz_pos_t &raw);
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/module/polargraph.h

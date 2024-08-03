@@ -9,7 +9,11 @@
 #  Will continue on if a COM port isn't found so that the compilation can be done.
 #
 
+<<<<<<< HEAD
 import os, platform
+=======
+import os
+>>>>>>> upstream/bugfix-2.0.x
 from SCons.Script import DefaultEnvironment
 
 current_OS = platform.system()

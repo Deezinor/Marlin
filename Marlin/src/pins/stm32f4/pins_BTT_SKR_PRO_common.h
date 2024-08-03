@@ -23,14 +23,23 @@
 
 #include "env_validate.h"
 
+<<<<<<< HEAD
 #define USES_DIAG_PINS
+=======
+#define USES_DIAG_JUMPERS
+>>>>>>> upstream/bugfix-2.0.x
 
 // If you have the BigTreeTech driver expansion module, enable BTT_MOTOR_EXPANSION
 // https://github.com/bigtreetech/BTT-Expansion-module/tree/master/BTT%20EXP-MOT
 //#define BTT_MOTOR_EXPANSION
 
+<<<<<<< HEAD
 #if ALL(HAS_WIRED_LCD, BTT_MOTOR_EXPANSION)
   #if ANY(CR10_STOCKDISPLAY, ENDER2_STOCKDISPLAY)
+=======
+#if BOTH(HAS_WIRED_LCD, BTT_MOTOR_EXPANSION)
+  #if EITHER(CR10_STOCKDISPLAY, ENDER2_STOCKDISPLAY)
+>>>>>>> upstream/bugfix-2.0.x
     #define EXP_MOT_USE_EXP2_ONLY 1
   #else
     #error "You can't use both an LCD and a Motor Expansion Module on EXP1/EXP2 at the same time."
@@ -299,7 +308,11 @@
 //
 // Fans
 //
+<<<<<<< HEAD
 #define FAN0_PIN                            PC8   // Fan0
+=======
+#define FAN_PIN                             PC8   // Fan0
+>>>>>>> upstream/bugfix-2.0.x
 #define FAN1_PIN                            PE5   // Fan1
 
 #ifndef E0_AUTO_FAN_PIN
@@ -449,6 +462,7 @@
   #if ENABLED(CR10_STOCKDISPLAY)
 
     #define LCD_PINS_RS              EXP1_07_PIN
+<<<<<<< HEAD
 
     #define BTN_EN1                  EXP1_03_PIN
     #define BTN_EN2                  EXP1_05_PIN
@@ -502,8 +516,65 @@
 
     #define BTN_EN1                  EXP2_03_PIN
     #define BTN_EN2                  EXP2_05_PIN
+=======
+
+    #define BTN_EN1                  EXP1_03_PIN
+    #define BTN_EN2                  EXP1_05_PIN
+>>>>>>> upstream/bugfix-2.0.x
 
     #define LCD_PINS_EN              EXP1_03_PIN
+    #define LCD_PINS_D4              EXP1_05_PIN
+
+  #elif ENABLED(MKS_MINI_12864)
+
+    #define DOGLCD_A0                EXP1_07_PIN
+    #define DOGLCD_CS                EXP1_06_PIN
+    #define BTN_EN1                  EXP2_03_PIN
+    #define BTN_EN2                  EXP2_05_PIN
+
+  #elif ENABLED(WYH_L12864)
+
+    #ifndef NO_CONTROLLER_CUSTOM_WIRING_WARNING
+      #error "CAUTION! WYH_L12864 requires wiring modifications. See 'pins_BTT_SKR_PRO_common.h' for details. (Define NO_CONTROLLER_CUSTOM_WIRING_WARNING to suppress this warning.)"
+    #endif
+
+    /**
+     * 1. Cut the tab off the LCD connector so it can be plugged into the "EXP1" connector the other way.
+     * 2. Swap the LCD's +5V (Pin2) and GND (Pin1) wires.
+     *
+     * !!! If you are unsure, ask for help! Your motherboard may be damaged in some circumstances !!!
+     *
+     * The WYH_L12864 connector plug:
+     *
+     *                  BEFORE                     AFTER
+     *                  ------                     ------
+     *              -- | 1  2 | MOSI           -- | 1  2 | MOSI
+     *         BTN_ENC | 3  4 | SCK       BTN_ENC | 3  4 | SCK
+     *         BTN_EN1 | 5  6   SID       BTN_EN1 | 5  6   SID
+     *         BTN_EN2 | 7  8 | CS        BTN_EN2 | 7  8 | CS
+     *              5V | 9 10 | GND           GND | 9 10 | 5V
+     *                  ------                     ------
+     *                   LCD                        LCD
+     */
+    #undef BEEPER_PIN
+    #undef BTN_ENC
+    #define BTN_EN1                  EXP1_05_PIN
+    #define BTN_EN2                  EXP1_07_PIN
+    #define BTN_ENC                  EXP1_03_PIN
+    #define DOGLCD_CS                EXP1_08_PIN
+    #define DOGLCD_A0                EXP1_06_PIN
+    #define DOGLCD_SCK               EXP1_04_PIN
+    #define DOGLCD_MOSI              EXP1_02_PIN
+    #define LCD_BACKLIGHT_PIN            -1
+
+  #else
+
+    #define LCD_PINS_RS              EXP1_04_PIN
+
+    #define BTN_EN1                  EXP2_03_PIN
+    #define BTN_EN2                  EXP2_05_PIN
+
+    #define LCD_PINS_ENABLE          EXP1_03_PIN
     #define LCD_PINS_D4              EXP1_05_PIN
 
     #if ENABLED(FYSETC_MINI_12864)
@@ -511,7 +582,11 @@
       #define DOGLCD_A0              EXP1_04_PIN
       //#define LCD_BACKLIGHT_PIN           -1
       #define LCD_RESET_PIN          EXP1_05_PIN  // Must be high or open for LCD to operate normally.
+<<<<<<< HEAD
       #if ANY(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
+=======
+      #if EITHER(FYSETC_MINI_12864_1_2, FYSETC_MINI_12864_2_0)
+>>>>>>> upstream/bugfix-2.0.x
         #ifndef RGB_LED_R_PIN
           #define RGB_LED_R_PIN      EXP1_06_PIN
         #endif
@@ -559,6 +634,7 @@
   // WIFI
   //
 
+<<<<<<< HEAD
   /**
    *          ------
    *      RX | 8  7 | 3.3V      GPIO0  PF14 ... Leave as unused (ESP3D software configures this with a pullup so OK to leave as floating)
@@ -575,3 +651,20 @@
   #define ESP_WIFI_MODULE_GPIO0_PIN         PF14
   #define ESP_WIFI_MODULE_GPIO2_PIN         PF15
 #endif
+=======
+/**
+ *          ------
+ *      RX | 8  7 | 3.3V      GPIO0  PF14 ... Leave as unused (ESP3D software configures this with a pullup so OK to leave as floating)
+ *   GPIO0 | 6  5 | Reset     GPIO2  PF15 ... must be high (ESP3D software configures this with a pullup so OK to leave as floating)
+ *   GPIO2 | 4  3 | Enable    Reset  PG0  ... active low, probably OK to leave floating
+ *     GND | 2  1 | TX        Enable PG1  ... Must be high for module to run
+ *          ------
+ *            W1
+ */
+#define ESP_WIFI_MODULE_COM                    6  // Must also set either SERIAL_PORT or SERIAL_PORT_2 to this
+#define ESP_WIFI_MODULE_BAUDRATE        BAUDRATE  // Must use same BAUDRATE as SERIAL_PORT & SERIAL_PORT_2
+#define ESP_WIFI_MODULE_RESET_PIN           PG0
+#define ESP_WIFI_MODULE_ENABLE_PIN          PG1
+#define ESP_WIFI_MODULE_GPIO0_PIN           PF14
+#define ESP_WIFI_MODULE_GPIO2_PIN           PF15
+>>>>>>> upstream/bugfix-2.0.x

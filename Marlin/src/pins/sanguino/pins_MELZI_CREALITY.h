@@ -37,6 +37,7 @@
 
 #define BOARD_INFO_NAME "Melzi (Creality)"
 
+<<<<<<< HEAD
 /**       ------
  *    27 | 1  2 | 16
  *    11 | 3  4 | RESET
@@ -87,6 +88,16 @@
   #define BOARD_ST7920_DELAY_2               125
   #define BOARD_ST7920_DELAY_3               125
 #endif
+=======
+// Alter timing for graphical display
+#if IS_U8GLIB_ST7920
+  #define BOARD_ST7920_DELAY_1               125
+  #define BOARD_ST7920_DELAY_2               125
+  #define BOARD_ST7920_DELAY_3               125
+#endif
+
+#include "pins_MELZI.h" // ... SANGUINOLOLU_12 ... SANGUINOLOLU_11
+>>>>>>> upstream/bugfix-2.0.x
 
 #include "pins_MELZI.h" // ... SANGUINOLOLU_12 ... SANGUINOLOLU_11
 
@@ -94,6 +105,12 @@
   #ifndef SERVO0_PIN
     #define SERVO0_PIN               EXP1_01_PIN
   #endif
+<<<<<<< HEAD
+=======
+  #if SERVO0_PIN == BEEPER_PIN
+    #undef BEEPER_PIN
+  #endif
+>>>>>>> upstream/bugfix-2.0.x
 #elif HAS_FILAMENT_SENSOR
   #ifndef FIL_RUNOUT_PIN
     #define FIL_RUNOUT_PIN           EXP1_01_PIN
@@ -150,3 +167,17 @@
   PIN:  30   Port: A1        LCD_PINS_D4      Output = 1
   PIN:  31   Port: A0        SDSS             Output = 1
 */
+<<<<<<< HEAD
+=======
+
+/**
+ *    EXP1 Connector                      EXP1 as CR10 STOCKDISPLAY
+ *        ------                                      ------
+ *   PA4 | 1  2 | PC0                     BEEPER_PIN | 1  2 | BTN_ENC
+ *   PD3 | 3  4 | RESET                      BTN_EN1 | 3  4 | RESET
+ *   PD2   5  6 | PA1                        BTN_EN2   5  6 | LCD_PINS_D4     (ST9720 CLK)
+ *   PA3 | 7  8 | PC1        (ST9720 CS) LCD_PINS_RS | 7  8 | LCD_PINS_ENABLE (ST9720 DAT)
+ *   GND | 9 10 | 5V                             GND | 9 10 | 5V
+ *        ------                                      ------
+ */
+>>>>>>> upstream/bugfix-2.0.x

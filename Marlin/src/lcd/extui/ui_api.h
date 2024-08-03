@@ -46,10 +46,14 @@
 
 #include "../marlinui.h"
 #include "../../gcode/gcode.h"
+<<<<<<< HEAD
 #include "../../module/temperature.h"
 
 #if ENABLED(ADVANCED_PAUSE_FEATURE)
   #include "../../module/motion.h"
+=======
+#if M600_PURGE_MORE_RESUMABLE
+>>>>>>> upstream/bugfix-2.0.x
   #include "../../feature/pause.h"
 #endif
 
@@ -64,6 +68,7 @@ namespace ExtUI {
   #endif
   static constexpr size_t eeprom_data_size = EXTUI_EEPROM_DATA_SIZE;
 
+<<<<<<< HEAD
   enum axis_t     : uint8_t { X, Y, Z, I, J, K, U, V, W, X2, Y2, Z2, Z3, Z4 };
   enum extruder_t : uint8_t { E0, E1, E2, E3, E4, E5, E6, E7 };
   enum heater_t   : uint8_t { H0, H1, H2, H3, H4, H5, BED, CHAMBER, COOLER };
@@ -75,6 +80,13 @@ namespace ExtUI {
     enum mpcresult_t : uint8_t { MPC_STARTED, MPC_TEMP_ERROR, MPC_INTERRUPTED, MPC_DONE };
   #endif
   struct probe_limits_t { float xmin, ymin, xmax, ymax; };
+=======
+  enum axis_t     : uint8_t { X, Y, Z, I, J, K, X2, Y2, Z2, Z3, Z4 };
+  enum extruder_t : uint8_t { E0, E1, E2, E3, E4, E5, E6, E7 };
+  enum heater_t   : uint8_t { H0, H1, H2, H3, H4, H5, BED, CHAMBER, COOLER };
+  enum fan_t      : uint8_t { FAN0, FAN1, FAN2, FAN3, FAN4, FAN5, FAN6, FAN7 };
+  enum result_t   : uint8_t { PID_STARTED, PID_BAD_EXTRUDER_NUM, PID_TEMP_TOO_HIGH, PID_TUNING_TIMEOUT, PID_DONE };
+>>>>>>> upstream/bugfix-2.0.x
 
   constexpr uint8_t extruderCount = EXTRUDERS;
   constexpr uint8_t hotendCount   = HOTENDS;
@@ -137,6 +149,14 @@ namespace ExtUI {
     GcodeSuite::MarlinBusyState getHostKeepaliveState();
     bool getHostKeepaliveIsPaused();
   #endif
+<<<<<<< HEAD
+=======
+
+  bool isHeaterIdle(const heater_t);
+  bool isHeaterIdle(const extruder_t);
+  void enableHeater(const heater_t);
+  void enableHeater(const extruder_t);
+>>>>>>> upstream/bugfix-2.0.x
 
   #if ENABLED(JOYSTICK)
     void jog(const xyz_float_t &dir);
@@ -192,7 +212,10 @@ namespace ExtUI {
   feedRate_t getMinFeedrate_mm_s();
   feedRate_t getMinTravelFeedrate_mm_s();
   feedRate_t getFeedrate_mm_s();
+<<<<<<< HEAD
   // Standard accelerations, as set in the planner
+=======
+>>>>>>> upstream/bugfix-2.0.x
   float getPrintingAcceleration_mm_s2();
   float getRetractAcceleration_mm_s2();
   float getTravelAcceleration_mm_s2();
@@ -208,7 +231,10 @@ namespace ExtUI {
   #endif
   uint32_t getProgress_seconds_elapsed();
 
+<<<<<<< HEAD
   // Material Preheat Presets
+=======
+>>>>>>> upstream/bugfix-2.0.x
   #if HAS_PREHEAT
     uint16_t getMaterial_preset_E(const uint16_t);
     #if HAS_HEATED_BED
@@ -244,6 +270,11 @@ namespace ExtUI {
       float getMeshPoint(const xy_uint8_t &pos);
       void setMeshPoint(const xy_uint8_t &pos, const_float_t zval);
       void moveToMeshPoint(const xy_uint8_t &pos, const_float_t z);
+<<<<<<< HEAD
+=======
+      void onLevelingStart();
+      void onLevelingDone();
+>>>>>>> upstream/bugfix-2.0.x
       void onMeshUpdate(const int8_t xpos, const int8_t ypos, const_float_t zval);
       inline void onMeshUpdate(const xy_int8_t &pos, const_float_t zval) { onMeshUpdate(pos.x, pos.y, zval); }
 
@@ -267,9 +298,14 @@ namespace ExtUI {
     void setHostResponse(const uint8_t);
   #endif
 
+<<<<<<< HEAD
   // Provide a simulated click to MarlinUI
   inline void simulateUserClick() {
     #if ANY(HAS_MARLINUI_MENU, EXTENSIBLE_UI)
+=======
+  inline void simulateUserClick() {
+    #if ANY(HAS_MARLINUI_MENU, EXTENSIBLE_UI, DWIN_CREALITY_LCD_JYERSUI)
+>>>>>>> upstream/bugfix-2.0.x
       ui.lcd_clicked = true;
     #endif
   }
@@ -316,9 +352,15 @@ namespace ExtUI {
   bool awaitingUserConfirm();
   void setUserConfirmed();
 
+<<<<<<< HEAD
   #if ENABLED(ADVANCED_PAUSE_FEATURE)
     // "Purge More" has a control screen
     void setPauseMenuResponse(PauseMenuResponse);
+=======
+  #if M600_PURGE_MORE_RESUMABLE
+    void setPauseMenuResponse(PauseMenuResponse);
+    extern PauseMessage pauseModeStatus;
+>>>>>>> upstream/bugfix-2.0.x
     PauseMode getPauseMode();
   #endif
 
@@ -416,10 +458,24 @@ namespace ExtUI {
     #endif
   #endif
 
+<<<<<<< HEAD
   // Power-Loss Recovery
   #if ENABLED(POWER_LOSS_RECOVERY)
     bool getPowerLossRecoveryEnabled();
     void setPowerLossRecoveryEnabled(const bool);
+=======
+  #if ENABLED(POWER_LOSS_RECOVERY)
+    bool getPowerLossRecoveryEnabled();
+    void setPowerLossRecoveryEnabled(const bool);
+  #endif
+
+  #if ENABLED(PIDTEMP)
+    float getPIDValues_Kp(const extruder_t);
+    float getPIDValues_Ki(const extruder_t);
+    float getPIDValues_Kd(const extruder_t);
+    void setPIDValues(const_float_t, const_float_t , const_float_t , extruder_t);
+    void startPIDTune(const celsius_t, extruder_t);
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 
   // Hotend PID
@@ -433,10 +489,17 @@ namespace ExtUI {
 
   // Bed PID
   #if ENABLED(PIDTEMPBED)
+<<<<<<< HEAD
     float getBedPID_Kp();
     float getBedPID_Ki();
     float getBedPID_Kd();
     void setBedPID(const_float_t, const_float_t , const_float_t);
+=======
+    float getBedPIDValues_Kp();
+    float getBedPIDValues_Ki();
+    float getBedPIDValues_Kd();
+    void setBedPIDValues(const_float_t, const_float_t , const_float_t);
+>>>>>>> upstream/bugfix-2.0.x
     void startBedPIDTune(const celsius_t);
   #endif
 
@@ -498,6 +561,7 @@ namespace ExtUI {
   void onMediaMounted();
   void onMediaError();
   void onMediaRemoved();
+<<<<<<< HEAD
 
   void onHeatingError(const heater_id_t header_id);
   void onMinTempError(const heater_id_t header_id);
@@ -508,15 +572,23 @@ namespace ExtUI {
   void onPrinterKilled(FSTR_P const error, FSTR_P const component);
   void onSurviveInKilled();
 
+=======
+  void onPlayTone(const uint16_t frequency, const uint16_t duration);
+  void onPrinterKilled(FSTR_P const error, FSTR_P const component);
+>>>>>>> upstream/bugfix-2.0.x
   void onPrintTimerStarted();
   void onPrintTimerPaused();
   void onPrintTimerStopped();
   void onPrintDone();
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
   void onFilamentRunout(const extruder_t extruder);
 
   void onUserConfirmRequired(const char * const msg);
   void onUserConfirmRequired(FSTR_P const fstr);
+<<<<<<< HEAD
 
   // For fancy LCDs include an icon ID, message, and translated button title
   void onUserConfirmRequired(const int icon, const char * const cstr, FSTR_P const fBtn);
@@ -535,6 +607,12 @@ namespace ExtUI {
   void onHomingStart();
   void onHomingDone();
 
+=======
+  void onStatusChanged(const char * const msg);
+  void onStatusChanged(FSTR_P const fstr);
+  void onHomingStart();
+  void onHomingDone();
+>>>>>>> upstream/bugfix-2.0.x
   void onSteppersDisabled();
   void onSteppersEnabled();
   void onAxisDisabled(const axis_t axis);
@@ -544,12 +622,17 @@ namespace ExtUI {
   void onStoreSettings(char *);
   void onLoadSettings(const char *);
   void onPostprocessSettings();
+<<<<<<< HEAD
   void onSettingsStored(const bool success);
   void onSettingsLoaded(const bool success);
 
   #if ENABLED(PREVENT_COLD_EXTRUSION)
     void onSetMinExtrusionTemp(const celsius_t t);
   #endif
+=======
+  void onSettingsStored(bool success);
+  void onSettingsLoaded(bool success);
+>>>>>>> upstream/bugfix-2.0.x
   #if ENABLED(POWER_LOSS_RECOVERY)
     void onSetPowerLoss(const bool onoff);
     void onPowerLoss();

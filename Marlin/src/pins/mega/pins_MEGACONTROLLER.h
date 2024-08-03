@@ -169,11 +169,21 @@
 
 #if ENABLED(MINIPANEL)
 
+<<<<<<< HEAD
   #define BEEPER_PIN                     MINI_15
 
   #define DOGLCD_A0                      MINI_16
   #define DOGLCD_CS                      MINI_14
   #define LCD_BACKLIGHT_PIN              MINI_13  // backlight LED on PA3
+=======
+  #define BEEPER_PIN                          46
+
+  #define DOGLCD_A0                           47
+  #define DOGLCD_CS                           45
+  #define LCD_BACKLIGHT_PIN                   44  // backlight LED on PA3
+
+  #define KILL_PIN                            12
+>>>>>>> upstream/bugfix-2.0.x
 
   #define KILL_PIN                       MINI_18
 
@@ -182,6 +192,8 @@
   #define BTN_EN2                        MINI_19
 
   #define SD_DETECT_PIN                  MINI_02
+
+  //#define LCD_SCREEN_ROTATE                180  // 0, 90, 180, 270
 
   //#define LCD_SCREEN_ROTATE                180  // 0, 90, 180, 270
 

@@ -83,7 +83,11 @@ enum {
   #if ENABLED(FILAMENT_RUNOUT_SENSOR)
     FILAMENT_RUNOUT_SCREEN_CACHE,
   #endif
+<<<<<<< HEAD
   #if HAS_MEDIA
+=======
+  #if ENABLED(SDSUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
     FILES_SCREEN_CACHE,
   #endif
   #if ENABLED(CUSTOM_MENU_MAIN)

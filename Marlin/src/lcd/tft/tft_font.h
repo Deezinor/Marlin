@@ -1,6 +1,6 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
  * Based on Sprinter and grbl.
  * Copyright (c) 2011 Camiel Gubbels / Erik van der Zalm
@@ -21,6 +21,7 @@
  */
 #pragma once
 
+<<<<<<<< HEAD:Marlin/src/lcd/tft/tft_font.h
 #define JOIN(A,B,C)         CAT(CAT(A, B), C)
 #define MENU_FONT_NAME      JOIN(FONT_FAMILY, _, FONT_SIZE)
 #define SYMBOLS_FONT_NAME   JOIN(FONT_FAMILY, _Symbols_, FONT_SIZE)
@@ -32,3 +33,16 @@ extern const uint8_t SYMBOLS_FONT_NAME[];
   #define EXTRA_FONT_NAME   JOIN(FONT_FAMILY, JOIN(_, FONT_EXTRA, _), FONT_SIZE)
   extern const uint8_t EXTRA_FONT_NAME[];
 #endif
+========
+#define BOARD_INFO_NAME "FYSETC SPIDER V22"
+#define DEFAULT_MACHINE_NAME BOARD_INFO_NAME
+
+#define TEMP_3_PIN                          PC3
+#define TEMP_4_PIN                          PB1
+#define TEMP_BED_PIN                        PB0
+
+#define FAN_PIN                             PA13
+#define FAN1_PIN                            PA14
+
+#include "pins_FYSETC_SPIDER.h"
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/pins/stm32f4/pins_FYSETC_SPIDER_V2_2.h

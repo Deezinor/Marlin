@@ -23,7 +23,10 @@
 
 /**
  * BigTreeTech SKR 1.4 Turbo pin assignments
+<<<<<<< HEAD
  * Schematic: https://github.com/bigtreetech/BIGTREETECH-SKR-V1.3/blob/master/BTT%20SKR%20V1.4/Hardware/BTT%20SKR%20V1.4-SCH.pdf
+=======
+>>>>>>> upstream/bugfix-2.0.x
  */
 
 #define BOARD_INFO_NAME "BTT SKR V1.4 TURBO"

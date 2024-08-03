@@ -39,11 +39,16 @@ namespace LanguageNarrow_bg {
   LSTR WELCOME_MSG                        = MACHINE_NAME _UxGT(" Готов.");
   LSTR MSG_MEDIA_INSERTED                 = _UxGT("Картата е поставена");
   LSTR MSG_MEDIA_REMOVED                  = _UxGT("Картата е извадена");
+<<<<<<< HEAD
   LSTR MSG_MAIN_MENU                      = _UxGT("Меню");
+=======
+  LSTR MSG_MAIN                           = _UxGT("Меню");
+>>>>>>> upstream/bugfix-2.0.x
   LSTR MSG_RUN_AUTO_FILES                 = _UxGT("Автостарт");
   LSTR MSG_DISABLE_STEPPERS               = _UxGT("Изкл. двигатели");
   LSTR MSG_AUTO_HOME                      = _UxGT("Паркиране");
   LSTR MSG_SET_HOME_OFFSETS               = _UxGT("Задай Начало");
+<<<<<<< HEAD
 
   LSTR MSG_PREHEAT_1                      = _UxGT("Подгряване ") PREHEAT_1_LABEL;
   LSTR MSG_PREHEAT_1_H                    = _UxGT("Подгряване ") PREHEAT_1_LABEL " ~";
@@ -61,6 +66,25 @@ namespace LanguageNarrow_bg {
   LSTR MSG_PREHEAT_M_BEDONLY              = _UxGT("Подгр. $ Легло");
   LSTR MSG_PREHEAT_M_SETTINGS             = _UxGT("Настройки $");
 
+=======
+  #if HAS_PREHEAT
+    LSTR MSG_PREHEAT_1                    = _UxGT("Подгряване ") PREHEAT_1_LABEL;
+    LSTR MSG_PREHEAT_1_H                  = _UxGT("Подгряване ") PREHEAT_1_LABEL " ~";
+    LSTR MSG_PREHEAT_1_END                = _UxGT("Подгряване ") PREHEAT_1_LABEL _UxGT(" Дюза");
+    LSTR MSG_PREHEAT_1_END_E              = _UxGT("Подгряване ") PREHEAT_1_LABEL _UxGT(" Дюза ~");
+    LSTR MSG_PREHEAT_1_ALL                = _UxGT("Подгр. ") PREHEAT_1_LABEL _UxGT(" Всички");
+    LSTR MSG_PREHEAT_1_BEDONLY            = _UxGT("Подгр. ") PREHEAT_1_LABEL _UxGT(" Легло");
+    LSTR MSG_PREHEAT_1_SETTINGS           = _UxGT("Настройки ") PREHEAT_1_LABEL;
+
+    LSTR MSG_PREHEAT_M                    = _UxGT("Подгряване $");
+    LSTR MSG_PREHEAT_M_H                  = _UxGT("Подгряване $ ~");
+    LSTR MSG_PREHEAT_M_END                = _UxGT("Подгряване $ Дюза");
+    LSTR MSG_PREHEAT_M_END_E              = _UxGT("Подгряване $ Дюза ~");
+    LSTR MSG_PREHEAT_M_ALL                = _UxGT("Подгр. $ Всички");
+    LSTR MSG_PREHEAT_M_BEDONLY            = _UxGT("Подгр. $ Легло");
+    LSTR MSG_PREHEAT_M_SETTINGS           = _UxGT("Настройки $");
+  #endif
+>>>>>>> upstream/bugfix-2.0.x
   LSTR MSG_COOLDOWN                       = _UxGT("Охлаждане");
   LSTR MSG_SWITCH_PS_ON                   = _UxGT("Вкл. захранване");
   LSTR MSG_SWITCH_PS_OFF                  = _UxGT("Изкл. захранване");
@@ -76,10 +100,19 @@ namespace LanguageNarrow_bg {
   LSTR MSG_MOVE_E                         = _UxGT("Екструдер");
   LSTR MSG_MOVE_EN                        = _UxGT("Екструдер *");
   LSTR MSG_MOVE_N_MM                      = _UxGT("Премести с $mm");
+<<<<<<< HEAD
   LSTR MSG_MOVE_N_IN                      = _UxGT("Премести с $in");
   LSTR MSG_MOVE_N_DEG                     = _UxGT("Премести с $") LCD_STR_DEGREE;
   LSTR MSG_SPEED                          = _UxGT("Скорост");
   LSTR MSG_MESH_Z_OFFSET                  = _UxGT("Bed Z");
+=======
+  LSTR MSG_MOVE_01MM                      = _UxGT("Премести с 0.1mm");
+  LSTR MSG_MOVE_1MM                       = _UxGT("Премести с 1mm");
+  LSTR MSG_MOVE_10MM                      = _UxGT("Премести с 10mm");
+  LSTR MSG_MOVE_100MM                     = _UxGT("Премести с 100mm");
+  LSTR MSG_SPEED                          = _UxGT("Скорост");
+  LSTR MSG_BED_Z                          = _UxGT("Bed Z");
+>>>>>>> upstream/bugfix-2.0.x
   LSTR MSG_NOZZLE                         = " " LCD_STR_THERMOMETER _UxGT(" Дюза");
   LSTR MSG_NOZZLE_N                       = " " LCD_STR_THERMOMETER _UxGT(" Дюза ~");
   LSTR MSG_BED                            = " " LCD_STR_THERMOMETER _UxGT(" Легло");
@@ -153,6 +186,7 @@ namespace LanguageNarrow_bg {
   LSTR MSG_DELTA_CALIBRATE_Z              = _UxGT("Калибровка Z");
   LSTR MSG_DELTA_CALIBRATE_CENTER         = _UxGT("Калибровка Център");
   LSTR MSG_KILL_EXPECTED_PRINTER          = _UxGT("Неправилен принтер");
+<<<<<<< HEAD
 }
 
 namespace LanguageWide_bg {
@@ -170,4 +204,6 @@ namespace LanguageTall_bg {
 
 namespace Language_bg {
   using namespace LanguageTall_bg;
+=======
+>>>>>>> upstream/bugfix-2.0.x
 }

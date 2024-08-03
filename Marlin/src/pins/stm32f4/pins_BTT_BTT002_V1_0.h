@@ -163,6 +163,7 @@
 //
 #define TEMP_0_PIN                          PA2   // T0 <-> E0
 #define TEMP_1_PIN                          PA0   // T1 <-> E1
+#define TEMP_BOARD_PIN                      PC2   // Onboard thermistor, NTC100K
 #define TEMP_BED_PIN                        PA1   // T2 <-> Bed
 #define TEMP_PROBE_PIN                      PC3   // Shares J4 connector with PD1
 
@@ -176,11 +177,19 @@
 #define HEATER_0_PIN                        PE6   // Heater0
 #define HEATER_BED_PIN                      PE5   // Hotbed
 
+<<<<<<< HEAD
 #ifndef FAN0_PIN
   #ifdef MK3_FAN_PINS
     #define FAN0_PIN                        PB8   // Fan1
   #else
     #define FAN0_PIN                        PB9   // Fan0
+=======
+#ifndef FAN_PIN
+  #ifdef MK3_FAN_PINS
+    #define FAN_PIN                         PB8   // Fan1
+  #else
+    #define FAN_PIN                         PB9   // Fan0
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 #endif
 
@@ -201,6 +210,7 @@
 #endif
 
 /**
+<<<<<<< HEAD
  *                ------                                    ------
  * (BEEPER) PE7  | 1  2 | PB1  (BTN_ENC)     (MISO)    PA6 | 1  2 | PA5 (SCK)
  * (LCD_EN) PE9  | 3  4 | PE8  (LCD_RS)      (BTN_EN1) PC5 | 3  4 | PA4 (SD_SS)
@@ -209,6 +219,18 @@
  *           GND | 9 10 | 5V                           GND | 9 10 | PA3
  *                ------                                    ------
  *                 EXP1                                      EXP2
+=======
+ * ---------------------------------BTT002 V1.0---------------------------------
+ *                ------                                    ------              |
+ * (BEEPER) PE7  | 1  2 | PB1  (BTN_ENC)     (MISO)    PA6 | 1  2 | PA5 (SCK)   |
+ * (LCD_EN) PE9  | 3  4 | PE8  (LCD_RS)      (BTN_EN1) PC5 | 3  4 | PA4 (SD_SS) |
+ * (LCD_D4) PE10   5  6 | PE11 (LCD_D5)      (BTN_EN2) PB0   5  6 | PA7 (MOSI)  |
+ * (LCD_D6) PE12 | 7  8 | PE13 (LCD_D7)      (SD_DET)  PC4 | 7  8 | RESET       |
+ *           GND | 9 10 | 5V                           GND | 9 10 | PA3         |
+ *                ------                                    ------              |
+ *                 EXP1                                      EXP2               |
+ * ------------------------------------------------------------------------------
+>>>>>>> upstream/bugfix-2.0.x
  */
 #define EXP1_01_PIN                         PE7
 #define EXP1_02_PIN                         PB1
@@ -249,6 +271,7 @@
 
   #if ENABLED(CR10_STOCKDISPLAY)
     #define LCD_PINS_RS              EXP1_07_PIN
+<<<<<<< HEAD
 
     #define BTN_EN1                  EXP1_03_PIN
     #define BTN_EN2                  EXP1_05_PIN
@@ -269,8 +292,30 @@
 
     #define BTN_EN1                  EXP2_03_PIN
     #define BTN_EN2                  EXP2_05_PIN
+=======
+
+    #define BTN_EN1                  EXP1_03_PIN
+    #define BTN_EN2                  EXP1_05_PIN
+>>>>>>> upstream/bugfix-2.0.x
 
     #define LCD_PINS_EN              EXP1_03_PIN
+    #define LCD_PINS_D4              EXP1_05_PIN
+
+  #elif ENABLED(MKS_MINI_12864)
+
+    #define DOGLCD_A0                EXP1_07_PIN
+    #define DOGLCD_CS                EXP1_06_PIN
+    #define BTN_EN1                  EXP2_03_PIN
+    #define BTN_EN2                  EXP2_05_PIN
+
+  #else
+
+    #define LCD_PINS_RS              EXP1_04_PIN
+
+    #define BTN_EN1                  EXP2_03_PIN
+    #define BTN_EN2                  EXP2_05_PIN
+
+    #define LCD_PINS_ENABLE          EXP1_03_PIN
     #define LCD_PINS_D4              EXP1_05_PIN
 
     #if ENABLED(FYSETC_MINI_12864)

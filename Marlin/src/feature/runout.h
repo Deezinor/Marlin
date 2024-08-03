@@ -136,7 +136,11 @@ class TFilamentMonitor : public FilamentMonitorBase {
 
     // Give the response a chance to update its counter.
     static void run() {
+<<<<<<< HEAD
       if (enabled && !filament_ran_out && should_monitor_runout()) {
+=======
+      if (enabled && !filament_ran_out && (printingIsActive() || did_pause_print)) {
+>>>>>>> upstream/bugfix-2.0.x
         TERN_(HAS_FILAMENT_RUNOUT_DISTANCE, cli()); // Prevent RunoutResponseDelayed::block_completed from accumulating here
         response.run();
         sensor.run();
@@ -156,6 +160,19 @@ class TFilamentMonitor : public FilamentMonitorBase {
           uint8_t extruder = active_extruder;
         #endif
 
+<<<<<<< HEAD
+=======
+        #if ENABLED(FILAMENT_RUNOUT_SENSOR_DEBUG)
+          if (runout_flags) {
+            SERIAL_ECHOPGM("Runout Sensors: ");
+            LOOP_L_N(i, 8) SERIAL_ECHO('0' + TEST(runout_flags, i));
+            SERIAL_ECHOPGM(" -> ", extruder);
+            if (ran_out) SERIAL_ECHOPGM(" RUN OUT");
+            SERIAL_EOL();
+          }
+        #endif
+
+>>>>>>> upstream/bugfix-2.0.x
         if (ran_out) {
           #if ENABLED(FILAMENT_RUNOUT_SENSOR_DEBUG)
             SERIAL_ECHOPGM("Runout Sensors: ");
@@ -190,6 +207,7 @@ class FilamentSensorBase {
 
   public:
     static void setup() {
+<<<<<<< HEAD
       #define _INIT_RUNOUT_PIN(P,S,U,D) do{ if (ENABLED(U)) SET_INPUT_PULLUP(P); else if (ENABLED(D)) SET_INPUT_PULLDOWN(P); else SET_INPUT(P); }while(0);
       #define  INIT_RUNOUT_PIN(N) _INIT_RUNOUT_PIN(FIL_RUNOUT##N##_PIN, FIL_RUNOUT##N##_STATE, FIL_RUNOUT##N##_PULLUP, FIL_RUNOUT##N##_PULLDOWN);
       REPEAT_1(NUM_RUNOUT_SENSORS, INIT_RUNOUT_PIN)
@@ -199,6 +217,33 @@ class FilamentSensorBase {
         #define INIT_MOTION_PIN(N) _INIT_RUNOUT_PIN(FIL_MOTION##N##_PIN, FIL_MOTION##N##_STATE, FIL_MOTION##N##_PULLUP, FIL_MOTION##N##_PULLDOWN);
         REPEAT_1(NUM_MOTION_SENSORS, INIT_MOTION_PIN)
         #undef  INIT_MOTION_PIN
+=======
+      #define _INIT_RUNOUT_PIN(P,S,U,D) do{ if (ENABLED(U)) SET_INPUT_PULLUP(P); else if (ENABLED(D)) SET_INPUT_PULLDOWN(P); else SET_INPUT(P); }while(0)
+      #define  INIT_RUNOUT_PIN(N) _INIT_RUNOUT_PIN(FIL_RUNOUT##N##_PIN, FIL_RUNOUT##N##_STATE, FIL_RUNOUT##N##_PULLUP, FIL_RUNOUT##N##_PULLDOWN)
+      #if NUM_RUNOUT_SENSORS >= 1
+        INIT_RUNOUT_PIN(1);
+      #endif
+      #if NUM_RUNOUT_SENSORS >= 2
+        INIT_RUNOUT_PIN(2);
+      #endif
+      #if NUM_RUNOUT_SENSORS >= 3
+        INIT_RUNOUT_PIN(3);
+      #endif
+      #if NUM_RUNOUT_SENSORS >= 4
+        INIT_RUNOUT_PIN(4);
+      #endif
+      #if NUM_RUNOUT_SENSORS >= 5
+        INIT_RUNOUT_PIN(5);
+      #endif
+      #if NUM_RUNOUT_SENSORS >= 6
+        INIT_RUNOUT_PIN(6);
+      #endif
+      #if NUM_RUNOUT_SENSORS >= 7
+        INIT_RUNOUT_PIN(7);
+      #endif
+      #if NUM_RUNOUT_SENSORS >= 8
+        INIT_RUNOUT_PIN(8);
+>>>>>>> upstream/bugfix-2.0.x
       #endif
       #undef _INIT_RUNOUT_PIN
     }
@@ -212,9 +257,38 @@ class FilamentSensorBase {
 
     // Return a bitmask of runout flag states (1 bits always indicates runout)
     static uint8_t poll_runout_states() {
+<<<<<<< HEAD
       #define _INVERT_BIT(N) | (FIL_RUNOUT##N##_STATE ? 0 : _BV(N - 1))
       return poll_runout_pins() ^ uint8_t(0 REPEAT_1(NUM_RUNOUT_SENSORS, _INVERT_BIT));
       #undef _INVERT_BIT
+=======
+      return poll_runout_pins() ^ uint8_t(0
+        #if NUM_RUNOUT_SENSORS >= 1
+          | (FIL_RUNOUT1_STATE ? 0 : _BV(1 - 1))
+        #endif
+        #if NUM_RUNOUT_SENSORS >= 2
+          | (FIL_RUNOUT2_STATE ? 0 : _BV(2 - 1))
+        #endif
+        #if NUM_RUNOUT_SENSORS >= 3
+          | (FIL_RUNOUT3_STATE ? 0 : _BV(3 - 1))
+        #endif
+        #if NUM_RUNOUT_SENSORS >= 4
+          | (FIL_RUNOUT4_STATE ? 0 : _BV(4 - 1))
+        #endif
+        #if NUM_RUNOUT_SENSORS >= 5
+          | (FIL_RUNOUT5_STATE ? 0 : _BV(5 - 1))
+        #endif
+        #if NUM_RUNOUT_SENSORS >= 6
+          | (FIL_RUNOUT6_STATE ? 0 : _BV(6 - 1))
+        #endif
+        #if NUM_RUNOUT_SENSORS >= 7
+          | (FIL_RUNOUT7_STATE ? 0 : _BV(7 - 1))
+        #endif
+        #if NUM_RUNOUT_SENSORS >= 8
+          | (FIL_RUNOUT8_STATE ? 0 : _BV(8 - 1))
+        #endif
+      );
+>>>>>>> upstream/bugfix-2.0.x
     }
 
     #if ENABLED(FILAMENT_SWITCH_AND_MOTION)
@@ -304,14 +378,22 @@ class FilamentSensorBase {
       static void block_completed(const block_t * const) {}
 
       static void run() {
+<<<<<<< HEAD
         for (uint8_t s = 0; s < NUM_RUNOUT_SENSORS; ++s) {
+=======
+        LOOP_L_N(s, NUM_RUNOUT_SENSORS) {
+>>>>>>> upstream/bugfix-2.0.x
           const bool out = poll_runout_state(s);
           if (!out) filament_present(s);
           #if ENABLED(FILAMENT_RUNOUT_SENSOR_DEBUG)
             static uint8_t was_out; // = 0
             if (out != TEST(was_out, s)) {
               TBI(was_out, s);
+<<<<<<< HEAD
               SERIAL_ECHOLN(F("Filament Sensor "), AS_DIGIT(s), out ? F(" OUT") : F(" IN"));
+=======
+              SERIAL_ECHOLNF(F("Filament Sensor "), AS_DIGIT(s), out ? F(" OUT") : F(" IN"));
+>>>>>>> upstream/bugfix-2.0.x
             }
           #endif
         }
@@ -365,10 +447,14 @@ class FilamentSensorBase {
       static float runout_distance_mm;
 
       static void reset() {
+<<<<<<< HEAD
         for (uint8_t i = 0; i < NUM_RUNOUT_SENSORS; ++i) filament_present(i);
         #if ENABLED(FILAMENT_SWITCH_AND_MOTION)
           for (uint8_t i = 0; i < NUM_MOTION_SENSORS; ++i) filament_motion_present(i);
         #endif
+=======
+        LOOP_L_N(i, NUM_RUNOUT_SENSORS) filament_present(i);
+>>>>>>> upstream/bugfix-2.0.x
       }
 
       static void run() {
@@ -377,27 +463,39 @@ class FilamentSensorBase {
           const millis_t ms = millis();
           if (ELAPSED(ms, t)) {
             t = millis() + 1000UL;
+<<<<<<< HEAD
             for (uint8_t i = 0; i < NUM_RUNOUT_SENSORS; ++i)
               SERIAL_ECHO(i ? F(", ") : F("Runout remaining mm: "), mm_countdown.runout[i]);
             #if ENABLED(FILAMENT_SWITCH_AND_MOTION)
               for (uint8_t i = 0; i < NUM_MOTION_SENSORS; ++i)
                 SERIAL_ECHO(i ? F(", ") : F("Motion remaining mm: "), mm_countdown.motion[i]);
             #endif
+=======
+            LOOP_L_N(i, NUM_RUNOUT_SENSORS)
+              SERIAL_ECHOF(i ? F(", ") : F("Remaining mm: "), runout_mm_countdown[i]);
+>>>>>>> upstream/bugfix-2.0.x
             SERIAL_EOL();
           }
         #endif
       }
 
+<<<<<<< HEAD
       static runout_flags_t has_run_out() {
         runout_flags_t runout_flags{0};
         for (uint8_t i = 0; i < NUM_RUNOUT_SENSORS; ++i) if (mm_countdown.runout[i] < 0) runout_flags.set(i);
         #if ENABLED(FILAMENT_SWITCH_AND_MOTION)
           for (uint8_t i = 0; i < NUM_MOTION_SENSORS; ++i) if (mm_countdown.motion[i] < 0) runout_flags.set(i);
         #endif
+=======
+      static uint8_t has_run_out() {
+        uint8_t runout_flags = 0;
+        LOOP_L_N(i, NUM_RUNOUT_SENSORS) if (runout_mm_countdown[i] < 0) SBI(runout_flags, i);
+>>>>>>> upstream/bugfix-2.0.x
         return runout_flags;
       }
 
       static void filament_present(const uint8_t extruder) {
+<<<<<<< HEAD
         if (mm_countdown.runout[extruder] < runout_distance_mm || did_pause_print) {
           // Reset runout only if it is smaller than runout_distance or printing is paused.
           // On Bowden systems retract may be larger than runout_distance_mm, so if retract
@@ -423,6 +521,17 @@ class FilamentSensorBase {
           }
           else
             mm_countdown.motion_reset.set(extruder);
+=======
+        runout_mm_countdown[extruder] = runout_distance_mm;
+      }
+
+      static void block_completed(const block_t * const b) {
+        if (b->steps.x || b->steps.y || b->steps.z || did_pause_print) { // Allow pause purge move to re-trigger runout state
+          // Only trigger on extrusion with XYZ movement to allow filament change and retract/recover.
+          const uint8_t e = b->extruder;
+          const int32_t steps = b->steps.e;
+          runout_mm_countdown[e] -= (TEST(b->direction_bits, E_AXIS) ? -steps : steps) * planner.mm_per_step[E_AXIS_N(e)];
+>>>>>>> upstream/bugfix-2.0.x
         }
       #endif
 
@@ -463,6 +572,7 @@ class FilamentSensorBase {
 
     public:
       static void reset() {
+<<<<<<< HEAD
         for (uint8_t i = 0; i < NUM_RUNOUT_SENSORS; ++i) filament_present(i);
       }
 
@@ -473,6 +583,18 @@ class FilamentSensorBase {
       static runout_flags_t has_run_out() {
         runout_flags_t runout_flags{0};
         for (uint8_t i = 0; i < NUM_RUNOUT_SENSORS; ++i) if (runout_count[i] < 0) runout_flags.set(i);
+=======
+        LOOP_L_N(i, NUM_RUNOUT_SENSORS) filament_present(i);
+      }
+
+      static void run() {
+        LOOP_L_N(i, NUM_RUNOUT_SENSORS) if (runout_count[i] >= 0) runout_count[i]--;
+      }
+
+      static uint8_t has_run_out() {
+        uint8_t runout_flags = 0;
+        LOOP_L_N(i, NUM_RUNOUT_SENSORS) if (runout_count[i] < 0) SBI(runout_flags, i);
+>>>>>>> upstream/bugfix-2.0.x
         return runout_flags;
       }
 

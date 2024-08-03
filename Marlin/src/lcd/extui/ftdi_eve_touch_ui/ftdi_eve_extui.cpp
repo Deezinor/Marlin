@@ -44,6 +44,7 @@ namespace ExtUI {
     KillScreen::show(str);
   }
 
+<<<<<<< HEAD
   void onMediaMounted() {
     #if HAS_MEDIA
       sound.play(media_inserted, PLAY_ASYNCHRONOUS);
@@ -58,6 +59,17 @@ namespace ExtUI {
 
   void onMediaRemoved() {
     #if HAS_MEDIA
+=======
+  void onMediaInserted() {
+    #if ENABLED(SDSUPPORT)
+      sound.play(media_inserted, PLAY_ASYNCHRONOUS);
+      StatusScreen::onMediaInserted();
+    #endif
+  }
+
+  void onMediaRemoved() {
+    #if ENABLED(SDSUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
       if (isPrintingFromMedia()) {
         stopPrint();
         InterfaceSoundsScreen::playEventSound(InterfaceSoundsScreen::PRINTING_FAILED);
@@ -70,9 +82,16 @@ namespace ExtUI {
     #endif
   }
 
+<<<<<<< HEAD
   void onHeatingError(const heater_id_t header_id) {}
   void onMinTempError(const heater_id_t header_id) {}
   void onMaxTempError(const heater_id_t header_id) {}
+=======
+  void onMediaError() {
+    sound.play(sad_trombone, PLAY_ASYNCHRONOUS);
+    AlertDialogBox::showError(F("Unable to read media."));
+  }
+>>>>>>> upstream/bugfix-2.0.x
 
   void onStatusChanged(const char *lcd_msg) { StatusScreen::setStatusMessage(lcd_msg); }
 
@@ -82,8 +101,13 @@ namespace ExtUI {
   void onPrintTimerStopped() {
     InterfaceSoundsScreen::playEventSound(InterfaceSoundsScreen::PRINTING_FINISHED);
   }
+<<<<<<< HEAD
   void onPrintTimerPaused() {}
 
+=======
+
+  void onPrintTimerPaused() {}
+>>>>>>> upstream/bugfix-2.0.x
   void onPrintDone() {}
 
   void onFilamentRunout(const extruder_t extruder) {
@@ -101,7 +125,11 @@ namespace ExtUI {
   void onLoadSettings(const char *buff) { InterfaceSettingsScreen::loadSettings(buff); }
   void onPostprocessSettings() {} // Called after loading or resetting stored settings
 
+<<<<<<< HEAD
   void onSettingsStored(const bool success) {
+=======
+  void onSettingsStored(bool success) {
+>>>>>>> upstream/bugfix-2.0.x
     #ifdef ARCHIM2_SPI_FLASH_EEPROM_BACKUP_SIZE
       if (success && InterfaceSettingsScreen::backupEEPROM()) {
         SERIAL_ECHOLNPGM("EEPROM backed up to SPI Flash");
@@ -110,9 +138,15 @@ namespace ExtUI {
       UNUSED(success);
     #endif
   }
+<<<<<<< HEAD
   void onSettingsLoaded(const bool) {}
 
   void onPlayTone(const uint16_t frequency, const uint16_t duration/*=0*/) { sound.play_tone(frequency, duration); }
+=======
+  void onSettingsLoaded(bool) {}
+
+  void onPlayTone(const uint16_t frequency, const uint16_t duration) { sound.play_tone(frequency, duration); }
+>>>>>>> upstream/bugfix-2.0.x
 
   void onUserConfirmRequired(const char * const msg) {
     if (msg)
@@ -121,6 +155,7 @@ namespace ExtUI {
       ConfirmUserRequestAlertBox::hide();
   }
 
+<<<<<<< HEAD
   // For fancy LCDs include an icon ID, message, and translated button title
   void onUserConfirmRequired(const int icon, const char * const cstr, FSTR_P const fBtn) {
     onUserConfirmRequired(cstr);
@@ -186,6 +221,29 @@ namespace ExtUI {
           break;
         case PID_BAD_HEATER_ID:
           StatusScreen::setStatusMessage(GET_TEXT_F(MSG_PID_BAD_HEATER_ID));
+=======
+  #if HAS_LEVELING && HAS_MESH
+    void onLevelingStart() {}
+    void onLevelingDone() {}
+    void onMeshUpdate(const int8_t x, const int8_t y, const_float_t val) { BedMeshViewScreen::onMeshUpdate(x, y, val); }
+    void onMeshUpdate(const int8_t x, const int8_t y, const ExtUI::probe_state_t state) { BedMeshViewScreen::onMeshUpdate(x, y, state); }
+  #endif
+
+  #if ENABLED(POWER_LOSS_RECOVERY)
+    void onPowerLossResume() {} // Called on resume from power-loss
+  #endif
+
+  #if HAS_PID_HEATING
+    void onPidTuning(const result_t rst) {
+      // Called for temperature PID tuning result
+      //SERIAL_ECHOLNPGM("OnPidTuning:", rst);
+      switch (rst) {
+        case PID_STARTED:
+          StatusScreen::setStatusMessage(GET_TEXT_F(MSG_PID_AUTOTUNE));
+          break;
+        case PID_BAD_EXTRUDER_NUM:
+          StatusScreen::setStatusMessage(GET_TEXT_F(MSG_PID_BAD_EXTRUDER_NUM));
+>>>>>>> upstream/bugfix-2.0.x
           break;
         case PID_TEMP_TOO_HIGH:
           StatusScreen::setStatusMessage(GET_TEXT_F(MSG_PID_TEMP_TOO_HIGH));
@@ -199,6 +257,7 @@ namespace ExtUI {
       }
       GOTO_SCREEN(StatusScreen);
     }
+<<<<<<< HEAD
     void onStartM303(const int count, const heater_id_t hid, const celsius_t temp) {
       // Called by M303 to update the UI
     }
@@ -224,6 +283,12 @@ namespace ExtUI {
   void onSteppersEnabled() {}
   void onAxisDisabled(const axis_t) {}
   void onAxisEnabled(const axis_t) {}
+=======
+  #endif // HAS_PID_HEATING
+
+  void onSteppersDisabled() {}
+  void onSteppersEnabled()  {}
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 #endif // TOUCH_UI_FTDI_EVE

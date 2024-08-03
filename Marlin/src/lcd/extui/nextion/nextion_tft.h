@@ -40,6 +40,7 @@ class NextionTFT {
 
   public:
     NextionTFT();
+<<<<<<< HEAD
     static void startup();
     static void idleLoop();
     static void printerKilled(FSTR_P const, FSTR_P const);
@@ -47,6 +48,15 @@ class NextionTFT {
     static void statusChange(const char * const);
     static void tftSend(FSTR_P const=nullptr);
     //static void tftSendLn(FSTR_P const=nullptr);
+=======
+    static void Startup();
+    static void IdleLoop();
+    static void PrinterKilled(FSTR_P const, FSTR_P const);
+    static void ConfirmationRequest(const char * const);
+    static void StatusChange(const char * const);
+    static void SendtoTFT(FSTR_P const=nullptr);
+    //static void SendtoTFTLN(FSTR_P const=nullptr);
+>>>>>>> upstream/bugfix-2.0.x
     static void UpdateOnChange();
     static void PrintFinished();
     static void panelInfo(uint8_t);

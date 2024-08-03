@@ -38,9 +38,19 @@ private:
   bool debug;
 
   void echo_msg(FSTR_P const fpre) {
+<<<<<<< HEAD
     SERIAL_ECHO(fpre);
     if (the_msg) SERIAL_ECHO(C(' '), the_msg);
     SERIAL_CHAR(' ');
     print_xyz(xyz_pos_t(current_position));
+=======
+    SERIAL_ECHOF(fpre);
+    if (the_msg) {
+      SERIAL_CHAR(' ');
+      SERIAL_ECHOF(the_msg);
+    }
+    SERIAL_CHAR(' ');
+    print_pos(current_position);
+>>>>>>> upstream/bugfix-2.0.x
   }
 };

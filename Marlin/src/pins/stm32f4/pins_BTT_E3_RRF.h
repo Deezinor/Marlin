@@ -51,7 +51,15 @@
 #define Z_STOP_PIN                          PC2   // Z-STOP
 
 #if ENABLED(BTT_E3_RRF_IDEX_BOARD)
+<<<<<<< HEAD
   #define X2_STOP_PIN                   FPC2_PIN  // X2-STOP
+=======
+  #if X2_USE_ENDSTOP == _XMAX_
+    #define X_MAX_PIN                   FPC2_PIN  // X2-STOP
+  #elif X2_USE_ENDSTOP == _XMIN_
+    #define X_MIN_PIN                   FPC2_PIN  // X2-STOP
+  #endif
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 //
@@ -165,7 +173,11 @@
   #define HEATER_1_PIN                 FPC16_PIN  // "HE1"
 #endif
 
+<<<<<<< HEAD
 #define FAN0_PIN                            PB5   // "FAN0"
+=======
+#define FAN_PIN                             PB5   // "FAN0"
+>>>>>>> upstream/bugfix-2.0.x
 
 #ifndef CONTROLLER_FAN_PIN
   #define CONTROLLER_FAN_PIN                PB6   // "FAN1"
@@ -181,15 +193,26 @@
 //
 // Misc. Functions
 //
+<<<<<<< HEAD
 #ifndef BOARD_NEOPIXEL_PIN
   #define BOARD_NEOPIXEL_PIN                PB7   // LED driving pin
+=======
+#ifndef NEOPIXEL_PIN
+  #define NEOPIXEL_PIN                      PB7   // LED driving pin
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #ifndef PS_ON_PIN
   #define PS_ON_PIN                         PE1   // Power Supply Control
 #endif
 
+<<<<<<< HEAD
 /**               ------
+=======
+/**
+ *              BTT E3 RRF
+ *                ------
+>>>>>>> upstream/bugfix-2.0.x
  * (BEEPER)  PE8 | 1  2 | PE9  (BTN_ENC)
  * (BTN_EN1) PE7 | 3  4 | RESET
  * (BTN_EN2) PB2   5  6 | PE10 (LCD_D4)
@@ -209,6 +232,7 @@
 
 #if HAS_WIRED_LCD
 
+<<<<<<< HEAD
   #if ANY(CR10_STOCKDISPLAY, LCD_FOR_MELZI)
 
     #define BEEPER_PIN               EXP1_01_PIN
@@ -216,6 +240,15 @@
     #define BTN_ENC                  EXP1_02_PIN
     #define BTN_EN1                  EXP1_03_PIN
     #define BTN_EN2                  EXP1_05_PIN
+=======
+  #if EITHER(CR10_STOCKDISPLAY, LCD_FOR_MELZI)
+
+    #define BEEPER_PIN                      PE8
+
+    #define BTN_ENC                         PE9
+    #define BTN_EN1                         PE7
+    #define BTN_EN2                         PB2
+>>>>>>> upstream/bugfix-2.0.x
 
     #define LCD_PINS_D4              EXP1_06_PIN
     #define LCD_PINS_RS              EXP1_07_PIN
@@ -223,7 +256,13 @@
 
     #if ENABLED(LCD_FOR_MELZI)
 
+<<<<<<< HEAD
       CONTROLLER_WARNING("BTT_E3_RRF", "LCD_FOR_MELZI")
+=======
+      #ifndef NO_CONTROLLER_CUSTOM_WIRING_WARNING
+        #error "CAUTION! LCD_FOR_MELZI requires wiring modifications. See 'pins_BTT_E3_RRF.h' for details. (Define NO_CONTROLLER_CUSTOM_WIRING_WARNING to suppress this warning.)"
+      #endif
+>>>>>>> upstream/bugfix-2.0.x
 
      /** LCD_FOR_MELZI display pinout
       *
@@ -257,7 +296,13 @@
 
   #elif ENABLED(ZONESTAR_LCD)                     // ANET A8 LCD Controller - Must convert to 3.3V - CONNECTING TO 5V WILL DAMAGE THE BOARD!
 
+<<<<<<< HEAD
     CONTROLLER_WARNING("BTT_E3_RRF", "ZONESTAR_LCD")
+=======
+    #ifndef NO_CONTROLLER_CUSTOM_WIRING_WARNING
+      #error "CAUTION! ZONESTAR_LCD requires wiring modifications. See 'pins_BTT_E3_RRF.h' for details. (Define NO_CONTROLLER_CUSTOM_WIRING_WARNING to suppress this warning.)"
+    #endif
+>>>>>>> upstream/bugfix-2.0.x
 
     #define LCD_PINS_RS              EXP1_06_PIN
     #define LCD_PINS_EN              EXP1_02_PIN
@@ -285,7 +330,13 @@
 
     #if ENABLED(TFTGLCD_PANEL_SPI)
 
+<<<<<<< HEAD
       CONTROLLER_WARNING("BTT_E3_RRF", "TFTGLCD_PANEL_SPI")
+=======
+      #ifndef NO_CONTROLLER_CUSTOM_WIRING_WARNING
+        #error "CAUTION! TFTGLCD_PANEL_SPI requires wiring modifications. See 'pins_BTT_E3_RRF.h' for details. (Define NO_CONTROLLER_CUSTOM_WIRING_WARNING to suppress this warning.)"
+      #endif
+>>>>>>> upstream/bugfix-2.0.x
 
       /**
        * TFTGLCD_PANEL_SPI display pinout
@@ -339,7 +390,13 @@
 
 #if ALL(TOUCH_UI_FTDI_EVE, LCD_FYSETC_TFT81050)
 
+<<<<<<< HEAD
   CONTROLLER_WARNING("BTT_E3_RRF", "LCD_FYSETC_TFT81050")
+=======
+  #ifndef NO_CONTROLLER_CUSTOM_WIRING_WARNING
+    #error "CAUTION! LCD_FYSETC_TFT81050 requires wiring modifications. See 'pins_BTT_E3_RRF.h' for details. (Define NO_CONTROLLER_CUSTOM_WIRING_WARNING to suppress this warning.)"
+  #endif
+>>>>>>> upstream/bugfix-2.0.x
 
   /** FYSETC TFT TFT81050 display pinout
    *
@@ -387,7 +444,11 @@
 #endif
 
 #if SD_CONNECTION_IS(ONBOARD)
+<<<<<<< HEAD
   #define ONBOARD_SDIO                            // Use SDIO for onboard SD
+=======
+  #define SDIO_SUPPORT                            // Use SDIO for onboard SD
+>>>>>>> upstream/bugfix-2.0.x
   //#define SDIO_CLOCK                  48000000
   #define SD_DETECT_PIN                     PC4
 #elif SD_CONNECTION_IS(CUSTOM_CABLE)
@@ -405,6 +466,15 @@
   #define ESP_WIFI_MODULE_GPIO0_PIN         PA6
 #endif
 
+<<<<<<< HEAD
+=======
+#define ESP_WIFI_MODULE_COM                    3  // Must also set either SERIAL_PORT or SERIAL_PORT_2 to this
+#define ESP_WIFI_MODULE_BAUDRATE        BAUDRATE  // Must use same BAUDRATE as SERIAL_PORT & SERIAL_PORT_2
+#define ESP_WIFI_MODULE_RESET_PIN           PA4
+#define ESP_WIFI_MODULE_ENABLE_PIN          PA5
+#define ESP_WIFI_MODULE_GPIO0_PIN           PA6
+
+>>>>>>> upstream/bugfix-2.0.x
 #if ENABLED(BTT_E3_RRF_IDEX_BOARD)
   #define FPC2_PIN                          PB11
   #define FPC3_PIN                          PB10

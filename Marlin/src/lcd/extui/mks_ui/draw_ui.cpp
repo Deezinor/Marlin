@@ -563,7 +563,11 @@ char *creat_title_text() {
   uintptr_t gPicturePreviewStart = 0;
 
   void preview_gcode_prehandle(char *path) {
+<<<<<<< HEAD
     #if HAS_MEDIA
+=======
+    #if ENABLED(SDSUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
       uintptr_t pre_read_cnt = 0;
       uint32_t *p1;
       char *cur_name;
@@ -647,8 +651,13 @@ char *creat_title_text() {
 
         char *cur_name = strrchr(list_file.file_name[sel_id], '/');
 
+<<<<<<< HEAD
         MediaFile file;
         MediaFile *curDir;
+=======
+        SdFile file;
+        SdFile *curDir;
+>>>>>>> upstream/bugfix-2.0.x
         const char * const fname = card.diveToFile(false, curDir, cur_name);
         if (!fname) return;
         if (file.open(curDir, fname, O_READ)) {
@@ -660,15 +669,28 @@ char *creat_title_text() {
         card.openFileRead(cur_name);
         if (card.isFileOpen()) {
           feedrate_percentage = 100;
+<<<<<<< HEAD
           TERN_(HAS_EXTRUDERS, planner.set_flow(0, 100));
           TERN_(HAS_MULTI_EXTRUDER, planner.set_flow(1, 100));
+=======
+          planner.flow_percentage[0] = 100;
+          planner.e_factor[0]        = planner.flow_percentage[0] * 0.01;
+          #if HAS_MULTI_EXTRUDER
+            planner.flow_percentage[1] = 100;
+            planner.e_factor[1]        = planner.flow_percentage[1] * 0.01;
+          #endif
+>>>>>>> upstream/bugfix-2.0.x
           card.startOrResumeFilePrinting();
           TERN_(POWER_LOSS_RECOVERY, recovery.prepare());
           once_flag = false;
         }
         return;
       }
+<<<<<<< HEAD
     #endif // HAS_MEDIA
+=======
+    #endif // SDSUPPORT
+>>>>>>> upstream/bugfix-2.0.x
   }
 
   void draw_default_preview(int xpos_pixel, int ypos_pixel, uint8_t sel) {
@@ -1343,7 +1365,11 @@ void lv_screen_menu_item_onoff_update(lv_obj_t *btn, const bool curValue) {
   lv_label_set_text((lv_obj_t*)btn->child_ll.head, curValue ? machine_menu.enable : machine_menu.disable);
 }
 
+<<<<<<< HEAD
 #if HAS_MEDIA
+=======
+#if ENABLED(SDSUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
 
   void sd_detection() {
     static bool last_sd_status;
@@ -1375,7 +1401,11 @@ void LV_TASK_HANDLER() {
   if (TERN1(USE_SPI_DMA_TC, !get_lcd_dma_lock()))
     lv_task_handler();
 
+<<<<<<< HEAD
   #if ALL(MKS_TEST, HAS_MEDIA)
+=======
+  #if BOTH(MKS_TEST, SDSUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
     if (mks_test_flag == 0x1E) mks_hardware_test();
   #endif
 

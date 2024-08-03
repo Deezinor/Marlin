@@ -247,12 +247,20 @@
       b <<= 1; // little setup time
 
       WRITE(SD_SCK_PIN, HIGH);
+<<<<<<< HEAD
       DELAY_NS_VAR(spiDelayNS);
+=======
+      DELAY_NS(spiDelayNS);
+>>>>>>> upstream/bugfix-2.0.x
 
       b |= (READ(SD_MISO_PIN) != 0);
 
       WRITE(SD_SCK_PIN, LOW);
+<<<<<<< HEAD
       DELAY_NS_VAR(spiDelayNS);
+=======
+      DELAY_NS(spiDelayNS);
+>>>>>>> upstream/bugfix-2.0.x
     } while (--bits);
     return b;
   }

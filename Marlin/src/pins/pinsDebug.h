@@ -45,6 +45,7 @@
 #define REPORT_NAME_ANALOG(COUNTER, NAME) _ADD_PIN(#NAME, COUNTER)
 
 #include "pinsDebug_list.h"
+<<<<<<< HEAD
 #line 49
 
 // manually add pins that have names that are macros which don't play well with these macros
@@ -62,6 +63,25 @@
     static const char TXD_NAME_2[] PROGMEM = { "TXD2" };
   #endif
   #if SERIAL_IN_USE(3)
+=======
+#line 48
+
+// manually add pins that have names that are macros which don't play well with these macros
+#if ANY(AVR_ATmega2560_FAMILY, AVR_ATmega1284_FAMILY, ARDUINO_ARCH_SAM, TARGET_LPC1768)
+  #if CONF_SERIAL_IS(0)
+    static const char RXD_NAME_0[] PROGMEM = { "RXD0" };
+    static const char TXD_NAME_0[] PROGMEM = { "TXD0" };
+  #endif
+  #if CONF_SERIAL_IS(1)
+    static const char RXD_NAME_1[] PROGMEM = { "RXD1" };
+    static const char TXD_NAME_1[] PROGMEM = { "TXD1" };
+  #endif
+  #if CONF_SERIAL_IS(2)
+    static const char RXD_NAME_2[] PROGMEM = { "RXD2" };
+    static const char TXD_NAME_2[] PROGMEM = { "TXD2" };
+  #endif
+  #if CONF_SERIAL_IS(3)
+>>>>>>> upstream/bugfix-2.0.x
     static const char RXD_NAME_3[] PROGMEM = { "RXD3" };
     static const char TXD_NAME_3[] PROGMEM = { "TXD3" };
   #endif
@@ -98,8 +118,13 @@ const PinInfo pin_array[] PROGMEM = {
    *     2 bytes containing the digital/analog bool flag
    */
 
+<<<<<<< HEAD
   #if SERIAL_IN_USE(0)
     #if ANY(AVR_ATmega2560_FAMILY, ARDUINO_ARCH_SAM)
+=======
+  #if CONF_SERIAL_IS(0)
+    #if EITHER(AVR_ATmega2560_FAMILY, ARDUINO_ARCH_SAM)
+>>>>>>> upstream/bugfix-2.0.x
       { RXD_NAME_0, 0, true },
       { TXD_NAME_0, 1, true },
     #elif AVR_ATmega1284_FAMILY
@@ -111,8 +136,13 @@ const PinInfo pin_array[] PROGMEM = {
     #endif
   #endif
 
+<<<<<<< HEAD
   #if SERIAL_IN_USE(1)
     #if ANY(AVR_ATmega2560_FAMILY, ARDUINO_ARCH_SAM)
+=======
+  #if CONF_SERIAL_IS(1)
+    #if EITHER(AVR_ATmega2560_FAMILY, ARDUINO_ARCH_SAM)
+>>>>>>> upstream/bugfix-2.0.x
       { RXD_NAME_1, 19, true },
       { TXD_NAME_1, 18, true },
     #elif AVR_ATmega1284_FAMILY
@@ -129,8 +159,13 @@ const PinInfo pin_array[] PROGMEM = {
     #endif
   #endif
 
+<<<<<<< HEAD
   #if SERIAL_IN_USE(2)
     #if ANY(AVR_ATmega2560_FAMILY, ARDUINO_ARCH_SAM)
+=======
+  #if CONF_SERIAL_IS(2)
+    #if EITHER(AVR_ATmega2560_FAMILY, ARDUINO_ARCH_SAM)
+>>>>>>> upstream/bugfix-2.0.x
       { RXD_NAME_2, 17, true },
       { TXD_NAME_2, 16, true },
     #elif defined(TARGET_LPC1768)
@@ -144,8 +179,13 @@ const PinInfo pin_array[] PROGMEM = {
     #endif
   #endif
 
+<<<<<<< HEAD
   #if SERIAL_IN_USE(3)
     #if ANY(AVR_ATmega2560_FAMILY, ARDUINO_ARCH_SAM)
+=======
+  #if CONF_SERIAL_IS(3)
+    #if EITHER(AVR_ATmega2560_FAMILY, ARDUINO_ARCH_SAM)
+>>>>>>> upstream/bugfix-2.0.x
       { RXD_NAME_3, 15, true },
       { TXD_NAME_3, 14, true },
     #elif defined(TARGET_LPC1768)
@@ -163,7 +203,11 @@ const PinInfo pin_array[] PROGMEM = {
   #endif
 
   #include "pinsDebug_list.h"
+<<<<<<< HEAD
   #line 168
+=======
+  #line 167
+>>>>>>> upstream/bugfix-2.0.x
 
 };
 
@@ -184,7 +228,11 @@ static void printPinState(const bool state) {
 }
 
 // pretty report with PWM info
+<<<<<<< HEAD
 inline void printPinStateExt(const pin_t pin, const bool ignore, const bool extended=false, FSTR_P const start_string=nullptr) {
+=======
+inline void report_pin_state_extended(pin_t pin, const bool ignore, const bool extended=false, FSTR_P const start_string=nullptr) {
+>>>>>>> upstream/bugfix-2.0.x
   char buffer[MAX_NAME_LENGTH + 1];   // for the sprintf statements
   bool found = false, multi_name_pin = false;
 
@@ -208,11 +256,19 @@ inline void printPinStateExt(const pin_t pin, const bool ignore, const bool exte
   for (uint8_t x = 0; x < COUNT(pin_array); ++x)  {    // scan entire array and report all instances of this pin
     if (getPinByIndex(x) == pin) {
       if (!found) {    // report digital and analog pin number only on the first time through
+<<<<<<< HEAD
         if (start_string) SERIAL_ECHO(start_string);
         SERIAL_ECHOPGM("PIN: ");
         printPinNumber(pin);
         printPinPort(pin);
         if (int8_t(digitalPinToAnalogIndex(pin)) >= 0) printPinAnalog(pin); // analog pin number
+=======
+        if (start_string) SERIAL_ECHOF(start_string);
+        SERIAL_ECHOPGM("PIN: ");
+        PRINT_PIN(pin);
+        PRINT_PORT(pin);
+        if (int8_t(DIGITAL_PIN_TO_ANALOG_PIN(pin)) >= 0) PRINT_PIN_ANALOG(pin); // analog pin number
+>>>>>>> upstream/bugfix-2.0.x
         else SERIAL_ECHO_SP(8);                                                 // add padding if not an analog pin
       }
       else {
@@ -256,11 +312,19 @@ inline void printPinStateExt(const pin_t pin, const bool ignore, const bool exte
   } // end of for loop
 
   if (!found) {
+<<<<<<< HEAD
     if (start_string) SERIAL_ECHO(start_string);
     SERIAL_ECHOPGM("PIN: ");
     printPinNumber(pin);
     printPinPort(pin);
     if (int8_t(digitalPinToAnalogIndex(pin)) >= 0) printPinAnalog(pin); // analog pin number
+=======
+    if (start_string) SERIAL_ECHOF(start_string);
+    SERIAL_ECHOPGM("PIN: ");
+    PRINT_PIN(pin);
+    PRINT_PORT(pin);
+    if (int8_t(DIGITAL_PIN_TO_ANALOG_PIN(pin)) >= 0) PRINT_PIN_ANALOG(pin); // analog pin number
+>>>>>>> upstream/bugfix-2.0.x
     else SERIAL_ECHO_SP(8);                                                 // add padding if not an analog pin
     SERIAL_ECHOPGM("<unused/unknown>");
     if (extended) {

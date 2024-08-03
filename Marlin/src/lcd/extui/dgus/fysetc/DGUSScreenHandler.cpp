@@ -22,7 +22,15 @@
 
 #include "../../../../inc/MarlinConfigPre.h"
 
+<<<<<<< HEAD
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
 #if DGUS_LCD_UI_FYSETC
+========
+#if ENABLED(DGUS_LCD_UI_HIPRECY)
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+=======
+#if DGUS_LCD_UI_HIPRECY
+>>>>>>> upstream/bugfix-2.0.x
 
 #include "../DGUSScreenHandler.h"
 
@@ -44,7 +52,19 @@
 
   extern ExtUI::FileList filelist;
 
+<<<<<<< HEAD
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
   void DGUSScreenHandler::sdFileSelected(DGUS_VP_Variable &var, void *val_ptr) {
+========
+  void DGUSScreenHandler::DGUSLCD_SD_FileSelected(DGUS_VP_Variable &var, void *val_ptr) {
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+=======
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+  void DGUSScreenHandler::sdFileSelected(DGUS_VP_Variable &var, void *val_ptr) {
+========
+  void DGUSScreenHandler::DGUSLCD_SD_FileSelected(DGUS_VP_Variable &var, void *val_ptr) {
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
+>>>>>>> upstream/bugfix-2.0.x
     uint16_t touched_nr = (int16_t)swap16(*(uint16_t*)val_ptr) + top_file;
     if (touched_nr > filelist.count()) return;
     if (!filelist.seek(touched_nr)) return;
@@ -77,18 +97,37 @@
 
     if (!ExtUI::isPrintingFromMedia()) return; // avoid race condition when user stays in this menu and printer finishes.
     switch (swap16(*(uint16_t*)val_ptr)) {
+<<<<<<< HEAD
       case 0:   // Resume
         if (ExtUI::isPrintingFromMediaPaused()) ExtUI::resumePrint();
         break;
 
       case 1: // Pause
         gotoScreen(DGUS_SCREEN_SDPRINTMANIPULATION);
+=======
+      case 0: { // Resume
+        if (ExtUI::isPrintingFromMediaPaused()) {
+          ExtUI::resumePrint();
+        }
+      } break;
+
+      case 1: // Pause
+
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+        gotoScreen(MKSLCD_SCREEN_PAUSE);
+========
+        GotoScreen(DGUSLCD_SCREEN_SDPRINTMANIPULATION);
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
+>>>>>>> upstream/bugfix-2.0.x
         if (!ExtUI::isPrintingFromMediaPaused()) {
           ExtUI::pausePrint();
           //ExtUI::mks_pausePrint();
         }
         break;
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
       case 2: // Abort
         handleUserConfirmationPopUp(VP_SD_AbortPrintConfirmed, nullptr, PSTR("Abort printing"), filelist.filename(), PSTR("?"), true, true, false, true);
         break;
@@ -132,7 +171,21 @@ void DGUSScreenHandler::screenChangeHook(DGUS_VP_Variable &var, void *val_ptr) {
   // meaning "return to previous screen"
   DGUS_ScreenID target = (DGUS_ScreenID)tmp[1];
 
+<<<<<<< HEAD
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
+=======
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+>>>>>>> upstream/bugfix-2.0.x
   if (target == DGUS_SCREEN_POPUP) {
+========
+  DEBUG_ECHOLNPGM("\n DEBUG target", target);
+
+  if (target == DGUSLCD_SCREEN_POPUP) {
+<<<<<<< HEAD
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+=======
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
+>>>>>>> upstream/bugfix-2.0.x
     // Special handling for popup is to return to previous menu
     if (current_screenID == DGUS_SCREEN_POPUP && confirm_action_cb) confirm_action_cb();
     popToOldScreen();
@@ -142,7 +195,19 @@ void DGUSScreenHandler::screenChangeHook(DGUS_VP_Variable &var, void *val_ptr) {
   updateNewScreen(target);
 
   #ifdef DEBUG_DGUSLCD
+<<<<<<< HEAD
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
     if (!findScreenVPMapList(target)) DEBUG_ECHOLNPGM("WARNING: No screen Mapping found for ", target);
+========
+    if (!DGUSLCD_FindScreenVPMapList(target)) DEBUG_ECHOLNPGM("WARNING: No screen Mapping found for ", target);
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+=======
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+    if (!findScreenVPMapList(target)) DEBUG_ECHOLNPGM("WARNING: No screen Mapping found for ", target);
+========
+    if (!DGUSLCD_FindScreenVPMapList(target)) DEBUG_ECHOLNPGM("WARNING: No screen Mapping found for ", target);
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
+>>>>>>> upstream/bugfix-2.0.x
   #endif
 }
 
@@ -155,7 +220,19 @@ void DGUSScreenHandler::handleManualMove(DGUS_VP_Variable &var, void *val_ptr) {
     }
   #endif
   char axiscode;
+<<<<<<< HEAD
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
   uint16_t speed = manual_feedrate_mm_m.x; // Default feedrate for manual moves
+========
+  unsigned int speed = 1500; // FIXME: get default feedrate for manual moves, don't hardcode.
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+=======
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+  uint16_t speed = manual_feedrate_mm_m.x; // Default feedrate for manual moves
+========
+  unsigned int speed = 1500; // FIXME: get default feedrate for manual moves, don't hardcode.
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
+>>>>>>> upstream/bugfix-2.0.x
 
   switch (var.VP) {
     default: return;
@@ -191,16 +268,50 @@ void DGUSScreenHandler::handleManualMove(DGUS_VP_Variable &var, void *val_ptr) {
 
   if (!movevalue) {
     // homing
+<<<<<<< HEAD
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
+=======
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+>>>>>>> upstream/bugfix-2.0.x
     char buf[6] = "G28 X";
     buf[4] = axiscode;
+========
+    DEBUG_ECHOPGM(" homing ", AS_CHAR(axiscode));
+    char buf[6] = "G28 X";
+    buf[4] = axiscode;
+    //DEBUG_ECHOPGM(" ", buf);
+<<<<<<< HEAD
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+=======
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
+>>>>>>> upstream/bugfix-2.0.x
     queue.enqueue_one_now(buf);
     forceCompleteUpdate();
     return;
   }
   else {
     // movement
+<<<<<<< HEAD
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
     bool old_relative_mode = relative_mode;
+=======
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+    const bool old_relative_mode = relative_mode;
+>>>>>>> upstream/bugfix-2.0.x
     if (!relative_mode) queue.enqueue_now(F("G91"));
+========
+    DEBUG_ECHOPGM(" move ", AS_CHAR(axiscode));
+    bool old_relative_mode = relative_mode;
+    if (!relative_mode) {
+      //DEBUG_ECHOPGM(" G91");
+      queue.enqueue_now(F("G91"));
+      //DEBUG_ECHOPGM(" ✓ ");
+    }
+<<<<<<< HEAD
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+=======
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
+>>>>>>> upstream/bugfix-2.0.x
     char buf[32]; // G1 X9999.99 F12345
     const uint16_t backup_speed = MMS_TO_MMM(feedrate_mm_s);
     char sign[] = "\0";
@@ -208,10 +319,40 @@ void DGUSScreenHandler::handleManualMove(DGUS_VP_Variable &var, void *val_ptr) {
     if (movevalue < 0) { value = -value; sign[0] = '-'; }
     int16_t fraction = ABS(movevalue) % 100;
     snprintf_P(buf, 32, PSTR("G0 %c%s%d.%02d F%d"), axiscode, sign, value, fraction, speed);
+<<<<<<< HEAD
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
+========
+    //DEBUG_ECHOPGM(" ", buf);
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+=======
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+========
+    //DEBUG_ECHOPGM(" ", buf);
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
+>>>>>>> upstream/bugfix-2.0.x
     queue.enqueue_one_now(buf);
     if (backup_speed != speed) {
       snprintf_P(buf, 32, PSTR("G0 F%d"), backup_speed);
       queue.enqueue_one_now(buf);
+<<<<<<< HEAD
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
+=======
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+>>>>>>> upstream/bugfix-2.0.x
+========
+      //DEBUG_ECHOPGM(" ", buf);
+    }
+    // while (!enqueue_and_echo_command(buf)) idle();
+    //DEBUG_ECHOLNPGM(" ✓ ");
+    if (!old_relative_mode) {
+      //DEBUG_ECHOPGM("G90");
+      queue.enqueue_now(F("G90"));
+      //DEBUG_ECHOPGM(" ✓ ");
+<<<<<<< HEAD
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+=======
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
+>>>>>>> upstream/bugfix-2.0.x
     }
     //while (!enqueue_and_echo_command(buf)) idle();
     if (!old_relative_mode) queue.enqueue_now(F("G90"));
@@ -220,13 +361,38 @@ void DGUSScreenHandler::handleManualMove(DGUS_VP_Variable &var, void *val_ptr) {
   forceCompleteUpdate();
 
   cannotmove:
+<<<<<<< HEAD
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
+========
+    DEBUG_ECHOLNPGM(" cannot move ", AS_CHAR(axiscode));
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+=======
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+========
+    DEBUG_ECHOLNPGM(" cannot move ", AS_CHAR(axiscode));
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
+>>>>>>> upstream/bugfix-2.0.x
     return;
 }
 
 #if HAS_PID_HEATING
   void DGUSScreenHandler::handleTemperaturePIDChanged(DGUS_VP_Variable &var, void *val_ptr) {
     uint16_t rawvalue = swap16(*(uint16_t*)val_ptr);
+<<<<<<< HEAD
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
+=======
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+>>>>>>> upstream/bugfix-2.0.x
     float value = (float)rawvalue / 10;
+========
+    DEBUG_ECHOLNPGM("V1:", rawvalue);
+    float value = (float)rawvalue / 10;
+    DEBUG_ECHOLNPGM("V2:", value);
+<<<<<<< HEAD
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+=======
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
+>>>>>>> upstream/bugfix-2.0.x
     float newvalue = 0;
 
     switch (var.VP) {
@@ -248,6 +414,17 @@ void DGUSScreenHandler::handleManualMove(DGUS_VP_Variable &var, void *val_ptr) {
         #endif
     }
 
+<<<<<<< HEAD
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
+========
+    DEBUG_ECHOLNPGM("V3:", newvalue);
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+=======
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+========
+    DEBUG_ECHOLNPGM("V3:", newvalue);
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
+>>>>>>> upstream/bugfix-2.0.x
     *(float *)var.memadr = newvalue;
 
     skipVP = var.VP; // don't overwrite value the next update time as the display might autoincrement in parallel
@@ -313,7 +490,19 @@ void DGUSScreenHandler::handleManualMove(DGUS_VP_Variable &var, void *val_ptr) {
           thermalManager.setTargetHotend(e_temp, ExtUI::extruder_t::E1);
         #endif
       #endif
+<<<<<<< HEAD
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
       gotoScreen(DGUS_SCREEN_UTILITY);
+========
+      GotoScreen(DGUSLCD_SCREEN_UTILITY);
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+=======
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+      gotoScreen(DGUS_SCREEN_UTILITY);
+========
+      GotoScreen(DGUSLCD_SCREEN_UTILITY);
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
+>>>>>>> upstream/bugfix-2.0.x
     }
     else { // Go to the preheat screen to show the heating progress
       switch (var.VP) {
@@ -388,11 +577,36 @@ bool DGUSScreenHandler::loop() {
 
     if (!booted && ELAPSED(ms, BOOTSCREEN_TIMEOUT)) {
       booted = true;
+<<<<<<< HEAD
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
+=======
+<<<<<<<< HEAD:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+>>>>>>> upstream/bugfix-2.0.x
       gotoScreen(TERN0(POWER_LOSS_RECOVERY, recovery.valid()) ? DGUS_SCREEN_POWER_LOSS : DGUS_SCREEN_MAIN);
     }
   #endif
 
   return isScreenComplete();
+<<<<<<< HEAD
 }
 
 #endif // DGUS_LCD_UI_FYSETC
+=======
+>>>>>>> upstream/bugfix-2.0.x
+========
+      GotoScreen(TERN0(POWER_LOSS_RECOVERY, recovery.valid()) ? DGUSLCD_SCREEN_POWER_LOSS : DGUSLCD_SCREEN_MAIN);
+    }
+  #endif
+
+  return IsScreenComplete();
+<<<<<<< HEAD
+}
+
+#endif // DGUS_LCD_UI_HIPRECY
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/hiprecy/DGUSScreenHandler.cpp
+=======
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/lcd/extui/dgus/fysetc/DGUSScreenHandler.cpp
+}
+
+#endif // DGUS_LCD_UI_HIPRECY
+>>>>>>> upstream/bugfix-2.0.x

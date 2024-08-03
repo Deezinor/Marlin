@@ -66,17 +66,28 @@ void TFT::lcdInit() {
   TERN_(HAS_LOGO_IN_FLASH, delay(2000));
 }
 
+<<<<<<< HEAD
 void TFT::lcdClear(uint16_t color) {
   setWindow(0, 0, TFT_WIDTH, TFT_HEIGHT);
   tftio.writeMultiple(color, uint32_t(TFT_WIDTH) * uint32_t(TFT_HEIGHT));
+=======
+void TFT::LCD_clear(uint16_t color) {
+  setWindow(0, 0, TFT_WIDTH, TFT_HEIGHT);
+  tftio.WriteMultiple(color, uint32_t(TFT_WIDTH) * uint32_t(TFT_HEIGHT));
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 void TFT::lcdDrawLogo() {
   #if HAS_LOGO_IN_FLASH
     setWindow(0, 0, TFT_WIDTH, TFT_HEIGHT);
     for (uint16_t i = 0; i < (TFT_HEIGHT); i++) {
+<<<<<<< HEAD
       picLogoRead((uint8_t *)"", (uint8_t *)bmp_public_buf, (TFT_WIDTH) * 2);
       tftio.writeSequence((uint16_t *)bmp_public_buf, TFT_WIDTH);
+=======
+      Pic_Logo_Read((uint8_t *)"", (uint8_t *)bmp_public_buf, (TFT_WIDTH) * 2);
+      tftio.WriteSequence((uint16_t *)bmp_public_buf, TFT_WIDTH);
+>>>>>>> upstream/bugfix-2.0.x
     }
   #endif
 }

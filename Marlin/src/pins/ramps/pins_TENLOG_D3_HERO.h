@@ -125,7 +125,11 @@
 #define TEMP_BED_PIN                          14  // Analog Input
 
 // SPI for MAX Thermocouple
+<<<<<<< HEAD
 #if !HAS_MEDIA
+=======
+#if DISABLED(SDSUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
   #define TEMP_0_CS_PIN                       -1  // Don't use 53 if using Display/SD card
 #else
   #define TEMP_0_CS_PIN                       -1  // Don't use 49 (SD_DETECT_PIN)
@@ -138,7 +142,11 @@
 #define HEATER_1_PIN                          11
 #define HEATER_BED_PIN                         8
 
+<<<<<<< HEAD
 #define FAN0_PIN                               9
+=======
+#define FAN_PIN                                9
+>>>>>>> upstream/bugfix-2.0.x
 #define FAN1_PIN                               5  // Normally this would be a servo pin
 
 // XXX Runout support unknown?

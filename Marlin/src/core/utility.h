@@ -83,11 +83,16 @@ public:
 constexpr uint8_t ui8_to_percent(const uint8_t i) { return (int(i) * 100 + 127) / 255; }
 
 // Axis names for G-code parsing, reports, etc.
+<<<<<<< HEAD
 const xyze_char_t axis_codes LOGICAL_AXIS_ARRAY('E', 'X', 'Y', 'Z', AXIS4_NAME, AXIS5_NAME, AXIS6_NAME, AXIS7_NAME, AXIS8_NAME, AXIS9_NAME);
+=======
+const xyze_char_t axis_codes LOGICAL_AXIS_ARRAY('E', 'X', 'Y', 'Z', AXIS4_NAME, AXIS5_NAME, AXIS6_NAME);
+>>>>>>> upstream/bugfix-2.0.x
 #if NUM_AXES <= XYZ && !HAS_EXTRUDERS
   #define AXIS_CHAR(A) ((char)('X' + A))
   #define IAXIS_CHAR AXIS_CHAR
 #else
+<<<<<<< HEAD
   const xyze_char_t iaxis_codes LOGICAL_AXIS_ARRAY('E', 'X', 'Y', 'Z', 'I', 'J', 'K', 'U', 'V', 'W');
   #define AXIS_CHAR(A) axis_codes[A]
   #define IAXIS_CHAR(A) iaxis_codes[A]
@@ -111,3 +116,9 @@ const xyze_char_t axis_codes LOGICAL_AXIS_ARRAY('E', 'X', 'Y', 'Z', AXIS4_NAME, 
   extern MarlinError marlin_error_number;   // Error Number - Marlin can beep, display, and emit...
   inline void error(const MarlinError err) { marlin_error_number = err; }
 #endif
+=======
+  const xyze_char_t iaxis_codes LOGICAL_AXIS_ARRAY('E', 'X', 'Y', 'Z', 'I', 'J', 'K');
+  #define AXIS_CHAR(A) axis_codes[A]
+  #define IAXIS_CHAR(A) iaxis_codes[A]
+#endif
+>>>>>>> upstream/bugfix-2.0.x

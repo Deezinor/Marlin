@@ -13,7 +13,11 @@
 from __future__ import print_function
 from __future__ import division
 
+<<<<<<< HEAD
 import subprocess, os, platform
+=======
+import subprocess,os,platform
+>>>>>>> upstream/bugfix-2.0.x
 from SCons.Script import DefaultEnvironment
 
 current_OS = platform.system()

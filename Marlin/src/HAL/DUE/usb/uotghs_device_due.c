@@ -838,6 +838,7 @@ void udd_attach(void)
 	// Enable USB line events
 	udd_enable_suspend_interrupt();
 	udd_enable_wake_up_interrupt();
+<<<<<<< HEAD
 
 	// Marlin modification: The RESET, SOF, and MSOF interrupts were previously
 	// enabled here, which caused a race condition where they could be raised
@@ -846,6 +847,16 @@ void udd_attach(void)
 	// explicitly disabled here to ensure that they cannot be raised before
 	// the clock is frozen.
 	disable_and_ack_sync_interrupts();
+=======
+	udd_enable_sof_interrupt();
+#ifdef USB_DEVICE_HS_SUPPORT
+	udd_enable_msof_interrupt();
+#endif
+	// Reset following interrupts flag
+	udd_ack_reset();
+	udd_ack_sof();
+	udd_ack_msof();
+>>>>>>> upstream/bugfix-2.0.x
 
 	// The first suspend interrupt must be forced
 	// The first suspend interrupt is not detected else raise it

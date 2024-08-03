@@ -34,17 +34,26 @@
 #endif
 
 #if SERIAL_PORT == 1 || SERIAL_PORT_2 == 1 || SERIAL_PORT_3 == 1
+<<<<<<< HEAD
   #warning "Serial 1 is originally reserved for DGUS LCD."
+=======
+  #warning "Serial 1 is originally reserved to DGUS LCD."
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 #if SERIAL_PORT == 2 || SERIAL_PORT_2 == 2 || SERIAL_PORT_3 == 2 || LCD_SERIAL_PORT == 2
   #warning "Serial 2 has no connector. Hardware changes may be required to use it."
 #endif
 #if SERIAL_PORT == 3 || SERIAL_PORT_2 == 3 || SERIAL_PORT_3 == 3 || LCD_SERIAL_PORT == 3
+<<<<<<< HEAD
   #warning "Serial 3 is originally reserved for Y limit switches. Hardware changes are required to use it."
   #define Y_STOP_PIN                          37
   #if MB(LONGER3D_LKx_PRO)
     #define Z_STOP_PIN                        35
   #endif
+=======
+  #define CHANGE_Y_LIMIT_PINS
+  #warning "Serial 3 is originally reserved to Y limit switches. Hardware changes are required to use it."
+>>>>>>> upstream/bugfix-2.0.x
 #endif
 
 #define BOARD_INFO_NAME "LGT KIT V1.0"
@@ -92,10 +101,7 @@
   #define Z_MAX_PIN                           37
 #endif
 
-//
-// Z Probe (when not Z_MIN_PIN)
-//
-#define Z_MIN_PROBE_PIN                       -1
+#undef CHANGE_Y_LIMIT_PINS
 
 //
 // Steppers - No E1 pins
@@ -106,6 +112,22 @@
 #define E1_CS_PIN                             -1
 
 //
+// Z Probe (when not Z_MIN_PIN)
+//
+#define Z_MIN_PROBE_PIN                       -1
+
+//
+<<<<<<< HEAD
+// Steppers - No E1 pins
+//
+#define E1_STEP_PIN                           -1
+#define E1_DIR_PIN                            -1
+#define E1_ENABLE_PIN                         -1
+#define E1_CS_PIN                             -1
+
+//
+=======
+>>>>>>> upstream/bugfix-2.0.x
 // Temperature Sensors
 //
 #define TEMP_1_PIN                            -1
@@ -155,4 +177,8 @@
 //
 // Other RAMPS 1.3 pins
 //
+<<<<<<< HEAD
 #include "pins_RAMPS_13.h" // ... pins_RAMPS.h
+=======
+#include "pins_RAMPS_13.h" // ... RAMPS
+>>>>>>> upstream/bugfix-2.0.x

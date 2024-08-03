@@ -66,9 +66,15 @@ float ProbeTempComp::init_measurement; // = 0.0
 bool ProbeTempComp::enabled = true;
 
 void ProbeTempComp::reset() {
+<<<<<<< HEAD
   TERN_(PTC_PROBE, for (uint8_t i = 0; i < PTC_PROBE_COUNT; ++i) z_offsets_probe[i] = z_offsets_probe_default[i]);
   TERN_(PTC_BED, for (uint8_t i = 0; i < PTC_BED_COUNT; ++i) z_offsets_bed[i] = z_offsets_bed_default[i]);
   TERN_(PTC_HOTEND, for (uint8_t i = 0; i < PTC_HOTEND_COUNT; ++i) z_offsets_hotend[i] = z_offsets_hotend_default[i]);
+=======
+  TERN_(PTC_PROBE, LOOP_L_N(i, PTC_PROBE_COUNT) z_offsets_probe[i] = z_offsets_probe_default[i]);
+  TERN_(PTC_BED, LOOP_L_N(i, PTC_BED_COUNT) z_offsets_bed[i] = z_offsets_bed_default[i]);
+  TERN_(PTC_HOTEND, LOOP_L_N(i, PTC_HOTEND_COUNT) z_offsets_hotend[i] = z_offsets_hotend_default[i]);
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 void ProbeTempComp::clear_offsets(const TempSensorID tsi) {
@@ -87,10 +93,22 @@ void ProbeTempComp::print_offsets() {
   for (uint8_t s = 0; s < TSI_COUNT; ++s) {
     celsius_t temp = cali_info[s].start_temp;
     for (int16_t i = -1; i < cali_info[s].measurements; ++i) {
+<<<<<<< HEAD
       SERIAL_ECHOLN(
         TERN_(PTC_BED, s == TSI_BED ? F("Bed") :) TERN_(PTC_HOTEND, s == TSI_EXT ? F("Extruder") :) F("Probe"),
         F(" temp: "), temp, F("C; Offset: "), i < 0 ? 0.0f : sensor_z_offsets[s][i], F(" um")
       );
+=======
+      SERIAL_ECHOF(
+        TERN_(PTC_BED, s == TSI_BED ? F("Bed") :)
+        TERN_(PTC_HOTEND, s == TSI_EXT ? F("Extruder") :)
+        F("Probe")
+      );
+      SERIAL_ECHOLNPGM(
+        " temp: ", temp,
+        "C; Offset: ", i < 0 ? 0.0f : sensor_z_offsets[s][i], " um"
+      );
+>>>>>>> upstream/bugfix-2.0.x
       temp += cali_info[s].temp_resolution;
     }
   }

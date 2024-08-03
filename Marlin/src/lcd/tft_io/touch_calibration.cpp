@@ -81,11 +81,19 @@ void TouchCalibration::validate_calibration() {
 
   if (calibration_state == CALIBRATION_SUCCESS) {
     SERIAL_ECHOLNPGM("Touch screen calibration completed");
+<<<<<<< HEAD
     SERIAL_ECHOLN(F("#define TOUCH_"), F("CALIBRATION_X "), calibration.x);
     SERIAL_ECHOLN(F("#define TOUCH_"), F("CALIBRATION_Y "), calibration.y);
     SERIAL_ECHOLN(F("#define TOUCH_"), F("OFFSET_X "), calibration.offset_x);
     SERIAL_ECHOLN(F("#define TOUCH_"), F("OFFSET_Y "), calibration.offset_y);
     SERIAL_ECHO(F("#define TOUCH_")); SERIAL_ECHO_TERNARY(calibration.orientation == TOUCH_LANDSCAPE, "ORIENTATION ", "TOUCH_LANDSCAPE", "TOUCH_PORTRAIT", "\n");
+=======
+    SERIAL_ECHOLNPGM("TOUCH_CALIBRATION_X ", calibration.x);
+    SERIAL_ECHOLNPGM("TOUCH_CALIBRATION_Y ", calibration.y);
+    SERIAL_ECHOLNPGM("TOUCH_OFFSET_X ", calibration.offset_x);
+    SERIAL_ECHOLNPGM("TOUCH_OFFSET_Y ", calibration.offset_y);
+    SERIAL_ECHO_TERNARY(calibration.orientation == TOUCH_LANDSCAPE, "TOUCH_ORIENTATION ", "TOUCH_LANDSCAPE", "TOUCH_PORTRAIT", "\n");
+>>>>>>> upstream/bugfix-2.0.x
     TERN_(TOUCH_CALIBRATION_AUTO_SAVE, settings.save());
   }
 }

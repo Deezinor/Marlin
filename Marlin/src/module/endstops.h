@@ -28,6 +28,7 @@
 #include "../inc/MarlinConfig.h"
 #include <stdint.h>
 
+<<<<<<< HEAD
 #define _ES_ENUM(A,M) A##_##M
 #define ES_ENUM(A,M) _ES_ENUM(A,M)
 
@@ -134,11 +135,88 @@ enum EndstopEnum : int8_t {
 #undef ES_ITEM
 #undef _ESN_ITEM
 #undef ES_MINMAX
+=======
+#define __ES_ITEM(N) N,
+#define _ES_ITEM(K,N) TERN_(K,DEFER4(__ES_ITEM)(N))
+
+enum EndstopEnum : char {
+  // Common XYZ (ABC) endstops. Defined according to USE_[XYZ](MIN|MAX)_PLUG settings.
+  _ES_ITEM(HAS_X_MIN, X_MIN)
+  _ES_ITEM(HAS_X_MAX, X_MAX)
+  _ES_ITEM(HAS_Y_MIN, Y_MIN)
+  _ES_ITEM(HAS_Y_MAX, Y_MAX)
+  _ES_ITEM(HAS_Z_MIN, Z_MIN)
+  _ES_ITEM(HAS_Z_MAX, Z_MAX)
+  _ES_ITEM(HAS_I_MIN, I_MIN)
+  _ES_ITEM(HAS_I_MAX, I_MAX)
+  _ES_ITEM(HAS_J_MIN, J_MIN)
+  _ES_ITEM(HAS_J_MAX, J_MAX)
+  _ES_ITEM(HAS_K_MIN, K_MIN)
+  _ES_ITEM(HAS_K_MAX, K_MAX)
+
+  // Extra Endstops for XYZ
+  #if ENABLED(X_DUAL_ENDSTOPS)
+    _ES_ITEM(HAS_X_MIN, X2_MIN)
+    _ES_ITEM(HAS_X_MAX, X2_MAX)
+  #endif
+  #if ENABLED(Y_DUAL_ENDSTOPS)
+    _ES_ITEM(HAS_Y_MIN, Y2_MIN)
+    _ES_ITEM(HAS_Y_MAX, Y2_MAX)
+  #endif
+  #if ENABLED(Z_MULTI_ENDSTOPS)
+    _ES_ITEM(HAS_Z_MIN, Z2_MIN)
+    _ES_ITEM(HAS_Z_MAX, Z2_MAX)
+    #if NUM_Z_STEPPERS >= 3
+      _ES_ITEM(HAS_Z_MIN, Z3_MIN)
+      _ES_ITEM(HAS_Z_MAX, Z3_MAX)
+    #endif
+    #if NUM_Z_STEPPERS >= 4
+      _ES_ITEM(HAS_Z_MIN, Z4_MIN)
+      _ES_ITEM(HAS_Z_MAX, Z4_MAX)
+    #endif
+  #endif
+
+  // Bed Probe state is distinct or shared with Z_MIN (i.e., when the probe is the only Z endstop)
+  #if !HAS_DELTA_SENSORLESS_PROBING
+    _ES_ITEM(HAS_BED_PROBE, Z_MIN_PROBE IF_DISABLED(USES_Z_MIN_PROBE_PIN, = Z_MIN))
+  #endif
+
+  // The total number of states
+  NUM_ENDSTOP_STATES
+
+  // Endstops can be either MIN or MAX but not both
+  #if HAS_X_MIN || HAS_X_MAX
+    , X_ENDSTOP = TERN(X_HOME_TO_MAX, X_MAX, X_MIN)
+  #endif
+  #if HAS_Y_MIN || HAS_Y_MAX
+    , Y_ENDSTOP = TERN(Y_HOME_TO_MAX, Y_MAX, Y_MIN)
+  #endif
+  #if HAS_Z_MIN || HAS_Z_MAX || HOMING_Z_WITH_PROBE
+    , Z_ENDSTOP = TERN(Z_HOME_TO_MAX, Z_MAX, TERN(HOMING_Z_WITH_PROBE, Z_MIN_PROBE, Z_MIN))
+  #endif
+  #if HAS_I_MIN || HAS_I_MAX
+    , I_ENDSTOP = TERN(I_HOME_TO_MAX, I_MAX, I_MIN)
+  #endif
+  #if HAS_J_MIN || HAS_J_MAX
+    , J_ENDSTOP = TERN(J_HOME_TO_MAX, J_MAX, J_MIN)
+  #endif
+  #if HAS_K_MIN || HAS_K_MAX
+    , K_ENDSTOP = TERN(K_HOME_TO_MAX, K_MAX, K_MIN)
+  #endif
+};
+
+#undef __ES_ITEM
+#undef _ES_ITEM
+>>>>>>> upstream/bugfix-2.0.x
 
 class Endstops {
   public:
 
+<<<<<<< HEAD
     typedef bits_t(NUM_ENDSTOP_STATES) endstop_mask_t;
+=======
+    typedef IF<(NUM_ENDSTOP_STATES > 8), uint16_t, uint8_t>::type endstop_mask_t;
+>>>>>>> upstream/bugfix-2.0.x
 
     #if ENABLED(X_DUAL_ENDSTOPS)
       static float x2_endstop_adj;
@@ -291,7 +369,11 @@ class Endstops {
   public:
     // Basic functions for Sensorless Homing
     #if USE_SENSORLESS
+<<<<<<< HEAD
       static void set_z_sensorless_current(const bool onoff);
+=======
+      static void set_homing_current(const bool onoff);
+>>>>>>> upstream/bugfix-2.0.x
     #endif
 };
 

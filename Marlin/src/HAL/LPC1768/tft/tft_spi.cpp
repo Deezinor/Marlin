@@ -28,9 +28,15 @@
 
 #include "tft_spi.h"
 
+<<<<<<< HEAD
 SPIClass TFT_SPI::SPIx(TFT_SPI_DEVICE);
 
 void TFT_SPI::init() {
+=======
+SPIClass TFT_SPI::SPIx(1);
+
+void TFT_SPI::Init() {
+>>>>>>> upstream/bugfix-2.0.x
   #if PIN_EXISTS(TFT_RESET)
     OUT_WRITE(TFT_RESET_PIN, HIGH);
     delay(100);
@@ -40,10 +46,47 @@ void TFT_SPI::init() {
     OUT_WRITE(TFT_BACKLIGHT_PIN, HIGH);
   #endif
 
+<<<<<<< HEAD
   OUT_WRITE(TFT_DC_PIN, HIGH);
   OUT_WRITE(TFT_CS_PIN, HIGH);
 
   SPIx.setModule(TFT_SPI_DEVICE);
+=======
+  SET_OUTPUT(TFT_DC_PIN);
+  SET_OUTPUT(TFT_CS_PIN);
+  WRITE(TFT_DC_PIN, HIGH);
+  WRITE(TFT_CS_PIN, HIGH);
+
+  /**
+   * STM32F1 APB2 = 72MHz, APB1 = 36MHz, max SPI speed of this MCU if 18Mhz
+   * STM32F1 has 3 SPI ports, SPI1 in APB2, SPI2/SPI3 in APB1
+   * so the minimum prescale of SPI1 is DIV4, SPI2/SPI3 is DIV2
+   */
+  #if 0
+    #if SPI_DEVICE == 1
+     #define SPI_CLOCK_MAX SPI_CLOCK_DIV4
+    #else
+     #define SPI_CLOCK_MAX SPI_CLOCK_DIV2
+    #endif
+    uint8_t  clock;
+    uint8_t spiRate = SPI_FULL_SPEED;
+    switch (spiRate) {
+     case SPI_FULL_SPEED:    clock = SPI_CLOCK_MAX ;  break;
+     case SPI_HALF_SPEED:    clock = SPI_CLOCK_DIV4 ; break;
+     case SPI_QUARTER_SPEED: clock = SPI_CLOCK_DIV8 ; break;
+     case SPI_EIGHTH_SPEED:  clock = SPI_CLOCK_DIV16; break;
+     case SPI_SPEED_5:       clock = SPI_CLOCK_DIV32; break;
+     case SPI_SPEED_6:       clock = SPI_CLOCK_DIV64; break;
+     default:                clock = SPI_CLOCK_DIV2;  // Default from the SPI library
+    }
+  #endif
+
+  #if TFT_MISO_PIN == BOARD_SPI1_MISO_PIN
+    SPIx.setModule(1);
+  #elif TFT_MISO_PIN == BOARD_SPI2_MISO_PIN
+    SPIx.setModule(2);
+  #endif
+>>>>>>> upstream/bugfix-2.0.x
   SPIx.setClock(SPI_CLOCK_MAX_TFT);
   SPIx.setBitOrder(MSBFIRST);
   SPIx.setDataMode(SPI_MODE0);
@@ -80,7 +123,11 @@ uint32_t TFT_SPI::readID(const uint16_t inReg) {
     SPIx.setClock(SPI_CLOCK_DIV64);
     SPIx.begin();
     WRITE(TFT_CS_PIN, LOW);
+<<<<<<< HEAD
     writeReg(inReg);
+=======
+    WriteReg(Reg);
+>>>>>>> upstream/bugfix-2.0.x
 
     for (uint8_t i = 0; i < 4; ++i) {
       SPIx.read((uint8_t*)&d, 1);
@@ -94,6 +141,7 @@ uint32_t TFT_SPI::readID(const uint16_t inReg) {
   return data >> 7;
 }
 
+<<<<<<< HEAD
 bool TFT_SPI::isBusy() {
   #define __IS_DMA_CONFIGURED(__HANDLE__)   ((__HANDLE__)->DMACCSrcAddr != 0)
 
@@ -150,6 +198,19 @@ void TFT_SPI::transmitDMA(uint32_t memoryIncrease, uint16_t *data, uint16_t coun
   SPIx.dmaSendAsync(data, count, memoryIncrease);
 
   TERN_(TFT_SHARED_IO, while (isBusy()));
+=======
+bool TFT_SPI::isBusy() { return false; }
+
+void TFT_SPI::Abort() { DataTransferEnd(); }
+
+void TFT_SPI::Transmit(uint16_t Data) { SPIx.transfer(Data); }
+
+void TFT_SPI::TransmitDMA(uint32_t MemoryIncrease, uint16_t *Data, uint16_t Count) {
+  DataTransferBegin(DATASIZE_16BIT);
+  WRITE(TFT_DC_PIN, HIGH);
+  SPIx.dmaSend(Data, Count, MemoryIncrease);
+  DataTransferEnd();
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 #endif // HAS_SPI_TFT

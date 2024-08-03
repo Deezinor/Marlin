@@ -113,7 +113,11 @@
 #define HEATER_0_PIN                        PC8   // HEATER1
 #define HEATER_BED_PIN                      PC9   // HOT BED
 
+<<<<<<< HEAD
 #define FAN0_PIN                            PC6   // FAN
+=======
+#define FAN_PIN                             PC6   // FAN
+>>>>>>> upstream/bugfix-2.0.x
 #define FAN_SOFT_PWM_REQUIRED
 
 #define CONTROLLER_FAN_PIN                  PC7
@@ -184,6 +188,11 @@
 
 #ifndef BOARD_NEOPIXEL_PIN
   #define BOARD_NEOPIXEL_PIN                PA8
+#endif
+
+#define SUICIDE_PIN                         PC13
+#ifndef SUICIDE_PIN_STATE
+  #define SUICIDE_PIN_STATE                  LOW
 #endif
 
 #define SUICIDE_PIN                         PC13

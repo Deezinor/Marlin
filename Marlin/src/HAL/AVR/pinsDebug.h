@@ -42,7 +42,11 @@
   #define digitalPinToTimer_DEBUG(p) digitalPinToTimer(p)
   #define digitalPinToBitMask_DEBUG(p) digitalPinToBitMask(p)
   #define digitalPinToPort_DEBUG(p) digitalPinToPort(p)
+<<<<<<< HEAD
   #define getValidPinMode(pin) (*portModeRegister(pin) & digitalPinToBitMask_DEBUG(pin))
+=======
+  #define GET_PINMODE(pin) (*portModeRegister(pin) & digitalPinToBitMask_DEBUG(pin))
+>>>>>>> upstream/bugfix-2.0.x
 
 #elif AVR_ATmega2560_FAMILY_PLUS_70   // So we can access/display all the pins on boards using more than 70
 
@@ -75,9 +79,15 @@
 #define getPinByIndex(p) pgm_read_byte(&pin_array[p].pin)
 #define MULTI_NAME_PAD 26 // space needed to be pretty if not first name assigned to a pin
 
+<<<<<<< HEAD
 void printPinNameByIndex(uint8_t x) {
   PGM_P const name_mem_pointer = (PGM_P)pgm_read_ptr(&pin_array[x].name);
   for (uint8_t y = 0; y < MAX_NAME_LENGTH; ++y) {
+=======
+void PRINT_ARRAY_NAME(uint8_t x) {
+  PGM_P const name_mem_pointer = (PGM_P)pgm_read_ptr(&pin_array[x].name);
+  LOOP_L_N(y, MAX_NAME_LENGTH) {
+>>>>>>> upstream/bugfix-2.0.x
     char temp_char = pgm_read_byte(name_mem_pointer + y);
     if (temp_char != 0)
       SERIAL_CHAR(temp_char);
@@ -347,7 +357,11 @@ void printPinPWM(uint8_t pin) {
   #else
     UNUSED(print_is_also_tied);
   #endif
+<<<<<<< HEAD
 } // printPinPWM
+=======
+} // pwm_details
+>>>>>>> upstream/bugfix-2.0.x
 
 #ifndef digitalRead_mod                   // Use Teensyduino's version of digitalRead - it doesn't disable the PWMs
   int digitalRead_mod(const pin_t pin) {  // same as digitalRead except the PWM stop section has been removed
@@ -389,4 +403,12 @@ void printPinPort(const pin_t pin) {   // print port number
 #define printPinNumber(p) do{ sprintf_P(buffer, PSTR("%3d "), p); SERIAL_ECHO(buffer); }while(0)
 #define printPinAnalog(p) do{ sprintf_P(buffer, PSTR(" (A%2d)  "), digitalPinToAnalogIndex(pin)); SERIAL_ECHO(buffer); }while(0)
 
+<<<<<<< HEAD
+=======
+#endif
+
+#define PRINT_PIN(p) do{ sprintf_P(buffer, PSTR("%3d "), p); SERIAL_ECHO(buffer); }while(0)
+#define PRINT_PIN_ANALOG(p) do{ sprintf_P(buffer, PSTR(" (A%2d)  "), DIGITAL_PIN_TO_ANALOG_PIN(pin)); SERIAL_ECHO(buffer); }while(0)
+
+>>>>>>> upstream/bugfix-2.0.x
 #undef ABTEST

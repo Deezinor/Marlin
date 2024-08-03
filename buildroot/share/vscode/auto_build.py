@@ -72,7 +72,11 @@
 from __future__ import print_function
 from __future__ import division
 
+<<<<<<< HEAD
 import sys, os, re
+=======
+import sys,os,re
+>>>>>>> upstream/bugfix-2.0.x
 
 pwd = os.getcwd()  # make sure we're executing from the correct directory level
 pwd = pwd.replace('\\', '/')
@@ -151,6 +155,11 @@ def get_answer(board_name, question_txt, options, default_value=1):
   root_get_answer.protocol("WM_DELETE_WINDOW", disable_event)
   root_get_answer.resizable(False, False)
 
+<<<<<<< HEAD
+=======
+  root_get_answer.radio_state = default_value  # declare variables used by TK and enable
+
+>>>>>>> upstream/bugfix-2.0.x
   global get_answer_val
   get_answer_val = default_value  # return get_answer_val, set default to match radio_state default
 
@@ -497,7 +506,11 @@ def get_starting_env(board_name_full, version):
   possible_envs = None
   for i, line in enumerate(pins_h):
     if 0 < line.find("Unknown MOTHERBOARD value set in Configuration.h"):
+<<<<<<< HEAD
       invalid_board()
+=======
+      invalid_board();
+>>>>>>> upstream/bugfix-2.0.x
     if list_start_found == False and 0 < line.find('1280'):
       list_start_found = True
     elif list_start_found == False:  # skip lines until find start of CPU list

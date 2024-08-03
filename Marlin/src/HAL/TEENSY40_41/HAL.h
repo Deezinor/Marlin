@@ -101,6 +101,7 @@ extern USBSerialType USBSerial;
   #endif
 #endif
 
+<<<<<<< HEAD
 #ifdef SERIAL_PORT_3
   #if SERIAL_PORT_3 == -1
     #define MYSERIAL3 USBSerial
@@ -112,6 +113,8 @@ extern USBSerialType USBSerial;
   #endif
 #endif
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 // ------------------------
 // Types
 // ------------------------
@@ -136,7 +139,11 @@ typedef int8_t pin_t;
   #define analogInputToDigitalPin(p) pin_t((p < 12U) ? (p) + 54U : -1)
 #endif
 
+<<<<<<< HEAD
 #define HAL_ADC_VREF_MV   3300
+=======
+#define HAL_ADC_VREF         3.3
+>>>>>>> upstream/bugfix-2.0.x
 #define HAL_ADC_RESOLUTION  10
 #define HAL_ADC_FILTERED      // turn off ADC oversampling
 

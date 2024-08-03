@@ -34,3 +34,7 @@ void u8g_i2c_stop();
 #ifdef __cplusplus
   }
 #endif
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/bugfix-2.0.x

@@ -153,7 +153,11 @@ void LevelingBilinear::extrapolate_unprobed_bed_level() {
     }
 }
 
+<<<<<<< HEAD
 void LevelingBilinear::print_leveling_grid(const bed_mesh_t* _z_values/*=nullptr*/) {
+=======
+void LevelingBilinear::print_leveling_grid(const bed_mesh_t* _z_values /*= NULL*/) {
+>>>>>>> upstream/bugfix-2.0.x
   // print internal grid(s) or just the one passed as a parameter
   SERIAL_ECHOLNPGM("Bilinear Leveling Grid:");
   print_2d_array(GRID_MAX_POINTS_X, GRID_MAX_POINTS_Y, 3, _z_values ? *_z_values[0] : z_values[0]);
@@ -175,7 +179,11 @@ void LevelingBilinear::print_leveling_grid(const bed_mesh_t* _z_values/*=nullptr
   xy_float_t LevelingBilinear::grid_factor_virt;
 
   #define LINEAR_EXTRAPOLATION(E, I) ((E) * 2 - (I))
+<<<<<<< HEAD
   float LevelingBilinear::virt_coord(const uint8_t x, const uint8_t y) {
+=======
+  float LevelingBilinear::bed_level_virt_coord(const uint8_t x, const uint8_t y) {
+>>>>>>> upstream/bugfix-2.0.x
     uint8_t ep = 0, ip = 1;
     if (x > (GRID_MAX_POINTS_X) + 1 || y > (GRID_MAX_POINTS_Y) + 1) {
       // The requested point requires extrapolating two points beyond the mesh.
@@ -220,7 +228,11 @@ void LevelingBilinear::print_leveling_grid(const bed_mesh_t* _z_values/*=nullptr
     return z_values[x - 1][y - 1];
   }
 
+<<<<<<< HEAD
   float LevelingBilinear::virt_cmr(const float p[4], const uint8_t i, const float t) {
+=======
+  float LevelingBilinear::bed_level_virt_cmr(const float p[4], const uint8_t i, const float t) {
+>>>>>>> upstream/bugfix-2.0.x
     return (
         p[i-1] * -t * sq(1 - t)
       + p[i]   * (2 - 5 * sq(t) + 3 * t * sq(t))
@@ -229,7 +241,11 @@ void LevelingBilinear::print_leveling_grid(const bed_mesh_t* _z_values/*=nullptr
     ) * 0.5f;
   }
 
+<<<<<<< HEAD
   float LevelingBilinear::virt_2cmr(const uint8_t x, const uint8_t y, const_float_t tx, const_float_t ty) {
+=======
+  float LevelingBilinear::bed_level_virt_2cmr(const uint8_t x, const uint8_t y, const_float_t tx, const_float_t ty) {
+>>>>>>> upstream/bugfix-2.0.x
     float row[4], column[4];
     for (uint8_t i = 0; i < 4; ++i) {
       for (uint8_t j = 0; j < 4; ++j) {
@@ -240,6 +256,7 @@ void LevelingBilinear::print_leveling_grid(const bed_mesh_t* _z_values/*=nullptr
     return virt_cmr(row, 1, tx);
   }
 
+<<<<<<< HEAD
   void LevelingBilinear::subdivide_mesh() {
     grid_spacing_virt = grid_spacing / (BILINEAR_SUBDIVISIONS);
     grid_factor_virt = grid_spacing_virt.reciprocal();
@@ -247,6 +264,15 @@ void LevelingBilinear::print_leveling_grid(const bed_mesh_t* _z_values/*=nullptr
       for (uint8_t x = 0; x < GRID_MAX_POINTS_X; ++x)
         for (uint8_t ty = 0; ty < BILINEAR_SUBDIVISIONS; ++ty)
           for (uint8_t tx = 0; tx < BILINEAR_SUBDIVISIONS; ++tx) {
+=======
+  void LevelingBilinear::bed_level_virt_interpolate() {
+    grid_spacing_virt = grid_spacing / (BILINEAR_SUBDIVISIONS);
+    grid_factor_virt = grid_spacing_virt.reciprocal();
+    LOOP_L_N(y, GRID_MAX_POINTS_Y)
+      LOOP_L_N(x, GRID_MAX_POINTS_X)
+        LOOP_L_N(ty, BILINEAR_SUBDIVISIONS)
+          LOOP_L_N(tx, BILINEAR_SUBDIVISIONS) {
+>>>>>>> upstream/bugfix-2.0.x
             if ((ty && y == (GRID_MAX_POINTS_Y) - 1) || (tx && x == (GRID_MAX_POINTS_X) - 1))
               continue;
             z_values_virt[x * (BILINEAR_SUBDIVISIONS) + tx][y * (BILINEAR_SUBDIVISIONS) + ty] =
@@ -258,7 +284,11 @@ void LevelingBilinear::print_leveling_grid(const bed_mesh_t* _z_values/*=nullptr
 
 // Refresh after other values have been updated
 void LevelingBilinear::refresh_bed_level() {
+<<<<<<< HEAD
   TERN_(ABL_BILINEAR_SUBDIVISION, subdivide_mesh());
+=======
+  TERN_(ABL_BILINEAR_SUBDIVISION, bed_level_virt_interpolate());
+>>>>>>> upstream/bugfix-2.0.x
   cached_rel.x = cached_rel.y = -999.999;
   cached_g.x = cached_g.y = -99;
 }

@@ -19,6 +19,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
+<<<<<<< HEAD
+=======
+
+#include "../../../inc/MarlinConfigPre.h"
+>>>>>>> upstream/bugfix-2.0.x
 
 #include "../../../inc/MarlinConfigPre.h"
 

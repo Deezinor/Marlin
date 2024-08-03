@@ -117,7 +117,11 @@
 #define SSR_PIN                                6
 
 // SPI for MAX Thermocouple
+<<<<<<< HEAD
 #if !HAS_MEDIA
+=======
+#if DISABLED(SDSUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
   #define TEMP_0_CS_PIN                       66  // Don't use 53 if using Display/SD card
 #else
   #define TEMP_0_CS_PIN                       66  // Don't use 49 (SD_DETECT_PIN)

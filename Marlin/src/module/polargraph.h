@@ -1,6 +1,10 @@
 /**
  * Marlin 3D Printer Firmware
+<<<<<<< HEAD
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+=======
+ * Copyright (c) 2023 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+>>>>>>> upstream/bugfix-2.0.x
  *
  * Based on Sprinter and grbl.
  * Copyright (c) 2011 Camiel Gubbels / Erik van der Zalm
@@ -21,6 +25,23 @@
  */
 #pragma once
 
+<<<<<<< HEAD
+=======
+<<<<<<<< HEAD:Marlin/src/lcd/tft/ui_theme.h
+#include "../../inc/MarlinConfigPre.h"
+
+#ifndef TFT_THEME
+  #define TFT_THEME BLUE_MARLIN
+#endif
+
+#define TFT_THEME_INCL_(M) STRINGIFY_(themes/theme_##M.h)
+#define TFT_THEME_INCL(M) TFT_THEME_INCL_(M)
+
+#include "tft_color.h"
+#include TFT_THEME_INCL(TFT_THEME)
+#include "themes/theme_default.h"
+========
+>>>>>>> upstream/bugfix-2.0.x
 /**
  * polargraph.h - Polargraph-specific functions
  */
@@ -30,6 +51,14 @@
 
 extern float segments_per_second;
 extern xy_pos_t draw_area_min, draw_area_max;
+<<<<<<< HEAD
 extern float polargraph_max_belt_len;
 
 void inverse_kinematics(const xyz_pos_t &raw);
+=======
+extern xy_float_t draw_area_size;
+extern float polargraph_max_belt_len;
+
+void inverse_kinematics(const xyz_pos_t &raw);
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/module/polargraph.h
+>>>>>>> upstream/bugfix-2.0.x

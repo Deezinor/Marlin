@@ -62,8 +62,12 @@
 //
 // LCD / Controller
 //
+<<<<<<< HEAD
 
 #if ANY(VIKI2, miniVIKI)
+=======
+#if EITHER(VIKI2, miniVIKI)
+>>>>>>> upstream/bugfix-2.0.x
   /**
    * VIKI2 Has two groups of wires with...
    *

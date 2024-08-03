@@ -70,6 +70,10 @@
 #define   SD_MMC_INSERTED      1
 #define   SD_MMC_REMOVING      2
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/bugfix-2.0.x
 //---- CONTROL FUNCTIONS ----
 //!
 //! @brief This function initializes the hw/sw resources required to drive the SD_MMC_SPI.
@@ -129,6 +133,10 @@ bool sd_mmc_spi_wr_protect();
 //!
 bool sd_mmc_spi_removal();
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/bugfix-2.0.x
 //---- ACCESS DATA FUNCTIONS ----
 
 #if ACCESS_USB == true

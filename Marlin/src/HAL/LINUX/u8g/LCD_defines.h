@@ -1,6 +1,10 @@
 /**
  * Marlin 3D Printer Firmware
+<<<<<<<< HEAD:Marlin/src/HAL/LINUX/u8g/LCD_defines.h
  * Copyright (c) 2023 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+========
+ * Copyright (c) 2021 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/HAL/LINUX/MarlinSPI.h
  *
  * Based on Sprinter and grbl.
  * Copyright (c) 2011 Camiel Gubbels / Erik van der Zalm
@@ -21,6 +25,12 @@
  */
 #pragma once
 
+<<<<<<<< HEAD:Marlin/src/HAL/LINUX/u8g/LCD_defines.h
 /**
  * Linux LCD-specific defines
  */
+========
+#include <SPI.h>
+
+using MarlinSPI = SPIClass;
+>>>>>>>> upstream/bugfix-2.0.x:Marlin/src/HAL/LINUX/MarlinSPI.h

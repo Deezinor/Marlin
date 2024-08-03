@@ -103,6 +103,7 @@ bool MainMenu::onTouchEnd(uint8_t tag) {
   using namespace ExtUI;
 
   switch (tag) {
+<<<<<<< HEAD
     case 1: SaveSettingsDialogBox::promptToSaveSettings(); break;
     case 2: SpinnerDialogBox::enqueueAndWait(F("G28")); break;
     #if ENABLED(NOZZLE_CLEAN_FEATURE)
@@ -121,6 +122,18 @@ bool MainMenu::onTouchEnd(uint8_t tag) {
     case 6: GOTO_SCREEN(TemperatureScreen);    break;
     case 7: GOTO_SCREEN(ChangeFilamentScreen); break;
     case 8: GOTO_SCREEN(AdvancedSettingsMenu); break;
+=======
+    case 1:  SaveSettingsDialogBox::promptToSaveSettings();           break;
+    case 2:  SpinnerDialogBox::enqueueAndWait(F("G28"));            break;
+    #if ENABLED(NOZZLE_CLEAN_FEATURE)
+      case 3: injectCommands(F("G12")); GOTO_SCREEN(StatusScreen); break;
+    #endif
+    case 4:  GOTO_SCREEN(MoveAxisScreen);                             break;
+    case 5:  injectCommands(F("M84"));                           break;
+    case 6:  GOTO_SCREEN(TemperatureScreen);                          break;
+    case 7:  GOTO_SCREEN(ChangeFilamentScreen);                       break;
+    case 8:  GOTO_SCREEN(AdvancedSettingsMenu);                       break;
+>>>>>>> upstream/bugfix-2.0.x
     #if HAS_LEVELING
       case 9: GOTO_SCREEN(LevelingMenu);       break;
     #endif

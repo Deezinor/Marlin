@@ -46,7 +46,11 @@ void CancelObject::set_active_object(const int8_t obj) {
 
   #if ALL(HAS_STATUS_MESSAGE, CANCEL_OBJECTS_REPORTING)
     if (active_object >= 0)
+<<<<<<< HEAD
       ui.set_status(MString<30>(GET_TEXT_F(MSG_PRINTING_OBJECT), ' ', active_object));
+=======
+      ui.status_printf(0, F(S_FMT " %i"), GET_TEXT(MSG_PRINTING_OBJECT), int(active_object));
+>>>>>>> upstream/bugfix-2.0.x
     else
       ui.reset_status();
   #endif

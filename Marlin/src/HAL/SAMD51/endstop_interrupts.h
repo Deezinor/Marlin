@@ -53,6 +53,7 @@
 #include "../../module/endstops.h"
 
 #define MATCH_EILINE(P1,P2) (P1 != P2 && PIN_TO_EILINE(P1) == PIN_TO_EILINE(P2))
+<<<<<<< HEAD
 #define MATCH_X_MAX_EILINE(P)  TERN0(USE_X_MAX,  DEFER4(MATCH_EILINE)(P, X_MAX_PIN))
 #define MATCH_X_MIN_EILINE(P)  TERN0(USE_X_MIN,  DEFER4(MATCH_EILINE)(P, X_MIN_PIN))
 #define MATCH_Y_MAX_EILINE(P)  TERN0(USE_Y_MAX,  DEFER4(MATCH_EILINE)(P, Y_MAX_PIN))
@@ -83,6 +84,27 @@
 #define MATCH_Z4_MIN_EILINE(P) TERN0(USE_Z4_MIN, DEFER4(MATCH_EILINE)(P, Z4_MIN_PIN))
 #define MATCH_Z_MIN_PROBE_EILINE(P) TERN0(USE_Z_MIN_PROBE, DEFER4(MATCH_EILINE)(P, Z_MIN_PROBE_PIN))
 #define MATCH_CALIBRATION_EILINE(P) TERN0(USE_CALIBRATION, DEFER4(MATCH_EILINE)(P, CALIBRATION_PIN))
+=======
+#define MATCH_X_MAX_EILINE(P)   TERN0(HAS_X_MAX,  DEFER4(MATCH_EILINE)(P, X_MAX_PIN))
+#define MATCH_X_MIN_EILINE(P)   TERN0(HAS_X_MIN,  DEFER4(MATCH_EILINE)(P, X_MIN_PIN))
+#define MATCH_Y_MAX_EILINE(P)   TERN0(HAS_Y_MAX,  DEFER4(MATCH_EILINE)(P, Y_MAX_PIN))
+#define MATCH_Y_MIN_EILINE(P)   TERN0(HAS_Y_MIN,  DEFER4(MATCH_EILINE)(P, Y_MIN_PIN))
+#define MATCH_Z_MAX_EILINE(P)   TERN0(HAS_Z_MAX,  DEFER4(MATCH_EILINE)(P, Z_MAX_PIN))
+#define MATCH_Z_MIN_EILINE(P)   TERN0(HAS_Z_MIN,  DEFER4(MATCH_EILINE)(P, Z_MIN_PIN))
+#define MATCH_I_MAX_EILINE(P)   TERN0(HAS_I_MAX,  DEFER4(MATCH_EILINE)(P, I_MAX_PIN))
+#define MATCH_I_MIN_EILINE(P)   TERN0(HAS_I_MIN,  DEFER4(MATCH_EILINE)(P, I_MIN_PIN))
+#define MATCH_J_MAX_EILINE(P)   TERN0(HAS_J_MAX,  DEFER4(MATCH_EILINE)(P, J_MAX_PIN))
+#define MATCH_J_MIN_EILINE(P)   TERN0(HAS_J_MIN,  DEFER4(MATCH_EILINE)(P, J_MIN_PIN))
+#define MATCH_K_MAX_EILINE(P)   TERN0(HAS_K_MAX,  DEFER4(MATCH_EILINE)(P, K_MAX_PIN))
+#define MATCH_K_MIN_EILINE(P)   TERN0(HAS_K_MIN,  DEFER4(MATCH_EILINE)(P, K_MIN_PIN))
+#define MATCH_Z2_MAX_EILINE(P)  TERN0(HAS_Z2_MAX, DEFER4(MATCH_EILINE)(P, Z2_MAX_PIN))
+#define MATCH_Z2_MIN_EILINE(P)  TERN0(HAS_Z2_MIN, DEFER4(MATCH_EILINE)(P, Z2_MIN_PIN))
+#define MATCH_Z3_MAX_EILINE(P)  TERN0(HAS_Z3_MAX, DEFER4(MATCH_EILINE)(P, Z3_MAX_PIN))
+#define MATCH_Z3_MIN_EILINE(P)  TERN0(HAS_Z3_MIN, DEFER4(MATCH_EILINE)(P, Z3_MIN_PIN))
+#define MATCH_Z4_MAX_EILINE(P)  TERN0(HAS_Z4_MAX, DEFER4(MATCH_EILINE)(P, Z4_MAX_PIN))
+#define MATCH_Z4_MIN_EILINE(P)  TERN0(HAS_Z4_MIN, DEFER4(MATCH_EILINE)(P, Z4_MIN_PIN))
+#define MATCH_Z_MIN_PROBE_EILINE(P) TERN0(HAS_Z_MIN_PROBE_PIN, DEFER4(MATCH_EILINE)(P, Z_MIN_PROBE_PIN))
+>>>>>>> upstream/bugfix-2.0.x
 
 #define AVAILABLE_EILINE(P) ( PIN_TO_EILINE(P) != -1    \
   && !MATCH_X_MAX_EILINE(P) && !MATCH_X_MIN_EILINE(P)   \
@@ -91,6 +113,7 @@
   && !MATCH_I_MAX_EILINE(P) && !MATCH_I_MIN_EILINE(P)   \
   && !MATCH_J_MAX_EILINE(P) && !MATCH_J_MIN_EILINE(P)   \
   && !MATCH_K_MAX_EILINE(P) && !MATCH_K_MIN_EILINE(P)   \
+<<<<<<< HEAD
   && !MATCH_U_MAX_EILINE(P) && !MATCH_U_MIN_EILINE(P)   \
   && !MATCH_V_MAX_EILINE(P) && !MATCH_V_MIN_EILINE(P)   \
   && !MATCH_W_MAX_EILINE(P) && !MATCH_W_MIN_EILINE(P)   \
@@ -101,6 +124,12 @@
   && !MATCH_Z4_MAX_EILINE(P) && !MATCH_Z4_MIN_EILINE(P) \
   && !MATCH_Z_MIN_PROBE_EILINE(P)                       \
   && !MATCH_CALIBRATION_EILINE(P) )
+=======
+  && !MATCH_Z2_MAX_EILINE(P) && !MATCH_Z2_MIN_EILINE(P) \
+  && !MATCH_Z3_MAX_EILINE(P) && !MATCH_Z3_MIN_EILINE(P) \
+  && !MATCH_Z4_MAX_EILINE(P) && !MATCH_Z4_MIN_EILINE(P) \
+  && !MATCH_Z_MIN_PROBE_EILINE(P) )
+>>>>>>> upstream/bugfix-2.0.x
 
 // One ISR for all EXT-Interrupts
 void endstop_ISR() { endstops.update(); }
@@ -185,6 +214,7 @@ void setup_endstop_interrupts() {
     #endif
     _ATTACH(Z_MIN_PROBE_PIN);
   #endif
+<<<<<<< HEAD
   #if USE_CALIBRATION
     #if !AVAILABLE_EILINE(CALIBRATION_PIN)
       #error "CALIBRATION_PIN has no EXTINT line available. Disable ENDSTOP_INTERRUPTS_FEATURE to continue."
@@ -263,4 +293,42 @@ void setup_endstop_interrupts() {
     #endif
     attachInterrupt(W_MIN_PIN, endstop_ISR, CHANGE);
   #endif
+=======
+  #if HAS_I_MAX
+    #if !AVAILABLE_EILINE(I_MAX_PIN)
+      #error "I_MAX_PIN has no EXTINT line available."
+    #endif
+    attachInterrupt(I_MAX_PIN, endstop_ISR, CHANGE);
+  #endif
+  #if HAS_I_MIN
+    #if !AVAILABLE_EILINE(I_MIN_PIN)
+      #error "I_MIN_PIN has no EXTINT line available."
+    #endif
+    attachInterrupt(I_MIN_PIN, endstop_ISR, CHANGE);
+  #endif
+  #if HAS_J_MAX
+    #if !AVAILABLE_EILINE(J_MAX_PIN)
+      #error "J_MAX_PIN has no EXTINT line available."
+    #endif
+    attachInterrupt(J_MAX_PIN, endstop_ISR, CHANGE);
+  #endif
+  #if HAS_J_MIN
+    #if !AVAILABLE_EILINE(J_MIN_PIN)
+      #error "J_MIN_PIN has no EXTINT line available."
+    #endif
+    attachInterrupt(J_MIN_PIN, endstop_ISR, CHANGE);
+  #endif
+  #if HAS_K_MAX
+    #if !AVAILABLE_EILINE(K_MAX_PIN)
+      #error "K_MAX_PIN has no EXTINT line available."
+    #endif
+    attachInterrupt(K_MAX_PIN, endstop_ISR, CHANGE);
+  #endif
+  #if HAS_K_MIN
+    #if !AVAILABLE_EILINE(K_MIN_PIN)
+      #error "K_MIN_PIN has no EXTINT line available."
+    #endif
+    attachInterrupt(K_MIN_PIN, endstop_ISR, CHANGE);
+  #endif
+>>>>>>> upstream/bugfix-2.0.x
 }

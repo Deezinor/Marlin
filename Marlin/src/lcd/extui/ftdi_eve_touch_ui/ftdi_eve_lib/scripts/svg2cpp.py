@@ -109,6 +109,7 @@ class ComputeBoundingBox:
     print("constexpr float y_max = %f;" % self.y_max)
     print()
 
+<<<<<<< HEAD
   def from_svg_view_box(self, viewbox):
     m = re.search('([0-9-.]+) ([0-9-.]+) ([0-9-.]+) ([0-9-.]+)', viewbox)
     if m:
@@ -117,6 +118,18 @@ class ComputeBoundingBox:
       self.x_max = float(m[3])
       self.y_max = float(m[4])
       return True
+=======
+  def from_svg_view_box(self, svg):
+    s = re.search('<svg[^>]+>', svg);
+    if s:
+      m = re.search('viewBox="([0-9-.]+) ([0-9-.]+) ([0-9-.]+) ([0-9-.]+)"', svg)
+      if m:
+        self.x_min = float(m[1])
+        self.y_min = float(m[2])
+        self.x_max = float(m[3])
+        self.y_max = float(m[4])
+        return True
+>>>>>>> upstream/bugfix-2.0.x
     return False
 
 class WriteDataStructure:
@@ -248,10 +261,20 @@ class SVGParser(HTMLParser):
         print("Syntax error:", d, "in path", id, "\n", file=sys.stderr)
         quit()
 
+<<<<<<< HEAD
   def find_attr(attrs, what):
     for attr, value in attrs:
       if attr == what:
          return value
+=======
+  def process_svg_paths(self, svg):
+    self.op.reset()
+    for path in re.findall('<path[^>]+>', svg):
+      id = "<none>"
+      m = re.search(' id="(.*)"', path)
+      if m:
+        id = m[1]
+>>>>>>> upstream/bugfix-2.0.x
 
   def layer_matches(self):
     """ Are we in the correct layer?"""
@@ -284,11 +307,19 @@ class SVGParser(HTMLParser):
           self.op.path_finished(id)
         self.restart()
 
+<<<<<<< HEAD
   def handle_endtag(self, tag):
     if tag == 'g':
       self.groups.pop()
     if tag != self.tags.pop():
       print("Error popping tag off list")
+=======
+      m = re.search(' d="(.*)"', path)
+      if m:
+        self.process_svg_path_data(id, m[1])
+        self.op.path_finished(id)
+        self.reset()
+>>>>>>> upstream/bugfix-2.0.x
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()

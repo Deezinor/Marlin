@@ -61,10 +61,15 @@ void GcodeSuite::M145() {
 }
 
 void GcodeSuite::M145_report(const bool forReplay/*=true*/) {
+<<<<<<< HEAD
   TERN_(MARLIN_SMALL_BUILD, return);
 
   report_heading(forReplay, F(STR_MATERIAL_HEATUP));
   for (uint8_t i = 0; i < PREHEAT_COUNT; ++i) {
+=======
+  report_heading(forReplay, F(STR_MATERIAL_HEATUP));
+  LOOP_L_N(i, PREHEAT_COUNT) {
+>>>>>>> upstream/bugfix-2.0.x
     report_echo_start(forReplay);
     SERIAL_ECHOLNPGM_P(
       PSTR("  M145 S"), i

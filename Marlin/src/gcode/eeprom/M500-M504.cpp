@@ -26,7 +26,11 @@
 #include "../../inc/MarlinConfig.h"
 
 #if ENABLED(CONFIGURATION_EMBEDDING)
+<<<<<<< HEAD
   #include "../../sd/cardreader.h"
+=======
+  #include "../../sd/SdBaseFile.h"
+>>>>>>> upstream/bugfix-2.0.x
   #include "../../mczip.h"
 #endif
 
@@ -66,6 +70,7 @@ void GcodeSuite::M502() {
 
     #if ENABLED(CONFIGURATION_EMBEDDING)
       if (parser.seen_test('C')) {
+<<<<<<< HEAD
         MediaFile file;
         // Need to create the config size on the SD card
         MediaFile root = card.getroot();
@@ -79,6 +84,13 @@ void GcodeSuite::M502() {
 
           if (success) SERIAL_ECHO_MSG("Configuration saved as 'mc.zip'");
         }
+=======
+        SdBaseFile file;
+        const uint16_t size = sizeof(mc_zip);
+        // Need to create the config size on the SD card
+        if (file.open("mc.zip", O_WRITE|O_CREAT) && file.write(pgm_read_ptr(mc_zip), size) != -1 && file.close())
+          SERIAL_ECHO_MSG("Configuration saved as 'mc.zip'");
+>>>>>>> upstream/bugfix-2.0.x
       }
     #endif
   }

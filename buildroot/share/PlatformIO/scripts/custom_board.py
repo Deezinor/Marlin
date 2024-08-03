@@ -7,7 +7,11 @@
 import pioutil
 if pioutil.is_pio_build():
     import marlin
+<<<<<<< HEAD
     board = pioutil.env.BoardConfig()
+=======
+    board = marlin.env.BoardConfig()
+>>>>>>> upstream/bugfix-2.0.x
 
     address = board.get("build.address", "")
     if address:

@@ -109,36 +109,61 @@ typedef Servo hal_servo_t;
 
   #define MYSERIAL1 TERN(BLUETOOTH, btSerial, MSerial0)
 #else
+<<<<<<< HEAD
   #if !WITHIN(SERIAL_PORT, 0, 3)
     #error "SERIAL_PORT must be from 0 to 3."
+=======
+  #if !WITHIN(SERIAL_PORT, -1, 3)
+    #error "SERIAL_PORT must be from 0 to 3, or -1 for USB Serial."
+>>>>>>> upstream/bugfix-2.0.x
   #endif
   #define MYSERIAL1 customizedSerial1
 
   #ifdef SERIAL_PORT_2
+<<<<<<< HEAD
     #if !WITHIN(SERIAL_PORT_2, 0, 3)
       #error "SERIAL_PORT_2 must be from 0 to 3."
+=======
+    #if !WITHIN(SERIAL_PORT_2, -1, 3)
+      #error "SERIAL_PORT_2 must be from 0 to 3, or -1 for USB Serial."
+>>>>>>> upstream/bugfix-2.0.x
     #endif
     #define MYSERIAL2 customizedSerial2
   #endif
 
   #ifdef SERIAL_PORT_3
+<<<<<<< HEAD
     #if !WITHIN(SERIAL_PORT_3, 0, 3)
       #error "SERIAL_PORT_3 must be from 0 to 3."
+=======
+    #if !WITHIN(SERIAL_PORT_3, -1, 3)
+      #error "SERIAL_PORT_3 must be from 0 to 3, or -1 for USB Serial."
+>>>>>>> upstream/bugfix-2.0.x
     #endif
     #define MYSERIAL3 customizedSerial3
   #endif
 #endif
 
 #ifdef MMU2_SERIAL_PORT
+<<<<<<< HEAD
   #if !WITHIN(MMU2_SERIAL_PORT, 0, 3)
     #error "MMU2_SERIAL_PORT must be from 0 to 3"
+=======
+  #if !WITHIN(MMU2_SERIAL_PORT, -1, 3)
+    #error "MMU2_SERIAL_PORT must be from 0 to 3, or -1 for USB Serial."
+>>>>>>> upstream/bugfix-2.0.x
   #endif
   #define MMU2_SERIAL mmuSerial
 #endif
 
 #ifdef LCD_SERIAL_PORT
+<<<<<<< HEAD
   #if !WITHIN(LCD_SERIAL_PORT, 0, 3)
     #error "LCD_SERIAL_PORT must be from 0 to 3."
+=======
+  #if !WITHIN(LCD_SERIAL_PORT, -1, 3)
+    #error "LCD_SERIAL_PORT must be from 0 to 3, or -1 for USB Serial."
+>>>>>>> upstream/bugfix-2.0.x
   #endif
   #define LCD_SERIAL lcdSerial
   #if ANY(HAS_DGUS_LCD, EXTENSIBLE_UI)
@@ -149,8 +174,13 @@ typedef Servo hal_servo_t;
 //
 // ADC
 //
+<<<<<<< HEAD
 #define HAL_ADC_VREF_MV   5000
 #define HAL_ADC_RESOLUTION  10
+=======
+#define HAL_ADC_VREF        5.0
+#define HAL_ADC_RESOLUTION 10
+>>>>>>> upstream/bugfix-2.0.x
 
 //
 // Pin Mapping for M42, M43, M226
@@ -159,7 +189,7 @@ typedef Servo hal_servo_t;
 #define GET_PIN_MAP_INDEX(pin) pin
 #define PARSED_PIN_INDEX(code, dval) parser.intval(code, dval)
 
-#define HAL_SENSITIVE_PINS 0, 1
+#define HAL_SENSITIVE_PINS 0, 1,
 
 #ifdef __AVR_AT90USB1286__
   #define JTAG_DISABLE() do{ MCUCR = 0x80; MCUCR = 0x80; }while(0)
@@ -189,7 +219,11 @@ class MarlinHAL {
 public:
 
   // Earliest possible init, before setup()
+<<<<<<< HEAD
   MarlinHAL();
+=======
+  MarlinHAL() {}
+>>>>>>> upstream/bugfix-2.0.x
 
   // Watchdog
   static void watchdog_init()    IF_DISABLED(USE_WATCHDOG, {});

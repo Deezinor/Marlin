@@ -25,21 +25,33 @@
 #if ENABLED(MPCTEMP)
 
 #include "../gcode.h"
+<<<<<<< HEAD
 #include "../../lcd/marlinui.h"
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #include "../../module/temperature.h"
 
 /**
  * M306: MPC settings and autotune
  *
+<<<<<<< HEAD
  *  E<extruder>               Extruder index. (Default: Active Extruder)
  *
  * Set MPC values manually for the specified or active extruder:
  *  A<watts/kelvin>           Ambient heat transfer coefficient (no fan).
  *  C<joules/kelvin>          Block heat capacity.
+=======
+ *  T                         Autotune the active extruder.
+ *
+ *  A<watts/kelvin>           Ambient heat transfer coefficient (no fan).
+ *  C<joules/kelvin>          Block heat capacity.
+ *  E<extruder>               Extruder number to set. (Default: E0)
+>>>>>>> upstream/bugfix-2.0.x
  *  F<watts/kelvin>           Ambient heat transfer coefficient (fan on full).
  *  H<joules/kelvin/mm>       Filament heat capacity per mm.
  *  P<watts>                  Heater power.
  *  R<kelvin/second/kelvin>   Sensor responsiveness (= transfer coefficient / heat capcity).
+<<<<<<< HEAD
  *
  *  With MPC_AUTOTUNE:
  *  T                         Autotune the extruder specified with 'E' or the active extruder.
@@ -81,6 +93,24 @@ void GcodeSuite::M306() {
       if (parser.seenval('F')) mpc.applyFanAdjustment(parser.value_float());
     #endif
     if (parser.seenval('H')) mpc.filament_heat_capacity_permm = parser.value_float();
+=======
+ */
+
+void GcodeSuite::M306() {
+  if (parser.seen_test('T')) { thermalManager.MPC_autotune(); return; }
+
+  if (parser.seen("ACFPRH")) {
+    const heater_id_t hid = (heater_id_t)parser.intval('E', 0);
+    MPC_t &constants = thermalManager.temp_hotend[hid].constants;
+    if (parser.seenval('P')) constants.heater_power = parser.value_float();
+    if (parser.seenval('C')) constants.block_heat_capacity = parser.value_float();
+    if (parser.seenval('R')) constants.sensor_responsiveness = parser.value_float();
+    if (parser.seenval('A')) constants.ambient_xfer_coeff_fan0 = parser.value_float();
+    #if ENABLED(MPC_INCLUDE_FAN)
+      if (parser.seenval('F')) constants.fan255_adjustment = parser.value_float() - constants.ambient_xfer_coeff_fan0;
+    #endif
+    if (parser.seenval('H')) constants.filament_heat_capacity_permm = parser.value_float();
+>>>>>>> upstream/bugfix-2.0.x
     return;
   }
 
@@ -88,6 +118,7 @@ void GcodeSuite::M306() {
 }
 
 void GcodeSuite::M306_report(const bool forReplay/*=true*/) {
+<<<<<<< HEAD
   TERN_(MARLIN_SMALL_BUILD, return);
 
   report_heading(forReplay, F("Model predictive control"));
@@ -104,6 +135,22 @@ void GcodeSuite::M306_report(const bool forReplay/*=true*/) {
       SERIAL_ECHOPGM(" F", p_float_t(mpc.fanCoefficient(), 4));
     #endif
     SERIAL_ECHOLNPGM(" H", p_float_t(mpc.filament_heat_capacity_permm, 4));
+=======
+  report_heading(forReplay, F("Model predictive control"));
+  HOTEND_LOOP() {
+    report_echo_start(forReplay);
+    MPC_t& constants = thermalManager.temp_hotend[e].constants;
+    SERIAL_ECHOPGM("  M306 E", e);
+    SERIAL_ECHOPAIR_F(" P", constants.heater_power, 2);
+    SERIAL_ECHOPAIR_F(" C", constants.block_heat_capacity, 2);
+    SERIAL_ECHOPAIR_F(" R", constants.sensor_responsiveness, 4);
+    SERIAL_ECHOPAIR_F(" A", constants.ambient_xfer_coeff_fan0, 4);
+    #if ENABLED(MPC_INCLUDE_FAN)
+      SERIAL_ECHOPAIR_F(" F", constants.ambient_xfer_coeff_fan0 + constants.fan255_adjustment, 4);
+    #endif
+    SERIAL_ECHOPAIR_F(" H", constants.filament_heat_capacity_permm, 4);
+    SERIAL_EOL();
+>>>>>>> upstream/bugfix-2.0.x
   }
 }
 

@@ -447,6 +447,10 @@ bool SdBaseFile::mkdir(SdBaseFile *parent, const char *path, const bool pFlag/*=
     uint8_t dlname[LONG_FILENAME_LENGTH];
   #endif
 
+  #if ENABLED(LONG_FILENAME_WRITE_SUPPORT)
+    uint8_t dlname[LONG_FILENAME_LENGTH];
+  #endif
+
   if (!parent || isOpen()) return false;
 
   if (*path == '/') {
@@ -457,7 +461,10 @@ bool SdBaseFile::mkdir(SdBaseFile *parent, const char *path, const bool pFlag/*=
     }
   }
 
+<<<<<<< HEAD
   uint8_t dname[11];
+=======
+>>>>>>> upstream/bugfix-2.0.x
   for (;;) {
     if (!TERN(LONG_FILENAME_WRITE_SUPPORT, parsePath(path, dname, dlname, &path), make83Name(path, dname, &path))) return false;
     while (*path == '/') path++;
@@ -473,7 +480,11 @@ bool SdBaseFile::mkdir(SdBaseFile *parent, const char *path, const bool pFlag/*=
   return mkdir(parent, dname OPTARG(LONG_FILENAME_WRITE_SUPPORT, dlname));
 }
 
+<<<<<<< HEAD
 bool SdBaseFile::mkdir(SdBaseFile * const parent, const uint8_t dname[11]
+=======
+bool SdBaseFile::mkdir(SdBaseFile *parent, const uint8_t dname[11]
+>>>>>>> upstream/bugfix-2.0.x
   OPTARG(LONG_FILENAME_WRITE_SUPPORT, const uint8_t dlname[LONG_FILENAME_LENGTH])
 ) {
   if (ENABLED(SDCARD_READONLY)) return false;
@@ -626,9 +637,15 @@ bool SdBaseFile::open(SdBaseFile * const dirFile, const char *path, const uint8_
 }
 
 // open with filename in dname and long filename in dlname
+<<<<<<< HEAD
 bool SdBaseFile::open(SdBaseFile * const dirFile, const uint8_t dname[11]
     OPTARG(LONG_FILENAME_WRITE_SUPPORT, const uint8_t dlname[LONG_FILENAME_LENGTH])
   , const uint8_t oflag
+=======
+bool SdBaseFile::open(SdBaseFile *dirFile, const uint8_t dname[11]
+    OPTARG(LONG_FILENAME_WRITE_SUPPORT, const uint8_t dlname[LONG_FILENAME_LENGTH])
+  , uint8_t oflag
+>>>>>>> upstream/bugfix-2.0.x
 ) {
   bool emptyFound = false, fileFound = false;
   uint8_t index = 0;
@@ -702,6 +719,7 @@ bool SdBaseFile::open(SdBaseFile * const dirFile, const uint8_t dname[11]
               // Get VFat dir entry
               pvFat = (vfat_t *) p;
               // Get checksum from the last entry of the sequence
+<<<<<<< HEAD
               if (pvFat->sequenceNumber & 0x40) {
                 lfnChecksum = pvFat->checksum;
                 ZERO(lfnName);
@@ -709,11 +727,20 @@ bool SdBaseFile::open(SdBaseFile * const dirFile, const uint8_t dname[11]
               // Get LFN sequence number
               lfnSequenceNumber = pvFat->sequenceNumber & 0x1F;
               if (WITHIN(lfnSequenceNumber, 1, reqEntriesNum)) {
+=======
+              if (pvFat->sequenceNumber & 0x40) lfnChecksum = pvFat->checksum;
+              // Get LFN sequence number
+              lfnSequenceNumber = pvFat->sequenceNumber & 0x1F;
+              if WITHIN(lfnSequenceNumber, 1, reqEntriesNum) {
+>>>>>>> upstream/bugfix-2.0.x
                 // Check checksum for all other entries with the starting checksum fetched before
                 if (lfnChecksum == pvFat->checksum) {
                   // Set chunk of LFN from VFAT entry into lfnName
                   getLFNName(pvFat, (char *)lfnName, lfnSequenceNumber);
+<<<<<<< HEAD
                   TERN_(UTF_FILENAME_SUPPORT, convertUtf16ToUtf8((char *)lfnName));
+=======
+>>>>>>> upstream/bugfix-2.0.x
                   // LFN found?
                   if (!strncasecmp((char*)dlname, (char*)lfnName, lfnNameLength)) lfnFileFound = true;
                 }
@@ -771,7 +798,11 @@ bool SdBaseFile::open(SdBaseFile * const dirFile, const uint8_t dname[11]
       if (!dirFile->seekSet(32 * index)) return false;
 
       // Dir entries write loop: [LFN] + SFN(1)
+<<<<<<< HEAD
       for (uint8_t dirWriteIdx = 0; dirWriteIdx < reqEntriesNum; ++dirWriteIdx) {
+=======
+      LOOP_L_N(dirWriteIdx, reqEntriesNum) {
+>>>>>>> upstream/bugfix-2.0.x
         index = (dirFile->curPosition_ / 32) & 0xF;
         p = dirFile->readDirCache();
         // LFN or SFN Entry?
@@ -1002,8 +1033,12 @@ bool SdBaseFile::openNext(SdBaseFile *dirFile, const uint8_t oflag) {
   bool SdBaseFile::isDirLFN(const dir_t* dir) {
     if (DIR_IS_LONG_NAME(dir)) {
       vfat_t *VFAT = (vfat_t*)dir;
+<<<<<<< HEAD
       // Sanity-check the VFAT entry. The first cluster is always set to zero.
       // The sequence number should be higher than 0 and lower than maximum allowed by VFAT spec
+=======
+      // Sanity-check the VFAT entry. The first cluster is always set to zero. And the sequence number should be higher than 0
+>>>>>>> upstream/bugfix-2.0.x
       if ((VFAT->firstClusterLow == 0) && WITHIN((VFAT->sequenceNumber & 0x1F), 1, MAX_VFAT_ENTRIES)) return true;
     }
     return false;
@@ -1016,8 +1051,14 @@ bool SdBaseFile::openNext(SdBaseFile *dirFile, const uint8_t oflag) {
    * \return true if the dirname is a long file name (LFN)
    * \return false if the dirname is a short file name 8.3 (SFN)
    */
+<<<<<<< HEAD
   bool SdBaseFile::isDirNameLFN(const char * const dirname) {
     uint8_t length = strlen(dirname), idx = length;
+=======
+  bool SdBaseFile::isDirNameLFN(const char *dirname) {
+    uint8_t length = strlen(dirname);
+    uint8_t idx = length;
+>>>>>>> upstream/bugfix-2.0.x
     bool dotFound = false;
     if (idx > 12) return true;            // LFN due to filename length > 12 ("filename.ext")
     // Check dot(s) position
@@ -1047,7 +1088,11 @@ bool SdBaseFile::openNext(SdBaseFile *dirFile, const uint8_t oflag) {
    * The SFN is without dot ("FILENAMEEXT")
    * The LFN is complete ("Filename.ext")
    */
+<<<<<<< HEAD
   bool SdBaseFile::parsePath(const char *path, uint8_t * const name, uint8_t * const lname, const char **ptrNextPath) {
+=======
+  bool SdBaseFile::parsePath(const char *path, uint8_t *name, uint8_t *lname, const char **ptrNextPath) {
+>>>>>>> upstream/bugfix-2.0.x
     // Init randomizer for SFN generation
     randomSeed(millis());
     // Parse the LFN
@@ -1135,14 +1180,24 @@ bool SdBaseFile::openNext(SdBaseFile *dirFile, const uint8_t oflag) {
   /**
    * Get the LFN filename block from a dir. Get the block in lname at startOffset
    */
+<<<<<<< HEAD
   void SdBaseFile::getLFNName(vfat_t *pFatDir, char *lname, const uint8_t sequenceNumber) {
     const uint8_t startOffset = (sequenceNumber - 1) * FILENAME_LENGTH;
     for (uint8_t i = 0; i < FILENAME_LENGTH; ++i) {
+=======
+  void SdBaseFile::getLFNName(vfat_t *pFatDir, char *lname, uint8_t sequenceNumber) {
+    uint8_t startOffset = (sequenceNumber - 1) * FILENAME_LENGTH;
+    LOOP_L_N(i, FILENAME_LENGTH) {
+>>>>>>> upstream/bugfix-2.0.x
       const uint16_t utf16_ch = (i >= 11) ? pFatDir->name3[i - 11] : (i >= 5) ? pFatDir->name2[i - 5] : pFatDir->name1[i];
       #if ENABLED(UTF_FILENAME_SUPPORT)
         // We can't reconvert to UTF-8 here as UTF-8 is variable-size encoding, but joining LFN blocks
         // needs static bytes addressing. So here just store full UTF-16LE words to re-convert later.
+<<<<<<< HEAD
         const uint16_t idx = (startOffset + i) * 2; // This is fixed as FAT LFN always contain UTF-16LE encoding
+=======
+        uint16_t idx = (startOffset + i) * 2; // This is fixed as FAT LFN always contain UTF-16LE encoding
+>>>>>>> upstream/bugfix-2.0.x
         lname[idx] = utf16_ch & 0xFF;
         lname[idx + 1] = (utf16_ch >> 8) & 0xFF;
       #else
@@ -1155,10 +1210,17 @@ bool SdBaseFile::openNext(SdBaseFile *dirFile, const uint8_t oflag) {
   /**
    * Set the LFN filename block lname to a dir. Put the block based on sequence number
    */
+<<<<<<< HEAD
   void SdBaseFile::setLFNName(vfat_t *pFatDir, char *lname, const uint8_t sequenceNumber) {
     const uint8_t startOffset = (sequenceNumber - 1) * FILENAME_LENGTH,
                   nameLength = strlen(lname);
     for (uint8_t i = 0; i < FILENAME_LENGTH; ++i) {
+=======
+  void SdBaseFile::setLFNName(vfat_t *pFatDir, char *lname, uint8_t sequenceNumber) {
+    uint8_t startOffset = (sequenceNumber - 1) * FILENAME_LENGTH;
+    uint8_t nameLength = strlen(lname);
+    LOOP_L_N(i, FILENAME_LENGTH) {
+>>>>>>> upstream/bugfix-2.0.x
       uint16_t ch = 0;
       if ((startOffset + i) < nameLength)
         ch = lname[startOffset + i];
@@ -1463,7 +1525,11 @@ int8_t SdBaseFile::readDir(dir_t * const dir, char * const longFilename) {
         // Sanity-check the VFAT entry. The first cluster is always set to zero. And the sequence number should be higher than 0
         if (VFAT->firstClusterLow == 0) {
           const uint8_t seq = VFAT->sequenceNumber & 0x1F;
+<<<<<<< HEAD
           if (WITHIN(seq, 1, VFAT_ENTRIES_LIMIT)) {
+=======
+          if (WITHIN(seq, 1, MAX_VFAT_ENTRIES)) {
+>>>>>>> upstream/bugfix-2.0.x
             if (seq == 1) {
               checksum = VFAT->checksum;
               checksum_error = 0;
@@ -1479,7 +1545,11 @@ int8_t SdBaseFile::readDir(dir_t * const dir, char * const longFilename) {
 
               n = (seq - 1) * (FILENAME_LENGTH);
 
+<<<<<<< HEAD
               for (uint8_t i = 0; i < FILENAME_LENGTH; ++i) {
+=======
+              LOOP_L_N(i, FILENAME_LENGTH) {
+>>>>>>> upstream/bugfix-2.0.x
                 const uint16_t utf16_ch = (i >= 11) ? VFAT->name3[i - 11] : (i >= 5) ? VFAT->name2[i - 5] : VFAT->name1[i];
                 #if ENABLED(UTF_FILENAME_SUPPORT)
                   // We can't reconvert to UTF-8 here as UTF-8 is variable-size encoding, but joining LFN blocks
@@ -1488,7 +1558,11 @@ int8_t SdBaseFile::readDir(dir_t * const dir, char * const longFilename) {
                   longFilename[idx] = utf16_ch & 0xFF;
                   longFilename[idx + 1] = (utf16_ch >> 8) & 0xFF;
                 #else
+<<<<<<< HEAD
                   // Replace multibyte character with '_'
+=======
+                  // Replace all multibyte characters to '_'
+>>>>>>> upstream/bugfix-2.0.x
                   longFilename[n + i] = (utf16_ch > 0xFF) ? '_' : (utf16_ch & 0xFF);
                 #endif
               }
@@ -1627,7 +1701,11 @@ bool SdBaseFile::remove() {
     // Check if the entry has a LFN
     bool lastEntry = false;
     // loop back to search for any LFN entries related to this file
+<<<<<<< HEAD
     for (uint8_t sequenceNumber = 1; sequenceNumber <= VFAT_ENTRIES_LIMIT; ++sequenceNumber) {
+=======
+    LOOP_S_LE_N(sequenceNumber, 1, MAX_VFAT_ENTRIES) {
+>>>>>>> upstream/bugfix-2.0.x
       dirIndex_ = (dirIndex_ - 1) & 0xF;
       if (dirBlock_ == 0) break;
       if (dirIndex_ == 0xF) dirBlock_--;

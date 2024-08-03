@@ -26,7 +26,11 @@
 
 #include "../../inc/MarlinConfigPre.h"
 
+<<<<<<< HEAD
 #if ALL(HAS_MARLINUI_MENU, MIXING_EXTRUDER)
+=======
+#if BOTH(HAS_MARLINUI_MENU, MIXING_EXTRUDER)
+>>>>>>> upstream/bugfix-2.0.x
 
 #include "menu_item.h"
 #include "menu_addon.h"
@@ -112,7 +116,11 @@ static uint8_t v_index;
 #if HAS_DUAL_MIXING
   void _lcd_draw_mix(const uint8_t y) {
     char tmp[20]; // "100%_100%"
+<<<<<<< HEAD
     sprintf_P(tmp, PSTR("%3d%% %3d%% "), int(mixer.mix[0]), int(mixer.mix[1]));
+=======
+    sprintf_P(tmp, PSTR("%3d%% %3d%%"), int(mixer.mix[0]), int(mixer.mix[1]));
+>>>>>>> upstream/bugfix-2.0.x
     SETCURSOR(2, y); lcd_put_u8str(GET_TEXT_F(MSG_MIX));
     SETCURSOR_RJ(10, y); lcd_put_u8str(tmp);
   }

@@ -82,7 +82,11 @@
 #define TEMP_BED_PIN                          11  // Analog Input
 
 // SPI for MAX Thermocouple
+<<<<<<< HEAD
 #if !HAS_MEDIA
+=======
+#if DISABLED(SDSUPPORT)
+>>>>>>> upstream/bugfix-2.0.x
   #define TEMP_0_CS_PIN                       67  // Don't use 53 if using Display/SD card
 #else
   #define TEMP_0_CS_PIN                       67  // Don't use 49 (SD_DETECT_PIN)
@@ -95,7 +99,10 @@
 //
 // LCD / Controller
 //
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/bugfix-2.0.x
 #if ENABLED(AZSMZ_12864)
 
   // Support for AZSMZ 12864 LCD with SD Card 3D printer smart controller control panel

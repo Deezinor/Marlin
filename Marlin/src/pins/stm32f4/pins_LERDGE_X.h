@@ -130,6 +130,21 @@
 #endif
 
 //
+// SD support (On board)
+//
+#define SDIO_SUPPORT
+#define SD_DETECT_PIN                       PA8
+#define SDIO_CLOCK                       4800000
+#if DISABLED(SDIO_SUPPORT)
+  #define SOFTWARE_SPI
+  #define SD_SCK_PIN                        PC12
+  #define SD_MISO_PIN                       PC8
+  #define SD_MOSI_PIN                       PD2
+  #define SD_SS_PIN                         PC11
+  #define SDSS                              PC11
+#endif
+
+//
 // Misc. Functions
 //
 #define LED_PIN                             PC7   // Alive

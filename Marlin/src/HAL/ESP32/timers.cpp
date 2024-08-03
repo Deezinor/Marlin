@@ -114,9 +114,15 @@ void HAL_timer_start(const uint8_t timer_num, const uint32_t frequency) {
  * @param timer_num timer number to set the compare value to
  * @param compare   threshold at which the interrupt is triggered
  */
+<<<<<<< HEAD
 void HAL_timer_set_compare(const uint8_t timer_num, const hal_timer_t compare) {
   const tTimerConfig timer = timer_config[timer_num];
   timer_set_alarm_value(timer.group, timer.idx, compare);
+=======
+void HAL_timer_set_compare(const uint8_t timer_num, hal_timer_t count) {
+  const tTimerConfig timer = timer_config[timer_num];
+  timer_set_alarm_value(timer.group, timer.idx, count);
+>>>>>>> upstream/bugfix-2.0.x
 }
 
 /**

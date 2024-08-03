@@ -41,7 +41,11 @@
   #include "../../feature/powerloss.h"
 #endif
 
+<<<<<<< HEAD
 #if DGUS_LCD_UI_MKS
+=======
+#if ENABLED(DGUS_LCD_UI_MKS)
+>>>>>>> upstream/bugfix-2.0.x
   #include "../../lcd/extui/dgus/DGUSDisplayDef.h"
 #endif
 
@@ -70,7 +74,11 @@ void GcodeSuite::M24() {
   #endif
 
   if (card.isFileOpen()) {
+<<<<<<< HEAD
     card.startOrResumeFilePrinting(); // SD card will now be read for commands
+=======
+    card.startOrResumeFilePrinting();            // SD card will now be read for commands
+>>>>>>> upstream/bugfix-2.0.x
     startOrResumeJob();               // Start (or resume) the print job timer
     TERN_(POWER_LOSS_RECOVERY, recovery.prepare());
   }

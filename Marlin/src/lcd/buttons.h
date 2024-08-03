@@ -26,7 +26,11 @@
 #if ((!HAS_ADC_BUTTONS && IS_NEWPANEL) || BUTTONS_EXIST(EN1, EN2)) && !IS_TFTGLCD_PANEL
   #define HAS_MARLINUI_ENCODER 1
 #endif
+<<<<<<< HEAD
 #if (HAS_MARLINUI_ENCODER || ANY_BUTTON(ENC, BACK, UP, DOWN, LEFT, RIGHT)) && DISABLED(TOUCH_UI_FTDI_EVE)
+=======
+#if (HAS_ENCODER_WHEEL || ANY_BUTTON(ENC, BACK, UP, DWN, LFT, RT)) && DISABLED(TOUCH_UI_FTDI_EVE)
+>>>>>>> upstream/bugfix-2.0.x
   #define HAS_DIGITAL_BUTTONS 1
 #endif
 #if !HAS_ADC_BUTTONS && (IS_RRW_KEYPAD || (HAS_WIRED_LCD && !IS_NEWPANEL))
@@ -38,7 +42,18 @@
   #define HAS_SLOW_BUTTONS 1
 #endif
 
+<<<<<<< HEAD
 #if ANY(HAS_DIGITAL_BUTTONS, HAS_DWIN_E3V2)
+=======
+#if HAS_ENCODER_WHEEL
+  #define ENCODER_PHASE_0 0
+  #define ENCODER_PHASE_1 2
+  #define ENCODER_PHASE_2 3
+  #define ENCODER_PHASE_3 1
+#endif
+
+#if EITHER(HAS_DIGITAL_BUTTONS, HAS_DWIN_E3V2)
+>>>>>>> upstream/bugfix-2.0.x
   // Wheel spin pins where BA is 00, 10, 11, 01 (1 bit always changes)
   #define BLEN_A 0
   #define BLEN_B 1
