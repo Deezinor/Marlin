@@ -1599,7 +1599,7 @@
  *     |    [-]    |
  *     O-- FRONT --+
  */
-#define NOZZLE_TO_PROBE_OFFSET { -44, -14.6, 0 } //JMB
+#define NOZZLE_TO_PROBE_OFFSET { -44, -14.6, -1.285 } //JMB
 
 // Enable and set to use a specific tool for probing. Disable to allow any tool.
 #define PROBING_TOOL 0
