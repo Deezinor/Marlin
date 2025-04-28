@@ -1302,10 +1302,10 @@
  * The probe replaces the Z-MIN endstop and is used for Z homing.
  * (Automatically enables USE_PROBE_FOR_Z_HOMING.)
  */
-#define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN
+#define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN //JMB
 
 // Force the use of the probe for Z-axis homing
-#define USE_PROBE_FOR_Z_HOMING
+#define USE_PROBE_FOR_Z_HOMING //JMB
 
 /**
  * Z_MIN_PROBE_PIN
@@ -2208,9 +2208,9 @@
  *   M501 - Read settings from EEPROM. (i.e., Throw away unsaved changes)
  *   M502 - Revert settings to "factory" defaults. (Follow with M500 to init the EEPROM.)
  */
-#define EEPROM_SETTINGS     // Persistent storage with M500 and M501
+#define EEPROM_SETTINGS     // Persistent storage with M500 and M501 //JMB
 //#define DISABLE_M503        // Saves ~2700 bytes of flash. Disable for release!
-#define EEPROM_CHITCHAT       // Give feedback on EEPROM commands. Disable to save flash.
+#define EEPROM_CHITCHAT       // Give feedback on EEPROM commands. Disable to save flash. //JMB
 #define EEPROM_BOOT_SILENT    // Keep M503 quiet and only give errors during first load
 #if ENABLED(EEPROM_SETTINGS)
   //#define EEPROM_AUTO_INIT  // Init EEPROM automatically on any errors.
@@ -2872,8 +2872,8 @@
 //
 // Connect to EXP1 on RAMPS and compatible boards.
 //
-#define CR10_STOCKDISPLAY
-#define LCD_CLASSIC_UI
+#define CR10_STOCKDISPLAY //JMB
+#define LCD_CLASSIC_UI //JMB
 
 //
 // Ender-2 OEM display, a variant of the MKS_MINI_12864
