@@ -1683,14 +1683,14 @@
 // @section extruder
 
 // For direct drive extruder v9 set to true, for geared extruder set to false.
-#define INVERT_E0_DIR false
-#define INVERT_E1_DIR false
-#define INVERT_E2_DIR false
-#define INVERT_E3_DIR false
-#define INVERT_E4_DIR false
-#define INVERT_E5_DIR false
-#define INVERT_E6_DIR false
-#define INVERT_E7_DIR false
+#define INVERT_E0_DIR true
+#define INVERT_E1_DIR true
+#define INVERT_E2_DIR true
+#define INVERT_E3_DIR true
+#define INVERT_E4_DIR true
+#define INVERT_E5_DIR true
+#define INVERT_E6_DIR true
+#define INVERT_E7_DIR true
 
 // @section homing
 
@@ -1909,10 +1909,10 @@
 //#define AUTO_BED_LEVELING_UBL
 //#define MESH_BED_LEVELING
 
-#define LEFT_PROBE_BED_POSITION  20 // (mm) X position of the left probe point //JMB
-#define RIGHT_PROBE_BED_POSITION 180 // (mm) X position of the right probe point //JMB
-#define FRONT_PROBE_BED_POSITION  20 // (mm) Y position of the front probe point //JMB
-#define BACK_PROBE_BED_POSITION  180 // (mm) Y position of the back probe point //JMB
+// #define LEFT_PROBE_BED_POSITION  20 // (mm) X position of the left probe point //JMB
+// #define RIGHT_PROBE_BED_POSITION 180 // (mm) X position of the right probe point //JMB
+// #define FRONT_PROBE_BED_POSITION  20 // (mm) Y position of the front probe point //JMB
+// #define BACK_PROBE_BED_POSITION  180 // (mm) Y position of the back probe point //JMB
 
 /**
  * Commands to execute at the end of G29 probing.
