@@ -1518,7 +1518,7 @@
 #define PROBING_MARGIN 10
 
 // X and Y axis travel speed (mm/min) between probes
-#define XY_PROBE_FEEDRATE (50*60) //JMB
+#define XY_PROBE_FEEDRATE (150*60) //JMB
 
 // Feedrate (mm/min) for the first approach when double-probing (MULTIPLE_PROBING == 2)
 #define Z_PROBE_FEEDRATE_FAST (10*60) //JMB
@@ -1909,6 +1909,11 @@
 //#define AUTO_BED_LEVELING_UBL
 //#define MESH_BED_LEVELING
 
+#define LEFT_PROBE_BED_POSITION  20 // (mm) X position of the left probe point //JMB
+#define RIGHT_PROBE_BED_POSITION 180 // (mm) X position of the right probe point //JMB
+#define FRONT_PROBE_BED_POSITION  20 // (mm) Y position of the front probe point //JMB
+#define BACK_PROBE_BED_POSITION  180 // (mm) Y position of the back probe point //JMB
+
 /**
  * Commands to execute at the end of G29 probing.
  * Useful to retract or move the Z probe out of the way.
@@ -2130,7 +2135,7 @@
 #endif
 
 // Homing speeds (linear=mm/min, rotational=°/min)
-#define HOMING_FEEDRATE_MM_M { (50*60), (50*60), (6*60) } //JMB
+#define HOMING_FEEDRATE_MM_M { (150*60), (150*60), (10*60) } //JMB
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS
